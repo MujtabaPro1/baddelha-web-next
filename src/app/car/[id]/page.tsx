@@ -25,7 +25,7 @@ import { inspectionData, numberWithCommas } from '../../../lib/utils';
 import CarBodySvgView from '../../../components/CarBodyView';
 import { useParams } from 'next/navigation';
 
-const CarDetail: React.FC = () => {
+export default function Page() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'inspection'  | 'similar'>('overview');
@@ -927,4 +927,3 @@ const CarDetail: React.FC = () => {
   );
 };
 
-export default CarDetail;

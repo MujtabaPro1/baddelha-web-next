@@ -1,14 +1,12 @@
 import { Metadata } from "next";
 import Page from "../[id]/page";
-import { Props } from "next/script";
 
 
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
-  searchParams
-}: Props): Promise<Metadata> {
+}: any): Promise<Metadata> {
   // fetch data
    
 
@@ -34,10 +32,7 @@ export async function generateMetadata({
 
 export default async function RootLayout({
   children,
-  params: { locale },
-}: {
-  children: React.ReactNode;
-  params: any;
-}) {
+}: any) {
+    // @ts-expect-error this is because our page is just for view
   return <Page> {children}</Page>;
 }
