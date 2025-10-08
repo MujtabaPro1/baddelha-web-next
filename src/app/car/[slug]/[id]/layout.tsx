@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Page from "../[id]/page";
+import Page from "./page";
 
 
 export const dynamic = 'force-dynamic';

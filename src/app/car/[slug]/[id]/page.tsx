@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -20,9 +20,9 @@ import {
   ThumbsUp,
   Plus,
 } from 'lucide-react';
-import axiosInstance from '../../../services/axiosInstance';
-import { inspectionData, numberWithCommas } from '../../../lib/utils';
-import CarBodySvgView from '../../../components/CarBodyView';
+import axiosInstance from '../../../../services/axiosInstance';
+import { inspectionData, numberWithCommas } from '../../../../lib/utils';
+import CarBodySvgView from '../../../../components/CarBodyView';
 import { useParams } from 'next/navigation';
 
 export default function Page() {
@@ -70,9 +70,9 @@ export default function Page() {
               // Process inspection data if available
               if(_car['Inspection']){
                   _car['InspectionData'] = _car?.Inspection?.[0]?.inspectionJson;
-                  _inspectionData.map((i)=>{
-                      i.fields.map((_i: any)=>{
-                          Object.keys(_car['InspectionData']).map((cKey)=>{
+                  _inspectionData.forEach((i) => {
+                      i.fields.forEach((_i: any) => {
+                          Object.keys(_car['InspectionData']).forEach((cKey) => {
                               if(cKey.replace(/_/g, " ") == _i.fieldName){
                                   if(cKey == 'Warranty_Valid_Till'){
                                       _i.value = _car['InspectionData'][cKey] ? new Date(_car['InspectionData'][cKey]).toDateString() : 'N/A';
@@ -84,12 +84,12 @@ export default function Page() {
                                       _i.value = _car['InspectionData'][cKey] ;
                                   }
                               }
-                          })
-                      })
-                      i['isHidden'] = i.name != 'General Information';
+                          });
+                      });
+                      (i as any)['isHidden'] = i.name != 'General Information';
   
                       if(_car['InspectionData'].overview){
-                          i['overview'] = _car['InspectionData'].overview[i.name];
+                          (i as any)['overview'] = _car['InspectionData'].overview[i.name];
                       }
                   })
               }

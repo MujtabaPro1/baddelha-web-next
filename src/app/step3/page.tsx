@@ -25,10 +25,12 @@ const Step3 = () => {
     const [otpVerified, setOtpVerified] = useState(false);
     const [otpError, setOtpError] = useState('');
     const [autoFill, setAutoFill] = useState(false);
+    const [showPricePopup, setShowPricePopup] = useState(false);
+    const [expectedPrice, setExpectedPrice] = useState<number | null>(null);
     const router = useRouter();
 
     // State for branches from API
-    const [branches, setBranches] = useState<{id: string; name: string; address: string, enName: string, arName: string}[]>([]);
+    const [branches, setBranches] = useState<{id: string; name: string; address: string, enName: string, arName: string, image?: string, location?: string, distance?: string}[]>([]);
     const [loadingBranches, setLoadingBranches] = useState(false);
     const [branchError, setBranchError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -107,8 +109,15 @@ const Step3 = () => {
             
             try {
                 const response = await axiosInstance.get('/api/1.0/branch');
-                setBranches(response?.data || []);
-                if (response?.data?.length > 0) {
+                // Add mock images, locations and distances to branches
+                const branchesWithImages = (response?.data || []).map((branch: any, index: number) => ({
+                    ...branch,
+                    image: `https://source.unsplash.com/random/300x200?kiosk,mall,${index}`,
+                    location: branch.address || `${language === 'en' ? 'Mall' : 'مول'} ${index + 1}`,
+                    distance: `${Math.floor(Math.random() * 10) + 1}.${Math.floor(Math.random() * 9)}${language === 'en' ? ' km away' : ' كم'}`
+                }));
+                setBranches(branchesWithImages);
+                if (branchesWithImages.length > 0) {
                     // Don't auto-select a branch, let user choose
                 }
             } catch (err) {
@@ -192,6 +201,12 @@ const Step3 = () => {
             // If there are validation errors, show them and stop form submission
             if (validationErrors.length > 0) {
                 alert(validationErrors.join('\n'));
+                return;
+            }
+            
+            // Check if car price is null, if so show the price popup
+            if (carPrice === null) {
+                setShowPricePopup(true);
                 return;
             }
             
@@ -319,9 +334,9 @@ const Step3 = () => {
                 <div className="md:col-span-1">
                     <div className="bg-[#3d3d40] text-white p-4 rounded-t-lg">
                         <div className="flex justify-between items-center">
-                            <div>
+                            <div className="w-full">
                                 <p className="text-sm">{lang[languageContent].yourVehicleMarketPrice}</p>
-                                <h3 className="text-3xl font-bold flex items-center animate-pulse">SAR
+                                <h3 className="text-3xl font-bold flex items-center animate-pulse w-full flex justify-between">SAR
                                 {revealPrice ? (carPrice ? ` ${carPrice.toLocaleString()}` : '') : 
                                   <button
                                     onClick={async ()=>{
@@ -360,7 +375,7 @@ const Step3 = () => {
                                         }
                                     
                                     }}
-                                    className="bg-gradient-to-r from-amber-500 to-amber-400 ml-2 mr-2 text-xs px-3 py-1 rounded hover:bg-yellow-600 transition w-[110px] mt-2 h-[40px] flex items-center justify-center">
+                                    className="bg-gradient-to-r from-amber-500 to-amber-400 ml-2 mr-2 text-xs px-3 py-1 rounded hover:bg-yellow-600 transition w-[140px] mt-2 h-[40px] flex items-center justify-center">
                                         {!isLoading? 'REVEAL PRICE': 
                                         
                                         <div className="w-4 h-4 border-2 border-white border-dashed rounded-full animate-spin"></div>
@@ -375,11 +390,50 @@ const Step3 = () => {
                     </div>
                     
                     <div className="bg-white p-4 rounded-b-lg shadow-md">
-                        <img 
-                            src={carImage || "https://images.unsplash.com/photo-1550355291-bbee04a92027?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"} 
-                            alt="Car" 
-                            className="w-full h-auto rounded-lg mb-4" 
-                        />
+                        {/* Car Details Summary - Cart-like section */}
+                        <div className="border border-gray-200 rounded-lg p-3 mb-4">
+                            <h4 className="text-sm font-medium text-gray-700 mb-2">{language === "en" ? "Your Car Details" : "تفاصيل سيارتك"}</h4>
+                            <div className="flex items-center">
+                                <div className="w-1/4 mr-3">
+                                    <div className="bg-gray-100 rounded-lg h-20 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className="w-3/4">
+                                    {step2Data && (
+                                        <>
+                                            <div className="flex justify-between mb-1">
+                                                <span className="text-xs text-gray-500">{language === "en" ? "Car" : "سيارة"}</span>
+                                                <span className="text-xs font-medium">
+                                                    {(() => {
+                                                        const storedStep1Data = sessionStorage.getItem('carDetails');
+                                                        const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
+                                                        return `${step1Data.make || '—'} ${step1Data.model || '—'} ${step1Data.year || '—'}`;
+                                                    })()}
+                                                </span>
+                                            </div>
+                                            <div className="flex justify-between mb-1">
+                                                <span className="text-xs text-gray-500">{language === "en" ? "Body Type" : "نوع الهيكل"}</span>
+                                                <span className="text-xs font-medium">{step2Data.bodyType || '—'}</span>
+                                            </div>
+                                            <div className="flex justify-between mb-1">
+                                                <span className="text-xs text-gray-500">{language === "en" ? "Engine" : "المحرك"}</span>
+                                                <span className="text-xs font-medium">{step2Data.engineSizeName || '—'}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-xs text-gray-500">{language === "en" ? "Mileage" : "المسافة المقطوعة"}</span>
+                                                <span className="text-xs font-medium">{step2Data.mileageName || '—'}</span>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Benefits section */}
                         <div className="text-sm text-gray-600">
                             <p className="flex items-center mb-2">
                                 <span className="mr-2">✓</span> {lang[languageContent].extraCashNoHassle}
@@ -396,36 +450,86 @@ const Step3 = () => {
                 
                 {/* Right Column - Booking Form */}
                 <div className="md:col-span-2 bg-[#eaeaea] p-6 rounded-lg">
-                    <form onSubmit={handleSubmit}>
+                    <form id="appointmentForm" onSubmit={handleSubmit}>
                         {/* Branch Selection */}
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">{lang[languageContent].branches}</label>
-                            <div className="relative">
+                        <div className="mb-6">
+                            <label className="block text-sm font-medium mb-3">{lang[languageContent].branches}</label>
+                            <div>
                                 {loadingBranches ? (
-                                    <div className="py-3 px-4 text-gray-500">{lang[languageContent].loadingBranches}</div>
+                                    <div className="py-6 px-4 text-center">
+                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#f78f37] mx-auto mb-2"></div>
+                                        <div className="text-gray-500">{lang[languageContent].loadingBranches}</div>
+                                    </div>
                                 ) : branchError ? (
                                     <div className="py-3 px-4 text-red-500">{branchError}</div>
                                 ) : (
-                                    <select
-                                        value={branch}
-                                        onChange={(e) => setBranch(e.target.value)}
-                                        className="block w-full rounded-lg border-gray-300 py-3 px-4 pr-8 focus:border-blue-500 focus:ring-blue-500 appearance-none bg-white"
-                                        required
-                                    >
-                                        <option value="">{lang[languageContent].selectBranch}</option>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         {branches.map((branchItem) => (
-                                            <option key={branchItem.id} value={branchItem.id}>
-                                                {language == "en" ? branchItem.enName : branchItem.arName}
-                                            </option>
+                                            <div 
+                                                key={branchItem.id} 
+                                                onClick={() => setBranch(branchItem.id)}
+                                                className={`cursor-pointer rounded-lg overflow-hidden border-2 transition ${branch === branchItem.id ? 'border-[#f78f37] shadow-md' : 'border-gray-200 hover:border-gray-300'}`}
+                                            >
+                                                <div className="flex h-full">
+                                                    {/* Left side - smaller image */}
+                                                    <div className="relative w-1/3 h-full">
+                                                        <img 
+                                                            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsSHkHJo3lDVYKlenp1sGYGzgfnPwzstj9AA&s'} 
+                                                            alt={language === "en" ? branchItem.enName : branchItem.arName}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                        {branch === branchItem.id && (
+                                                            <div className="absolute top-2 right-2 bg-[#f78f37] text-white rounded-full p-1">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                </svg>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    
+                                                    {/* Right side - branch details */}
+                                                    <div className="p-3 bg-white w-2/3">
+                                                        <h3 className="font-medium text-gray-900">
+                                                            {language === "en" ? branchItem.enName : branchItem.arName}
+                                                        </h3>
+                                                        
+                                                        {/* Location with link */}
+                                                        <a 
+                                                            href={`https://maps.google.com/?q=${encodeURIComponent(branchItem.location || '')}`} 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer"
+                                                            onClick={(e) => e.stopPropagation()} 
+                                                            className="text-sm text-gray-500 mt-1 flex items-center hover:text-[#f78f37]"
+                                                        >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            </svg>
+                                                            {branchItem.location}
+                                                        </a>
+                                                        
+                                                        {/* Distance indicator */}
+                                                        <p className="text-sm text-[#f78f37] mt-1 flex items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                            </svg>
+                                                            {branchItem.distance}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         ))}
-                                    </select>
+                                    </div>
                                 )}
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                    </svg>
-                                </div>
                             </div>
+                            {branch && (
+                                <div className="mt-2 text-sm text-green-600 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                    </svg>
+                                    {lang[languageContent].branchSelected || 'Branch selected successfully'}
+                                </div>
+                            )}
                         </div>
                         
                         {/* Date and Time Selection */}
@@ -579,6 +683,62 @@ const Step3 = () => {
                     </div>
                 </div>
             </div>
+            
+            {/* Expected Price Popup */}
+            {showPricePopup && (
+                <div className="fixed inset-0 bg-[#9797977d] bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+                        <button 
+                            onClick={() => setShowPricePopup(false)}
+                            className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
+                        
+                        <div className="text-center mb-6">
+                            <div className="bg-orange-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#f78f37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold">Expected Car Price</h3>
+                            <p className="text-gray-600 mt-1">
+                                Please enter your expected price for the car to continue with the appointment.
+                            </p>
+                        </div>
+                        
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium mb-1">Expected Price (SAR)</label>
+                            <input
+                                type="number"
+                                value={expectedPrice || ''}
+                                onChange={(e) => setExpectedPrice(Number(e.target.value))}
+                                placeholder="Enter expected price"
+                                className="block w-full rounded-lg border-gray-300 border-2 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 bg-white"
+                                required
+                            />
+                        </div>
+                        
+                        <button
+                            onClick={() => {
+                                if (expectedPrice && expectedPrice > 0) {
+                                    setCarPrice(expectedPrice);
+                                    setShowPricePopup(false);
+                                    // Submit the form after setting the price
+                                    setTimeout(() => {
+                                        document.getElementById('appointmentForm')?.dispatchEvent(
+                                            new Event('submit', { bubbles: true, cancelable: true })
+                                        );
+                                    }, 100);
+                                }
+                            }}
+                            className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white font-semibold py-3 px-6 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#f78f37] focus:ring-opacity-50 shadow-md"
+                        >
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            )}
             
             {/* Phone Verification Modal */}
             {showPhoneVerification && (
