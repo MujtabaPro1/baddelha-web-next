@@ -17,7 +17,6 @@ const Step3 = () => {
     const [email, setEmail] = useState('');
     const [revealPrice, setRevealPrice] = useState(false);
     const [carPrice, setCarPrice] = useState<number | null>(null);
-    const [carImage, setCarImage] = useState<string | null>(null);
     const [showPhoneVerification, setShowPhoneVerification] = useState(false);
     const [verificationPhone, setVerificationPhone] = useState('');
     const [otpSent, setOtpSent] = useState(false);
@@ -362,9 +361,6 @@ const Step3 = () => {
                                             
                                             if (response.data) {
                                                 setCarPrice(response.data.priceEstimate?.valueRange?.low);
-                                                if (response.data.sampleImageUrl) {
-                                                    setCarImage('https://images.unsplash.com/photo-1550355291-bbee04a92027?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=6');
-                                                }
                                             }
                                             setRevealPrice(true);
                                             setIsLoading(false);

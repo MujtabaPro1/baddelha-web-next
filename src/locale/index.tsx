@@ -167,7 +167,8 @@ const lang = {
         "termsOfService": "Terms & Conditions",
         "legal": "Legal",
         "premiumServicesDesc": "Ensuring fair and transparent competitive market value for your car based on expert inspection",
-        "viewAllCars": "View All Cars"
+        "viewAllCars": "View All Cars",
+        "branchSelected": "Branch selected successfully"
 
                  
        } ,
@@ -339,7 +340,8 @@ const lang = {
         "option": "الخيار",
         "termsOfService": "الشروط والأحكام",
         "legal": "قانوني",
-        "viewAllCars": "عرض جميع السيارات"
+        "viewAllCars": "عرض جميع السيارات",
+        "branchSelected": "تم اختيار الفرع بنجاح"
 
 
        } 
