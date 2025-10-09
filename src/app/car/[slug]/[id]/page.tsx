@@ -54,12 +54,12 @@ export default function Page() {
 
    useEffect(()=>{
       // Extract car ID from URL
-      const id = params.id;
+      const id = params?.id;
       
       if (id) {
          carDetails(id);
       }
-   },[]);
+   },[params?.id]);
 
    const carDetails = (id: any) => {
           axiosInstance.get('/api/1.0/car/car-details/' + id).then((res)=>{

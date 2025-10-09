@@ -105,7 +105,7 @@ const Navbar: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : pathname != '/' ? 'bg-[#3d3d40] py-4' :  'bg-transparent py-4'
+        isScrolled ? 'bg-white shadow-md py-2' : pathname !== '/' ? 'bg-[#3d3d40] py-4' :  'bg-transparent py-4'
       }`}
     >
       <div className="container mx-auto px-4">
@@ -130,7 +130,7 @@ const Navbar: React.FC = () => {
             </div>
             <nav className="hidden md:flex space-x-8">
             
-              <Link href={pathname.includes('buy') ? '/' : '/buy'} className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{pathname.includes('buy') ? lang[languageContent].sell : lang[languageContent].buy}</Link>
+              <Link href={pathname?.includes('buy') ? '/' : '/buy'} className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{pathname?.includes('buy') ? lang[languageContent].sell : lang[languageContent].buy}</Link>
               <Link href="/tradein" className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{lang[languageContent].tradeIn}</Link>
             </nav>
           </div>
