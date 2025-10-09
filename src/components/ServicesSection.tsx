@@ -40,7 +40,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
       <h3 className={`text-xl font-semibold mb-3 ${textColor}`}>{title}</h3>
       <p className={`mb-5 ${textColor} opacity-90`}>{description}</p>
-      <button onClick={() => window.location.href = btnLink} className={`${btnColor} font-medium py-2 px-4 rounded-lg transition hover:opacity-90`}>
+      <button 
+        onClick={() => window.location.href = btnLink} 
+        className={`${btnColor} font-medium py-2 px-4 rounded-lg transition hover:opacity-90`}
+        aria-label={`${btnText} - ${title}`}
+      >
         {btnText}
       </button>
     </div>
@@ -123,10 +127,10 @@ const ServicesSection: React.FC = () => {
   ];
 
   return (
-    <section id="services" className="py-20 bg-gray-50">
+    <section id="services" className="py-20 bg-gray-50" aria-label="Our Services">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <span className="text-[#F7AF37] font-semibold text-sm uppercase tracking-wider">{lang[languageContent].ourServices}</span>
+          <h3 className="text-[#F7AF37] font-semibold text-sm uppercase tracking-wider">{lang[languageContent].ourServices}</h3>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">{lang[languageContent].everythingYouNeedForYourCar}</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             {lang[languageContent].driveMarketProvidesComprehensiveAutomotiveServicesToMakeYourCarBuyingSellingAndOwnershipExperienceSeamlessAndEnjoyable}

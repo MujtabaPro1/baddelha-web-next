@@ -79,6 +79,7 @@ const CarCard: React.FC<{ car: Car }> = ({ car }) => {
         <button 
           onClick={() => setIsLiked(!isLiked)}
           className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition"
+          aria-label={isLiked ? 'Remove from favorites' : 'Add to favorites'}
         >
           <Heart className={`h-5 w-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
         </button>
@@ -118,10 +119,16 @@ const CarCard: React.FC<{ car: Car }> = ({ car }) => {
         </div>
         
         <div className="flex gap-2 mt-5">
-          <button className="bg-gradient-to-r from-amber-500 to-amber-400  text-white font-medium py-2 px-4 rounded-lg w-full transition">
+          <button 
+            className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-medium py-2 px-4 rounded-lg w-full transition"
+            aria-label={`${lang[languageContent].viewDetails} ${car.make} ${car.model}`}
+          >
             {lang[languageContent].viewDetails}
           </button>
-          <button className="border border-blue-800 text-blue-800 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition flex items-center justify-center">
+          <button 
+            className="border border-blue-800 text-blue-800 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition flex items-center justify-center"
+            aria-label={`More information about ${car.make} ${car.model}`}
+          >
             <Info className="h-4 w-4" />
           </button>
         </div>
@@ -163,12 +170,14 @@ const FeaturedCars: React.FC = () => {
             <button 
               onClick={prevSlide}
               className="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition"
+              aria-label="Previous cars"
             >
               <ChevronLeft className="h-5 w-5 text-gray-700" />
             </button>
             <button 
               onClick={nextSlide}
               className="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition"
+              aria-label="Next cars"
             >
               <ChevronRight className="h-5 w-5 text-gray-700" />
             </button>
@@ -193,7 +202,8 @@ const FeaturedCars: React.FC = () => {
           onClick={()=>{
              window.location.href = '/Buy';
           }}
-          className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-semibold py-3 px-6 rounded-lg transition">
+          className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-semibold py-3 px-6 rounded-lg transition"
+          aria-label={lang[languageContent].viewAllCars}>
             {lang[languageContent].viewAllCars}
           </button>
         </div>

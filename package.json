@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "optimize-images": "node scripts/optimize-images.js",
-    "build:prod": "npm run optimize-images && next build --turbopack"
+    "build:prod": "npm run optimize-images && next build --turbopack",
+    "analyze": "node scripts/analyze-bundle.js"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",

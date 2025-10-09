@@ -87,6 +87,7 @@ const Navbar: React.FC = () => {
             <a 
               href="/appointments" 
               className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+              aria-label={language === 'ar' ? 'المواعيد' : 'My Appointments'}
             >
              {language === 'ar' ? 'المواعيد' : 'My Appointments'}
             </a>
@@ -114,7 +115,9 @@ const Navbar: React.FC = () => {
             <div className="flex items-center mr-6">
               <span
               onClick={() => router.push('/')}
-              className={`ml-2 text-xl font-bold ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} cursor-pointer`}>
+              className={`ml-2 text-xl font-bold ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} cursor-pointer`}
+              role="button"
+              aria-label="Go to homepage">
                <Image
                 src={!isScrolled ? '/logo-light.png' : '/logo.png'} 
                 alt="Baddelha Logo" 
@@ -139,13 +142,16 @@ const Navbar: React.FC = () => {
             <div 
             onClick={() => router.push('tel:920032590')}
            dir="ltr"
-            className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-white'}`}>
+            className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-white'}`}
+            role="button"
+            aria-label="Call 920032590">
               <Phone className="h-4 w-4  ml-2 mr-2" />
               <span className="font-medium ml-2 mr-2">920032590</span>
             </div>
             <button
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
               className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37] transition`}
+              aria-label={`Switch to ${language === 'en' ? 'Arabic' : 'English'} language`}
             >
               <Globe className="h-4 w-4 mr-1" />&nbsp;
               <span>{language === 'en' ? 'العربية' : 'English'}</span>
@@ -160,6 +166,8 @@ const Navbar: React.FC = () => {
           <button 
             className="md:hidden text-blue-800"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -177,7 +185,9 @@ const Navbar: React.FC = () => {
             <div 
             dir="ltr"
             onClick={() => router.push('tel:920032590')}
-            className="flex items-center text-[#3d3d40] hover:text-[#f78f37] mt-4 cursor-pointer">
+            className="flex items-center text-[#3d3d40] hover:text-[#f78f37] mt-4 cursor-pointer"
+            role="button"
+            aria-label="Call 920032590">
               <Phone className="h-4 w-4 mr-2" />
               <span className="font-medium ml-2 mr-2">920032590</span>
             </div>

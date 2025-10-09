@@ -34,21 +34,23 @@ const HeroSection: React.FC = () => {
                 behavior: 'smooth'
               });
             }}
-            className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-gradient-to-r from-amber-500 to-amber-400 text-[#FFF] font-semibold px-6 py-3 rounded-lg transition transform hover:scale-105 flex items-center">
+            className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-gradient-to-r from-amber-500 to-amber-400 text-[#FFF] font-semibold px-6 py-3 rounded-lg transition transform hover:scale-105 flex items-center"
+            aria-label={lang[languageContent].getStarted}>
               {lang[languageContent].getStarted} <ArrowRight className="ml-2 h-5 w-5" />
             </button>
             <button
             onClick={() => {
              router.push('/AboutUs');
             }}
-            className="bg-transparent border-2 border-white hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition">
+            className="bg-transparent border-2 border-white hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition"
+            aria-label={lang[languageContent].learnMore}>
               {lang[languageContent].learnMore}
             </button>
           </div>
         </div>
         
         <div className="hidden md:flex justify-center mt-12">
-          <div className="animate-bounce">
+          <div className="animate-bounce" aria-hidden="true">
             <ChevronDown className="h-8 w-8 text-white" />
           </div>
         </div>
