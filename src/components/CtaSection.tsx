@@ -49,7 +49,7 @@ const CtaSection: React.FC = () => {
               </div>
             </div>
             
-            <div className="md:w-1/2 bg-[url('https://images.pexels.com/photos/3849554/pexels-photo-3849554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')] bg-cover bg-center min-h-[300px] md:min-h-0">
+            <div className="md:w-1/2 bg-url bg-cover bg-center min-h-[300px] md:min-h-0">
               <div className="h-full w-full bg-blue-900/30 backdrop-blur-sm p-10 md:p-12 flex items-center justify-center">
                 <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 max-w-md text-center">
                   <h3 className="text-2xl font-bold text-white mb-4">{lang[languageContent].getFreeCarValuation}</h3>
