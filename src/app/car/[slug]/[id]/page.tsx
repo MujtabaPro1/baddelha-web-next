@@ -19,11 +19,13 @@ import {
   FileText,
   ThumbsUp,
   Plus,
+  Info,
 } from 'lucide-react';
 import axiosInstance from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
 import CarBodySvgView from '../../../../components/CarBodyView';
 import { useParams } from 'next/navigation';
+import { Popover, PopoverTrigger, PopoverContent } from '../../../../components/ui/popover';
 
 export default function Page() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -34,6 +36,7 @@ export default function Page() {
   const [images, setImages] = useState<string[]>([]);
   const [inspectionDetails, setInspectionDetails]: any = useState(null);
   const [inspectionSchema, setInspectionSchema]: any = useState(null);
+  const [extraData, setExtraData] = useState<any>(null);
   const params = useParams();
   // These state variables are initialized but not currently used
   // They are kept for future implementation of dynamic data loading
@@ -70,6 +73,20 @@ export default function Page() {
               // Process inspection data if available
               if(_car['Inspection']){
                   _car['InspectionData'] = _car?.Inspection?.[0]?.inspectionJson;
+                  // Sample extraData for testing
+                  const _extraData = _car['InspectionData'].extraData || {
+                    "Bonnet_Replaced?": {
+                      "image": "https://cau-stg-bucket.s3.af-south-1.amazonaws.com/Inspection/file-1760004166963-411775683.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQ3EGRILCC65ZXTFT%2F20251009%2Faf-south-1%2Fs3%2Faws4_request&X-Amz-Date=20251009T100248Z&X-Amz-Expires=86400&X-Amz-Signature=ec4b322224181f4b0fe3ee67772fddaf0e256abff1b7582db8f067745b6d59f9&X-Amz-SignedHeaders=host",
+                      "comment": "Yes it's replaced"
+                    },
+                    "Rear_Bumper_Replaced?": {
+                      "image": "https://cau-stg-bucket.s3.af-south-1.amazonaws.com/Inspection/file-1760004168539-879893810.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQ3EGRILCC65ZXTFT%2F20251009%2Faf-south-1%2Fs3%2Faws4_request&X-Amz-Date=20251009T100249Z&X-Amz-Expires=86400&X-Amz-Signature=98d22e131b9e6945af6c72f544fc542f4f9ffc95942d18c3ae6ef7bf6b64b452&X-Amz-SignedHeaders=host",
+                      "comment": "Yes maybe"
+                    }
+                  };
+                  
+                  setExtraData(_extraData);
+                  
                   _inspectionData.forEach((i) => {
                       i.fields.forEach((_i: any) => {
                           Object.keys(_car['InspectionData']).forEach((cKey) => {
@@ -82,6 +99,12 @@ export default function Page() {
                                   }
                                   else{
                                       _i.value = _car['InspectionData'][cKey] ;
+                                  }
+                                  
+                                  // Check if this field has extra data
+                                  if (_extraData && _extraData[cKey]) {
+                                      _i.hasExtraData = true;
+                                      _i.extraDataKey = cKey;
                                   }
                               }
                           });
@@ -627,18 +650,46 @@ export default function Page() {
                               {inspectionDetails && (
                                 <div>
                                   {Object.keys(inspectionDetails?.inspectionJson).map((category, index) => {
-                                    if(category === 'overview') return null;
+                                    if(category === 'overview' || category === 'extraData') return null;
                                     
                                     return (
                                       <div key={category + index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-4">
                                         <h5 className="font-semibold text-gray-700 mb-2">{category.replace(/_/g, " ")}</h5>
-                                        <div className="text-sm">
+                                        <div className="text-sm flex items-center">
                                           {typeof inspectionDetails?.inspectionJson[category] === 'object' && inspectionDetails?.inspectionJson[category]?.length ? (
                                             <span>{inspectionDetails?.inspectionJson[category][0].value}</span>
                                           ) : typeof inspectionDetails?.inspectionJson[category] === 'object' && !inspectionDetails?.inspectionJson[category]?.length ? (
                                             <span>{inspectionDetails?.inspectionJson[category]?.value || 'N/A'}</span>
                                           ) : (
                                             <span>{inspectionDetails?.inspectionJson[category] === "" ? "N/A" : inspectionDetails?.inspectionJson[category]}</span>
+                                          )}
+                                          
+                                          {/* Check if this field has extra data */}
+                                          {extraData && extraData[category] && (
+                                            <Popover>
+                                              <PopoverTrigger>
+                                                <Info className="h-4 w-4 ml-2 text-blue-500 cursor-pointer" />
+                                              </PopoverTrigger>
+                                              <PopoverContent className="w-80 p-0 bg-white">
+                                                <div className="p-4">
+                                                  <h5 className="font-medium text-gray-900 mb-2">{category.replace(/_/g, " ")} Details</h5>
+                                                  {extraData[category].image && (
+                                                    <div className="mb-3">
+                                                      <img 
+                                                        src={extraData[category].image} 
+                                                        alt={category.replace(/_/g, " ")} 
+                                                        className="w-full h-auto rounded-md"
+                                                      />
+                                                    </div>
+                                                  )}
+                                                  {extraData[category].comment && (
+                                                    <p className="text-sm text-gray-700">
+                                                      <span className="font-medium">Comment:</span> {extraData[category].comment}
+                                                    </p>
+                                                  )}
+                                                </div>
+                                              </PopoverContent>
+                                            </Popover>
                                           )}
                                         </div>
                                       </div>
