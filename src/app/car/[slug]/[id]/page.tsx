@@ -251,7 +251,7 @@ export default function Page() {
                 </div>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-red-500">
-                    SAR {numberWithCommas(car?.bookValue || 114210)}
+                    SAR {numberWithCommas(car?.sellingPrice || car?.bookValue)}
                   </div>
                 </div>
               </div>
@@ -919,7 +919,7 @@ export default function Page() {
             <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-24">
               <div className="mb-6">
                 <div className="text-2xl font-bold text-red-500 mb-1">
-                  SAR {numberWithCommas(car?.bookValue || 114210)}
+                  SAR {numberWithCommas(car?.sellingPrice || car?.bookValue)}
                 </div>
                 <div className="text-sm text-gray-500">
                   Price includes VAT

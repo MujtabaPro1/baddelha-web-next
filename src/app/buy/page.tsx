@@ -435,9 +435,9 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
                 <p className="text-gray-600">{car.bodyType}</p>
               </div>
               <div className="text-right">
-                {car.bookValue && (
+                {car.sellingPrice || car.bookValue && (
                   <div className="text-xl font-bold">
-                    SAR {car.bookValue}
+                    SAR {car.sellingPrice || car.bookValue}
                   </div>
                 )}
               </div>
@@ -555,9 +555,9 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
 
         <div className="flex justify-between items-center mb-4">
             <div className="font-bold text-md text-[#3d3d40]">
-              SAR {numberWithCommas(car.bookValue)}
+              SAR {numberWithCommas(car?.sellingPrice || car.bookValue)}
             </div>
-            <div className="text-xs text-gray-600">Est. SAR {(car.bookValue / 50).toFixed(0).toLocaleString()}/mo</div>
+            <div className="text-xs text-gray-600">Est. SAR {((car?.sellingPrice || car.bookValue) / 50).toFixed(0).toLocaleString()}/mo</div>
           </div>
 
         <div className="flex gap-2">
