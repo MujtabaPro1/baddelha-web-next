@@ -31,7 +31,6 @@ export default function Page() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'inspection'  | 'similar'>('overview');
-  const [showContactForm, setShowContactForm] = useState(false);
   const [car, setCar] = useState<any>(null);
   const [images, setImages] = useState<string[]>([]);
   const [inspectionDetails, setInspectionDetails]: any = useState(null);
