@@ -74,16 +74,7 @@ export default function Page() {
               if(_car['Inspection']){
                   _car['InspectionData'] = _car?.Inspection?.[0]?.inspectionJson;
                   // Sample extraData for testing
-                  const _extraData = _car['InspectionData'].extraData || {
-                    "Bonnet_Replaced?": {
-                      "image": "https://cau-stg-bucket.s3.af-south-1.amazonaws.com/Inspection/file-1760004166963-411775683.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQ3EGRILCC65ZXTFT%2F20251009%2Faf-south-1%2Fs3%2Faws4_request&X-Amz-Date=20251009T100248Z&X-Amz-Expires=86400&X-Amz-Signature=ec4b322224181f4b0fe3ee67772fddaf0e256abff1b7582db8f067745b6d59f9&X-Amz-SignedHeaders=host",
-                      "comment": "Yes it's replaced"
-                    },
-                    "Rear_Bumper_Replaced?": {
-                      "image": "https://cau-stg-bucket.s3.af-south-1.amazonaws.com/Inspection/file-1760004168539-879893810.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQ3EGRILCC65ZXTFT%2F20251009%2Faf-south-1%2Fs3%2Faws4_request&X-Amz-Date=20251009T100249Z&X-Amz-Expires=86400&X-Amz-Signature=98d22e131b9e6945af6c72f544fc542f4f9ffc95942d18c3ae6ef7bf6b64b452&X-Amz-SignedHeaders=host",
-                      "comment": "Yes maybe"
-                    }
-                  };
+                  const _extraData = _car['InspectionData'].extraData || {};
                   
                   setExtraData(_extraData);
                   
@@ -928,13 +919,13 @@ export default function Page() {
 
               <div className="space-y-3">
                 <button 
-                  onClick={() => window.location.href = `/purchase/${car?.id || 1}`}
-                  className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white font-medium py-3 px-6 rounded-lg transition"
-                >
-                  Buy Now
-                </button>
-                <button 
-                  onClick={() => setShowContactForm(!showContactForm)}
+                  onClick={() => {
+                    const carDetails = `${car?.modelYear} ${car?.make} ${car?.model}`;
+                    const carPrice = `SAR ${numberWithCommas(car?.sellingPrice || car?.bookValue)}`;
+                    const currentUrl = window.location.href;
+                    const message = `Hello, I'm interested in the ${carDetails} (${carPrice}) that I found on your website. Can I schedule a test drive? Here's the car link: ${currentUrl}`;
+                    window.location.href = `whatsapp://send?phone=+966920032590&text=${encodeURIComponent(message)}`;
+                  }}
                   className="w-full flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -943,10 +934,12 @@ export default function Page() {
                   WhatsApp
                 </button>
                 <button 
-                  onClick={() => setShowContactForm(!showContactForm)}
-                  className="w-full border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-3 px-6 rounded-lg transition"
+                  onClick={() => {
+                    window.location.href = `tel:+966920032590`;
+                  }}
+                  className="w-full border border-gray-300 bg-gradient-to-r from-amber-500 to-amber-400 text-white font-medium py-3 px-6 rounded-lg transition"
                 >
-                  Contact Seller
+                  I'm Interested
                 </button>
               </div>
             </div>
