@@ -41,3 +41,49 @@ h1, h2, h3, h4, h5, h6 {
 .bg-url {
   background-image: url('/bg.jpeg');
 }
+
+
+
+
+
+.ais-Pagination {
+
+}
+
+
+.ais-Pagination-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.ais-Pagination-item.ais-Pagination-item--page {
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+.ais-Pagination-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  width: 38px;
+  color: #414247;
+  background-color: rgba(65,66,71,.08);
+  border-radius: 4px;
+}
+
+
+.ais-Pagination-item--disabled {
+  opacity: .33;
+}
+.ais-Pagination-item--previousPage , .ais-Pagination-item--nextPage, .ais-Pagination-item--lastPage {
+  background: 0 0;
+  font-size: 32px;
+}
+
+.ais-Pagination-item--selected {
+  background-color: #1F1F1F;
+  color: #fff;
+  font-weight: 700;
+}

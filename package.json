@@ -28,7 +28,10 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.64.0",
     "recharts": "^3.2.1",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "@meilisearch/instant-meilisearch": "^0.25.0",
+    "react-instantsearch": "^7.0.0",
+    "react-instantsearch-core": "^7.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

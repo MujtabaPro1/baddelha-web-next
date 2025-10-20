@@ -2,6 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Grid, List, Heart, MapPin, Fuel, Calendar, Settings, ChevronDown, X, SlidersHorizontal } from 'lucide-react';
 import axiosInstance from '../../services/axiosInstance';
+import { InstantWrapper } from '../../providers/InstantProvider';
+import { useHits, useInstantSearch, useStats } from "react-instantsearch";
+import { PaginationComponent } from '../../components/pagination';
+import { Filters } from '../../components/filters';
+import { SearchBox } from '../../components/search';
 
 const numberWithCommas = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -12,6 +17,31 @@ const bodyTypes = ['All Types', 'Sedan', 'SUV', 'Hatchback', 'Coupe', 'Convertib
 const fuelTypes = ['All Fuel Types', 'Gasoline', 'Hybrid', 'Electric', 'Diesel'];
 const conditions = ['All Conditions', 'New', 'Used', 'Certified Pre-Owned'];
 const locations = ['All Locations', 'Riyadh', 'Jeddah', 'Dammam', 'Mecca', 'Medina'];
+
+
+const CarView = ({viewMode,likedCars,toggleLike}: {viewMode: 'grid' | 'list',likedCars: Set<number>,toggleLike: (carId: number) => void}) => {
+
+  const { hits } = useHits();
+  const { status } = useInstantSearch();
+
+  console.log('hits',hits);
+  console.log('status',status);
+  if(status == 'loading'){
+    return <div>Loading...</div>
+  }
+
+
+  return <>{hits.map((car: any) => (
+    <CarCard 
+      key={car.id} 
+      car={car} 
+      viewMode={viewMode}
+      isLiked={likedCars.has(car.id)}
+      onToggleLike={() => toggleLike(car.id)}
+    />
+  ))}</>
+
+}
 
 function Buy() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -69,7 +99,7 @@ function Buy() {
     }
 
     return  <div className={`lg:w-80 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-    <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
+    <div className="hidden bg-white rounded-xl shadow-md p-6 sticky top-24">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold flex items-center">
           <SlidersHorizontal className="h-5 w-5 mr-2" />
@@ -242,6 +272,7 @@ function Buy() {
         </div>
       </div>
     </div>
+    <Filters/>
   </div>
 
   }
@@ -264,7 +295,22 @@ function Buy() {
 
 
 
+  const Head = () => {
+    const { nbHits } = useStats();
+
+
+    return (
+      <h2 className="text-xl font-semibold">
+      {nbHits} Cars Found
+    </h2>
+    );
+};
+
+
+
+
   return (
+    <InstantWrapper searchIndex={'cars'} >
     <div className="min-h-screen bg-gray-50 pt-[60px]">
       {/* Hero Section */}
       <div className="bg-[#3d3d40] text-white py-16">
@@ -278,16 +324,7 @@ function Buy() {
             </p>
             
             {/* Search Bar */}
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search by make, model, or keyword..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 text-white rounded-xl text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#f78f37] shadow-lg"
-              />
-            </div>
+            <SearchBox />
           </div>
         </div>
       </div>
@@ -295,7 +332,7 @@ function Buy() {
       <div className="container mx-auto px-2 py-4 pb-[200px]">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
-          {FilterView(false)}
+          {FilterView(true)}
 
 
           {/* Main Content */}
@@ -304,9 +341,7 @@ function Buy() {
             <div className="bg-white rounded-xl shadow-md p-6 mb-6">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <h2 className="text-xl font-semibold">
-                    {carList.length} Cars Found
-                  </h2>
+                  <Head/>
                   <button
                     onClick={() => setShowFilters(!showFilters)}
                     className="lg:hidden flex items-center px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
@@ -382,21 +417,15 @@ function Buy() {
                 ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6' 
                 : 'space-y-4'
               }>
-                {carList.map((car: any) => (
-                  <CarCard 
-                    key={car.id} 
-                    car={car} 
-                    viewMode={viewMode}
-                    isLiked={likedCars.has(car.id)}
-                    onToggleLike={() => toggleLike(car.id)}
-                  />
-                ))}
+                <CarView viewMode={viewMode} likedCars={likedCars} toggleLike={toggleLike} />
               </div>
             )}
           </div>
         </div>
+        <PaginationComponent/>
       </div>
     </div>
+    </InstantWrapper>
   );
 }
 
@@ -410,7 +439,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
         <div className="flex flex-col md:flex-row">
           <div className="md:w-80 relative">
             <img 
-              src={car?.coverImage?.url || 'https://miamiconcours.com/wp-content/themes/miami/assets/image/vote-placeholder.png'}
+              src={car?.imageUrl || 'https://miamiconcours.com/wp-content/themes/miami/assets/image/vote-placeholder.png'}
                  alt={`${car.modelYear} ${car.make} ${car.model}`}
               className="w-full h-48 md:h-full object-cover"
               onError={()=>{
@@ -499,7 +528,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative">
         <img 
-          src={car?.coverImage?.url || 'https://miamiconcours.com/wp-content/themes/miami/assets/image/vote-placeholder.png'} 
+          src={car?.imageUrl || 'https://miamiconcours.com/wp-content/themes/miami/assets/image/vote-placeholder.png'} 
           alt={`${car.modelYear} ${car.make} ${car.model}`}
           className="w-full h-[280px] object-cover"
           onError={()=>{
