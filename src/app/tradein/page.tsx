@@ -21,6 +21,8 @@ import {
   Eye
 } from 'lucide-react';
 import axiosInstance from '../../services/axiosInstance';
+import { useLanguage } from '../../contexts/LanguageContext';
+import lang from '../../locale';
 
 interface DesiredVehicle {
   make: string;
@@ -133,6 +135,8 @@ interface AppointmentDetails {
 const TradeIn: React.FC = () => {
   const [clientType, setClientType] = useState<'individual' | 'corporate'>('individual');
   const [currentStep, setCurrentStep] = useState<'desired-car' | 'dealerships' | 'inventory' | 'trade-details' | 'confirmation'>('desired-car');
+  const { language } = useLanguage();
+  const languageContent = language === 'ar' ? 'ar' : 'en';
   
   const [desiredVehicle, setDesiredVehicle] = useState<DesiredVehicle>({
     makeName: '',
@@ -697,10 +701,10 @@ const TradeIn: React.FC = () => {
                   <CheckCircle className="h-12 w-12 text-white" />
                 </div>
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                  🎉 Trade-In Appointment Confirmed!
+                  🎉 {lang[language].tradeInConfirmed}
                 </h1>
                 <p className="text-xl text-gray-600">
-                  Your trade-in appointment has been scheduled with {selectedDealer?.name}
+                  {lang[language].tradeInConfirmedMessage}
                 </p>
               </div>
 
@@ -710,19 +714,19 @@ const TradeIn: React.FC = () => {
                 <div className="bg-gray-50 rounded-xl p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
                     <Car className="h-6 w-6 mr-2 text-red-500" />
-                    Your Trade-In Vehicle
+                    {lang[language].yourTradeInVehicle}
                   </h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Vehicle:</span>
+                      <span className="text-gray-600">{lang[language].vehicle}</span>
                       <span className="font-semibold">{tradeInVehicle.year} {tradeInVehicle.make} {tradeInVehicle.model}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Mileage:</span>
+                      <span className="text-gray-600">{lang[language].mileage}</span>
                       <span className="font-semibold">{parseInt(tradeInVehicle.mileage || '0').toLocaleString()} km</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Condition:</span>
+                      <span className="text-gray-600">{lang[language].condition}</span>
                       <span className="font-semibold capitalize">{tradeInVehicle.condition}</span>
                     </div>
                   </div>
@@ -732,7 +736,7 @@ const TradeIn: React.FC = () => {
                 <div className="bg-blue-50 rounded-xl p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
                     <Car className="h-6 w-6 mr-2 text-blue-500" />
-                    Your New Vehicle
+                    {lang[language].yourNewVehicle}
                   </h3>
                   {selectedCar && (
                     <div className="space-y-3">
@@ -742,19 +746,19 @@ const TradeIn: React.FC = () => {
                         className="w-[120px] h-[120px] m-auto  object-cover rounded-lg mb-3"
                       />
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Vehicle:</span>
+                        <span className="text-gray-600">{lang[language].vehicle}</span>
                         <span className="font-semibold">{selectedCar.year} {selectedCar.make} {selectedCar.model}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Mileage:</span>
+                        <span className="text-gray-600">{lang[language].mileage}</span>
                         <span className="font-semibold">{selectedCar.mileage?.toLocaleString() || '0'} km</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Condition:</span>
+                        <span className="text-gray-600">{lang[language].condition}</span>
                         <span className="font-semibold">{selectedCar.condition}</span>
                       </div>
                       <div className="flex justify-between border-t pt-3">
-                        <span className="text-gray-600">Vehicle Price:</span>
+                        <span className="text-gray-600">{lang[language].vehiclePrice}</span>
                         <span className="font-bold text-blue-600 text-lg">SAR {selectedCar.price?.toLocaleString() || parseInt(selectedCar.sellingPrice || '0').toLocaleString()}</span>
                       </div>
                     </div>
@@ -766,7 +770,7 @@ const TradeIn: React.FC = () => {
               {/* Appointment Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div>
-                  <h3 className="text-xl font-bold mb-4">Appointment Details</h3>
+                  <h3 className="text-xl font-bold mb-4">{lang[language].appointmentDetails}</h3>
                   <div className="space-y-3">
                     <div className="flex items-center">
                       <Building2 className="h-5 w-5 mr-3 text-[#f78f37]" />
@@ -786,7 +790,7 @@ const TradeIn: React.FC = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold mb-4">Contact Information</h3>
+                  <h3 className="text-xl font-bold mb-4">{lang[language].contactInformation}</h3>
                   <div className="space-y-3">
                     <div className="flex items-center">
                       <User className="h-5 w-5 mr-3 text-[#f78f37]" />
@@ -806,27 +810,27 @@ const TradeIn: React.FC = () => {
 
               {/* Next Steps */}
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
-                <h4 className="font-semibold text-yellow-800 mb-3">What Happens Next?</h4>
+                <h4 className="font-semibold text-yellow-800 mb-3">{lang[language].whatHappensNext}</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="flex items-start">
                     <div className="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">1</div>
                     <div>
-                      <p className="font-medium text-yellow-800">Vehicle Inspection</p>
-                      <p className="text-yellow-700 text-sm">We'll inspect your trade-in vehicle</p>
+                      <p className="font-medium text-yellow-800">{lang[language].vehicleInspection}</p>
+                      <p className="text-yellow-700 text-sm">{lang[language].vehicleInspectionDesc}</p>
                     </div>
                   </div>
                   <div className="flex items-start">
                     <div className="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">2</div>
                     <div>
-                      <p className="font-medium text-yellow-800">Final Valuation</p>
-                      <p className="text-yellow-700 text-sm">Confirm the trade-in value</p>
+                      <p className="font-medium text-yellow-800">{lang[language].finalValuation}</p>
+                      <p className="text-yellow-700 text-sm">{lang[language].finalValuationDesc}</p>
                     </div>
                   </div>
                   <div className="flex items-start">
                     <div className="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">3</div>
                     <div>
-                      <p className="font-medium text-yellow-800">Complete Transaction</p>
-                      <p className="text-yellow-700 text-sm">Finalize paperwork and payment</p>
+                      <p className="font-medium text-yellow-800">{lang[language].completeTransaction}</p>
+                      <p className="text-yellow-700 text-sm">{lang[language].completeTransactionDesc}</p>
                     </div>
                   </div>
                 </div>
@@ -837,18 +841,18 @@ const TradeIn: React.FC = () => {
                   onClick={() => window.location.href = '/'}
                   className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white font-semibold py-3 px-8 rounded-lg transition transform hover:scale-105"
                 >
-                  Return Home
+                  {lang[language].returnHome}
                 </button>
                 <button
                   onClick={() => alert('Calendar integration coming soon!')}
                   className="border-2 border-[#f78f37] text-[#f78f37] hover:bg-gradient-to-r from-amber-500 to-amber-400 hover:text-white font-semibold py-3 px-8 rounded-lg transition"
                 >
-                  Add to Calendar
+                  {lang[language].addToCalendar}
                 </button>
               </div>
 
               <p className="text-sm text-gray-500 mt-8 text-center">
-                Confirmation ID: #TI{Date.now().toString().slice(-6)} | A confirmation email has been sent to {personalInfo.email}
+                {lang[language].confirmationId}: #TI{Date.now().toString().slice(-6)} | {lang[language].confirmationEmail}: {personalInfo.email}
               </p>
             </div>
           </div>
@@ -864,14 +868,14 @@ const TradeIn: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">Complete Your Trade-In Details</h1>
-              <p className="text-gray-600">Provide your vehicle information and personal details to finalize the trade-in</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">{lang[language].completeTradeInDetails}</h1>
+              <p className="text-gray-600">{lang[language].provideVehicleInfo}</p>
             </div>
 
             {/* Selected Car Display */}
             {selectedCar && (
               <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-                <h2 className="text-xl font-semibold mb-4">Your Selected Vehicle</h2>
+                <h2 className="text-xl font-semibold mb-4">{lang[language].selectedVehicle}</h2>
                 <div className="flex items-center bg-blue-50 rounded-lg p-4">
                   <img 
                     src={selectedCar.image} 
@@ -904,16 +908,16 @@ const TradeIn: React.FC = () => {
               
               {appointmentStatus.success && (
                 <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-                  <p className="font-medium">Success</p>
-                  <p className="text-sm">Your appointment has been created successfully!</p>
+                  <p className="font-medium">{lang[language].success}</p>
+                  <p className="text-sm">{lang[language].appointmentCreatedSuccessfully}</p>
                 </div>
               )}
               {/* Personal Information */}
               <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-semibold mb-6">Personal Information</h2>
+                <h2 className="text-xl font-semibold mb-6">{lang[language].personalInformation}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].firstName}</label>
                     <input
                       type="text"
                       required
@@ -924,7 +928,7 @@ const TradeIn: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].lastName}</label>
                     <input
                       type="text"
                       required
@@ -935,7 +939,7 @@ const TradeIn: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].emailAddress}</label>
                     <input
                       type="email"
                       required
@@ -946,7 +950,7 @@ const TradeIn: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].phoneNumber}</label>
                     <input
                       type="tel"
                       required
@@ -961,10 +965,10 @@ const TradeIn: React.FC = () => {
 
               {/* Trade-In Vehicle Information */}
               <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-semibold mb-6">Your Trade-In Vehicle</h2>
+                <h2 className="text-xl font-semibold mb-6">{lang[language].yourTradeInVehicle}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Make *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].make}</label>
                     <div className="relative">
                       <select
                         required
@@ -981,7 +985,7 @@ const TradeIn: React.FC = () => {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent appearance-none"
                         disabled={loading.makes}
                       >
-                        <option value="">Select Make</option>
+                        <option value="">{lang[language].selectMake}</option>
                         {makes?.map(makeItem => (
                           <option key={makeItem.id} value={makeItem.id}>{makeItem.name}</option>
                         ))}
@@ -1001,7 +1005,7 @@ const TradeIn: React.FC = () => {
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Model *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].model}</label>
                     <div className="relative">
                       <select
                         required
@@ -1016,7 +1020,7 @@ const TradeIn: React.FC = () => {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent appearance-none"
                         disabled={loading.models || !tradeInVehicle.makeId}
                       >
-                        <option value="">Select Model</option>
+                        <option value="">{lang[language].selectModel}</option>
                         {models.map(modelItem => (
                           <option key={modelItem.id} value={modelItem.id}>{modelItem.name}</option>
                         ))}
@@ -1036,7 +1040,7 @@ const TradeIn: React.FC = () => {
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Year *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].year}</label>
                     <div className="relative">
                       <select
                         required
@@ -1044,7 +1048,7 @@ const TradeIn: React.FC = () => {
                         onChange={(e) => setTradeInVehicle({...tradeInVehicle, year: e.target.value})}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent appearance-none"
                       >
-                        <option value="">Select Year</option>
+                        <option value="">{lang[language].selectYear}</option>
                         {Array.from({ length: 20 }, (_, i) => (
                           <option key={i} value={2024 - i}>{2024 - i}</option>
                         ))}
@@ -1060,7 +1064,7 @@ const TradeIn: React.FC = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Mileage (km) *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].mileage}</label>
                     <input
                       type="number"
                       required
@@ -1078,7 +1082,7 @@ const TradeIn: React.FC = () => {
                       onChange={(e) => setTradeInVehicle({...tradeInVehicle, condition: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
                     >
-                      <option value="">Select Condition</option>
+                      <option value="">{lang[language].selectCondition}</option>
                       <option value="excellent">Excellent</option>
                       <option value="good">Good</option>
                       <option value="fair">Fair</option>
@@ -1094,7 +1098,7 @@ const TradeIn: React.FC = () => {
                       >
                         <div className="flex items-center">
                           <Calculator className="h-5 w-5 mr-2" />
-                          <span className="font-medium">Enter Your Trade-In Value</span>
+                          <span className="font-medium">{lang[language].enterYourTradeInValue}</span>
                         </div>
                         <div className="flex items-center">
                           <input
@@ -1115,10 +1119,10 @@ const TradeIn: React.FC = () => {
 
               {/* Appointment Scheduling */}
               <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-semibold mb-6">Schedule Appointment</h2>
+                <h2 className="text-xl font-semibold mb-6">{lang[language].scheduleAppointment}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Date *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].preferredDate}</label>
                     <input
                       type="date"
                       required
@@ -1129,14 +1133,14 @@ const TradeIn: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Time *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].preferredTime}</label>
                     <select
                       required
                       value={appointmentDetails.time}
                       onChange={(e) => setAppointmentDetails({...appointmentDetails, time: e.target.value})}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
                     >
-                      <option value="">Select Time</option>
+                      <option value="">{lang[language].selectTime}</option>
                       <option value="9:00 AM">9:00 AM</option>
                       <option value="10:00 AM">10:00 AM</option>
                       <option value="11:00 AM">11:00 AM</option>
@@ -1158,7 +1162,7 @@ const TradeIn: React.FC = () => {
                   className="flex-1 border-2 border-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 transition"
                 >
                   <ArrowLeft className="inline-block mr-2 h-5 w-5" />
-                  Back to Inventory
+                  {lang[language].backToInventory}
                 </button>
                 <button
                   type="submit"
@@ -1168,11 +1172,11 @@ const TradeIn: React.FC = () => {
                   {appointmentStatus.loading ? (
                     <>
                       <span className="animate-spin h-5 w-5 mr-3 border-2 border-white border-t-transparent rounded-full"></span>
-                      Creating Appointment...
+                      {lang[language].creatingAppointment}
                     </>
                   ) : (
                     <>
-                      Schedule Appointment
+                      {lang[language].scheduleAppointment}
                       <ArrowRight className="inline-block ml-2 h-5 w-5" />
                     </>
                   )}
@@ -1196,9 +1200,9 @@ const TradeIn: React.FC = () => {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                {selectedDealer?.name} - Available Inventory
+                {selectedDealer?.name} - {lang[language].availableInventory}
               </h1>
-              <p className="text-gray-600">Choose the vehicle you'd like to purchase with your trade-in</p>
+              <p className="text-gray-600">{lang[language].chooseVehicle}</p>
             </div>
 
             {/* Dealer Info */}
@@ -1215,7 +1219,7 @@ const TradeIn: React.FC = () => {
                     <div className="flex items-center mt-1">
                       <Star className="h-4 w-4 text-yellow-400 fill-yellow-400 mr-1" />
                       <span className="text-sm font-medium">{selectedDealer?.rating || 4.5}</span>
-                      <span className="text-sm text-gray-500 ml-1">({selectedDealer?.reviews || 0} reviews)</span>
+                      <span className="text-sm text-gray-500 ml-1">({selectedDealer?.reviews || 0} {lang[language].reviews})</span>
                     </div>
                   </div>
                 </div>
@@ -1231,12 +1235,12 @@ const TradeIn: React.FC = () => {
             {loading.dealerCars ? (
               <div className="flex justify-center items-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#f78f37]"></div>
-                <span className="ml-3 text-lg text-gray-600">Loading inventory...</span>
+                <span className="ml-3 text-lg text-gray-600">{lang[language].loadingInventory}</span>
               </div>
             ) : error.dealerCars ? (
               <div className="text-center py-12 bg-red-50 rounded-xl">
                 <Car className="h-16 w-16 text-red-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-red-600 mb-2">Failed to load inventory</h3>
+                <h3 className="text-xl font-semibold text-red-600 mb-2">{lang[language].failedToLoadInventory}</h3>
                 <p className="text-gray-600">{error.dealerCars}</p>
                 <button 
                   onClick={() => handleDealershipSelect(selectedDealership)}
@@ -1310,7 +1314,7 @@ const TradeIn: React.FC = () => {
                         onClick={() => handleCarSelect(car)}
                         className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white font-semibold py-2 px-4 rounded-lg transition transform hover:scale-105"
                       >
-                        Select This Car
+                        {lang[language].selectThisCar}
                       </button>
                       <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition">
                         <Eye className="h-4 w-4" />
@@ -1325,8 +1329,8 @@ const TradeIn: React.FC = () => {
             {inventory.length === 0 && !loading.dealerCars && !error.dealerCars && (
               <div className="text-center py-12">
                 <Car className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">No vehicles available</h3>
-                <p className="text-gray-500">This dealership doesn't have any vehicles matching your criteria</p>
+                <h3 className="text-xl font-semibold text-gray-600 mb-2">{lang[language].noVehiclesAvailable}</h3>
+                <p className="text-gray-500">{lang[language].noVehiclesAvailableDescription}</p>
               </div>
             )}
 
@@ -1335,7 +1339,7 @@ const TradeIn: React.FC = () => {
                 onClick={() => setCurrentStep('dealerships')}
                 className="text-gray-600 hover:text-gray-800 font-medium transition"
               >
-                ← Back to Dealership Selection
+                {lang[language].backToDealershipSelection}
               </button>
             </div>
           </div>
@@ -1351,19 +1355,19 @@ const TradeIn: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">Choose Your Preferred Dealership</h1>
-              <p className="text-gray-600">Select the dealership where you'd like to complete your trade-in</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">{lang[language].chooseYourPreferredDealership}</h1>
+              <p className="text-gray-600">{lang[language].selectTheDealershipWhereYoudLikeToCompleteYourTradeIn}</p>
             </div>
 
             {loading.dealerships ? (
               <div className="flex justify-center items-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#f78f37]"></div>
-                <span className="ml-3 text-lg text-gray-600">Loading dealerships...</span>
+                <span className="ml-3 text-lg text-gray-600">{lang[language].loadingDealerships}</span>
               </div>
             ) : error.dealerships ? (
               <div className="text-center py-12 bg-red-50 rounded-xl">
                 <Building2 className="h-16 w-16 text-red-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-red-600 mb-2">Failed to load dealerships</h3>
+                <h3 className="text-xl font-semibold text-red-600 mb-2">{lang[language].failedToLoadDealerships}</h3>
                 <p className="text-gray-600">{error.dealerships}</p>
                 <button 
                   onClick={() => window.location.reload()}
@@ -1375,8 +1379,8 @@ const TradeIn: React.FC = () => {
             ) : dealerships.length === 0 ? (
               <div className="text-center py-12">
                 <Building2 className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">No dealerships available</h3>
-                <p className="text-gray-500">Please check back later for available dealerships</p>
+                <h3 className="text-xl font-semibold text-gray-600 mb-2">{lang[language].noDealershipsAvailable}</h3>
+                <p className="text-gray-500">{lang[language].noDealershipsAvailableDescription}</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
@@ -1409,15 +1413,15 @@ const TradeIn: React.FC = () => {
                       </div>
                       <div className="flex items-center text-sm text-gray-600">
                         <Clock className="h-4 w-4 mr-2" />
-                        <span>Processing: {dealership.processingTime}</span>
+                        <span>{lang[language].processingTime}: {dealership.processingTime}</span>
                       </div>
                       <div className="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center text-sm text-gray-600">
-                        <span className="font-semibold text-green-600">Trade-in Bonus: SAR {dealership.tradeInBonus}</span>
+                        <span className="font-semibold text-green-600">{lang[language].tradeInBonus}: SAR {dealership.tradeInBonus}</span>
                       </div>
                     </div>
 
                     <div className="mb-4">
-                      <h4 className="font-semibold text-sm mb-2">Specialties:</h4>
+                      <h4 className="font-semibold text-sm mb-2">{lang[language].specialties}:</h4>
                       <div className="flex flex-wrap gap-1">
                         {dealership.specialties?.map((specialty, index) => (
                           <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
@@ -1425,7 +1429,7 @@ const TradeIn: React.FC = () => {
                           </span>
                         )) || (
                           <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                            Luxury Cars
+                            {lang[language].luxuryCars}
                           </span>
                         )}
                       </div>
@@ -1436,7 +1440,7 @@ const TradeIn: React.FC = () => {
                       onClick={() => handleDealershipSelect(dealership.id)}
                       className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white font-semibold py-3 px-6 rounded-lg transition transform hover:scale-105"
                     >
-                      View Inventory
+                      {lang[language].viewInventory}
                     </button>
                   </div>
                 </div>
@@ -1449,7 +1453,7 @@ const TradeIn: React.FC = () => {
                 onClick={() => setCurrentStep('desired-car')}
                 className="text-gray-600 hover:text-gray-800 font-medium transition"
               >
-                ← Back to Car Selection
+                {lang[language].backToCarSelection}
               </button>
             </div>
           </div>
@@ -1465,13 +1469,13 @@ const TradeIn: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Trade-In Your Vehicle</h1>
-            <p className="text-xl text-gray-600">Find your perfect upgrade and get the best value for your current vehicle</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">{lang[language].tradeInYourVehicle}</h1>
+            <p className="text-xl text-gray-600">{lang[language].tradeInYourVehicleDescription}</p>
           </div>
 
           {/* Client Type Selection */}
           <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Select Client Type</h2>
+            <h2 className="text-xl font-semibold mb-4">{lang[language].selectClientType}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => setClientType('individual')}
@@ -1487,10 +1491,10 @@ const TradeIn: React.FC = () => {
                 <h3 className={`font-semibold text-lg ${
                   clientType === 'individual' ? 'text-[#f78f37]' : 'text-gray-700'
                 }`}>
-                  Individual
+                  {lang[language].individual}
                 </h3>
                 <p className="text-gray-600 text-sm mt-2">
-                  Personal vehicle trade-in for individual customers
+                  {lang[language].personalVehicleTradeInForIndividualCustomers}
                 </p>
               </button>
 
@@ -1508,10 +1512,10 @@ const TradeIn: React.FC = () => {
                 <h3 className={`font-semibold text-lg ${
                   clientType === 'corporate' ? 'text-[#f78f37]' : 'text-gray-700'
                 }`}>
-                  Corporate
+                  {lang[language].corporate}
                 </h3>
                 <p className="text-gray-600 text-sm mt-2">
-                  Fleet or multiple vehicle trade-in for businesses
+                  {lang[language].personalVehicleTradeInForCorporateCustomers}
                 </p>
               </button>
             </div>
@@ -1520,11 +1524,11 @@ const TradeIn: React.FC = () => {
           {/* Desired Vehicle Form */}
           <form onSubmit={handleDesiredCarSubmit}>
             <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-              <h2 className="text-xl font-semibold mb-6">What car are you looking for?</h2>
+              <h2 className="text-xl font-semibold mb-6">{lang[language].whatCarAreYouLookingFor}</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Make *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].make}</label>
                   <select
                     required
                     value={desiredVehicle.make}
@@ -1535,7 +1539,7 @@ const TradeIn: React.FC = () => {
                     }}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
                   >
-                    <option value="">Select Make</option>
+                    <option value="">{lang[language].selectMake}</option>
                     {makes?.map(make => (
                       <option key={make.id} value={make.id}>{make.name}</option>
                     ))}
@@ -1543,7 +1547,7 @@ const TradeIn: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Model *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].model}</label>
                   <select
                     required
                     value={desiredVehicle.model}
@@ -1552,7 +1556,7 @@ const TradeIn: React.FC = () => {
                     })}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
                   >
-                    <option value="">Select Model</option>
+                    <option value="">{lang[language].selectModel}</option>
                     {models?.map(model => (
                       <option key={model.id} value={model.id}>{model.name}</option>
                     ))}
@@ -1561,14 +1565,14 @@ const TradeIn: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Year *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].year}</label>
                   <select
                     required
                     value={desiredVehicle.year}
                     onChange={(e) => setDesiredVehicle({...desiredVehicle, year: e.target.value})}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
                   >
-                    <option value="">Select Year</option>
+                    <option value="">{lang[language].selectYear}</option>
                     {Array.from({ length: 50 }, (_, i) => (
                       <option key={i} value={2024 - i}>{2024 - i}</option>
                     ))}
@@ -1578,7 +1582,7 @@ const TradeIn: React.FC = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Max Price (SAR)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].maxPrice}</label>
                   <input
                     type="number"
                     value={desiredVehicle.maxPrice}
@@ -1628,7 +1632,7 @@ const TradeIn: React.FC = () => {
                 type="submit"
                 className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white font-semibold py-4 px-12 rounded-lg transition transform hover:scale-105 text-lg"
               >
-                Find Dealerships
+                {lang[language].findDealerships}
                 <ArrowRight className="inline-block ml-2 h-5 w-5" />
               </button>
             </div>
@@ -1636,28 +1640,28 @@ const TradeIn: React.FC = () => {
 
           {/* Benefits Section */}
           <div className="mt-12 bg-white rounded-xl shadow-md p-8">
-            <h2 className="text-2xl font-bold text-center mb-8">Why Choose Our Trade-In Service?</h2>
+            <h2 className="text-2xl font-bold text-center mb-8">{lang[language].whyChooseOurTradeInService}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Calculator className="h-8 w-8 text-blue-600" />
                 </div>
-                <h3 className="font-semibold text-lg mb-2">Fair Market Value</h3>
-                <p className="text-gray-600">Get competitive pricing based on current market conditions and vehicle condition</p>
+                <h3 className="font-semibold text-lg mb-2">{lang[language].fairMarketValue}</h3>
+                <p className="text-gray-600">{lang[language].getCompetitivePricing}</p>
               </div>
               <div className="text-center">
                 <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Zap className="h-8 w-8 text-green-600" />
                 </div>
-                <h3 className="font-semibold text-lg mb-2">Quick Process</h3>
-                <p className="text-gray-600">Fast evaluation and same-day payment options available</p>
+                <h3 className="font-semibold text-lg mb-2">{lang[language].quickProcess}</h3>
+                <p className="text-gray-600">{lang[language].quickProcessDescription}</p>
               </div>
               <div className="text-center">
                 <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Shield className="h-8 w-8 text-purple-600" />
                 </div>
-                <h3 className="font-semibold text-lg mb-2">Hassle-Free</h3>
-                <p className="text-gray-600">We handle all paperwork and documentation for you</p>
+                <h3 className="font-semibold text-lg mb-2">{lang[language].hassleFree}</h3>
+                <p className="text-gray-600">{lang[language].hassleFreeDescription}</p>
               </div>
             </div>
           </div>
