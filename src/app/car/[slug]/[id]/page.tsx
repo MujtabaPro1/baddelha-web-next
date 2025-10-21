@@ -40,7 +40,6 @@ export default function Page() {
   const [extraData, setExtraData] = useState<any>(null);
   const params = useParams();
   const { language } = useLanguage();
-  const languageContent = language === 'ar' ? 'ar' : 'en';
   
   
   // These state variables are initialized but not currently used

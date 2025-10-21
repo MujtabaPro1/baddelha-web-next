@@ -136,7 +136,6 @@ const TradeIn: React.FC = () => {
   const [clientType, setClientType] = useState<'individual' | 'corporate'>('individual');
   const [currentStep, setCurrentStep] = useState<'desired-car' | 'dealerships' | 'inventory' | 'trade-details' | 'confirmation'>('desired-car');
   const { language } = useLanguage();
-  const languageContent = language === 'ar' ? 'ar' : 'en';
   
   const [desiredVehicle, setDesiredVehicle] = useState<DesiredVehicle>({
     makeName: '',

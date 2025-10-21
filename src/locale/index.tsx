@@ -57,6 +57,7 @@ const lang = {
         "details": "Details",
         "viewDetails": "View Details",
         "featured": "Featured",
+        "convenienceFeatures": "Convenience Features",
         "transmission": "Transmission",
         "fuel": "Fuel",
         "mileage": "Mileage",
@@ -580,8 +581,9 @@ const lang = {
         "personalVehicleTradeInForIndividualCustomers": "استبدال السيارة الشخصية للعملاء الأفراد",
         "personalVehicleTradeInForCorporateCustomers": "استبدال السيارة الشخصية للعملاء الشركات",
         "getCompetitivePricing": "احصل على أفضل قيمة لسيارتك الحالية",
-        "quickProcessDescription": "Fast evaluation and same-day payment options available",
-        "hassleFreeDescription": "We handle all paperwork and documentation for you",
+        "quickProcessDescription": "تقييم سريع وخيارات الدفع في نفس اليوم متاحة",
+        "hassleFreeDescription": "نقوم بجميع الإجراءات والأوراق نيابةً عنك",
+        "convenienceFeatures": "مزايا الراحة"
          
        } 
     }
