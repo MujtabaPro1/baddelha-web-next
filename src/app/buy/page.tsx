@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Grid, List, Heart, MapPin, Fuel, Calendar, Settings, ChevronDown, X, SlidersHorizontal } from 'lucide-react';
 import axiosInstance from '../../services/axiosInstance';
+import { useLanguage } from '../../contexts/LanguageContext';
+import lang from '../../locale';
 
 const numberWithCommas = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -404,6 +406,10 @@ function Buy() {
 
 const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggleLike: () => void }> = ({ car, viewMode, isLiked, onToggleLike }) => {
   console.log('CarCard');
+
+  const { language } = useLanguage();
+  const languageContent = language === 'ar' ? 'ar' : 'en';
+
   if (viewMode === 'list') {
     return (
       <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
@@ -445,28 +451,28 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm h-[60px]">
               <div className="flex items-start flex-col text-gray-600">
-                <p className="font-medium">Mileage &nbsp;</p>
+                <p className="font-medium">{lang[languageContent].mileage} &nbsp;</p>
                 <div className="flex items-center">
                   <Settings className="h-4 w-4 mr-2 text-[#f78f37]" />
                   <span className="font-bold">{car.exactMileage || '0'} km</span>
                 </div>
               </div>
               <div className="flex items-start flex-col text-gray-600">
-                <p className="font-medium">Fuel Type &nbsp;</p>
+                <p className="font-medium">{lang[languageContent].fuelType} &nbsp;</p>
                 <div className="flex items-center">
                   <Fuel className="h-4 w-4 mr-2 text-[#f78f37]" />
                   <span className="font-bold">{car.fuelType || 'Petrol'}</span>
                 </div>
               </div>
               <div className="flex items-start flex-col text-gray-600">
-                <p className="font-medium">Transmission &nbsp;</p>
+                <p className="font-medium">{lang[languageContent].transmission} &nbsp;</p>
                 <div className="flex items-center">
                   <Calendar className="h-4 w-4 mr-2 text-[#f78f37]" />
                   <span className="font-bold">{car.transmission || 'Automatic'}</span>
                 </div>
               </div>
               <div className="flex flex-col items-start text-gray-600">
-                <p className="font-medium">Location &nbsp;</p>
+                <p className="font-medium">{lang[languageContent].location} &nbsp;</p>
                 <div className="flex items-center">
                   <MapPin className="h-4 w-4 mr-2 text-[#f78f37]" />
                   <span className="font-bold">{car.location || 'Saudi Arabia'}</span>
@@ -476,17 +482,14 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
 
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600">
-                Sold by: <span className="font-medium">{car?.organizationId ? 'Company' : 'Private'}</span>
+                {lang[languageContent].soldBy}: <span className="font-medium">{car?.organizationId ? 'Company' : 'Private'}</span>
               </div>
               <div className="flex gap-2">
                 <a
                 href={`/car/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
                 className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white px-4 py-2 rounded-lg transition text-sm">
-                  View Details
+                  {lang[languageContent].viewDetails}
                 </a>
-                {/* <button className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white px-4 py-2 rounded-lg transition text-sm">
-                  Contact Dealer
-                </button> */}
               </div>
             </div>
           </div>
@@ -549,7 +552,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
        
 
         <div className="text-xs text-gray-600 mb-4">
-          Sold by: <span className="font-medium"><span className="font-medium">{car?.organizationId ? 'Company' : 'Private'}</span></span>
+          {lang[languageContent].soldBy}: <span className="font-medium"><span className="font-medium">{car?.organizationId ? 'Company' : 'Private'}</span></span>
         </div>
         
 
@@ -564,11 +567,8 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
           <a 
           href={`/car/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
            className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white py-2 px-3 rounded-lg transition text-sm text-center">
-            View Details
+         {lang[languageContent].viewDetails}
           </a>
-          {/* <a href="#" className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white py-2 px-3 rounded-lg transition text-sm text-center">
-            Inquire
-          </a> */}
         </div>
       </div>
     </div>
