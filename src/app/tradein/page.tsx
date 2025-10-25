@@ -895,7 +895,6 @@ const TradeIn: React.FC = () => {
                 </div>
               </div>
             )}
-
             <form onSubmit={(e)=>{
                     if(!desiredVehicle.make || !desiredVehicle.model || !desiredVehicle.year || !desiredVehicle.maxPrice || !desiredVehicle.fuelType || !desiredVehicle.transmission){
                       e.preventDefault();
