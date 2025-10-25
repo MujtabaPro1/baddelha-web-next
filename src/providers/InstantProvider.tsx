@@ -8,7 +8,7 @@ export const InstantWrapper = (props: any) => {
 
   //http://ec2-15-184-133-49.me-south-1.compute.amazonaws.com:7700/indexes/cars/search
   //http://127.0.0.1 baddelha
-  const searchClient = instantMeiliSearch('ec2-15-184-133-49.me-south-1.compute.amazonaws.com:7700', 'cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg', {
+  const searchClient: any = instantMeiliSearch('ec2-15-184-133-49.me-south-1.compute.amazonaws.com:7700', 'cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg', {
     finitePagination: true,
     primaryKey: "id",
     placeholderSearch: true,

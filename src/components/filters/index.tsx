@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { RefinementList, useRefinementList, useClearRefinements } from "react-instantsearch";
 import { useRouter } from "next/navigation";
-import { Car, ChevronDown, ChevronRight, VariableIcon, VectorSquareIcon } from "lucide-react";
+import { Car, ChevronDown, ChevronRight} from "lucide-react";
 
 export const Filters = ({ isLanding = false }) => {
   const { refine: clearRefinements } = useClearRefinements();

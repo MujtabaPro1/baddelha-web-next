@@ -44,7 +44,6 @@ const CarView = ({viewMode,likedCars,toggleLike}: {viewMode: 'grid' | 'list',lik
 }
 
 function Buy() {
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedMake, setSelectedMake] = useState('All Makes');
   const [selectedBodyType, setSelectedBodyType] = useState('All Types');
   const [selectedFuelType, setSelectedFuelType] = useState('All Fuel Types');
@@ -78,7 +77,6 @@ function Buy() {
     setPriceRange([0, 300000]);
     setYearRange([2020, 2024]);
     setMileageRange([0, 50000]);
-    setSearchTerm('');
   };
 
   const activeFiltersCount = [
