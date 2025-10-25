@@ -146,8 +146,8 @@ const TradeIn: React.FC = () => {
     model: '',
     year: '',
     maxPrice: '',
-    fuelType: '',
-    transmission: ''
+    fuelType: 'Petrol',
+    transmission: 'Automatic'
   });
 
   const [selectedDealership, setSelectedDealership] = useState<string>('');
@@ -640,7 +640,7 @@ const TradeIn: React.FC = () => {
         firstName: personalInfo.firstName,
         lastName: personalInfo.lastName,
         email: personalInfo.email,
-        phone:'+' + personalInfo.phone,
+        phone: '+966' + personalInfo.phone,
         carDetails: {
           dealershipCarId: selectedCar.id,
           make: selectedCar.make,
@@ -752,10 +752,13 @@ const TradeIn: React.FC = () => {
                         <span className="text-gray-600">{lang[language].mileage}</span>
                         <span className="font-semibold">{selectedCar.mileage?.toLocaleString() || '0'} km</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">{lang[language].condition}</span>
-                        <span className="font-semibold">{selectedCar.condition}</span>
-                      </div>
+                      {/* Only show condition for used cars */}
+                      {selectedCar.condition !== 'New' && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">{lang[language].condition}</span>
+                          <span className="font-semibold">{selectedCar.condition}</span>
+                        </div>
+                      )}
                       <div className="flex justify-between border-t pt-3">
                         <span className="text-gray-600">{lang[language].vehiclePrice}</span>
                         <span className="font-bold text-blue-600 text-lg">SAR {selectedCar.price?.toLocaleString() || parseInt(selectedCar.sellingPrice || '0').toLocaleString()}</span>
@@ -957,15 +960,24 @@ const TradeIn: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].phoneNumber}</label>
-                    <input
-                      type="tel"
-                      required
-                      value={personalInfo.phone}
-                      onChange={(e) => setPersonalInfo({...personalInfo, phone: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
-                      placeholder="+966 50 123 4567"
-                    />
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{lang[language].phoneNumber} *</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <span className="text-gray-500">+966</span>
+                      </div>
+                      <input
+                        type="tel"
+                        required
+                        value={personalInfo.phone}
+                        onChange={(e) => {
+                          // Only allow digits and limit to appropriate length
+                          const value = e.target.value.replace(/\D/g, '');
+                          setPersonalInfo({...personalInfo, phone: value});
+                        }}
+                        className="w-full pl-16 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
+                        placeholder="5XXXXXXXX"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1098,32 +1110,7 @@ const TradeIn: React.FC = () => {
                   </div>
                 </div>
 
-                {tradeInVehicle.make && tradeInVehicle.model && tradeInVehicle.year && tradeInVehicle.mileage && tradeInVehicle.condition && (
-                  <div className="mt-4">
-                      <div 
-                        className="w-full p-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl flex items-center justify-between"
-                      >
-                        <div className="flex items-center">
-                          <Calculator className="h-5 w-5 mr-2" />
-                          <span className="font-medium">{lang[language].enterYourTradeInValue}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            placeholder="Enter car price"
-                            required
-                            value={tradeInVehicle.estimatedValue}
-                            style={{
-                              color: 'black'
-                            }}
-                            className="w-full px-3 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-dark"
-                            onChange={(e) => setTradeInVehicle({...tradeInVehicle, estimatedValue: parseInt(e.target.value) || 0})}
-                          />
-                          <ArrowRight className="h-5 w-5 ml-2" />
-                        </div>
-                      </div>
-                  </div>
-                )}
+                {/* Trade-in value is now calculated automatically by AI pricing algorithm */}
               </div>
 
               {/* Appointment Scheduling */}
@@ -1165,14 +1152,14 @@ const TradeIn: React.FC = () => {
               </div>
 
               <div className="flex gap-4">
-                <button
+                {desiredVehicle.make && <button
                   type="button"
                   onClick={() => setCurrentStep('inventory')}
                   className="flex-1 border-2 border-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-50 transition"
                 >
                   <ArrowLeft className="inline-block mr-2 h-5 w-5" />
                   {lang[language].backToInventory}
-                </button>
+                </button>}
                 <button
                   type="submit"
                   disabled={appointmentStatus.loading}

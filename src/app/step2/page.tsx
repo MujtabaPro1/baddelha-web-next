@@ -13,9 +13,9 @@ const Step2 = () => {
     const [engineSizeName, setEngineSizeName] = useState('');
     const [mileage, setMileage] = useState('');
     const [mileageName, setMileageName] = useState('');
-    const [option, setOption] = useState('');
-    const [paint, setPaint] = useState('');
-    const [gccSpecs, setGccSpecs] = useState('');
+    const [option, setOption] = useState('Basic');
+    const [paint, setPaint] = useState('Original paint');
+    const [gccSpecs, setGccSpecs] = useState('GCC Specs');
 
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
