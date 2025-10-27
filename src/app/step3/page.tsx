@@ -412,7 +412,7 @@ const Step3 = () => {
                             <h4 className="text-sm font-medium text-gray-700 mb-2">{language === "en" ? "Your Car Details" : "تفاصيل سيارتك"}</h4>
                             <div className="flex items-center">
                                 <div className="w-1/4 mr-3">
-                                    <div className="bg-gray-100 rounded-lg h-20 flex items-center justify-center">
+                                    <div className="rounded-lg h-20 flex items-center justify-center">
                                         {carLogo && <img src={carLogo} alt="Car Logo" className="w-16 h-16 object-contain" />}
                                     </div>
                                 </div>
