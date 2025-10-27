@@ -164,7 +164,7 @@ const Navbar: React.FC = () => {
           </div>
           
           <button 
-            className="md:hidden text-blue-800"
+            className={`md:hidden ${isScrolled ? 'text-[#3d3d40]' : 'text-white'}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
@@ -176,7 +176,7 @@ const Navbar: React.FC = () => {
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg absolute top-full left-0 right-0 p-4 transition-transform">
+        <div className={`md:hidden bg-white shadow-lg absolute top-full left-0 right-0 p-4 transition-transform`}>
           <nav className="flex flex-col space-y-4 py-4">
             <Link href="/buy" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'شراء' : 'Buy'}</Link>
             <Link href="/tradein" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'استبدال' : 'Trade-In'}</Link>
@@ -198,10 +198,10 @@ const Navbar: React.FC = () => {
               <Globe className="h-4 w-4 mr-1" />
               <span>{language === 'en' ? 'العربية' : 'English'}</span>
             </button>
-            {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-blue-800 hover:bg-blue-700 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-gradient-to-r from-amber-500 to-amber-400 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
               {language === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
             </button>}
-            {isAuthenticated && <button onClick={handleLogout} className="mt-4 w-full bg-blue-800 hover:bg-blue-700 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            {isAuthenticated && <button onClick={handleLogout} className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-gradient-to-r from-amber-500 to-amber-400 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
               {language === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}
             </button>}
           </div>
