@@ -27,7 +27,7 @@ const Step3 = () => {
     const [showPricePopup, setShowPricePopup] = useState(false);
     const [expectedPrice, setExpectedPrice] = useState<number | null>(null);
     const router = useRouter();
-    const [carLogo,setCarLogo] = useState(null);
+    const [carLogo,setCarLogo] = useState<string | null>(null);
 
     // State for branches from API
     const [branches, setBranches] = useState<{id: string; name: string; address: string, enName: string, arName: string, image?: string, location?: string, distance?: string}[]>([]);
@@ -52,7 +52,7 @@ const Step3 = () => {
     };
     
     const [branchTimings, setBranchTimings] = useState<DaySchedule[]>([]);
-    const [loadingTimings, setLoadingTimings] = useState(null);
+    const [loadingTimings, setLoadingTimings] = useState<boolean | null>(null);
     const [timingsError, setTimingsError] = useState('');
     
     // State for Step2 data

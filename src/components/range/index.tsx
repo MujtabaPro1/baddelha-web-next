@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useRange } from "react-instantsearch";
 import { RangeInput } from "react-instantsearch";
 import Slider from 'rc-slider';
@@ -26,7 +25,7 @@ export function RangeSlider(props: any) {
     const { min, max, precision }: any = range;
     console.log("Min/Max extracted:", { min, max, precision });
     
-    const [value, setValue] = useState({ start: min, end: max });
+    //const [value, setValue] = useState({ start: min, end: max });
     const step = 1 / Math.pow(10, precision || 0);
 
     const from = Math.max(min, Number.isFinite(start[0]) ? start[0] : min);
@@ -36,9 +35,9 @@ export function RangeSlider(props: any) {
     const { language } = useLanguage();
     const locale = language === 'ar' ? 'ar' : 'en';
 
-    useEffect(() => {
-        setValue({ start: from, end: to });
-    }, [from, to]);
+    //useEffect(() => {
+    //    setValue({ start: from, end: to });
+    //}, [from, to]);
 
     // Show empty component if min and max are both 0 or if they're the same value
     if (min === 0 && max === 0 || min === max) {
@@ -69,10 +68,10 @@ export function RangeSlider(props: any) {
                 ariaLabelForHandle={["Minimum price", "Maximum price"]}
                 onChange={(value: number | number[]) => {
                     if (Array.isArray(value)) {
-                        setValue({
-                            start: value[0],
-                            end: value[1]
-                        });
+                        //setValue({
+                        //    start: value[0],
+                        //    end: value[1]
+                        //});
                         refine([value[0], value[1]]);
                     }
                 }}
