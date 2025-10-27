@@ -64,6 +64,7 @@ const Step2 = () => {
                 setBodyTypes(response?.data || []);
                 if (response?.data?.length > 0) {
                     setBodyType(response?.data[0].id);
+                    setBodyTypeName(response?.data[0].name);
                 }
             } catch (err) {
                 console.error('Error fetching body types:', err);
@@ -87,6 +88,7 @@ const Step2 = () => {
                 setEngineSizes(response?.data || []);
                 if (response?.data?.length > 0) {
                     setEngineSize(response?.data[0].id);
+                    setEngineSizeName(response?.data[0].name);
                 }
             } catch (err) {
                 console.error('Error fetching engine sizes:', err);
@@ -110,6 +112,7 @@ const Step2 = () => {
                 setMileageOptions(response?.data || []);
                 if (response?.data?.length > 0) {
                     setMileage(response?.data[0].id);
+                    setMileageName(response?.data[0].label || response?.data[0].name);
                 }
             } catch (err) {
                 console.error('Error fetching mileage options:', err);
@@ -200,7 +203,7 @@ const Step2 = () => {
                                     {loading.bodyTypes ? (
                                         <option>Loading...</option>
                                     ) : bodyTypes.length > 0 ? (
-                                        bodyTypes.map(type => (
+                                        bodyTypes.map((type) => (
                                             <option key={type.id} value={type.id}>{type.name}</option>
                                         ))
                                     ) : (

@@ -27,6 +27,7 @@ const Step3 = () => {
     const [showPricePopup, setShowPricePopup] = useState(false);
     const [expectedPrice, setExpectedPrice] = useState<number | null>(null);
     const router = useRouter();
+    const [carLogo,setCarLogo] = useState(null);
 
     // State for branches from API
     const [branches, setBranches] = useState<{id: string; name: string; address: string, enName: string, arName: string, image?: string, location?: string, distance?: string}[]>([]);
@@ -51,7 +52,7 @@ const Step3 = () => {
     };
     
     const [branchTimings, setBranchTimings] = useState<DaySchedule[]>([]);
-    const [loadingTimings, setLoadingTimings] = useState(false);
+    const [loadingTimings, setLoadingTimings] = useState(null);
     const [timingsError, setTimingsError] = useState('');
     
     // State for Step2 data
@@ -72,6 +73,7 @@ const Step3 = () => {
         if (storedStep2Data) {
             setStep2Data(JSON.parse(storedStep2Data));
         }
+        
     }, []);
 
     useEffect(()=>{
@@ -95,8 +97,9 @@ const Step3 = () => {
             setEmail(user.email);
             }
             setAutoFill(true);
-
         }
+
+        
     };
 
     
@@ -128,8 +131,25 @@ const Step3 = () => {
         };
         
         fetchBranches();
+
+        fetchLogo();
+      
+
     }, []);
     
+
+    const fetchLogo = async () => {
+        const storedStep1Data = sessionStorage.getItem('carDetails');
+        const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
+        const response = await axiosInstance.get(
+            `/api/1.0/car/logo/${step1Data.make.toLowerCase()}`,
+            { responseType: "blob" } // 👈 important for binary data
+          );
+  
+        const imageUrl = URL.createObjectURL(response.data);
+        setCarLogo(imageUrl);
+    }
+
     // Fetch branch timings from API
     useEffect(() => {
         const fetchBranchTimings = async () => {
@@ -279,6 +299,7 @@ const Step3 = () => {
                     image: step1Data.image || 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb'
                 }));
             }
+
             
             // Redirect to confirmation page
             router.push('/confirmation');
@@ -392,10 +413,7 @@ const Step3 = () => {
                             <div className="flex items-center">
                                 <div className="w-1/4 mr-3">
                                     <div className="bg-gray-100 rounded-lg h-20 flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
-                                        </svg>
+                                        {carLogo && <img src={carLogo} alt="Car Logo" className="w-16 h-16 object-contain" />}
                                     </div>
                                 </div>
                                 <div className="w-3/4">
@@ -410,10 +428,6 @@ const Step3 = () => {
                                                         return `${step1Data.make || '—'} ${step1Data.model || '—'} ${step1Data.year || '—'}`;
                                                     })()}
                                                 </span>
-                                            </div>
-                                            <div className="flex justify-between mb-1">
-                                                <span className="text-xs text-gray-500">{language === "en" ? "Body Type" : "نوع الهيكل"}</span>
-                                                <span className="text-xs font-medium">{step2Data.bodyType || '—'}</span>
                                             </div>
                                             <div className="flex justify-between mb-1">
                                                 <span className="text-xs text-gray-500">{language === "en" ? "Engine" : "المحرك"}</span>

@@ -8,11 +8,19 @@ export const InstantWrapper = (props: any) => {
 
   //http://ec2-15-184-133-49.me-south-1.compute.amazonaws.com:7700/indexes/cars/search
   //http://127.0.0.1 baddelha
-  const searchClient: any = instantMeiliSearch('ec2-15-184-133-49.me-south-1.compute.amazonaws.com:7700', 'cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg', {
+  //cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg
+  const searchClient: any = instantMeiliSearch('https://stg-service.bddelha.com/meili/indexes/cars/search', 'cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg', {
     finitePagination: true,
     primaryKey: "id",
     placeholderSearch: true,
     keepZeroFacets: false,
+    // Enable stats for numeric attributes to support range facets
+    // Use the correct structure for MeiliSearch configuration
+    meiliSearchParams: {
+      attributesToHighlight: ['*'],
+      attributesToRetrieve: ['*'],
+      attributesToCrop: ['*'],
+    }
   }).searchClient;
 
 
@@ -48,6 +56,7 @@ export const InstantWrapper = (props: any) => {
       attributesToRetrieve={["*"]}
       filters={slug}
       hitsPerPage={hitsPerPage}
+      facets={["*", "sellingPrice"]}
     />
     {props.children}
   </InstantSearch>

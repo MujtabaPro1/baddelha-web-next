@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { RefinementList, useRefinementList, useClearRefinements } from "react-instantsearch";
 import { useRouter } from "next/navigation";
+import {  RangeSlider }   from "../range";
 import { Car, ChevronDown, ChevronRight} from "lucide-react";
 
 export const Filters = ({ isLanding = false }) => {
@@ -31,6 +32,12 @@ export const Filters = ({ isLanding = false }) => {
       attribute: "modelYear",
       icon: Car,
     },
+    {
+      title: 'Selling Price',
+      attribute: "sellingPrice",
+      icon: Car,
+    },
+
   ];
 
   const selectFilter = (value: string) => {
@@ -113,9 +120,26 @@ export const Filters = ({ isLanding = false }) => {
                 : "hidden"
               }`}
             >
-              {filter.attribute === "make" || filter.attribute === "bodyType" || filter.attribute === "model" || filter.attribute === "modelYear" ? (
+              {filter.attribute === "make" || filter.attribute === "bodyType" || filter.attribute === "model"  ? (
                 <>
                   <RefinementList 
+                    attribute={filter?.attribute}
+                    classNames={{
+                      root: "space-y-2",
+                      labelText: "text-gray-600 ml-2 text-sm",
+                      count: "text-gray-500 text-xs ml-1.5 bg-gray-100 px-1.5 py-0.5 rounded-full",
+                      showMore: "mt-3 text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200",
+                      checkbox: "rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    }}
+                  />
+                  <hr
+                    className={"my-3 border-gray-200"}
+                    aria-hidden="true"
+                  />
+                </>
+              ) : filter.attribute === "sellingPrice" ||  filter.attribute == "modelYear" ? (
+                <>
+                  <RangeSlider
                     attribute={filter?.attribute}
                     classNames={{
                       root: "space-y-2",
@@ -144,5 +168,9 @@ export const Filters = ({ isLanding = false }) => {
 export function VirtualFilters() {
   useRefinementList({ attribute: "make" });
   useRefinementList({ attribute: "model" });
+  useRefinementList({ attribute: "bodyType" });
+  useRefinementList({ attribute: "modelYear" });
+  useRefinementList({ attribute: "sellingPrice" });
+
   return null;
 }
