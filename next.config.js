@@ -5,7 +5,7 @@ const nextConfig = {
   },
   // Performance optimizations
   images: {
-    domains: ['images.pexels.com', 'images.unsplash.com'],
+    domains: ['images.pexels.com', 'images.unsplash.com','badellah-stg-bucket.s3.me-south-1.amazonaws.com/'],
     formats: ['image/avif', 'image/webp'],
   },
   experimental: {
