@@ -6,7 +6,7 @@ import {Search} from 'lucide-react';
  
 export const SearchBox = () => {
   const [hasValue, setHasValue] = useState(false);
-  const placeholderTexts = ['Toyota', 'Electric', 'Manual', 'GCC'];
+  const placeholderTexts = ['Baddehla Inventory'];
   const TYPING_SPEED = 120;
   const ERASING_SPEED = 60;
   const DELAY_AFTER_TYPING = 1000;
