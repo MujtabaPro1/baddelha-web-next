@@ -49,22 +49,142 @@ const Step2 = () => {
     useEffect(() => {
         const storedCarDetails = sessionStorage.getItem('carDetails');
         if (storedCarDetails) {
+            console.log('Stored car details:', storedCarDetails);
             setCarDetails(JSON.parse(storedCarDetails));
+ 
         }
     }, []);
+
+    useEffect(()=>{
+        if(bodyTypes.length > 0 && engineSizes.length > 0 && carDetails.make && carDetails.model && carDetails.year){
+            getCarSpecs(carDetails);           
+        }
+    }, [bodyTypes, engineSizes]);
+
+    const getCarSpecs = (carDetails: { make: string; model: string; year: string }) => {
+        console.log('Car details:', carDetails);
+        
+        // Set loading states for both body types and engine sizes
+        setLoading(prev => ({ 
+            ...prev, 
+            bodyTypes: true,
+            engineSizes: true 
+        }));
+        
+        // Clear any previous errors
+        setError(prev => ({
+            ...prev,
+            bodyTypes: '',
+            engineSizes: ''
+        }));
+        
+        axiosInstance.post(`/api/1.0/car/specs`,{
+            make: carDetails.make,
+            model: carDetails.model,
+            year: Number(carDetails.year)
+        })
+            .then((response) => {
+                console.log('Car specs:', response.data);
+                
+                // Store the car specs data for later use
+                const carSpecsData = response.data;
+                
+                // Process body types from API response
+                if (carSpecsData.bodyTypes && carSpecsData.bodyTypes.length > 0) {
+                    // Check if we already have body types loaded
+                    if (bodyTypes.length > 0) {
+                        // Filter the existing body types to match the ones from the car specs API
+                        const filteredBodyTypes = bodyTypes.filter((type: {id: string; name: string}) => 
+                            carSpecsData.bodyTypes.includes(type.name)
+                        );
+                        
+                        // If we have filtered body types, update the state
+                        if (filteredBodyTypes.length > 0) {
+                            setBodyTypes(filteredBodyTypes);
+                            setBodyType(filteredBodyTypes[0].id);
+                            setBodyTypeName(filteredBodyTypes[0].name);
+                        }
+                    }
+                }
+                
+                // Process engine sizes from API response
+                if (carSpecsData.engineSizes && carSpecsData.engineSizes.length > 0) {
+                    // Check if we already have engine sizes loaded
+                    if (engineSizes.length > 0) {
+                        // Filter the existing engine sizes to match the ones from the car specs API
+                        const filteredEngineSizes = engineSizes.filter((size: {id: string; name: string}) => 
+                            carSpecsData.engineSizes.includes(size.name)
+                        );
+                        
+                        // If we have filtered engine sizes, update the state
+                        if (filteredEngineSizes.length > 0) {
+                            setEngineSizes(filteredEngineSizes);
+                            setEngineSize(filteredEngineSizes[0].id);
+                            setEngineSizeName(filteredEngineSizes[0].name);
+                        }
+                    } 
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching car specs:', error);
+                
+
+            })
+            .finally(() => {
+                // Reset loading states
+                setLoading(prev => ({
+                    ...prev,
+                    bodyTypes: false,
+                    engineSizes: false
+                }));
+            });
+    }
     
     // Fetch body types
     useEffect(() => {
         const fetchBodyTypes = async () => {
+            // Skip if we already have body types data
+            if (bodyTypes.length > 0) {
+                return;
+            }
+            
             setLoading(prev => ({ ...prev, bodyTypes: true }));
             setError(prev => ({ ...prev, bodyTypes: '' }));
             
             try {
                 const response = await axiosInstance.get('/api/1.0/car-options/body-types');
-                setBodyTypes(response?.data || []);
-                if (response?.data?.length > 0) {
-                    setBodyType(response?.data[0].id);
-                    setBodyTypeName(response?.data[0].name);
+                const allBodyTypes = response?.data || [];
+                
+                // Check if we have stored car specs body types to filter by
+                const storedCarSpecsBodyTypes = sessionStorage.getItem('carSpecsBodyTypes');
+                
+                if (storedCarSpecsBodyTypes) {
+                    const carSpecsBodyTypes = JSON.parse(storedCarSpecsBodyTypes);
+                    
+                    // Filter body types based on car specs
+                    const filteredBodyTypes = allBodyTypes.filter((type: {id: string; name: string}) => 
+                        carSpecsBodyTypes.includes(type.name)
+                    );
+                    
+                    if (filteredBodyTypes.length > 0) {
+                        setBodyTypes(filteredBodyTypes);
+                        setBodyType(filteredBodyTypes[0].id);
+                        setBodyTypeName(filteredBodyTypes[0].name);
+                    } else {
+                        // If no matches, use all body types
+                        setBodyTypes(allBodyTypes);
+                        if (allBodyTypes.length > 0) {
+                            setBodyType(allBodyTypes[0].id);
+                            setBodyTypeName(allBodyTypes[0].name);
+                        }
+                    }
+                } else {
+                    // No car specs data, use all body types
+                    setBodyTypes(allBodyTypes);
+                    if (allBodyTypes.length > 0) {
+                        setBodyType(allBodyTypes[0].id);
+                        setBodyTypeName(allBodyTypes[0].name);
+                    }
                 }
             } catch (err) {
                 console.error('Error fetching body types:', err);
@@ -75,20 +195,53 @@ const Step2 = () => {
         };
         
         fetchBodyTypes();
-    }, []);
+    }, [bodyTypes.length]);
     
     // Fetch engine sizes
     useEffect(() => {
         const fetchEngineSizes = async () => {
+            // Skip if we already have engine sizes data
+            if (engineSizes.length > 0) {
+                return;
+            }
+            
             setLoading(prev => ({ ...prev, engineSizes: true }));
             setError(prev => ({ ...prev, engineSizes: '' }));
             
             try {
                 const response = await axiosInstance.get('/api/1.0/car-options/engine-size');
-                setEngineSizes(response?.data || []);
-                if (response?.data?.length > 0) {
-                    setEngineSize(response?.data[0].id);
-                    setEngineSizeName(response?.data[0].name);
+                const allEngineSizes = response?.data || [];
+                
+                // Check if we have stored car specs engine sizes to filter by
+                const storedCarSpecsEngineSizes = sessionStorage.getItem('carSpecsEngineSizes');
+                
+                if (storedCarSpecsEngineSizes) {
+                    const carSpecsEngineSizes = JSON.parse(storedCarSpecsEngineSizes);
+                    
+                    // Filter engine sizes based on car specs
+                    const filteredEngineSizes = allEngineSizes.filter((size: {id: string; name: string}) => 
+                        carSpecsEngineSizes.includes(size.name)
+                    );
+                    
+                    if (filteredEngineSizes.length > 0) {
+                        setEngineSizes(filteredEngineSizes);
+                        setEngineSize(filteredEngineSizes[0].id);
+                        setEngineSizeName(filteredEngineSizes[0].name);
+                    } else {
+                        // If no matches, use all engine sizes
+                        setEngineSizes(allEngineSizes);
+                        if (allEngineSizes.length > 0) {
+                            setEngineSize(allEngineSizes[0].id);
+                            setEngineSizeName(allEngineSizes[0].name);
+                        }
+                    }
+                } else {
+                    // No car specs data, use all engine sizes
+                    setEngineSizes(allEngineSizes);
+                    if (allEngineSizes.length > 0) {
+                        setEngineSize(allEngineSizes[0].id);
+                        setEngineSizeName(allEngineSizes[0].name);
+                    }
                 }
             } catch (err) {
                 console.error('Error fetching engine sizes:', err);
@@ -99,7 +252,7 @@ const Step2 = () => {
         };
         
         fetchEngineSizes();
-    }, []);
+    }, [engineSizes.length]);
     
     // Fetch mileage options
     useEffect(() => {
