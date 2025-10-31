@@ -32,6 +32,7 @@
     "react-hook-form": "^7.64.0",
     "react-instantsearch": "^7.0.0",
     "react-instantsearch-core": "^7.0.0",
+    "react-usestateref": "^1.0.9",
     "recharts": "^3.2.1",
     "rheostat": "^4.1.1",
     "tailwind-merge": "^3.3.1"
