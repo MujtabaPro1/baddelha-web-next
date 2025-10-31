@@ -57,7 +57,7 @@ const Step2 = () => {
 
     const getCarSpecs = () => {
         const storedCarDetails: any = sessionStorage.getItem('carDetails');
-        let _carDetails = JSON.parse(storedCarDetails);
+        const _carDetails = JSON.parse(storedCarDetails);
         axiosInstance.post(`/api/1.0/car/specs`,{
             make: _carDetails.make,
             model: _carDetails.model,
@@ -65,11 +65,11 @@ const Step2 = () => {
         })
             .then((response) => {
                 console.log('Car specs:', response.data);
-           let data = response.data;
+           const data = response.data;
 
         if(engineSizesRef?.current?.length > 0 && bodyTypesRef?.current?.length > 0 ){
-                let newBodyType: any [] = []
-                let newEngineSize: any [] = []
+                const newBodyType: any [] = []
+                const newEngineSize: any [] = []
                 
                 data.bodyTypes.map((item: any) => {
                     bodyTypesRef?.current.map((bodyType: any) => {
