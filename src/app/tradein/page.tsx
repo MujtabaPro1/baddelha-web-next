@@ -255,6 +255,16 @@ const TradeIn: React.FC = () => {
   const [dealerships, setDealerships] = useState<Dealership[]>([]);
   
 
+  const [tradeInValueStatus, setTradeInValueStatus] = useState<{
+    loading: boolean;
+    error: string;
+    revealed: boolean;
+  }>({
+    loading: false,
+    error: '',
+    revealed: false
+  });
+
   const fetchDealerships = async () => {
     setLoading(prev => ({ ...prev, dealerships: true }));
     setError(prev => ({ ...prev, dealerships: '' }));
@@ -672,6 +682,97 @@ const TradeIn: React.FC = () => {
       return false;
     }
   };
+
+
+  const getTradeInValue =  () => {
+    // Check if all required fields are filled
+    if (!tradeInVehicle.make || !tradeInVehicle.model || !tradeInVehicle.year || !tradeInVehicle.mileage || !tradeInVehicle.condition) {
+      return (
+        <div className="mt-4 text-center">
+          <button
+            disabled={true}
+            className="bg-gray-300 text-gray-500 font-semibold py-2 px-6 rounded-lg cursor-not-allowed"
+          >
+            Reveal Trade-In Value
+          </button>
+          <p className="text-sm text-red-500 mt-2">Please fill all vehicle details first</p>
+        </div>
+      );
+    }
+    
+    // If already revealed, show the value
+    if (tradeInValueStatus.revealed) {
+      return (
+        <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex justify-between items-center">
+            <span className="text-gray-700 font-medium">{'Estimated Trade-In Value:'}</span>
+            <span className="text-2xl font-bold text-green-600">SAR {tradeInVehicle.estimatedValue.toLocaleString()}</span>
+          </div>
+          <p className="text-xs text-gray-500 mt-2 text-center">This is an estimated value. Final value may vary after inspection.</p>
+        </div>
+      );
+    }
+    
+    // If currently loading
+    if (tradeInValueStatus.loading) {
+      return (
+        <div className="mt-4 text-center">
+          <button
+            disabled={true}
+            className="bg-amber-300 text-white font-semibold py-2 px-6 rounded-lg flex items-center justify-center mx-auto"
+          >
+            <span className="animate-spin h-4 w-4 mr-2 border-2 border-white border-t-transparent rounded-full"></span>
+            Calculating...
+          </button>
+        </div>
+      );
+    }
+    
+    // Button to reveal value
+    return (
+      <div className="mt-4 text-center">
+        <button
+          onClick={async () => {
+            setTradeInValueStatus({ loading: true, error: '', revealed: false });
+            try {
+              // Prepare the request payload based on the screenshot
+              const payload = {
+                make: tradeInVehicle.make,
+                model: tradeInVehicle.model,
+                year: parseInt(tradeInVehicle.year),
+                mileage: parseInt(tradeInVehicle.mileage),
+                condition: tradeInVehicle.condition[0]?.toLocaleUpperCase() + tradeInVehicle.condition.slice(1)
+              };
+              
+              try {
+                // Call the API to get the trade-in value
+                const response = await axiosInstance.post('/api/1.0/car/trade-price', payload);
+                
+                // Update the trade-in vehicle with the estimated value from the API
+                const estimatedValue = response.data.medianPrice || 0;
+                setTradeInVehicle(prev => ({ ...prev, estimatedValue }));
+                setTradeInValueStatus({ loading: false, error: '', revealed: true });
+              } catch (apiError) {
+                console.error('API error:', apiError);
+                // Fallback to calculated value if API fails
+                const estimatedValue = calculateTradeInValue();
+                setTradeInVehicle(prev => ({ ...prev, estimatedValue }));
+                setTradeInValueStatus({ loading: false, error: 'Could not fetch from API, using estimated value', revealed: true });
+              }
+            } catch (error) {
+              console.error('Error calculating trade-in value:', error);
+              setTradeInValueStatus({ loading: false, error: 'Failed to calculate trade-in value', revealed: false });
+            }
+          }}
+          className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-amber-500 text-white font-semibold py-2 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center mx-auto"
+        >
+          <Eye className="h-4 w-4 mr-2" />
+          Reveal Trade-In Value
+        </button>
+      </div>
+    );
+  };
+
 
   const handleTradeDetailsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1111,6 +1212,7 @@ const TradeIn: React.FC = () => {
                 </div>
 
                 {/* Trade-in value is now calculated automatically by AI pricing algorithm */}
+                {getTradeInValue()}
               </div>
 
               {/* Appointment Scheduling */}
