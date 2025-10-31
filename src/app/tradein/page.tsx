@@ -1094,6 +1094,12 @@ const TradeIn: React.FC = () => {
                         required
                         value={tradeInVehicle.makeId}
                         onChange={(e) => {
+
+                          setTradeInValueStatus({
+                              ...tradeInValueStatus,
+                              revealed: false
+                          })
+
                           setTradeInVehicle({
                             ...tradeInVehicle, 
                             makeId: e.target.value,
@@ -1131,6 +1137,12 @@ const TradeIn: React.FC = () => {
                         required
                         value={tradeInVehicle.modelId}
                         onChange={(e) => {
+
+                          setTradeInValueStatus({
+                            ...tradeInValueStatus,
+                            revealed: false
+                        })
+
                           setTradeInVehicle({
                             ...tradeInVehicle, 
                             modelId: e.target.value,
@@ -1165,7 +1177,12 @@ const TradeIn: React.FC = () => {
                       <select
                         required
                         value={tradeInVehicle.year}
-                        onChange={(e) => setTradeInVehicle({...tradeInVehicle, year: e.target.value})}
+                        onChange={(e) =>{
+                          setTradeInValueStatus({
+                            ...tradeInValueStatus,
+                            revealed: false
+                        })
+                          setTradeInVehicle({...tradeInVehicle, year: e.target.value})}}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent appearance-none"
                       >
                         <option value="">{lang[language].selectYear}</option>
@@ -1189,7 +1206,13 @@ const TradeIn: React.FC = () => {
                       type="number"
                       required
                       value={tradeInVehicle.mileage}
-                      onChange={(e) => setTradeInVehicle({...tradeInVehicle, mileage: e.target.value})}
+                      onChange={(e) =>{
+                        
+                        setTradeInValueStatus({
+                          ...tradeInValueStatus,
+                          revealed: false
+                      })
+                        setTradeInVehicle({...tradeInVehicle, mileage: e.target.value})}}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
                       placeholder="Enter mileage"
                     />
@@ -1199,7 +1222,12 @@ const TradeIn: React.FC = () => {
                     <select
                       required
                       value={tradeInVehicle.condition}
-                      onChange={(e) => setTradeInVehicle({...tradeInVehicle, condition: e.target.value})}
+                      onChange={(e) => {
+                        setTradeInValueStatus({
+                          ...tradeInValueStatus,
+                          revealed: false
+                      })
+                        setTradeInVehicle({...tradeInVehicle, condition: e.target.value})}}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
                     >
                       <option value="">{lang[language].selectCondition}</option>
