@@ -1,7 +1,6 @@
 'use client'
-import React, { useState, useEffect } from 'react';
-import { Search, Filter, Grid, List, Heart, MapPin, Fuel, Calendar, Settings, ChevronDown, X, SlidersHorizontal } from 'lucide-react';
-import axiosInstance from '../../services/axiosInstance';
+import React, { useState } from 'react';
+import { Filter, Grid, List, Heart, MapPin, Fuel, Calendar, Settings, ChevronDown, X, SlidersHorizontal } from 'lucide-react';
 import { InstantWrapper } from '../../providers/InstantProvider';
 import { useHits, useInstantSearch, useStats } from "react-instantsearch";
 import { PaginationComponent } from '../../components/pagination';
