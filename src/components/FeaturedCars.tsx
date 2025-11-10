@@ -118,8 +118,9 @@ const CarCard: React.FC<{ car: Car }> = ({ car }) => {
           </div>
         </div>
         
-        <div className="flex gap-2 mt-5">
-          <button 
+        <div className="flex gap-2 mt-5 hidden">
+          <button  
+            
             className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-medium py-2 px-4 rounded-lg w-full transition"
             aria-label={`${lang[languageContent].viewDetails} ${car.make} ${car.model}`}
           >
