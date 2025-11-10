@@ -58,7 +58,6 @@ function Buy() {
   const [sortBy, setSortBy] = useState('price-low');
   const [showFilters, setShowFilters] = useState(false);
   const [likedCars, setLikedCars] = useState<Set<number>>(new Set());
-  const [carList,setCarList] = useState([]);
 
   const toggleLike = (carId: number) => {
     const newLikedCars = new Set(likedCars);
