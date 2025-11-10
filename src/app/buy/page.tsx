@@ -21,10 +21,12 @@ const locations = ['All Locations', 'Riyadh', 'Jeddah', 'Dammam', 'Mecca', 'Medi
 
 const CarView = ({viewMode,likedCars,toggleLike}: {viewMode: 'grid' | 'list',likedCars: Set<number>,toggleLike: (carId: number) => void}) => {
 
-  const { hits } = useHits();
+  console.log('CarView');
+  const { hits, results } = useHits();
   const { status } = useInstantSearch();
 
   console.log('hits',hits);
+  console.log('results',results);
   console.log('status',status);
   if(status == 'loading'){
     return <div>Loading...</div>
@@ -275,21 +277,6 @@ function Buy() {
 
   }
 
-  useEffect(() => {
-     getCars();
-  }, []);
-
-  const getCars = () => {
-    axiosInstance.get('/api/1.0/car/get-all?page=1&limit=12')
-    .then(response => {
-      const cars: [] = response.data?.data.filter((car: any) => car.carStatus != 'push_to_auction' && car?.carStatus != 'pending_inspection');
-      console.log('cars',cars);
-      setCarList(cars);
-    })
-    .catch(error => {
-      console.error('Error fetching cars:', error);
-    }); 
-  }
 
 
 
@@ -395,29 +382,13 @@ function Buy() {
               </div>
             </div>
 
-            {/* Car Listings */}
-            {carList.length === 0 ? (
-              <div className="bg-white rounded-xl shadow-md p-12 text-center">
-                <div className="text-gray-400 mb-4">
-                  <Search className="h-16 w-16 mx-auto" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">No cars found</h3>
-                <p className="text-gray-500 mb-4">Try adjusting your filters or search criteria</p>
-                <button
-                  onClick={clearFilters}
-                  className="bg-gradient-to-r from-amber-500 to-amber-400 text-white px-6 py-2 rounded-lg hover:bg-[#e67d26] transition"
-                >
-                  Clear All Filters
-                </button>
-              </div>
-            ) : (
-              <div className={viewMode === 'grid' 
+            
+            <div className={viewMode === 'grid' 
                 ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6' 
                 : 'space-y-4'
               }>
                 <CarView viewMode={viewMode} likedCars={likedCars} toggleLike={toggleLike} />
               </div>
-            )}
           </div>
         </div>
         <PaginationComponent/>
