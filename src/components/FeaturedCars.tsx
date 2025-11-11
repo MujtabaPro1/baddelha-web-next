@@ -201,7 +201,7 @@ const FeaturedCars: React.FC = () => {
         <div className="text-center mt-10">
           <button
           onClick={()=>{
-             window.location.href = '/Buy';
+             window.location.href = '/buy';
           }}
           className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-semibold py-3 px-6 rounded-lg transition"
           aria-label={lang[languageContent].viewAllCars}>
