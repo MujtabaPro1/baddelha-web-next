@@ -68,7 +68,7 @@ const ServicesSection: React.FC = () => {
       bgColor: "bg-gradient-to-r from-blue-800 to-blue-700",
       textColor: "text-white",
       btnColor: "bg-gradient-to-r from-amber-500 to-amber-400 text-white",
-      btnLink: "/buy",
+      btnLink: "/",
       btnText: lang[languageContent].browseCarsBtnText
     },
     {
@@ -88,7 +88,7 @@ const ServicesSection: React.FC = () => {
       bgColor: "bg-gradient-to-r from-blue-800 to-blue-700",
       textColor: "text-white",
       btnColor: "bg-gradient-to-r from-amber-500 to-amber-400 text-white",
-      btnLink: "/tradein",
+      btnLink: "/",
       btnText: lang[languageContent].tradeNowBtnText
     },
     {
@@ -98,7 +98,7 @@ const ServicesSection: React.FC = () => {
       bgColor: "bg-gradient-to-r from-blue-800 to-blue-700",
       textColor: "text-white",
       btnColor: "bg-gradient-to-r from-amber-500 to-amber-400 text-white",
-      btnLink: "/bank-valuation",
+      btnLink: "/",
       btnText: lang[languageContent].getValuationBtnText
     }
   ];

@@ -198,7 +198,7 @@ const FeaturedCars: React.FC = () => {
           ))}
         </div>
         
-        <div className="text-center mt-10">
+        {/* <div className="text-center mt-10">
           <button
           onClick={()=>{
              window.location.href = '/buy';
@@ -207,7 +207,7 @@ const FeaturedCars: React.FC = () => {
           aria-label={lang[languageContent].viewAllCars}>
             {lang[languageContent].viewAllCars}
           </button>
-        </div>
+        </div> */}
       </div>
     </section>
   );

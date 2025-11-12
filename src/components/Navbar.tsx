@@ -133,8 +133,8 @@ const Navbar: React.FC = () => {
             </div>
             <nav className="hidden md:flex space-x-8">
             
-              <Link href={pathname?.includes('buy') ? '/' : '/buy'} className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{pathname?.includes('buy') ? lang[languageContent].sell : lang[languageContent].buy}</Link>
-              <Link href="/tradein" className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{lang[languageContent].tradeIn}</Link>
+              {/* <Link href={pathname?.includes('buy') ? '/' : '/buy'} className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{pathname?.includes('buy') ? lang[languageContent].sell : lang[languageContent].buy}</Link>
+              <Link href="/tradein" className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{lang[languageContent].tradeIn}</Link> */}
             </nav>
           </div>
           
@@ -178,8 +178,8 @@ const Navbar: React.FC = () => {
       {isMenuOpen && (
         <div className={`md:hidden bg-white shadow-lg absolute top-full left-0 right-0 p-4 transition-transform`}>
           <nav className="flex flex-col space-y-4 py-4">
-            <Link href="/buy" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'شراء' : 'Buy'}</Link>
-            <Link href="/tradein" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'استبدال' : 'Trade-In'}</Link>
+            {/* <Link href="/buy" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'شراء' : 'Buy'}</Link>
+            <Link href="/tradein" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'استبدال' : 'Trade-In'}</Link> */}
           </nav>
           <div className="mt-4 pt-4 border-t border-gray-100">
             <div 

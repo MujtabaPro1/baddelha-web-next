@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-3">
               {[lang[languageContent].buy, lang[languageContent].sell, lang[languageContent].tradeIn].map((link, index) => (
                 <li key={index}>
-                  <a href={index == 0 ? "/buy" : index == 1 ? "/" : "/tradein"} className="text-white hover:text-amber-500 transition">
+                  <a href={index == 0 ? "/" : index == 1 ? "/" : "/"} className="text-white hover:text-amber-500 transition">
                     {link}
                   </a>
                 </li>
