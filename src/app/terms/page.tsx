@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { fetchPageContent, PageContentResponse } from '../../services/pageContentService';
+import { fetchPageContent } from '../../services/pageContentService';
 
 const Terms: React.FC = () => {
   const [content, setContent] = useState<string>('');

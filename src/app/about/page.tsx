@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { fetchPageContent, PageContentResponse } from '../../services/pageContentService';
+import { fetchPageContent } from '../../services/pageContentService';
 
 const AboutUs: React.FC = () => {
   const [content, setContent] = useState<string>('');
@@ -14,7 +14,6 @@ const AboutUs: React.FC = () => {
         setIsLoading(true);
         const response: any = await fetchPageContent('about-us');
         
-        console.log(response.content);
         if (response.content) {
           setContent(response.content);
           setLastUpdated(response.lastUpdated || '');
