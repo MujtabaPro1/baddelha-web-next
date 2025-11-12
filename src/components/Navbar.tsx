@@ -2,7 +2,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Globe } from 'lucide-react';
-import { Link } from './ui/Link';
 import Image from 'next/image';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
