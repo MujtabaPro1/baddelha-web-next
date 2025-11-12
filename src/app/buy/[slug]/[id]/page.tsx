@@ -28,6 +28,7 @@ import { useParams } from 'next/navigation';
 import { Popover, PopoverTrigger, PopoverContent } from '../../../../components/ui/popover';
 import { useLanguage } from '../../../../contexts/LanguageContext';
 import lang from '../../../../locale';
+import { Skeleton } from '../../../../components/ui/skeleton';
 
 export default function Page() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -39,6 +40,7 @@ export default function Page() {
   const [inspectionSchema, setInspectionSchema]: any = useState(null);
   const [extraData, setExtraData] = useState<any>(null);
   const params = useParams();
+  const [loading, setLoading] = useState(true);
   const { language } = useLanguage();
   
   
@@ -73,9 +75,10 @@ export default function Page() {
               // Process car data
               const _car = res?.data?.car;
               const _inspectionData = inspectionData;
+              console.log(_car);
               
               // Process inspection data if available
-              if(_car['Inspection']){
+              if(_car['Inspection'] && _car['Inspection'].length){
                   _car['InspectionData'] = _car?.Inspection?.[0]?.inspectionJson;
                   // Sample extraData for testing
                   const _extraData = _car['InspectionData'].extraData || {};
@@ -116,8 +119,10 @@ export default function Page() {
               // Set car data
               setCar(_car);
 
+              if(res?.data?.car?.Inspection?.length){
               setInspectionDetails(res?.data?.car?.Inspection?.[0]);
               setInspectionSchema(res?.data?.car?.Inspection?.[0]?.inspectionJson);
+              }
               
               // Process images
               if (res?.data?.images && res.data.images.length > 0) {
@@ -141,15 +146,30 @@ export default function Page() {
                       console.log('Videos available:', videos.length);
                   }
               }
+              setTimeout(() => {
+                setLoading(false);
+              }, 2000);
           }).catch((err)=>{
               console.log('err',err);
+              setTimeout(() => {
+                setLoading(false);
+              }, 2000);
           })
       };
 
 
  
-      if(!car || !inspectionDetails || !inspectionSchema){
-        return <div>Loading...</div>
+      if(loading){
+        return     <div className="min-h-screen bg-white mt-[120px]">
+           <div className="max-w-7xl mx-auto px-4 py-6">
+          <Skeleton
+           className="h-[300px] w-full bg-gray-200"
+          />
+          <Skeleton
+           className="h-[300px] w-full bg-gray-200 mt-4"
+          />
+          </div>
+        </div>
       }
 
 

@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const cars = carsResponse.data?.cars || [];
     
     carUrls = cars.map((car: {id: string}) => ({
-      url: `https://baddelha.com/car/${car.id}`,
+      url: `https://baddelha.com/buy/${car.id}`,
       lastModified: new Date(),
       // changeFrequency is removed as it's not a valid property in MetadataRoute.Sitemap
       priority: 0.8,

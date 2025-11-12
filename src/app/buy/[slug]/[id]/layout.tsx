@@ -10,7 +10,9 @@ export async function generateMetadata({
   // fetch data
    
 
-  const data = await fetch(`https://stg-service.bddelha.com/api/1.0/car/car-details/${params.id}`
+  const {id} = await params;
+  console.log(id);
+  const data = await fetch(`https://stg-service.bddelha.com/api/1.0/car/car-details/${id}`
   ).then((res) => res.json());
 
 
@@ -25,7 +27,7 @@ export async function generateMetadata({
       type: "website",
       description: "Buy used " + data?.car?.make + " " + data?.car?.model + " " + data?.car?.modelYear + " for SAR " + data?.car?.bookValue + " at Badelha",
       images: [data?.carImages?.[0]],
-      url: "localhost:3000/car/" + data?.car?.id,
+      url: "https://baddelha.com/buy/" + data?.car?.id,
     },
   };
 }

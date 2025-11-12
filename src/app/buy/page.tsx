@@ -476,7 +476,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
               </div>
               <div className="flex gap-2">
                 <a
-                href={`/car/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
+                href={`/buy/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
                 className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white px-4 py-2 rounded-lg transition text-sm">
                   View Details
                 </a>
@@ -558,7 +558,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
 
         <div className="flex gap-2">
           <a 
-          href={`/car/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
+          href={`/buy/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
            className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white py-2 px-3 rounded-lg transition text-sm text-center">
             View Details
           </a>
