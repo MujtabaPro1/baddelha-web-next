@@ -11,11 +11,12 @@ const Privacy: React.FC = () => {
     const getPrivacyPolicy = async () => {
       try {
         setIsLoading(true);   
-        const response: PageContentResponse = await fetchPageContent('privacy-policy');
+        const response: any = await fetchPageContent('privacy-policy');
         
-        if (response.success && response.data?.content) {
-          setContent(response.data.content);
-          setLastUpdated(response.data.lastUpdated || '');
+         
+        if (response.content) {
+          setContent(response.content);
+          setLastUpdated(response.lastUpdated || '');
         } else {
           setError(response.message || 'Failed to load Privacy Policy content');
         }

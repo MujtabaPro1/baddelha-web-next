@@ -12,11 +12,11 @@ const Terms: React.FC = () => {
     const getTermsAndConditions = async () => {
       try {
         setIsLoading(true);
-        const response: PageContentResponse = await fetchPageContent('terms');
+        const response: any = await fetchPageContent('terms');
         
-        if (response.success && response.data?.content) {
-          setContent(response.data.content);
-          setLastUpdated(response.data.lastUpdated || '');
+        if (response.content) {
+          setContent(response.content);
+          setLastUpdated(response.lastUpdated || '');
         } else {
           setError(response.message || 'Failed to load Terms and Conditions content');
         }

@@ -12,11 +12,12 @@ const AboutUs: React.FC = () => {
     const getAboutUs = async () => {
       try {
         setIsLoading(true);
-        const response: PageContentResponse = await fetchPageContent('about-us');
+        const response: any = await fetchPageContent('about-us');
         
-        if (response.success && response.data?.content) {
-          setContent(response.data.content);
-          setLastUpdated(response.data.lastUpdated || '');
+        console.log(response.content);
+        if (response.content) {
+          setContent(response.content);
+          setLastUpdated(response.lastUpdated || '');
         } else {
           setError(response.message || 'Failed to load About Us content');
         }
