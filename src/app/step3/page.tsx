@@ -656,7 +656,6 @@ const Step3 = () => {
                                 className={`block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 ${autoFill ? 'bg-gray-100' : 'bg-white'}`}
                                 required
                             />
-
                         </div>
                         
                         {/* Submit Button */}
