@@ -341,11 +341,7 @@ const Step3 = () => {
                 </div>
             </div>
             
-            {/* Success Message */}
-            <div className="bg-green-100 border border-green-200 text-green-700 px-4 py-3 rounded mb-6 flex items-center">
-                <Check className="h-5 w-5 mr-2" />
-                <span>{lang[languageContent].onlyOneStepLeft}</span>
-            </div>
+        
             
             <h2 className="text-2xl font-bold text-center mb-6">{lang[languageContent].bookFreeCarInspection}</h2>
             
@@ -442,19 +438,7 @@ const Step3 = () => {
                                 </div>
                             </div>
                         </div>
-                        
-                        {/* Benefits section */}
-                        <div className="text-sm text-gray-600">
-                            <p className="flex items-center mb-2">
-                                <span className="mr-2">✓</span> {lang[languageContent].extraCashNoHassle}
-                            </p>
-                            <p className="flex items-center mb-2">
-                                <span className="mr-2">✓</span> {lang[languageContent].youMightGetMoreCash}
-                            </p>
-                            <p className="flex items-center mb-2">
-                                <span className="mr-2">✓</span> {lang[languageContent].instantPaymentNoPaperworkHassle}
-                            </p>
-                        </div>
+                   
                     </div>
                 </div>
                 
@@ -672,10 +656,7 @@ const Step3 = () => {
                                 className={`block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 ${autoFill ? 'bg-gray-100' : 'bg-white'}`}
                                 required
                             />
-                            <p className="text-xs mt-1 flex items-center">
-                                <span className="w-4 h-4 bg-gray-800 rounded-full flex items-center justify-center text-white text-xs mr-1">i</span>
-                                {lang[languageContent].youWillReceiveUpdates}
-                            </p>
+
                         </div>
                         
                         {/* Submit Button */}
@@ -687,10 +668,7 @@ const Step3 = () => {
                         </button>
                     </form>
                     
-                    <div className="mt-4 text-xs text-gray-700">
-                        <p>{lang[languageContent].byContinuingYouAgreeToThe} <a href="#" className="underline">{lang[languageContent].termsAndConditions}</a> {lang[languageContent].and} <a href="#" className="underline">{lang[languageContent].privacyPolicy}</a></p>
-                        <p className="mt-1">{lang[languageContent].thisSiteIsProtectedByReCaptchaAndTheGoogle} <a href="#" className="underline">{lang[languageContent].privacyPolicy}</a> {lang[languageContent].and} <a href="#" className="underline">{lang[languageContent].termsAndConditions}</a> {lang[languageContent].apply}</p>
-                    </div>
+
                 </div>
             </div>
             

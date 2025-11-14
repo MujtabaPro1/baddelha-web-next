@@ -400,13 +400,6 @@ const Step2 = () => {
                             >
                                 Full option
                             </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setOption('I don\'t know')} 
-                                className={`px-4 py-2 rounded-md ${option === 'I don\'t know' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
-                            >
-                                I don't know
-                            </button>
                         </div>
                     </div>
                     
@@ -435,13 +428,7 @@ const Step2 = () => {
                             >
                                 Total repaint
                             </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setPaint('I don\'t know')} 
-                                className={`px-4 py-2 rounded-md ${paint === 'I don\'t know' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
-                            >
-                                I don't know
-                            </button>
+
                         </div>
                     </div>
                     
@@ -463,13 +450,6 @@ const Step2 = () => {
                             >
                                 Non GCC Specs
                             </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setGccSpecs('I don\'t know')} 
-                                className={`px-4 py-2 rounded-md ${gccSpecs === 'I don\'t know' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
-                            >
-                                I don't know
-                            </button>
                         </div>
                     </div>
                     
@@ -483,11 +463,7 @@ const Step2 = () => {
                         </button>
                     </div>
                 </form>
-                
-                <div className="bg-gray-50 px-6 py-4 text-xs text-gray-500 border-t border-gray-100">
-                    <p>{lang[languageContent].byContinuingYouAgreeToThe} <a href="#" className="text-blue-600 hover:underline">{lang[languageContent].termsAndConditions}</a> {lang[languageContent].and} <a href="#" className="text-blue-600 hover:underline">{lang[languageContent].privacyPolicy}</a></p>
-                    <p className="mt-1">{lang[languageContent].thisSiteIsProtectedByReCaptchaAndTheGoogle} <a href="#" className="text-blue-600 hover:underline">{lang[languageContent].privacyPolicy}</a> {lang[languageContent].and} <a href="#" className="text-blue-600 hover:underline">{lang[languageContent].termsAndConditions}</a> {lang[languageContent].apply}.</p>
-                </div>
+          
             </div>
         </div>
     );
