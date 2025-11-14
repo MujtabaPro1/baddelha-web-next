@@ -112,7 +112,7 @@ const Step3 = () => {
             try {
                 const response = await axiosInstance.get('/api/1.0/branch');
                 // Add mock images, locations and distances to branches
-                let branches: any [] = response?.data.filter((r: any)=> r.is_active);
+                const branches: any [] = response?.data.filter((r: any)=> r.is_active);
                 const branchesWithImages = (branches || []).map((branch: any, index: number) => ({
                     ...branch,
                     image: `https://source.unsplash.com/random/300x200?kiosk,mall,${index}`,
