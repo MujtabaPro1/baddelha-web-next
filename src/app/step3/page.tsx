@@ -390,7 +390,7 @@ const Step3 = () => {
                                     
                                     }}
                                     className="bg-gradient-to-r from-amber-500 to-amber-400 ml-2 mr-2 text-xs px-3 py-1 rounded hover:bg-yellow-600 transition w-[140px] mt-2 h-[40px] flex items-center justify-center">
-                                        {!isLoading? 'REVEAL PRICE': 
+                                        {!isLoading? lang[languageContent].revealPrice: 
                                         
                                         <div className="w-4 h-4 border-2 border-white border-dashed rounded-full animate-spin"></div>
 
@@ -675,10 +675,10 @@ const Step3 = () => {
             {/* Expected Price Popup */}
             {showPricePopup && (
                 <div className="fixed inset-0 bg-[#9797977d] bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+                    <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative" dir={language === 'ar' ? 'rtl' : 'ltr'}>
                         <button 
                             onClick={() => setShowPricePopup(false)}
-                            className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+                            className={`absolute ${language === 'ar' ? 'left-4' : 'right-4'} top-4 text-gray-500 hover:text-gray-700`}
                         >
                             <X className="h-5 w-5" />
                         </button>
@@ -689,19 +689,19 @@ const Step3 = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <h3 className="text-xl font-bold">Expected Car Price</h3>
+                            <h3 className="text-xl font-bold">{lang[languageContent].expectedCarPrice}</h3>
                             <p className="text-gray-600 mt-1">
-                                Please enter your expected price for the car to continue with the appointment.
+                                {lang[languageContent].enterExpectedPricePrompt}
                             </p>
                         </div>
                         
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Expected Price (SAR)</label>
+                            <label className="block text-sm font-medium mb-1">{lang[languageContent].expectedPriceSAR}</label>
                             <input
                                 type="number"
                                 value={expectedPrice || ''}
                                 onChange={(e) => setExpectedPrice(Number(e.target.value))}
-                                placeholder="Enter expected price"
+                                placeholder={lang[languageContent].enterExpectedPrice}
                                 className="block w-full rounded-lg border-gray-300 border-2 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 bg-white"
                                 required
                             />
@@ -722,7 +722,7 @@ const Step3 = () => {
                             }}
                             className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white font-semibold py-3 px-6 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#f78f37] focus:ring-opacity-50 shadow-md"
                         >
-                            Continue
+                            {lang[languageContent].continue}
                         </button>
                     </div>
                 </div>

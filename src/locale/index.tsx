@@ -139,12 +139,12 @@ const lang = {
         "email": "Email",
         "mobile": "Mobile Number",
         "disclaimer": "DISCLAIMER",
-        "assumptions": "These are the assumptions we have made for your vehicle before going into an in-office valuation:",
-        "assumption1": "It doesn't have major cosmetic or mechanical damage, or an accident history.",
-        "assumption2": "It has a clean title with no liens or loans.",
-        "assumption3": "It is in a marketable condition, including interior and mechanical.",
-        "assumption4": "It isn't a non-runner.",
-        "assumption5": "If our assumptions do not apply, this final offer might vary from your online valuation, but we may still buy your car! (Guaranteed)",
+        "assumptions": "Before we move forward with your in-person appraisal, these are the conditions we assume about your car:",
+        "assumption1": "The car has no major mechanical problems, significant body damage, or a serious accident history.",
+        "assumption2": "The car has a clear title and isn’t tied to any loans or financial liabilities.",
+        "assumption3": "The car is in a sellable state, including its interior and mechanical condition.",
+        "assumption4": "The car is running and not considered a non-operational vehicle.",
+        "assumption5": "If any of these assumptions are incorrect, the final offer may differ from your online estimate — but we can still buy your car. (Guaranteed)",
         "loadingBookingDetails": "Loading Booking Details",
         "bookingConfirmed": "Booking Confirmed!",
         "bookingDetails": "Booking Details",
@@ -283,21 +283,11 @@ const lang = {
         "getCompetitivePricing": "Get competitive pricing based on current market conditions and vehicle condition",
         "quickProcessDescription": "Fast evaluation and same-day payment options available",
         "hassleFreeDescription": "We handle all paperwork and documentation for you",
-        
-        
-        
-        
-        
-        
-
-
-
-        
-
-        
-        
-        
-
+        "revealPrice": "Get Price",
+        "expectedCarPrice": "Expected Car Price",
+        "enterExpectedPricePrompt": "Please enter your expected price for the car to continue with the appointment.",
+        "expectedPriceSAR": "Expected Price (SAR)",
+        "enterExpectedPrice": "Enter expected price",
                  
        } ,
        ar: {
@@ -441,12 +431,12 @@ const lang = {
         "email": "البريد الإلكتروني",
         "mobile": "رقم الجوال",
         "disclaimer": "إخلاء المسؤولية",
-        "assumptions": "هذه هي الافتراضات التي أخذناها بعين الاعتبار لمركبتك قبل إجراء التقييم في الفرع:",
-        "assumption1": "لا تحتوي على أضرار تجميلية أو ميكانيكية كبيرة، ولا يوجد لها سجل حوادث.",
-        "assumption2": "تحمل ملكية نظيفة بدون أية رهونات أو قروض.",
-        "assumption3": "في حالة قابلة للبيع، بما في ذلك الحالة الداخلية والميكانيكية.",
-        "assumption4": "ليست غير قابلة للتشغيل.",
-        "assumption5": "إذا لم تنطبق هذه الافتراضات، فقد يختلف العرض النهائي عن التقييم عبر الإنترنت، ولكن قد نشتري سيارتك رغم ذلك! (مضمون)",
+        "assumptions": "قبل المتابعة في التقييم داخل المركز، هذه هي الشروط التي نفترض أنها تنطبق على سيارتك:",
+        "assumption1": "السيارة لا تحتوي على مشاكل ميكانيكية كبيرة أو أضرار جسيمة في الهيكل أو تاريخ حوادث خطيرة.",
+        "assumption2": "السيارة ذات ملكية واضحة وغير مرتبطة بأي قروض أو التزامات مالية.",
+        "assumption3": "السيارة في حالة قابلة للبيع، بما في ذلك حالتها الميكانيكية والداخلية.",
+        "assumption4": "السيارة تعمل وليست غير قابلة للتشغيل.",
+        "assumption5": "إذا لم تنطبق أي من هذه الافتراضات، فقد يختلف العرض النهائي عن التقييم الإلكتروني — ولكن يمكننا ما زلنا شراء سيارتك. (مضمون)",
         "loadingBookingDetails": "جارٍ تحميل تفاصيل الحجز",
         "bookingConfirmed": "تم تأكيد الحجز!",
         "bookingDetails": "تفاصيل الحجز",
@@ -583,7 +573,12 @@ const lang = {
         "getCompetitivePricing": "احصل على أفضل قيمة لسيارتك الحالية",
         "quickProcessDescription": "تقييم سريع وخيارات الدفع في نفس اليوم متاحة",
         "hassleFreeDescription": "نقوم بجميع الإجراءات والأوراق نيابةً عنك",
-        "convenienceFeatures": "مزايا الراحة"
+        "convenienceFeatures": "مزايا الراحة",
+        "revealPrice": "عرض السعر",
+        "expectedCarPrice": "السعر المتوقع للسيارة",
+        "enterExpectedPricePrompt": "يرجى إدخال السعر المتوقع للسيارة للمتابعة مع الموعد.",
+        "expectedPriceSAR": "السعر المتوقع (ريال سعودي)",
+        "enterExpectedPrice": "أدخل السعر المتوقع",   
          
        } 
     }
