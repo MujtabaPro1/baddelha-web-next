@@ -32,7 +32,7 @@ const Privacy: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-12 mt-[60px] max-w-5xl h-screen overflow-y-auto">
+    <div className="container mx-auto px-4 py-12 mt-[60px] max-w-5xl overflow-y-auto">
    <div className="p-4">
         <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-4">Privacy Policy</h1>
         
