@@ -32,7 +32,7 @@ const AboutUs: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-12 mt-[60px] max-w-5xl h-[calc(80vh-60px)] overflow-y-auto">
+    <div className="container mx-auto px-4 py-12 mt-[60px] max-w-5xl h-screen overflow-y-auto">
       <div className="bg-white rounded-xl shadow-md p-8">
         <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-4">About Us</h1>
         
