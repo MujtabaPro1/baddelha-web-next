@@ -1,12 +1,15 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { fetchPageContent } from '../../services/pageContentService';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const AboutUs: React.FC = () => {
-  const [content, setContent] = useState<string>('');
+  const [contentEn, setContentEn] = useState<string>('');
+  const [contentAr, setContentAr] = useState<string>('');
   const [lastUpdated, setLastUpdated] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const getAboutUs = async () => {
@@ -14,9 +17,10 @@ const AboutUs: React.FC = () => {
         setIsLoading(true);
         const response: any = await fetchPageContent('about-us');
         
-        if (response.content) {
-          setContent(response.content);
-          setLastUpdated(response.lastUpdated || '');
+        if (response) {
+          setContentEn(response.content_en || '');
+          setContentAr(response.content_ar || '');
+          setLastUpdated(response.updatedAt || '');
         } else {
           setError(response.message || 'Failed to load About Us content');
         }
@@ -54,7 +58,7 @@ const AboutUs: React.FC = () => {
               </div>
             )}
             
-            <div dangerouslySetInnerHTML={{ __html: content }} />
+            <div dangerouslySetInnerHTML={{ __html: language === 'ar' ? contentAr : contentEn }} />
             
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-sm text-gray-500">

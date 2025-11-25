@@ -2,8 +2,10 @@ import axiosInstance from './axiosInstance';
 
 export interface PageContentResponse {
   data: {
-    content: string;
-    title?: string;
+    content_en: string;
+    content_ar: string;
+    title_en?: string;
+    title_ar?: string;
     lastUpdated?: string;
   };
   success: boolean;
@@ -13,7 +15,7 @@ export interface PageContentResponse {
 /**
  * Fetches page content from the API
  * @param pageType The type of page content to fetch (e.g., 'privacy-policy', 'terms')
- * @returns Promise with the page content response
+ * @returns Promise with the page content response containing both English and Arabic content
  */
 export const fetchPageContent = async (pageType: string): Promise<PageContentResponse> => {
   try {
