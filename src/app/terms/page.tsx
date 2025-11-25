@@ -52,13 +52,7 @@ const Terms: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-6 text-gray-600">
-            {lastUpdated && (
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <p className="text-sm text-gray-500">
-                  Last updated: {lastUpdated}
-                </p>
-              </div>
-            )}
+          
             
             <div dangerouslySetInnerHTML={{ __html: language === 'ar' ? contentAr : contentEn }} />
             

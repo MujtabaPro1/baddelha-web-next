@@ -51,12 +51,8 @@ const Privacy: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-6 text-gray-600">
-            {lastUpdated && (
-              <p className="mb-6 text-gray-500 italic">
-                Last updated: {lastUpdated}
-              </p>
-            )}
-            
+          
+          
             <div dangerouslySetInnerHTML={{ __html: language === 'ar' ? contentAr : contentEn }} />
             
             <div className="mt-8 pt-6 border-t border-gray-200">
