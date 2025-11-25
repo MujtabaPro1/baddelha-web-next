@@ -38,7 +38,9 @@ const AboutUs: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-12 mt-[60px] max-w-5xl overflow-y-auto">
       <div className="p-4">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-4">About Us</h1>
+        <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-4">
+          {language === 'ar' ? 'عنّا' : 'About Us'}
+        </h1>
         
         {isLoading ? (
           <div className="flex justify-center items-center py-12">
