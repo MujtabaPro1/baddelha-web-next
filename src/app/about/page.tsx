@@ -6,7 +6,6 @@ import { useLanguage } from '../../contexts/LanguageContext';
 const AboutUs: React.FC = () => {
   const [contentEn, setContentEn] = useState<string>('');
   const [contentAr, setContentAr] = useState<string>('');
-  const [lastUpdated, setLastUpdated] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { language } = useLanguage();
@@ -20,7 +19,6 @@ const AboutUs: React.FC = () => {
         if (response) {
           setContentEn(response.content_en || '');
           setContentAr(response.content_ar || '');
-          setLastUpdated(response.updatedAt || '');
         } else {
           setError(response.message || 'Failed to load About Us content');
         }

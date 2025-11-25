@@ -6,7 +6,6 @@ import { useLanguage } from '../../contexts/LanguageContext';
 const Privacy: React.FC = () => {
   const [contentEn, setContentEn] = useState<string>('');
   const [contentAr, setContentAr] = useState<string>('');
-  const [lastUpdated, setLastUpdated] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { language } = useLanguage();
@@ -19,7 +18,6 @@ const Privacy: React.FC = () => {
         if (response) {
           setContentEn(response.content_en || '');
           setContentAr(response.content_ar || '');
-          setLastUpdated(response.updatedAt || '');
         } else {
           setError(response.message || 'Failed to load Privacy Policy content');
         }
