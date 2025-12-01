@@ -349,7 +349,7 @@ const Step3 = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Left Column - Car Image & Price */}
                 <div className="md:col-span-1">
-                    <div className="bg-[#3d3d40] text-white p-4 rounded-t-lg">
+                    <div className="hidden bg-[#3d3d40] text-white p-4 rounded-t-lg">
                         <div className="flex justify-between items-center">
                             <div className="w-full">
                                 <p className="text-sm">{lang[languageContent].yourVehicleMarketPrice}</p>
