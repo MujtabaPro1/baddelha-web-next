@@ -91,9 +91,13 @@ const Step2 = () => {
 
                 if(newBodyType.length > 0){
                     setBodyTypes(newBodyType);
+                    setBodyType(newBodyType[0].name);
+                    setBodyTypeName(newBodyType[0].name);
                 }
                 if(newEngineSize.length > 0){
                     setEngineSizes(newEngineSize);
+                    setEngineSize(newEngineSize[0].name);
+                    setEngineSizeName(newEngineSize[0].name);
                 }
         }
 
@@ -206,35 +210,46 @@ const Step2 = () => {
         router.push('/step3');
     };
     
+
+    const currentStep = 2;
+const totalSteps = 3;
+const progressPercent = Math.min(100, Math.max(0, (currentStep / totalSteps) * 100));
+const progressSteps = [
+    { key: 'select', label: lang[languageContent].select, state: currentStep > 1 ? 'done' : 'active' },
+    { key: 'condition', label: lang[languageContent].condition, state: currentStep === 2 ? 'active' : currentStep > 2 ? 'done' : 'upcoming' },
+    { key: 'book', label: lang[languageContent].book, state: currentStep >= 3 ? 'active' : 'upcoming' },
+];
+
     return (
-        <div className="max-w-5xl mt-[120px] mx-auto px-4 py-8">
+        <div className="max-w-6xl mt-[120px] mx-auto px-4 py-8">
             {/* Progress Indicator */}
             <div className="mb-8">
-                <div className="relative">
-                    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
-                        <div style={{ width: '66%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-amber-500 to-amber-400"></div>
+            <div className="bg-white border border-gray-100 rounded-2xl shadow-sm px-5 py-4">
+    <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
+        <span className="font-semibold text-gray-800">Step {currentStep} / {totalSteps}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-600">In progress</span>
+    </div>
+    <div className="relative">
+        <div className="absolute top-6 left-3 right-3 h-2 rounded-full bg-gray-200 overflow-hidden">
+            <div style={{ width: `${progressPercent}%` }} className="h-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-300 shadow-[0_8px_20px_-10px_rgba(245,158,11,0.9)]" />
+        </div>
+        <div className="relative flex justify-between">
+            {progressSteps.map((step, idx) => {
+                const isDone = step.state === 'done';
+                const isActive = step.state === 'active';
+                return (
+                    <div key={step.key} className="flex flex-col items-center gap-1 w-1/3 text-center">
+                        <div className={`h-11 w-11 rounded-full border-2 flex items-center justify-center transition-all ${isDone ? 'bg-gradient-to-r from-amber-500 to-amber-400 border-amber-300 shadow-md' : isActive ? 'bg-white border-amber-400 ring-4 ring-amber-100' : 'bg-white border-gray-200'}`}>
+                            {isDone ? <Check className="h-5 w-5 text-white" /> : <span className={`text-sm font-semibold ${isActive ? 'text-amber-600' : 'text-gray-400'}`}>{idx + 1}</span>}
+                        </div>
+                        <span className={`text-sm font-semibold ${isActive ? 'text-gray-900' : isDone ? 'text-gray-700' : 'text-gray-500'}`}>{step.label}</span>
+                        <span className="text-[11px] text-gray-500">{isDone ? 'Completed' : isActive ? 'Currently filling' : 'Up next'}</span>
                     </div>
-                    <div className="flex justify-between">
-                        <div className="text-center">
-                            <div className="w-10 h-10 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center">
-                                <Check className="h-6 w-6 text-white" />
-                            </div>
-                            <div className="mt-2 font-medium text-[#f78f37]">{lang[languageContent].select}</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-10 h-10 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center">
-                                <div className="h-3 w-3 bg-white rounded-full"></div>
-                            </div>
-                            <div className="mt-2 font-medium text-[#f78f37]">{lang[languageContent].condition}</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-10 h-10 mx-auto rounded-full bg-gray-300 flex items-center justify-center">
-                                <div className="h-3 w-3 bg-white rounded-full"></div>
-                            </div>
-                            <div className="mt-2 font-medium text-gray-500">{lang[languageContent].book}</div>
-                        </div>
-                    </div>
-                </div>
+                );
+            })}
+        </div>
+    </div>
+</div>
             </div>
             
             <div className="bg-white rounded-xl shadow-xl overflow-hidden">
@@ -382,21 +397,21 @@ const Step2 = () => {
                             <button 
                                 type="button" 
                                 onClick={() => setOption('Basic')} 
-                                className={`px-4 py-2 rounded-md ${option === 'Basic' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${option === 'Basic' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 Basic
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setOption('Mid option')} 
-                                className={`px-4 py-2 rounded-md ${option === 'Mid option' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${option === 'Mid option' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 Mid option
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setOption('Full option')} 
-                                className={`px-4 py-2 rounded-md ${option === 'Full option' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${option === 'Full option' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 Full option
                             </button>
@@ -410,21 +425,21 @@ const Step2 = () => {
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Original paint')} 
-                                className={`px-4 py-2 rounded-md ${paint === 'Original paint' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${paint === 'Original paint' ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 Original paint
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Partial repaint')} 
-                                className={`px-4 py-2 rounded-md ${paint === 'Partial repaint' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${paint === 'Partial repaint' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 Partial repaint
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Total repaint')} 
-                                className={`px-4 py-2 rounded-md ${paint === 'Total repaint' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${paint === 'Total repaint' ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 Total repaint
                             </button>
@@ -439,14 +454,14 @@ const Step2 = () => {
                             <button 
                                 type="button" 
                                 onClick={() => setGccSpecs('GCC Specs')} 
-                                className={`px-4 py-2 rounded-md ${gccSpecs === 'GCC Specs' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${gccSpecs === 'GCC Specs' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 GCC Specs
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setGccSpecs('Non GCC Specs')} 
-                                className={`px-4 py-2 rounded-md ${gccSpecs === 'Non GCC Specs' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`px-4 py-2 rounded-md ${gccSpecs === 'Non GCC Specs' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
                                 Non GCC Specs
                             </button>

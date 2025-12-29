@@ -18,13 +18,11 @@ const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Client-side only code to handle localStorage
-  useEffect(() => {
-    // Check if user is authenticated
-    const authToken = localStorage.getItem('authToken');
+  // Function to check auth state from localStorage
+  const checkAuthState = () => {
+    const authToken = localStorage.getItem('authToken') || localStorage.getItem('token');
     setIsAuthenticated(!!authToken);
     
-    // Get user details if available
     const userDetailsStr = localStorage.getItem('userDetails');
     if (userDetailsStr) {
       try {
@@ -32,7 +30,20 @@ const Navbar: React.FC = () => {
       } catch (e) {
         console.error('Error parsing user details', e);
       }
+    } else {
+      setUserDetails({});
     }
+  };
+
+  // Client-side only code to handle localStorage
+  useEffect(() => {
+    checkAuthState();
+    
+    // Listen for auth state changes
+    const handleAuthChange = () => checkAuthState();
+    window.addEventListener('authStateChanged', handleAuthChange);
+    
+    return () => window.removeEventListener('authStateChanged', handleAuthChange);
   }, []);
   
 
@@ -145,7 +156,7 @@ const Navbar: React.FC = () => {
             role="button"
             aria-label="Call 920032590">
               <Phone className="h-4 w-4  ml-2 mr-2" />
-              <span className="font-medium ml-2 mr-2">920032590</span>
+              <span className="font-medium ml-2 mr-2">+92 00 32590</span>
             </div>
             <button
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}

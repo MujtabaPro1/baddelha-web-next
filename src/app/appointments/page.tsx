@@ -187,9 +187,9 @@ const Appointments = () => {
           </div>
         ) : (
           <div className="space-y-3 sm:space-y-4">
-            {appointments.map((appointment) => (
+            {appointments.map((appointment: any) => (
               <div 
-                key={appointment.id + '-appointment'}
+                key={appointment.uid + '-appointment'}
                 className="bg-white shadow rounded-lg overflow-hidden"
               >
                 <div className="px-4 py-3 sm:px-5 sm:py-4 border-b border-gray-100">

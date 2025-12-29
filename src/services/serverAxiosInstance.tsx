@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://stg-service.bddelha.com';
+const BASE_URL = 'https://service.baddelha.com.sa';
 
 const serverAxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -10,3 +10,5 @@ const serverAxiosInstance = axios.create({
 // No interceptors that use browser-only APIs like localStorage
 
 export default serverAxiosInstance;
+
+

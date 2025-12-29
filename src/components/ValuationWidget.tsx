@@ -1,5 +1,7 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { Check, ArrowRight, AlertCircle, ArrowLeft } from 'lucide-react';
+import Select from 'react-select';
 import axiosInstance from '../services/axiosInstance';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
@@ -112,32 +114,29 @@ const ValuationWidget: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           <div>
             <label htmlFor="make" className="block text-sm font-medium text-gray-700 mb-1">{lang[languageContent].make}</label>
-            <div className="relative">
-              <select
-                id="make"
-                
-                value={makeId}
-                onChange={(e) => {
-                  console.log(e.target.options[e.target.selectedIndex].text)
-                  setMake(e.target.options[e.target.selectedIndex].text);
-                  setMakeId(e.target.value);
-                }}
-                className="block w-full rounded-lg border-gray-300 bg-gray-50 py-3 px-4 pr-8 focus:border-blue-500 focus:ring-blue-500 appearance-none"
-                disabled={loading.makes}
-              >
-                <option value="">{lang[languageContent].selectMake}</option>
-                {makes?.map(makeItem => (
-                  <option key={makeItem.id} value={makeItem.id}>{makeItem.name}</option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                {loading.makes ? (
-                  <span className="animate-spin h-4 w-4 border-2 border-gray-500 rounded-full border-t-transparent"></span>
-                ) : (
-                  <ChevronIcon />
-                )}
-              </div>
-            </div>
+            <Select
+              instanceId="make-select"
+              inputId="make"
+              value={makeId ? { value: makeId, label: make } : null}
+              onChange={(option) => {
+                setMake(option?.label || '');
+                setMakeId(option?.value || '');
+              }}
+              options={makes?.map(makeItem => ({ value: makeItem.id, label: makeItem.name }))}
+              placeholder={lang[languageContent].selectMake}
+              isLoading={loading.makes}
+              isDisabled={loading.makes}
+              isClearable
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+              classNames={{
+                control: () => 'rounded-lg border-gray-300 bg-gray-50 py-1 px-1',
+                menu: () => 'rounded-lg shadow-lg',
+              }}
+              styles={{
+                control: (base) => ({ ...base, minHeight: '48px' }),
+                menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+              }}
+            />
             {error.makes && (
               <p className="mt-1 text-sm text-red-600">{error.makes}</p>
             )}
@@ -145,28 +144,29 @@ const ValuationWidget: React.FC = () => {
           
           <div>
             <label htmlFor="model" className="block text-sm font-medium text-gray-700 mb-1">{lang[languageContent].model}</label>
-            <div className="relative">
-              <select
-                id="model"
-                value={modelId}
-                onChange={(e) => {
-                  setModel(e.target.options[e.target.selectedIndex].text);
-                  setModelId(e.target.value);
-                }}
-                className="block w-full rounded-lg border-gray-300 bg-gray-50 py-3 px-4 pr-8 focus:border-blue-500 focus:ring-blue-500"
-                disabled={loading.models || !make}
-              >
-                <option value="">{lang[languageContent].selectModel}</option>
-                {models.map(modelItem => (
-                  <option key={modelItem.id} value={modelItem.id}>{modelItem.name}</option>
-                ))}
-              </select>
-              {loading.models && (
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <span className="animate-spin h-4 w-4 border-2 border-gray-500 rounded-full border-t-transparent"></span>
-                </div>
-              )}
-            </div>
+            <Select
+              instanceId="model-select"
+              inputId="model"
+              value={modelId ? { value: modelId, label: model } : null}
+              onChange={(option) => {
+                setModel(option?.label || '');
+                setModelId(option?.value || '');
+              }}
+              options={models.map(modelItem => ({ value: modelItem.id, label: modelItem.name }))}
+              placeholder={lang[languageContent].selectModel}
+              isLoading={loading.models}
+              isDisabled={loading.models || !make}
+              isClearable
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+              classNames={{
+                control: () => 'rounded-lg border-gray-300 bg-gray-50 py-1 px-1',
+                menu: () => 'rounded-lg shadow-lg',
+              }}
+              styles={{
+                control: (base) => ({ ...base, minHeight: '48px' }),
+                menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+              }}
+            />
             {error.models && (
               <p className="mt-1 text-sm text-red-600">{error.models}</p>
             )}
@@ -174,22 +174,24 @@ const ValuationWidget: React.FC = () => {
           
           <div>
             <label htmlFor="year" className="block text-sm font-medium text-gray-700 mb-1">Year</label>
-            <div className="relative">
-              <select
-                id="year"
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-                className="block w-full rounded-lg border-gray-300 bg-gray-50 py-3 px-4 pr-8 focus:border-blue-500 focus:ring-blue-500 appearance-none"
-              >
-                <option value="">{lang[languageContent].selectYear}</option>
-                {years.map(year => (
-                  <option key={year} value={year}>{year}</option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <ChevronIcon />
-              </div>
-            </div>
+            <Select
+              instanceId="year-select"
+              inputId="year"
+              value={year ? { value: year, label: year } : null}
+              onChange={(option) => setYear(option?.value || '')}
+              options={years.map(y => ({ value: y, label: y }))}
+              placeholder={lang[languageContent].selectYear}
+              isClearable
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+              classNames={{
+                control: () => 'rounded-lg border-gray-300 bg-gray-50 py-1 px-1',
+                menu: () => 'rounded-lg shadow-lg',
+              }}
+              styles={{
+                control: (base) => ({ ...base, minHeight: '48px' }),
+                menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+              }}
+            />
           </div>
           
          
@@ -237,11 +239,5 @@ const ValuationWidget: React.FC = () => {
     </div>
   );
 };
-
-const ChevronIcon = () => (
-  <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-  </svg>
-);
 
 export default ValuationWidget;

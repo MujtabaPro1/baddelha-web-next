@@ -6,6 +6,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '../../components/ui/input
 import { useLanguage } from '../../contexts/LanguageContext';
 import lang  from '../../locale';
 import { useRouter } from 'next/navigation';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const Step3 = () => {
     const [branch, setBranch] = useState('');
@@ -29,11 +30,23 @@ const Step3 = () => {
     const router = useRouter();
     const [carLogo,setCarLogo] = useState<string | null>(null);
 
+    // Seller OTP authentication states
+    const [showSellerOtpPopup, setShowSellerOtpPopup] = useState(false);
+    const [sellerOtp, setSellerOtp] = useState('');
+    const [sellerOtpError, setSellerOtpError] = useState('');
+    const [sellerOtpSending, setSellerOtpSending] = useState(false);
+    const [sellerOtpVerifying, setSellerOtpVerifying] = useState(false);
+    const [resendTimer, setResendTimer] = useState(0);
+    const [resendCount, setResendCount] = useState(0);
+    const [pendingBookingData, setPendingBookingData] = useState<any>(null);
+
     // State for branches from API
     const [branches, setBranches] = useState<{id: string; name: string; address: string, enName: string, arName: string, image?: string, location?: string, distance?: string}[]>([]);
     const [loadingBranches, setLoadingBranches] = useState(false);
     const [branchError, setBranchError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const { executeRecaptcha } = useGoogleReCaptcha();
+    const [recaptchaReady, setRecaptchaReady] = useState(false);
 
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
@@ -101,6 +114,172 @@ const Step3 = () => {
 
         
     };
+
+
+        // Monitor reCAPTCHA availability
+    useEffect(() => {
+        if (executeRecaptcha) {
+        console.log('reCAPTCHA is available');
+
+        // Just mark as ready when the hook is available
+        // We'll execute it only when the form is submitted
+        setRecaptchaReady(true);
+        }
+    }, [executeRecaptcha]);
+
+    
+
+        // Resend timer countdown effect
+    useEffect(() => {
+        if (resendTimer > 0) {
+            const interval = setInterval(() => {
+                setResendTimer((prev) => prev - 1);
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [resendTimer]);
+
+    // Send OTP to seller
+    const sendSellerOtp = async () => {
+        if (sellerOtpSending) return; // Prevent multi-click
+        
+        setSellerOtpSending(true);
+        setSellerOtpError('');
+        
+        try {
+            await axiosInstance.post('/api/auth/seller/sign-up', {
+                email: email.trim(),
+                firstName: firstName.trim(),
+                lastName: lastName.trim(),
+                phone: phone.trim()
+            });
+            
+            // Set resend timer: 120s for first resend, 240s thereafter
+            const timerDuration = resendCount === 0 ? 120 : 240;
+            setResendTimer(timerDuration);
+            setResendCount((prev) => prev + 1);
+            
+        } catch (error: any) {
+            console.error('Error sending OTP:', error);
+            setSellerOtpError(error?.response?.data?.message || 'Failed to send OTP. Please try again.');
+        } finally {
+            setSellerOtpSending(false);
+        }
+    };
+
+    // Verify OTP and proceed with booking
+    const verifySellerOtp = async () => {
+        if (sellerOtpVerifying || sellerOtp.length !== 6) return; // Prevent multi-click
+        
+        setSellerOtpVerifying(true);
+        setSellerOtpError('');
+        
+        try {
+            const response = await axiosInstance.post('/api/auth/verify-otp', {
+                otp: sellerOtp,
+                target: email.trim()
+            });
+            
+            // OTP verified successfully, store tokens and user details
+            const { access_token, refresh_token, id, firstName: resFirstName, lastName: resLastName, phone: resPhone, email: resEmail, avatar } = response.data;
+            
+            // Store tokens for axios interceptor
+            localStorage.setItem('token', access_token);
+            localStorage.setItem('authToken', access_token);
+            localStorage.setItem('refresh_token', refresh_token);
+            
+            // Store user details in localStorage
+            localStorage.setItem('userDetails', JSON.stringify({
+                id,
+                firstName: resFirstName || firstName.trim(),
+                lastName: resLastName || lastName.trim(),
+                phone: resPhone || phone.trim(),
+                email: resEmail || email.trim(),
+                avatar
+            }));
+            
+            // Dispatch event to notify Navbar of auth state change
+            window.dispatchEvent(new Event('authStateChanged'));
+            
+            setShowSellerOtpPopup(false);
+            
+            // Proceed with booking using pending data
+            if (pendingBookingData) {
+                await submitBooking(pendingBookingData);
+            }
+            
+        } catch (error: any) {
+            console.error('Error verifying OTP:', error);
+            setSellerOtpError(error?.response?.data?.message || 'Invalid OTP. Please try again.');
+        } finally {
+            setSellerOtpVerifying(false);
+        }
+    };
+
+    // Submit booking API call
+    const submitBooking = async (bookingData: any) => {
+     
+             
+        try {
+        // Check if reCAPTCHA is available
+        let recaptchaToken = '';
+        if (!executeRecaptcha) {
+            console.warn('reCAPTCHA not available, proceeding without verification');
+            // Continue without reCAPTCHA for testing
+        } else {
+            try {
+            // Try to execute reCAPTCHA
+            recaptchaToken = await executeRecaptcha('book_appointment');
+            console.log('reCAPTCHA token:', recaptchaToken);
+            bookingData.recaptchaToken = recaptchaToken;
+            } catch (recaptchaError) {
+            console.error('reCAPTCHA execution error:', recaptchaError);
+            // Continue without reCAPTCHA for now
+            }
+            
+        }
+
+ 
+            const response = await axiosInstance.post('/api/1.0/book-appointment/', bookingData);
+            
+            // Store the response data in localStorage for the confirmation page
+            localStorage.setItem('bookingDetails', JSON.stringify({
+                branch: branches.find(b => b.id == branch)?.enName || '',
+                date: bookingData.appointmentDate,
+                time: selectedTimeSlot,
+                firstName,
+                lastName,
+                phone,
+                email,
+                bookingId: response.data?.uid || '',
+                carPrice: carPrice,
+                id: response.data?.uid || '',
+            }));
+            
+            // Store car details in localStorage
+            const storedStep1Data = sessionStorage.getItem('carDetails');
+            const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
+            if (step1Data && step2Data) {
+                localStorage.setItem('carDetails', JSON.stringify({
+                    make: step1Data.make || '',
+                    model: step1Data.model || '',
+                    year: step1Data.year || '',
+                    price: carPrice,
+                    image: step1Data.image || 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb'
+                }));
+            }
+            
+            // Redirect to confirmation page
+            router.push('/confirmation');
+            
+        } catch (error) {
+            console.error('Error submitting booking:', error);
+            alert('There was an error submitting your booking. Please try again.');
+        }
+    
+    }
+    
+
 
     
     // Fetch branches from API
@@ -270,40 +449,22 @@ const Step3 = () => {
                 type: 'sell'
             };
 
-       
-            
-            // Make the API call
-     
-            const response = await axiosInstance.post('/api/1.0/book-appointment/', bookingData);
-            
-            // Store the response data in localStorage for the confirmation page
-            localStorage.setItem('bookingDetails', JSON.stringify({
-                branch: branches.find(b => b.id == branch)?.enName || '',
-                date: appointmentDate,
-                time: selectedTimeSlot,
-                firstName,
-                lastName,
-                phone,
-                email,
-                bookingId: response.data?.uid || '',
-                carPrice: carPrice,
-                id: response.data?.uid || '',
-            }));
-            
-            // Store car details in localStorage
-            if (step1Data && step2Data) {
-                localStorage.setItem('carDetails', JSON.stringify({
-                    make: step1Data.make || '',
-                    model: step1Data.model || '',
-                    year: step1Data.year || '',
-                    price: carPrice,
-                    image: step1Data.image || 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb'
-                }));
+            // Check if user is logged in
+            const userDetails = localStorage.getItem('userDetails');
+            if (!userDetails) {
+                // User not logged in, show OTP popup and send OTP
+                setPendingBookingData(bookingData);
+                setShowSellerOtpPopup(true);
+                setSellerOtp('');
+                setSellerOtpError('');
+                setResendCount(0);
+                // Send OTP immediately when popup opens
+                await sendSellerOtp();
+                return;
             }
-
             
-            // Redirect to confirmation page
-            router.push('/confirmation');
+            // User is logged in, proceed with booking directly
+            await submitBooking(bookingData);
             
         } catch (error) {
             console.error('Error submitting booking:', error);
@@ -311,35 +472,47 @@ const Step3 = () => {
         }
     };
 
+    const currentStep = 3;
+    const totalSteps = 3;
+    const progressPercent = Math.min(100, Math.max(0, (currentStep / totalSteps) * 100));
+    const progressSteps = [
+        { key: 'select', label: lang[languageContent].select, state: currentStep > 1 ? 'done' : 'active' },
+        { key: 'condition', label: lang[languageContent].condition, state: currentStep > 2 ? 'done' : 'upcoming' },
+        { key: 'book', label: lang[languageContent].book, state: currentStep >= 3 ? 'active' : 'upcoming' },
+    ];
+    
+
+
     return (
-        <div className="max-w-5xl mt-[120px] mx-auto px-4 py-8">
+        <div className="max-w-6xl mt-[120px] mx-auto px-4 py-8">
             {/* Progress Indicator */}
             <div className="mb-8">
-                <div className="relative">
-                    <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
-                        <div style={{ width: '100%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-amber-500 to-amber-400"></div>
+            <div className="bg-white border border-gray-100 rounded-2xl shadow-sm px-5 py-4">
+    <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
+        <span className="font-semibold text-gray-800">Step {currentStep} / {totalSteps}</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-600">In progress</span>
+    </div>
+    <div className="relative">
+        <div className="absolute top-6 left-3 right-3 h-2 rounded-full bg-gray-200 overflow-hidden">
+            <div style={{ width: `${progressPercent}%` }} className="h-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-300 shadow-[0_8px_20px_-10px_rgba(245,158,11,0.9)]" />
+        </div>
+        <div className="relative flex justify-between">
+            {progressSteps.map((step, idx) => {
+                const isDone = step.state === 'done';
+                const isActive = step.state === 'active';
+                return (
+                    <div key={step.key} className="flex flex-col items-center gap-1 w-1/3 text-center">
+                        <div className={`h-11 w-11 rounded-full border-2 flex items-center justify-center transition-all ${isDone ? 'bg-gradient-to-r from-amber-500 to-amber-400 border-amber-300 shadow-md' : isActive ? 'bg-white border-amber-400 ring-4 ring-amber-100' : 'bg-white border-gray-200'}`}>
+                            {isDone ? <Check className="h-5 w-5 text-white" /> : <span className={`text-sm font-semibold ${isActive ? 'text-amber-600' : 'text-gray-400'}`}>{idx + 1}</span>}
+                        </div>
+                        <span className={`text-sm font-semibold ${isActive ? 'text-gray-900' : isDone ? 'text-gray-700' : 'text-gray-500'}`}>{step.label}</span>
+                        <span className="text-[11px] text-gray-500">{isDone ? 'Completed' : isActive ? 'Currently filling' : 'Up next'}</span>
                     </div>
-                    <div className="flex justify-between">
-                        <div className="text-center">
-                            <div className="w-10 h-10 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center">
-                                <Check className="h-6 w-6 text-white" />
-                            </div>
-                            <div className="mt-2 font-medium text-[#f78f37]">{lang[languageContent].select}</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-10 h-10 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center">
-                                <Check className="h-6 w-6 text-white" />
-                            </div>
-                            <div className="mt-2 font-medium text-[#f78f37]">{lang[languageContent].condition}</div>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-10 h-10 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center">
-                                <div className="h-3 w-3 bg-white rounded-full"></div>
-                            </div>
-                            <div className="mt-2 font-medium text-[#f78f37]">{lang[languageContent].book}</div>
-                        </div>
-                    </div>
-                </div>
+                );
+            })}
+        </div>
+    </div>
+</div>
             </div>
             
         
@@ -353,50 +526,71 @@ const Step3 = () => {
                         <div className="flex justify-between items-center">
                             <div className="w-full">
                                 <p className="text-sm">{lang[languageContent].yourVehicleMarketPrice}</p>
-                                <h3 className="text-3xl font-bold flex items-center animate-pulse w-full flex justify-between">SAR
-                                {revealPrice ? (carPrice ? ` ${carPrice.toLocaleString()}` : '') : 
-                                  <button
-                                    onClick={async ()=>{
-                                        try {
-                                            setIsLoading(true);
-                                            // Sample car data - in a real app, you would get this from form inputs or state
-                                            const storedStep1Data = sessionStorage.getItem('carDetails');
-                                            const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
-                                            const step2 = sessionStorage.getItem('step2Data');
-                                            const step2Data = step2 ? JSON.parse(step2) : {};
-                                            const carData = {
-                                                make: step1Data.make,
-                                                model: step1Data.model,
-                                                year: Number(step1Data.year),
-                                                mileage: step2Data.mileageName,
-                                                bodyType: step2Data.bodyTypeName,
-                                                engineType: 'Petrol',
-                                                engineSize: step2Data.engineSizeName,
-                                                gearType: 'Automatic',
-                                                specs: step2Data.gccSpecs,
-                                            };
-                                            const response = await axiosInstance.post('/api/1.0/core/evaluate/car', carData);
-                                            
-                                            if (response.data) {
-                                                setCarPrice(response.data.priceEstimate?.valueRange?.low);
-                                            }
-                                            setRevealPrice(true);
-                                            setIsLoading(false);
-                                        } catch (error) {
-                                            console.error('Error fetching car price:', error);
-                                            setRevealPrice(true); // Still reveal the UI section even if API fails
-                                            setIsLoading(false);
-                                        }
-                                    
-                                    }}
-                                    className="bg-gradient-to-r from-amber-500 to-amber-400 ml-2 mr-2 text-xs px-3 py-1 rounded hover:bg-yellow-600 transition w-[140px] mt-2 h-[40px] flex items-center justify-center">
-                                        {!isLoading? lang[languageContent].revealPrice: 
-                                        
-                                        <div className="w-4 h-4 border-2 border-white border-dashed rounded-full animate-spin"></div>
+                                <h3 className="text-3xl font-bold flex items-center animate-pulse w-full flex justify-between">
+                                    SAR
+                                    {revealPrice ? 
+                                        (carPrice ? ` ${carPrice.toLocaleString()}` : '') 
+                                        : 
+                                        <button
+                                            onClick={async () => {
+                                                try {
+                                                    setIsLoading(true);
+                                                    // Sample car data - in a real app, you would get this from form inputs or state
+                                                    const storedStep1Data = sessionStorage.getItem('carDetails');
+                                                    const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
+                                                    const step2 = sessionStorage.getItem('step2Data');
+                                                    const step2Data = step2 ? JSON.parse(step2) : {};
 
-                                        }
-                                    </button>
-                                }
+                                                    // Check if reCAPTCHA is available
+                                                    let recaptchaToken = '';
+                                                    if (executeRecaptcha) {
+                                                        try {
+                                                            // Try to execute reCAPTCHA
+                                                            recaptchaToken = await executeRecaptcha('evaluate');
+                                                            console.log('reCAPTCHA token:', recaptchaToken);
+                                                        } catch (recaptchaError) {
+                                                            console.error('reCAPTCHA execution error:', recaptchaError);
+                                                            // Continue without reCAPTCHA for now
+                                                        }
+                                                    } else {
+                                                        console.warn('reCAPTCHA not available, proceeding without verification');
+                                                        // Continue without reCAPTCHA for testing
+                                                    }
+                                                    
+                                                    const carData = {
+                                                        make: step1Data.make,
+                                                        model: step1Data.model,
+                                                        year: Number(step1Data.year),
+                                                        mileage: step2Data.mileageName,
+                                                        bodyType: step2Data.bodyTypeName,
+                                                        engineType: 'Petrol',
+                                                        engineSize: step2Data.engineSizeName,
+                                                        gearType: 'Automatic',
+                                                        specs: step2Data.gccSpecs,
+                                                        recaptchaToken,
+                                                    };
+                                                    const response = await axiosInstance.post('/api/1.0/core/evaluate/car', carData);
+                                                    
+                                                    if (response.data) {
+                                                        setCarPrice(response.data.priceEstimate?.valueRange?.low);
+                                                    }
+                                                    setRevealPrice(true);
+                                                    setIsLoading(false);
+                                                } catch (error) {
+                                                    console.error('Error fetching car price:', error);
+                                                    setRevealPrice(true); // Still reveal the UI section even if API fails
+                                                    setIsLoading(false);
+                                                }
+                                            }}
+                                            className="bg-gradient-to-r from-amber-500 to-amber-400 ml-2 mr-2 text-xs px-3 py-1 rounded hover:bg-yellow-600 transition w-[180px] mt-2 h-[40px] flex items-center justify-center"
+                                        >
+                                            {!isLoading ? 
+                                                lang[languageContent].revealPrice 
+                                                : 
+                                                <div className="w-4 h-4 border-2 border-white border-dashed rounded-full animate-spin"></div>
+                                            }
+                                        </button>
+                                    }
                                 </h3>
                             </div>
                            
@@ -469,7 +663,7 @@ const Step3 = () => {
                                                     {/* Left side - smaller image */}
                                                     <div className="relative w-1/3 h-full">
                                                         <img 
-                                                            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsSHkHJo3lDVYKlenp1sGYGzgfnPwzstj9AA&s'} 
+                                                            src={'branch.jpeg'} 
                                                             alt={language === "en" ? branchItem.enName : branchItem.arName}
                                                             className="w-full h-full object-cover"
                                                         />
@@ -502,14 +696,7 @@ const Step3 = () => {
                                                             </svg>
                                                             {branchItem.location}
                                                         </a>
-                                                        
-                                                        {/* Distance indicator */}
-                                                        <p className="text-sm text-[#f78f37] mt-1 flex items-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                                            </svg>
-                                                            {branchItem.distance}
-                                                        </p>
+                                                
                                                     </div>
                                                 </div>
                                             </div>
@@ -728,6 +915,97 @@ const Step3 = () => {
                 </div>
             )}
             
+            {/* Seller OTP Verification Modal */}
+            {showSellerOtpPopup && (
+                <div className="fixed inset-0 bg-[#9797977d] bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+                        <button 
+                            onClick={() => {
+                                setShowSellerOtpPopup(false);
+                                setPendingBookingData(null);
+                            }}
+                            className={`absolute ${language === 'ar' ? 'left-4' : 'right-4'} top-4 text-gray-500 hover:text-gray-700`}
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
+                        
+                        <div className="text-center mb-6">
+                            <div className="bg-orange-100 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#f78f37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold">
+                                {language === 'en' ? 'Verify Your Email' : 'تحقق من بريدك الإلكتروني'}
+                            </h3>
+                            <p className="text-gray-600 mt-1">
+                                {language === 'en' 
+                                    ? `We sent a 6-digit code to ${email}` 
+                                    : `لقد أرسلنا رمزًا مكونًا من 6 أرقام إلى ${email}`}
+                            </p>
+                        </div>
+                        
+                        <div className="mb-6">
+                            <label className="block text-sm font-medium mb-3 text-center">
+                                {language === 'en' ? 'Enter the 6-digit code' : 'أدخل الرمز المكون من 6 أرقام'}
+                            </label>
+                            <InputOTP
+                                maxLength={6}
+                                value={sellerOtp}
+                                onChange={(value: string) => setSellerOtp(value)}
+                                containerClassName="justify-center gap-2"
+                            >
+                                <InputOTPGroup className="gap-2">
+                                    <InputOTPSlot index={0} className="rounded-md border-gray-300" />
+                                    <InputOTPSlot index={1} className="rounded-md border-gray-300" />
+                                    <InputOTPSlot index={2} className="rounded-md border-gray-300" />
+                                    <InputOTPSlot index={3} className="rounded-md border-gray-300" />
+                                    <InputOTPSlot index={4} className="rounded-md border-gray-300" />
+                                    <InputOTPSlot index={5} className="rounded-md border-gray-300" />
+                                </InputOTPGroup>
+                            </InputOTP>
+                            {sellerOtpError && (
+                                <p className="text-red-500 text-sm mt-2 text-center">{sellerOtpError}</p>
+                            )}
+                        </div>
+                        
+                        <div className="flex flex-col space-y-3">
+                            <button
+                                onClick={verifySellerOtp}
+                                disabled={sellerOtpVerifying || sellerOtp.length !== 6}
+                                className={`w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white font-semibold py-3 px-6 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#f78f37] focus:ring-opacity-50 shadow-md flex items-center justify-center ${
+                                    (sellerOtpVerifying || sellerOtp.length !== 6) ? 'opacity-70 cursor-not-allowed' : ''
+                                }`}
+                            >
+                                {sellerOtpVerifying ? (
+                                    <div className="w-5 h-5 border-2 border-white border-dashed rounded-full animate-spin"></div>
+                                ) : (
+                                    language === 'en' ? 'Verify & Book Appointment' : 'تحقق واحجز موعد'
+                                )}
+                            </button>
+                            
+                            <button
+                                onClick={sendSellerOtp}
+                                disabled={resendTimer > 0 || sellerOtpSending}
+                                className={`text-[#f78f37] hover:text-[#e67d26] text-sm font-medium ${
+                                    (resendTimer > 0 || sellerOtpSending) ? 'opacity-50 cursor-not-allowed' : ''
+                                }`}
+                            >
+                                {sellerOtpSending ? (
+                                    language === 'en' ? 'Sending...' : 'جاري الإرسال...'
+                                ) : resendTimer > 0 ? (
+                                    language === 'en' 
+                                        ? `Resend Code in ${Math.floor(resendTimer / 60)}:${(resendTimer % 60).toString().padStart(2, '0')}` 
+                                        : `إعادة إرسال الرمز في ${Math.floor(resendTimer / 60)}:${(resendTimer % 60).toString().padStart(2, '0')}`
+                                ) : (
+                                    language === 'en' ? 'Resend Code' : 'إعادة إرسال الرمز'
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
             {/* Phone Verification Modal */}
             {showPhoneVerification && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -872,7 +1150,7 @@ const Step3 = () => {
                 <p className="mt-2">{lang[languageContent].assumption5}</p>
             </div>
         </div>
-    );
-};
+    )};
+
 
 export default Step3;

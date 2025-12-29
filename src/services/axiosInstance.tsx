@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://stg-service.bddelha.com';
-
+// const BASE_URL = 'https://stg-service.bddelha.com';
+const isDevelop = true;
+const BASE_URL = isDevelop ? 'https://stg-service.bddelha.com' : 'https://service.baddelha.com.sa';
 
 
 const axiosInstance = axios.create({

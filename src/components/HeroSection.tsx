@@ -40,7 +40,7 @@ const HeroSection: React.FC = () => {
             </button>
             <button
             onClick={() => {
-             router.push('/AboutUs');
+             router.push('/about');
             }}
             className="bg-transparent border-2 border-white hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition"
             aria-label={lang[languageContent].learnMore}>

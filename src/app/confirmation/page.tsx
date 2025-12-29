@@ -137,6 +137,7 @@ const Confirmation = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
+  
     return (
         <div className="max-w-5xl mt-[120px] mx-auto px-4 py-8">
             {loading ? (
@@ -157,13 +158,13 @@ const Confirmation = () => {
             ) : (
                 <>
                     {/* Success Message */}
-                    <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg mb-8 flex items-center shadow-md">
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-2 py-4 rounded-lg mb-8 flex items-center shadow-md">
                         <div className="bg-green-500 rounded-full p-2 mr-4 ml-4">
-                            <Check className="h-8 w-8 text-white" />
+                            <Check className="h-4 w-4 text-white" />
                         </div>
                         <div>
-                            <h2 className="text-xl font-bold">{lang[languageContent].bookingConfirmed}</h2>
-                            <p>{lang[languageContent].bookingConfirmed}</p>
+                            <h2 className="text-lg font-bold">{lang[languageContent].bookingConfirmed}</h2>
+                            <p>{lang[languageContent].bookingConfirmedDesc}</p>
                             {bookingDetails.bookingId && (
                                 <p className="text-sm mt-1">{lang[languageContent].bookingId}: {bookingDetails.bookingId}</p>
                             )}
@@ -183,7 +184,7 @@ const Confirmation = () => {
                             </div>
                             
                             <div className="bg-white p-4 rounded-b-lg shadow-md">
-                            <div className="w-full h-48 bg-gray-200 rounded-md mb-4 flex items-center justify-center overflow-hidden text-center">
+                            <div className="w-full h-24 bg-gray-200 rounded-md mb-4 flex items-center justify-center overflow-hidden text-center">
                             {carDetails.year ? `${carDetails.year} ` : ''}
                                         {carDetails.make ? `${carDetails.make} ` : ''}
                                         {carDetails.model || 'Vehicle'}

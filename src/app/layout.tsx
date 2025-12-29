@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { Toaster } from '../components/ui/toaster';
 import type { Metadata } from 'next';
 import './globals.css';
+import ReCaptchaProvider from '../components/ReCaptchaProvider'
 
 // Preload critical fonts
 const fontPreload = [
@@ -57,10 +58,12 @@ export default function RootLayout({
           <link key={i} {...attrs} />
         ))}
         {/* Favicon */}
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
-        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png" />
-        <link rel="manifest" href="/manifest.json" />
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="manifest" href="/site.webmanifest" />
+          
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -69,7 +72,9 @@ export default function RootLayout({
         <LanguageProvider>
           <div className="min-h-screen bg-white">
             <Navbar />
-            <main>{children}</main>
+            <ReCaptchaProvider>
+              <main>{children}</main>
+            </ReCaptchaProvider>
             <Footer />
             <Toaster />
           </div>

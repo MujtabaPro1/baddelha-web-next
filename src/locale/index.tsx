@@ -283,11 +283,12 @@ const lang = {
         "getCompetitivePricing": "Get competitive pricing based on current market conditions and vehicle condition",
         "quickProcessDescription": "Fast evaluation and same-day payment options available",
         "hassleFreeDescription": "We handle all paperwork and documentation for you",
-        "revealPrice": "Get Price",
+        "revealPrice": "Get Estimated Price",
         "expectedCarPrice": "Expected Car Price",
         "enterExpectedPricePrompt": "Please enter your expected price for the car to continue with the appointment.",
         "expectedPriceSAR": "Expected Price (SAR)",
         "enterExpectedPrice": "Enter expected price",
+        "bookingConfirmedDesc": "Thank you for your booking! We will contact you soon to confirm your appointment."
                  
        } ,
        ar: {
@@ -579,6 +580,7 @@ const lang = {
         "enterExpectedPricePrompt": "يرجى إدخال السعر المتوقع للسيارة للمتابعة مع الموعد.",
         "expectedPriceSAR": "السعر المتوقع (ريال سعودي)",
         "enterExpectedPrice": "أدخل السعر المتوقع",   
+        "bookingConfirmedDesc": "نشكرك على حجزك! سنتصل بك قريباً لتأكيد موعدك"
          
        } 
     }

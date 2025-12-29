@@ -358,16 +358,14 @@ const ContactUs: React.FC = () => {
         {/* Map Section */}
         <div className="mt-12 bg-white rounded-xl shadow-md p-8">
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">Our Location</h2>
-          <div className="aspect-w-16 aspect-h-9">
-            <div className="w-full h-96 rounded-lg overflow-hidden">
-              {/* In a real application, you would embed an actual map here */}
-              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-500">Map placeholder - In a real application, an interactive map would be displayed here</p>
-                </div>
-              </div>
-            </div>
+          <div className="relative w-full overflow-hidden rounded-lg" style={{ paddingBottom: '56.25%' }}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3624.1800215657668!2d46.765712386569454!3d24.720699194178266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDQzJzE0LjUiTiA0NsKwNDYnMTQuMSJF!5e0!3m2!1sen!2sae!4v1765448022928!5m2!1sen!2sae"
+              className="absolute inset-0 h-full w-full border-0"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
 
