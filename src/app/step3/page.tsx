@@ -46,7 +46,7 @@ const Step3 = () => {
     const [branchError, setBranchError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const { executeRecaptcha } = useGoogleReCaptcha();
-    const [recaptchaReady, setRecaptchaReady] = useState(false);
+    const [, setRecaptchaReady] = useState(false);
 
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
