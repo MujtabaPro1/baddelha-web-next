@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // const BASE_URL = 'https://stg-service.bddelha.com';
-const isDevelop = true;
+const isDevelop = false;
 const BASE_URL = isDevelop ? 'https://stg-service.bddelha.com' : 'https://service.baddelha.com.sa';
 
 
