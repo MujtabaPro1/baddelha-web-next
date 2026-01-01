@@ -32,8 +32,8 @@ export function LoginForm() {
     } else {
       if (!formData.otp) {
         newErrors.otp = 'OTP is required';
-      } else if (formData.otp.length !== 5) {
-        newErrors.otp = 'OTP must be 5 digits';
+      } else if (formData.otp.length !== 6) {
+        newErrors.otp = 'OTP must be 6 digits';
       }
     }
 
@@ -190,7 +190,7 @@ export function LoginForm() {
                 <Input
                   id="otp"
                   type="text"
-                  placeholder="Enter 5-digit OTP"
+                  placeholder="Enter 6-digit OTP"
                   value={formData.otp}
                   onChange={(e) => handleInputChange('otp', e.target.value)}
                   className={`pl-10 h-12 transition-all duration-200 ${
@@ -198,7 +198,7 @@ export function LoginForm() {
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
                       : 'border-gray-300 focus:border-orange-500 focus:ring-orange-500'
                   }`}
-                  maxLength={5}
+                  maxLength={6}
                 />
               </div>
               {errors.otp && (
