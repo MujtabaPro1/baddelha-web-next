@@ -1,11 +1,14 @@
+'use client';
 import React from 'react';
 import { Phone, Mail, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
+import { useRouter } from 'next/navigation';
 
 const CtaSection: React.FC = () => {
   const { language } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
+  const router = useRouter();
 
   return (
     <section className="py-20 bg-white">
@@ -43,7 +46,11 @@ const CtaSection: React.FC = () => {
                 className="bg-amber-500 hover:bg-amber-400 text-blue-900 font-semibold py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center">
                   {lang[languageContent].scheduleAppointment} {language == 'en' ? <ArrowRight className="ml-2 h-5 w-5" /> : <ArrowLeft className="mr-2 h-5 w-5" />}
                 </button>
-                <button className="bg-transparent border-2 border-white hover:bg-white/10 text-white font-semibold py-3 px-6 rounded-lg transition">
+                <button 
+                onClick={()=>{
+                  router.push('/about');
+                }}
+                className="bg-transparent cursor-pointer border-2 border-white hover:bg-white/10 text-white font-semibold py-3 px-6 rounded-lg transition">
                   {lang[languageContent].learnMore}
                 </button>
               </div>

@@ -140,6 +140,7 @@ const CarCard: React.FC<{ car: Car }> = ({ car }) => {
 
 const FeaturedCars: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [mobileIndex, setMobileIndex] = useState(0);
   const cardsToShow = 3;
   const { language } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
@@ -155,6 +156,18 @@ const FeaturedCars: React.FC = () => {
       prevIndex === 0 ? Math.max(0, cars.length - cardsToShow) : prevIndex - 1
     );
   };
+
+  const nextMobileSlide = () => {
+    setMobileIndex((prevIndex) => 
+      prevIndex >= cars.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+  
+  const prevMobileSlide = () => {
+    setMobileIndex((prevIndex) => 
+      prevIndex === 0 ? cars.length - 1 : prevIndex - 1
+    );
+  };
   
   const visibleCars = cars.slice(currentIndex, currentIndex + cardsToShow);
   
@@ -167,7 +180,7 @@ const FeaturedCars: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold mt-2">{lang[languageContent].findYourPerfectMatch}</h2>
           </div>
           
-          <div className="flex space-x-2">
+          <div className="hidden lg:flex space-x-2">
             <button 
               onClick={prevSlide}
               className="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition"
@@ -192,10 +205,37 @@ const FeaturedCars: React.FC = () => {
         </div>
         
         {/* For mobile */}
-        <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-6">
-          {cars.filter(car => car.featured).map(car => (
-            <CarCard key={car.id} car={car} />
-          ))}
+        <div className="lg:hidden">
+          <div className="relative">
+            <CarCard key={cars[mobileIndex].id} car={cars[mobileIndex]} />
+            
+            <div className="flex justify-center items-center gap-4 mt-4">
+              <button 
+                onClick={prevMobileSlide}
+                className="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition"
+                aria-label="Previous car"
+              >
+                <ChevronLeft className="h-5 w-5 text-gray-700" />
+              </button>
+              
+              <div className="flex gap-2">
+                {cars.map((_, index) => (
+                  <span 
+                    key={index} 
+                    className={`w-2 h-2 rounded-full transition ${index === mobileIndex ? 'bg-amber-500' : 'bg-gray-300'}`}
+                  />
+                ))}
+              </div>
+              
+              <button 
+                onClick={nextMobileSlide}
+                className="bg-gray-100 hover:bg-gray-200 p-3 rounded-full transition"
+                aria-label="Next car"
+              >
+                <ChevronRight className="h-5 w-5 text-gray-700" />
+              </button>
+            </div>
+          </div>
         </div>
         
         {/* <div className="text-center mt-10">
