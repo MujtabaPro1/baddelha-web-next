@@ -427,21 +427,21 @@ const progressSteps = [
                                 onClick={() => setPaint('Original paint')} 
                                 className={`px-4 py-2 rounded-md ${paint === 'Original paint' ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
-                                Original
+                                Original Paint
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Partial repaint')} 
                                 className={`px-4 py-2 rounded-md ${paint === 'Partial repaint' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
-                                Partial
+                                Partial Repainted
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Total repaint')} 
                                 className={`px-4 py-2 rounded-md ${paint === 'Total repaint' ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
-                                Total
+                                Total Repainted 
                             </button>
 
                         </div>
@@ -456,14 +456,14 @@ const progressSteps = [
                                 onClick={() => setGccSpecs('GCC Specs')} 
                                 className={`px-4 py-2 rounded-md ${gccSpecs === 'GCC Specs' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
-                                GCC
+                                GCC Specs
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setGccSpecs('Non GCC Specs')} 
                                 className={`px-4 py-2 rounded-md ${gccSpecs === 'Non GCC Specs' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
                             >
-                                Non GCC
+                                Non GCC Specs
                             </button>
                         </div>
                     </div>
