@@ -80,8 +80,19 @@ const Step3 = () => {
         gccSpecs: string;
     } | null>(null);
 
-    // Load Step2 data from sessionStorage
+    // State for Step1 data (car details)
+    const [step1Data, setStep1Data] = useState<{
+        make: string;
+        model: string;
+        year: string;
+    } | null>(null);
+
+    // Load Step1 and Step2 data from sessionStorage
     useEffect(() => {
+        const storedStep1Data = sessionStorage.getItem('carDetails');
+        if (storedStep1Data) {
+            setStep1Data(JSON.parse(storedStep1Data));
+        }
         const storedStep2Data = sessionStorage.getItem('step2Data');
         if (storedStep2Data) {
             setStep2Data(JSON.parse(storedStep2Data));
@@ -517,186 +528,165 @@ const Step3 = () => {
             
         
             
-            <h2 className="text-2xl font-bold text-center mb-6">{lang[languageContent].bookFreeCarInspection}</h2>
+            <h2 className="text-2xl font-bold text-center mb-8">{lang[languageContent].bookFreeCarInspection}</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Left Column - Car Image & Price */}
-                <div className="md:col-span-1">
-                    <div className="bg-[#3d3d40] text-white p-4 rounded-t-lg">
-                        <div className="flex justify-between items-center">
-                            <div className="w-full">
-                                <p className="text-sm">{lang[languageContent].yourVehicleMarketPrice}</p>
-                                <h3 className="text-3xl font-bold flex items-center animate-pulse w-full flex justify-between">
-                                    SAR
-                                    {revealPrice ? 
-                                        (carPrice ? ` ${carPrice.toLocaleString()}` : '') 
-                                        : 
-                                        <button
-                                            onClick={async () => {
-                                                try {
-                                                    setIsLoading(true);
-                                                    // Sample car data - in a real app, you would get this from form inputs or state
-                                                    const storedStep1Data = sessionStorage.getItem('carDetails');
-                                                    const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
-                                                    const step2 = sessionStorage.getItem('step2Data');
-                                                    const step2Data = step2 ? JSON.parse(step2) : {};
-
-                                                    // Check if reCAPTCHA is available
-                                                    let recaptchaToken = '';
-                                                    if (executeRecaptcha) {
-                                                        try {
-                                                            // Try to execute reCAPTCHA
-                                                            recaptchaToken = await executeRecaptcha('evaluate');
-                                                            console.log('reCAPTCHA token:', recaptchaToken);
-                                                        } catch (recaptchaError) {
-                                                            console.error('reCAPTCHA execution error:', recaptchaError);
-                                                            // Continue without reCAPTCHA for now
-                                                        }
-                                                    } else {
-                                                        console.warn('reCAPTCHA not available, proceeding without verification');
-                                                        // Continue without reCAPTCHA for testing
-                                                    }
-                                                    
-                                                    const carData = {
-                                                        make: step1Data.make,
-                                                        model: step1Data.model,
-                                                        year: Number(step1Data.year),
-                                                        mileage: step2Data.mileageName,
-                                                        bodyType: step2Data.bodyTypeName,
-                                                        engineType: 'Petrol',
-                                                        engineSize: step2Data.engineSizeName,
-                                                        gearType: 'Automatic',
-                                                        specs: step2Data.gccSpecs,
-                                                        recaptchaToken,
-                                                    };
-                                                    const response = await axiosInstance.post('/api/1.0/core/evaluate/car', carData);
-                                                    
-                                                    if (response.data) {
-                                                        setCarPrice(response.data.priceEstimate?.valueRange?.low);
-                                                    }
-                                                    setRevealPrice(true);
-                                                    setIsLoading(false);
-                                                } catch (error) {
-                                                    console.error('Error fetching car price:', error);
-                                                    setRevealPrice(true); // Still reveal the UI section even if API fails
-                                                    setIsLoading(false);
-                                                }
-                                            }}
-                                            className="bg-gradient-to-r from-amber-500 to-amber-400 ml-2 mr-2 text-xs px-3 py-1 rounded hover:bg-yellow-600 transition w-[180px] mt-2 h-[40px] flex items-center justify-center"
-                                        >
-                                            {!isLoading ? 
-                                                lang[languageContent].revealPrice 
-                                                : 
-                                                <div className="w-4 h-4 border-2 border-white border-dashed rounded-full animate-spin"></div>
-                                            }
-                                        </button>
-                                    }
-                                </h3>
+            {/* Car Summary Banner - Full Width */}
+            <div className="mb-8 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-2xl p-6 shadow-xl">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    {/* Car Info */}
+                    <div className="flex items-center gap-4">
+                        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                            {carLogo && <img src={carLogo} alt="Car Logo" className="w-14 h-14 object-contain" />}
+                        </div>
+                        <div>
+                            <p className="text-slate-400 text-sm mb-1">{language === "en" ? "Your Vehicle" : "سيارتك"}</p>
+                            <h3 className="text-white text-xl font-bold">
+                                {step1Data ? `${step1Data.make || '—'} ${step1Data.model || '—'} ${step1Data.year || ''}` : '—'}
+                            </h3>
+                            <div className="flex gap-4 mt-2">
+                                {step2Data && (
+                                    <>
+                                        <span className="text-slate-300 text-xs bg-white/10 px-2 py-1 rounded">{step2Data.engineSizeName || '—'}</span>
+                                        <span className="text-slate-300 text-xs bg-white/10 px-2 py-1 rounded">{step2Data.mileageName || '—'}</span>
+                                    </>
+                                )}
                             </div>
-                           
                         </div>
                     </div>
                     
-                    <div className="bg-white p-4 rounded-b-lg shadow-md">
-                        {/* Car Details Summary - Cart-like section */}
-                        <div className="border border-gray-200 rounded-lg p-3 mb-4">
-                            <h4 className="text-sm font-medium text-gray-700 mb-2">{language === "en" ? "Your Car Details" : "تفاصيل سيارتك"}</h4>
-                            <div className="flex items-center">
-                                <div className="w-1/4 mr-3">
-                                    <div className="rounded-lg h-20 flex items-center justify-center">
-                                        {carLogo && <img src={carLogo} alt="Car Logo" className="w-16 h-16 object-contain" />}
-                                    </div>
-                                </div>
-                                <div className="w-3/4">
-                                    {step2Data && (
-                                        <>
-                                            <div className="flex justify-between mb-1">
-                                                <span className="text-xs text-gray-500">{language === "en" ? "Car" : "سيارة"}</span>
-                                                <span className="text-xs font-medium">
-                                                    {(() => {
-                                                        const storedStep1Data = sessionStorage.getItem('carDetails');
-                                                        const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
-                                                        return `${step1Data.make || '—'} ${step1Data.model || '—'} ${step1Data.year || '—'}`;
-                                                    })()}
-                                                </span>
-                                            </div>
-                                            <div className="flex justify-between mb-1">
-                                                <span className="text-xs text-gray-500">{language === "en" ? "Engine" : "المحرك"}</span>
-                                                <span className="text-xs font-medium">{step2Data.engineSizeName || '—'}</span>
-                                            </div>
-                                            <div className="flex justify-between">
-                                                <span className="text-xs text-gray-500">{language === "en" ? "Mileage" : "المسافة المقطوعة"}</span>
-                                                <span className="text-xs font-medium">{step2Data.mileageName || '—'}</span>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
+                    {/* Price Section */}
+                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                        <p className="text-slate-400 text-sm mb-1">{lang[languageContent].yourVehicleMarketPrice}</p>
+                        {revealPrice ? (
+                            <div className="text-3xl font-bold text-amber-400">
+                                SAR {carPrice ? carPrice.toLocaleString() : '—'}
                             </div>
-                        </div>
-                   
+                        ) : (
+                            <button
+                                onClick={async () => {
+                                    try {
+                                        setIsLoading(true);
+
+                                        let recaptchaToken = '';
+                                        if (executeRecaptcha) {
+                                            try {
+                                                recaptchaToken = await executeRecaptcha('evaluate');
+                                            } catch (recaptchaError) {
+                                                console.error('reCAPTCHA execution error:', recaptchaError);
+                                            }
+                                        }
+                                        
+                                        const carData = {
+                                            make: step1Data?.make,
+                                            model: step1Data?.model,
+                                            year: Number(step1Data?.year),
+                                            mileage: step2Data?.mileageName,
+                                            bodyType: step2Data?.bodyType,
+                                            engineType: 'Petrol',
+                                            engineSize: step2Data?.engineSizeName,
+                                            gearType: 'Automatic',
+                                            specs: step2Data?.gccSpecs,
+                                            recaptchaToken,
+                                        };
+                                        const response = await axiosInstance.post('/api/1.0/core/evaluate/car', carData);
+                                        
+                                        if (response.data) {
+                                            setCarPrice(response.data.priceEstimate?.valueRange?.low);
+                                        }
+                                        setRevealPrice(true);
+                                        setIsLoading(false);
+                                    } catch (error) {
+                                        console.error('Error fetching car price:', error);
+                                        setRevealPrice(true);
+                                        setIsLoading(false);
+                                    }
+                                }}
+                                className="bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-6 py-3 rounded-lg transition flex items-center gap-2"
+                            >
+                                {!isLoading ? (
+                                    <>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                            <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                        </svg>
+                                        {lang[languageContent].revealPrice}
+                                    </>
+                                ) : (
+                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                )}
+                            </button>
+                        )}
                     </div>
                 </div>
-                
-                {/* Right Column - Booking Form */}
-                <div className="md:col-span-2 bg-[#eaeaea] p-6 rounded-lg">
+            </div>
+            
+            {/* Booking Form - Full Width */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
                     <form id="appointmentForm" onSubmit={handleSubmit}>
-                        {/* Branch Selection */}
-                        <div className="mb-6">
-                            <label className="block text-sm font-medium mb-3">{lang[languageContent].branches}</label>
-                            <div>
+                        {/* Branch Selection - Vertical List Style */}
+                        <div className="mb-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center">
+                                    <span className="text-white font-bold">1</span>
+                                </div>
+                                <h3 className="text-lg font-semibold text-gray-900">{lang[languageContent].branches}</h3>
+                            </div>
+                            <div className="md:ml-5 md:pl-8 md:border-l-2 border-slate-200">
                                 {loadingBranches ? (
                                     <div className="py-6 px-4 text-center">
-                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#f78f37] mx-auto mb-2"></div>
+                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-800 mx-auto mb-2"></div>
                                         <div className="text-gray-500">{lang[languageContent].loadingBranches}</div>
                                     </div>
                                 ) : branchError ? (
                                     <div className="py-3 px-4 text-red-500">{branchError}</div>
                                 ) : (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="space-y-3">
                                         {branches.map((branchItem) => (
                                             <div 
                                                 key={branchItem.id} 
                                                 onClick={() => setBranch(branchItem.id)}
-                                                className={`cursor-pointer rounded-lg overflow-hidden border-2 transition ${branch === branchItem.id ? 'border-[#f78f37] shadow-md' : 'border-gray-200 hover:border-gray-300'}`}
+                                                className={`cursor-pointer p-3 md:p-4 rounded-xl transition-all duration-200 ${
+                                                    branch === branchItem.id 
+                                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                                        : 'bg-slate-50 hover:bg-slate-100 text-gray-900'
+                                                }`}
                                             >
-                                                <div className="flex h-full">
-                                                    {/* Left side - smaller image */}
-                                                    <div className="relative w-1/3 h-full">
-                                                        <img 
-                                                            src={'branch.jpeg'} 
-                                                            alt={language === "en" ? branchItem.enName : branchItem.arName}
-                                                            className="w-full h-full object-cover"
-                                                        />
+                                                <div className="flex items-start gap-3">
+                                                    <div className={`w-5 h-5 mt-0.5 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
+                                                        branch === branchItem.id 
+                                                            ? 'border-amber-400 bg-amber-400' 
+                                                            : 'border-gray-400'
+                                                    }`}>
                                                         {branch === branchItem.id && (
-                                                            <div className="absolute top-2 right-2 bg-[#f78f37] text-white rounded-full p-1">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                                </svg>
-                                                            </div>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-slate-900" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                            </svg>
                                                         )}
                                                     </div>
-                                                    
-                                                    {/* Right side - branch details */}
-                                                    <div className="p-3 bg-white w-2/3">
-                                                        <h3 className="font-medium text-gray-900">
+                                                    <div className="flex-1 min-w-0">
+                                                        <h4 className="font-semibold text-sm md:text-base">
                                                             {language === "en" ? branchItem.enName : branchItem.arName}
-                                                        </h3>
-                                                        
-                                                        {/* Location with link */}
+                                                        </h4>
+                                                        <p className={`text-xs md:text-sm truncate ${branch === branchItem.id ? 'text-slate-300' : 'text-gray-500'}`}>
+                                                            {branchItem.location}
+                                                        </p>
                                                         <a 
                                                             href={`https://maps.google.com/?q=${encodeURIComponent(branchItem.location || '')}`} 
                                                             target="_blank" 
                                                             rel="noopener noreferrer"
                                                             onClick={(e) => e.stopPropagation()} 
-                                                            className="text-sm text-gray-500 mt-1 flex items-center hover:text-[#f78f37]"
+                                                            className={`inline-flex items-center gap-1 text-xs mt-2 px-2 py-1 rounded-md transition ${
+                                                                branch === branchItem.id 
+                                                                    ? 'bg-white/10 hover:bg-white/20 text-amber-400' 
+                                                                    : 'bg-slate-200 hover:bg-slate-300 text-slate-600'
+                                                            }`}
                                                         >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                                             </svg>
-                                                            {branchItem.location}
+                                                            {language === "en" ? "View Map" : "الخريطة"}
                                                         </a>
-                                                
                                                     </div>
                                                 </div>
                                             </div>
@@ -704,61 +694,58 @@ const Step3 = () => {
                                     </div>
                                 )}
                             </div>
-                            {branch && (
-                                <div className="mt-2 text-sm text-green-600 flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                    </svg>
-                                    {lang[languageContent].branchSelected || 'Branch selected successfully'}
-                                </div>
-                            )}
                         </div>
                         
-                        {/* Date and Time Selection */}
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium mb-2">{lang[languageContent].selectDayTime}</label>
-                            
+                        {/* Date and Time Selection - Step Style */}
+                        <div className="mb-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${branch ? 'bg-slate-900' : 'bg-slate-300'}`}>
+                                    <span className="text-white font-bold">2</span>
+                                </div>
+                                <h3 className="text-lg font-semibold text-gray-900">{lang[languageContent].selectDayTime}</h3>
+                            </div>
+                            <div className="md:ml-5 md:pl-8 md:border-l-2 border-slate-200">
                             {loadingTimings ? (
-                                <div className="text-center py-4" >
-                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#f78f37] mx-auto"></div>
-                                    <p 
-                                    className="mt-2 text-sm text-gray-600">{lang[languageContent].loadingTimeSlots}</p>
+                                <div className="text-center py-6">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-800 mx-auto"></div>
+                                    <p className="mt-2 text-sm text-gray-600">{lang[languageContent].loadingTimeSlots}</p>
                                 </div>
                             ) : timingsError ? (
                                 <div className="text-red-500 text-sm py-2">{timingsError}</div>
                             ) : branchTimings.length === 0 && branch ? (
                                 <div className="text-gray-500 text-sm py-2">{lang[languageContent].noTimeSlotsAvailable}</div>
                             ) : branch ? (
-                                <div>
-                                    {/* Days selection */}
-                                    <div className="flex overflow-x-auto pb-2 mb-4 gap-2">
-                                        {branchTimings.map((daySchedule, index) => (
-                                            <button
-                                                key={index}
-                                                type="button"
-                                                onClick={() => {
-                                                    setSelectedDay(daySchedule.day);
-                                                    setSelectedTimeSlot(null);
-                                                }}
-                                                className={`flex-shrink-0 px-4 py-2 rounded-lg border ${
-                                                    selectedDay === daySchedule.day
-                                                        ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white border-[#f78f37]'
-                                                        : 'bg-white text-gray-700 border-gray-300 hover:border-[#f78f37]'
-                                                }`}
-                                            >
-                                                <div className="text-center">
-                                                    <div className="font-medium">{daySchedule.day}</div>
-                                                    <div className="text-xs">{daySchedule.date}</div>
-                                                </div>
-                                            </button>
-                                        ))}
+                                <div className="space-y-4">
+                                    {/* Days selection - Calendar style */}
+                                    <div className="bg-slate-50 rounded-xl p-3 md:p-4">
+                                        <p className="text-sm text-gray-600 mb-3">{language === "en" ? "Select a date" : "اختر تاريخ"}</p>
+                                        <div className="flex overflow-x-auto gap-2 pb-2 md:grid md:grid-cols-5 md:overflow-visible md:pb-0">
+                                            {branchTimings.map((daySchedule, index) => (
+                                                <button
+                                                    key={index}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSelectedDay(daySchedule.day);
+                                                        setSelectedTimeSlot(null);
+                                                    }}
+                                                    className={`flex-shrink-0 w-16 md:w-auto p-2 md:p-3 rounded-xl text-center transition-all ${
+                                                        selectedDay === daySchedule.day
+                                                            ? 'bg-slate-900 text-white shadow-lg'
+                                                            : 'bg-white text-gray-700 hover:bg-slate-100 border border-slate-200'
+                                                    }`}
+                                                >
+                                                    <div className="text-[10px] md:text-xs font-medium opacity-70">{daySchedule.day.slice(0, 3)}</div>
+                                                    <div className="text-base md:text-lg font-bold mt-0.5 md:mt-1">{daySchedule.date.split(' ')[1] || daySchedule.date}</div>
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
                                     
-                                    {/* Time slots */}
+                                    {/* Time slots - Chip style */}
                                     {selectedDay && (
-                                        <div>
-                                            <h4 className="text-sm font-medium mb-2">{lang[languageContent].availableTimeSlots}</h4>
-                                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                                        <div className="bg-slate-50 rounded-xl p-4">
+                                            <p className="text-sm text-gray-600 mb-3">{lang[languageContent].availableTimeSlots}</p>
+                                            <div className="flex flex-wrap gap-2">
                                                 {branchTimings
                                                     .find(day => day.day === selectedDay)
                                                     ?.slots.map((slot, index) => (
@@ -767,10 +754,10 @@ const Step3 = () => {
                                                             dir={'ltr'}
                                                             type="button"
                                                             onClick={() => setSelectedTimeSlot(slot.label)}
-                                                            className={`px-3 py-2 text-sm rounded-lg border ${
+                                                            className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
                                                                 selectedTimeSlot === slot.label
-                                                                    ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white border-[#f78f37]'
-                                                                    : 'bg-white text-gray-700 border-gray-300 hover:border-[#f78f37]'
+                                                                    ? 'bg-amber-500 text-white shadow-md'
+                                                                    : 'bg-white text-gray-700 border border-slate-200 hover:border-amber-400 hover:text-amber-600'
                                                             }`}
                                                         >
                                                             {slot.label}
@@ -781,83 +768,96 @@ const Step3 = () => {
                                     )}
                                 </div>
                             ) : (
-                                <div className="text-gray-500 text-sm py-2">{lang[languageContent].pleaseSelectBranchFirst}</div>
+                                <div className="bg-slate-50 rounded-xl p-6 text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <p className="text-gray-500 text-sm">{lang[languageContent].pleaseSelectBranchFirst}</p>
+                                </div>
                             )}
-                        </div>
-                        
-                        {/* Name */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label className="block text-sm font-medium mb-1">{lang[languageContent].firstName}</label>
-                                <input
-                                    type="text"
-                                    disabled={autoFill}
-                                    value={firstName}
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                    placeholder={lang[languageContent].firstName}
-                                    className={`block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 ${autoFill ? 'bg-gray-100' : 'bg-white'}`}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium mb-1">{lang[languageContent].lastName}</label>
-                                <input
-                                    type="text"
-                                    disabled={autoFill}
-                                    value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                    placeholder={lang[languageContent].lastName}
-                                    className={`block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 ${autoFill ? 'bg-gray-100' : 'bg-white'}`}
-                                    required
-                                />
                             </div>
                         </div>
                         
-                        {/* Mobile */}
-                        <div dir="ltr" className="mb-4">
-                            <label className={`block text-sm font-medium mb-1 ${languageContent === 'ar' ? 'text-right' : 'text-left'}`}>{lang[languageContent].mobile}</label>
-                            <div className="flex">
-                                <span className={`inline-flex items-center px-3 text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300`}>
-                                    +966
-                                </span>
-                                <input
-                                    type="tel"
-                                    disabled={autoFill}
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    placeholder={lang[languageContent].mobile}
-                                    className={`block w-full rounded-r-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 ${autoFill ? 'bg-gray-100' : 'bg-white'}`}
-                                    required
-                                />
+                        {/* Contact Details - Step Style */}
+                        <div className="mb-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${selectedTimeSlot ? 'bg-slate-900' : 'bg-slate-300'}`}>
+                                    <span className="text-white font-bold">3</span>
+                                </div>
+                                <h3 className="text-lg font-semibold text-gray-900">{language === "en" ? "Your Details" : "بياناتك"}</h3>
                             </div>
-                        </div>
-                        
-                        {/* Email */}
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">{lang[languageContent].email}</label>
-                            <input
-                                type="email"
-                                disabled={autoFill}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder={lang[languageContent].email}
-                                className={`block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 ${autoFill ? 'bg-gray-100' : 'bg-white'}`}
-                                required
-                            />
+                            <div className="md:ml-5 md:pl-8 md:border-l-2 border-slate-200">
+                                <div className="bg-slate-50 rounded-xl p-4 md:p-5 space-y-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">{lang[languageContent].firstName}</label>
+                                            <input
+                                                type="text"
+                                                disabled={autoFill}
+                                                value={firstName}
+                                                onChange={(e) => setFirstName(e.target.value)}
+                                                placeholder={lang[languageContent].firstName}
+                                                className={`block w-full rounded-xl border-0 py-3 px-4 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 ${autoFill ? 'bg-slate-100' : 'bg-white'}`}
+                                                required
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">{lang[languageContent].lastName}</label>
+                                            <input
+                                                type="text"
+                                                disabled={autoFill}
+                                                value={lastName}
+                                                onChange={(e) => setLastName(e.target.value)}
+                                                placeholder={lang[languageContent].lastName}
+                                                className={`block w-full rounded-xl border-0 py-3 px-4 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 ${autoFill ? 'bg-slate-100' : 'bg-white'}`}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    
+                                    <div dir="ltr">
+                                        <label className={`block text-sm font-medium text-gray-700 mb-2 ${languageContent === 'ar' ? 'text-right' : 'text-left'}`}>{lang[languageContent].mobile}</label>
+                                        <div className="flex">
+                                            <span className="inline-flex items-center px-4 text-slate-700 bg-slate-200 rounded-l-xl border-0 font-medium">
+                                                +966
+                                            </span>
+                                            <input
+                                                type="tel"
+                                                disabled={autoFill}
+                                                value={phone}
+                                                onChange={(e) => setPhone(e.target.value)}
+                                                placeholder={lang[languageContent].mobile}
+                                                className={`block w-full rounded-r-xl border-0 py-3 px-4 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 ${autoFill ? 'bg-slate-100' : 'bg-white'}`}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">{lang[languageContent].email}</label>
+                                        <input
+                                            type="email"
+                                            disabled={autoFill}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            placeholder={lang[languageContent].email}
+                                            className={`block w-full rounded-xl border-0 py-3 px-4 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 ${autoFill ? 'bg-slate-100' : 'bg-white'}`}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 shadow-md mt-4"
+                            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-xl transition focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 shadow-lg text-lg"
                         >
                             {lang[languageContent].bookAppointment}
                         </button>
                     </form>
-                    
-
                 </div>
-            </div>
             
             {/* Expected Price Popup */}
             {showPricePopup && (
