@@ -15,7 +15,7 @@ export default function ReCaptchaProvider({
         appendTo: 'head',
         nonce: undefined,
       }}
-      reCaptchaKey={'6Le8uTcsAAAAAFQicqxQlu3jXqCdwEJw7TjL7X_q'}
+      reCaptchaKey={'6Lc2Cj8sAAAAAJi90fdNKuQDvS-5BBA9Woj6sYvl'}
     >
       {children}
     </GoogleReCaptchaProvider>
