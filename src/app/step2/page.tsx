@@ -252,103 +252,108 @@ const progressSteps = [
 </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-xl overflow-hidden">
-                <div className="bg-[#3d3d40] px-6 py-4 text-white">
-                    <h2 className="text-xl font-semibold">{carDetails.make} {carDetails.model} {carDetails.year}</h2>
-                    <p className="text-blue-100 text-sm">{lang[languageContent].enterInformation}</p>
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                {/* Car Header Banner */}
+                <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 px-6 py-5">
+                    <p className="text-slate-400 text-sm mb-1">{language === "en" ? "Your Vehicle" : "سيارتك"}</p>
+                    <h2 className="text-xl md:text-2xl font-bold text-white">{carDetails.make} {carDetails.model} {carDetails.year}</h2>
+                    <p className="text-slate-300 text-sm mt-1">{lang[languageContent].enterInformation}</p>
                 </div>
                 
-                <form onSubmit={handleSubmit} className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        {/* Body Type */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{lang[languageContent].bodyType}</label>
-                            <div className="relative">
-                                <select
-                                    value={bodyType}
-                                    onChange={(e) => {
-                                        setBodyType(e.target.value)
-                                        setBodyTypeName(bodyTypes.find(type => type.id == e.target.value)?.name || '')
-                                    }}
-                                    className="block w-full rounded-lg border-gray-300 bg-gray-50 py-3 px-4 pr-8 focus:border-blue-500 focus:ring-blue-500 appearance-none"
-                                    disabled={loading.bodyTypes}
-                                >
-                                    {loading.bodyTypes ? (
-                                        <option>Loading...</option>
-                                    ) : bodyTypes.length > 0 ? (
-                                        bodyTypes.map((type) => (
-                                            <option key={type.id} value={type.id}>{type.name}</option>
-                                        ))
-                                    ) : (
-                                        <option value="">No body types available</option>
-                                    )}
-                                </select>
-                                <div className={`pointer-events-none absolute inset-y-0 ${language == "en" ? "right-0" : "left-0"} flex items-center px-2 text-gray-700`}>
-                                    {loading.bodyTypes ? (
-                                        <span className="animate-spin h-4 w-4 border-2 border-gray-500 rounded-full border-t-transparent"></span>
-                                    ) : (
-                                        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                        </svg>
+                <form onSubmit={handleSubmit} className="p-4 md:p-6">
+                    {/* Dropdowns Section */}
+                    <div className="space-y-4 mb-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Body Type */}
+                            <div className="bg-slate-50 rounded-xl p-4">
+                                <label className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].bodyType}</label>
+                                <div className="relative">
+                                    <select
+                                        value={bodyType}
+                                        onChange={(e) => {
+                                            setBodyType(e.target.value)
+                                            setBodyTypeName(bodyTypes.find(type => type.id == e.target.value)?.name || '')
+                                        }}
+                                        className="block w-full rounded-xl border-0 bg-white py-3 px-4 pr-10 ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 appearance-none font-medium text-gray-900"
+                                        disabled={loading.bodyTypes}
+                                    >
+                                        {loading.bodyTypes ? (
+                                            <option>Loading...</option>
+                                        ) : bodyTypes.length > 0 ? (
+                                            bodyTypes.map((type) => (
+                                                <option key={type.id} value={type.id}>{type.name}</option>
+                                            ))
+                                        ) : (
+                                            <option value="">No body types available</option>
+                                        )}
+                                    </select>
+                                    <div className={`pointer-events-none absolute inset-y-0 ${language == "en" ? "right-0" : "left-0"} flex items-center px-3 text-slate-400`}>
+                                        {loading.bodyTypes ? (
+                                            <span className="animate-spin h-4 w-4 border-2 border-slate-400 rounded-full border-t-transparent"></span>
+                                        ) : (
+                                            <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                                            </svg>
+                                        )}
+                                    </div>
+                                    {bodyType && !loading.bodyTypes && (
+                                        <div className={`absolute ${language == "en" ? "right-8" : "left-8"} top-0 h-full flex items-center`}>
+                                            <Check className="h-4 w-4 text-green-500" />
+                                        </div>
                                     )}
                                 </div>
-                                {bodyType && !loading.bodyTypes && (
-                                    <div className={`absolute ${language == "en" ? "right-0" : "left-10"} top-0 h-full flex items-center pr-10`}>
-                                        <Check className="h-5 w-5 text-green-500" />
-                                    </div>
+                                {error.bodyTypes && (
+                                    <p className="mt-2 text-xs text-red-600">{error.bodyTypes}</p>
                                 )}
                             </div>
-                            {error.bodyTypes && (
-                                <p className="mt-1 text-sm text-red-600">{error.bodyTypes}</p>
-                            )}
-                        </div>
-                        
-                        {/* Engine */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{lang[languageContent].engineSize}</label>
-                            <div className="relative">
-                                <select
-                                    value={engineSize}
-                                    onChange={(e) => {
-                                        setEngineSize(e.target.value)
-                                        setEngineSizeName(engineSizes.find(engine => engine.id == e.target.value)?.name || '')
-                                    }}
-                                    className="block w-full rounded-lg border-gray-300 bg-gray-50 py-3 px-4 pr-8 focus:border-blue-500 focus:ring-blue-500 appearance-none"
-                                    disabled={loading.engineSizes}
-                                >
-                                    {loading.engineSizes ? (
-                                        <option>Loading...</option>
-                                    ) : engineSizes.length > 0 ? (
-                                        engineSizes.map(engine => (
-                                            <option key={engine.id} value={engine.id}>{engine.name}</option>
-                                        ))
-                                    ) : (
-                                        <option value="">No engine sizes available</option>
-                                    )}
-                                </select>
-                                <div className={`pointer-events-none absolute inset-y-0 ${language == "en" ? "right-0" : "left-0"} flex items-center px-2 text-gray-700`}>
-                                    {loading.engineSizes ? (
-                                        <span className="animate-spin h-4 w-4 border-2 border-gray-500 rounded-full border-t-transparent"></span>
-                                    ) : (
-                                        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                        </svg>
+                            
+                            {/* Engine */}
+                            <div className="bg-slate-50 rounded-xl p-4">
+                                <label className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].engineSize}</label>
+                                <div className="relative">
+                                    <select
+                                        value={engineSize}
+                                        onChange={(e) => {
+                                            setEngineSize(e.target.value)
+                                            setEngineSizeName(engineSizes.find(engine => engine.id == e.target.value)?.name || '')
+                                        }}
+                                        className="block w-full rounded-xl border-0 bg-white py-3 px-4 pr-10 ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 appearance-none font-medium text-gray-900"
+                                        disabled={loading.engineSizes}
+                                    >
+                                        {loading.engineSizes ? (
+                                            <option>Loading...</option>
+                                        ) : engineSizes.length > 0 ? (
+                                            engineSizes.map(engine => (
+                                                <option key={engine.id} value={engine.id}>{engine.name}</option>
+                                            ))
+                                        ) : (
+                                            <option value="">No engine sizes available</option>
+                                        )}
+                                    </select>
+                                    <div className={`pointer-events-none absolute inset-y-0 ${language == "en" ? "right-0" : "left-0"} flex items-center px-3 text-slate-400`}>
+                                        {loading.engineSizes ? (
+                                            <span className="animate-spin h-4 w-4 border-2 border-slate-400 rounded-full border-t-transparent"></span>
+                                        ) : (
+                                            <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                                            </svg>
+                                        )}
+                                    </div>
+                                    {engineSize && !loading.engineSizes && (
+                                        <div className={`absolute ${language == "en" ? "right-8" : "left-8"} top-0 h-full flex items-center`}>
+                                            <Check className="h-4 w-4 text-green-500" />
+                                        </div>
                                     )}
                                 </div>
-                                {engineSize && !loading.engineSizes && (
-                                    <div className={`absolute ${language == "en" ? "right-0" : "left-10"} top-0 h-full flex items-center pr-10`}>
-                                        <Check className="h-5 w-5 text-green-500" />
-                                    </div>
+                                {error.engineSizes && (
+                                    <p className="mt-2 text-xs text-red-600">{error.engineSizes}</p>
                                 )}
                             </div>
-                            {error.engineSizes && (
-                                <p className="mt-1 text-sm text-red-600">{error.engineSizes}</p>
-                            )}
                         </div>
                         
-                        {/* Mileage */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">{lang[languageContent].mileage}</label>
+                        {/* Mileage - Full Width */}
+                        <div className="bg-slate-50 rounded-xl p-4">
+                            <label className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].mileage}</label>
                             <div className="relative">
                                 <select
                                     value={mileage}
@@ -356,7 +361,7 @@ const progressSteps = [
                                         setMileage(e.target.value)
                                         setMileageName(mileageOptions.find(option => option.id == e.target.value)?.label || '')
                                     }}
-                                    className="block w-full rounded-lg border-gray-300 bg-gray-50 py-3 px-4 pr-8 focus:border-blue-500 focus:ring-blue-500 appearance-none"
+                                    className="block w-full rounded-xl border-0 bg-white py-3 px-4 pr-10 ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 appearance-none font-medium text-gray-900"
                                     disabled={loading.mileage}
                                 >
                                     {loading.mileage ? (
@@ -369,9 +374,9 @@ const progressSteps = [
                                         <option value="">No mileage options available</option>
                                     )}
                                 </select>
-                                <div className={`pointer-events-none absolute inset-y-0 ${language == "en" ? "right-0" : "left-0"} flex items-center px-2 text-gray-700`}>
+                                <div className={`pointer-events-none absolute inset-y-0 ${language == "en" ? "right-0" : "left-0"} flex items-center px-3 text-slate-400`}>
                                     {loading.mileage ? (
-                                        <span className="animate-spin h-4 w-4 border-2 border-gray-500 rounded-full border-t-transparent"></span>
+                                        <span className="animate-spin h-4 w-4 border-2 border-slate-400 rounded-full border-t-transparent"></span>
                                     ) : (
                                         <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -379,89 +384,120 @@ const progressSteps = [
                                     )}
                                 </div>
                                 {mileage && !loading.mileage && (
-                                    <div className={`absolute ${language == "en" ? "right-0" : "left-10"} top-0 h-full flex items-center pr-10`}>
-                                        <Check className="h-5 w-5 text-green-500" />
+                                    <div className={`absolute ${language == "en" ? "right-8" : "left-8"} top-0 h-full flex items-center`}>
+                                        <Check className="h-4 w-4 text-green-500" />
                                     </div>
                                 )}
                             </div>
                             {error.mileage && (
-                                <p className="mt-1 text-sm text-red-600">{error.mileage}</p>
+                                <p className="mt-2 text-xs text-red-600">{error.mileage}</p>
                             )}
                         </div>
                     </div>
                     
-                    {/* Option */}
-                    <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">{lang[languageContent].option}</label>
-                        <div className="flex flex-wrap gap-2">
+                    {/* Option Buttons */}
+                    <div className="mb-5">
+                        <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].option}</label>
+                        <div className="grid grid-cols-3 gap-2">
                             <button 
                                 type="button" 
                                 onClick={() => setOption('Basic')} 
-                                className={`px-4 py-2 rounded-md ${option === 'Basic' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                    option === 'Basic' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
                                 Basic
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setOption('Mid option')} 
-                                className={`px-4 py-2 rounded-md ${option === 'Mid option' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                    option === 'Mid option' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
                                 Mid option
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setOption('Full option')} 
-                                className={`px-4 py-2 rounded-md ${option === 'Full option' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                    option === 'Full option' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
                                 Full option
                             </button>
                         </div>
                     </div>
                     
-                    {/* Paint */}
-                    <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">{lang[languageContent].paint}</label>
-                        <div className="flex flex-wrap gap-2">
+                    {/* Paint Buttons */}
+                    <div className="mb-5">
+                        <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].paint}</label>
+                        <div className="grid grid-cols-3 gap-2">
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Original paint')} 
-                                className={`px-4 py-2 rounded-md ${paint === 'Original paint' ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                    paint === 'Original paint' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
-                                Original Paint
+                                Original
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Partial repaint')} 
-                                className={`px-4 py-2 rounded-md ${paint === 'Partial repaint' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                    paint === 'Partial repaint' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
-                                Partial Repainted
+                                Partial
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setPaint('Total repaint')} 
-                                className={`px-4 py-2 rounded-md ${paint === 'Total repaint' ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                    paint === 'Total repaint' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
-                                Total Repainted 
+                                Total Repaint
                             </button>
-
                         </div>
                     </div>
                     
-                    {/* GCC Specs */}
+                    {/* GCC Specs Buttons */}
                     <div className="mb-6">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">{lang[languageContent].gccSpecs}</label>
-                        <div className="flex flex-wrap gap-2">
+                        <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].gccSpecs}</label>
+                        <div className="grid grid-cols-2 gap-2">
                             <button 
                                 type="button" 
                                 onClick={() => setGccSpecs('GCC Specs')} 
-                                className={`px-4 py-2 rounded-md ${gccSpecs === 'GCC Specs' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                                    gccSpecs === 'GCC Specs' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
                                 GCC Specs
                             </button>
                             <button 
                                 type="button" 
                                 onClick={() => setGccSpecs('Non GCC Specs')} 
-                                className={`px-4 py-2 rounded-md ${gccSpecs === 'Non GCC Specs' ? ' bg-gradient-to-r from-amber-500 to-amber-400 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                                    gccSpecs === 'Non GCC Specs' 
+                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                }`}
                             >
                                 Non GCC Specs
                             </button>
@@ -472,13 +508,16 @@ const progressSteps = [
                     <div className="mt-8">
                         <button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-white font-semibold py-3 px-6 rounded-lg transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50 shadow-md flex items-center justify-center"
+                            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-4 px-6 rounded-xl transition shadow-lg flex items-center justify-center gap-2"
                         >
                             {lang[languageContent].continue}
+                            <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${language === 'ar' ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
                         </button>
                     </div>
                 </form>
-          
+         
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from '../../components/ui/input
 import { useLanguage } from '../../contexts/LanguageContext';
 import lang  from '../../locale';
 import { useRouter } from 'next/navigation';
+import { useToast } from '../../hooks/use-toast';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const Step3 = () => {
@@ -47,6 +48,7 @@ const Step3 = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { executeRecaptcha } = useGoogleReCaptcha();
     const [, setRecaptchaReady] = useState(false);
+    const { toast } = useToast();
 
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
@@ -172,6 +174,12 @@ const Step3 = () => {
             
         } catch (error: any) {
             console.error('Error sending OTP:', error);
+            toast({
+                title: 'Error',
+                description: 'Error sending OTP',
+                variant: 'destructive',
+            });
+            
             setSellerOtpError(error?.response?.data?.message || 'Failed to send OTP. Please try again.');
         } finally {
             setSellerOtpSending(false);
@@ -212,6 +220,11 @@ const Step3 = () => {
             // Dispatch event to notify Navbar of auth state change
             window.dispatchEvent(new Event('authStateChanged'));
             
+            toast({
+                title: 'Success',
+                description: 'OTP verified successfully',
+                variant: 'default',
+            });
             setShowSellerOtpPopup(false);
             
             // Proceed with booking using pending data
@@ -221,6 +234,11 @@ const Step3 = () => {
             
         } catch (error: any) {
             console.error('Error verifying OTP:', error);
+            toast({
+                title: 'Error',
+                description: 'Error verifying OTP',
+                variant: 'destructive',
+            });
             setSellerOtpError(error?.response?.data?.message || 'Invalid OTP. Please try again.');
         } finally {
             setSellerOtpVerifying(false);
@@ -244,6 +262,11 @@ const Step3 = () => {
             console.log('reCAPTCHA token:', recaptchaToken);
             bookingData.recaptchaToken = recaptchaToken;
             } catch (recaptchaError) {
+                toast({
+                    title: 'Error',
+                    description: 'reCAPTCHA execution error',
+                    variant: 'destructive',
+                });
             console.error('reCAPTCHA execution error:', recaptchaError);
             // Continue without reCAPTCHA for now
             }
@@ -557,7 +580,7 @@ const Step3 = () => {
                     {/* Price Section */}
                     <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                         <p className="text-slate-400 text-sm mb-1">{lang[languageContent].yourVehicleMarketPrice}</p>
-                        {revealPrice ? (
+                        {revealPrice && carPrice ? (
                             <div className="text-3xl font-bold text-amber-400">
                                 SAR {carPrice ? carPrice.toLocaleString() : '—'}
                             </div>
@@ -572,6 +595,7 @@ const Step3 = () => {
                                             try {
                                                 recaptchaToken = await executeRecaptcha('evaluate');
                                             } catch (recaptchaError) {
+                                            
                                                 console.error('reCAPTCHA execution error:', recaptchaError);
                                             }
                                         }
