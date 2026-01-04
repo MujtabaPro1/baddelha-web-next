@@ -619,8 +619,13 @@ const Step3 = () => {
                                         }
                                         setRevealPrice(true);
                                         setIsLoading(false);
-                                    } catch (error) {
+                                    } catch (error: any) {
                                         console.error('Error fetching car price:', error);
+                                        toast({
+                                            title: 'Error',
+                                            description: error.response?.data?.message || 'Error fetching car price',
+                                            variant: 'destructive',
+                                        });
                                         setRevealPrice(true);
                                         setIsLoading(false);
                                     }
