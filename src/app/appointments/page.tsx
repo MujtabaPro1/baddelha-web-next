@@ -126,7 +126,14 @@ const Appointments = () => {
     }
   };
 
-
+  const formatTime = (timeString: string) => {
+    try {
+      return format(parseISO(timeString), 'hh:mm a');
+    } catch (e) {
+      console.error('Error parsing time:', e);
+      return timeString;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16 pb-8 mt-16">
@@ -212,7 +219,7 @@ const Appointments = () => {
                       <div>
                         <p className="text-xs text-gray-500">Appointment Time</p>
                         <p className="text-sm font-medium text-gray-900">
-                          {appointment.appointmentTime}
+                          {formatTime(appointment.appointmentTime)}
                         </p>
                       </div>
                     </div>
@@ -298,7 +305,7 @@ const Appointments = () => {
                         <h4 className="text-xs font-medium text-gray-500">Time</h4>
                       </div>
                       <p className="text-sm font-medium text-gray-900">
-                        {selectedAppointment.appointmentTime}
+                        {formatTime(selectedAppointment.appointmentTime)}
                       </p>
                     </div>
                   </div>
