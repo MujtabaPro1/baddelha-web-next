@@ -227,11 +227,7 @@ const Confirmation = () => {
                                         <span className="text-sm text-gray-500">{lang[languageContent].time}</span>
                                     </div>
                                     <p className="font-semibold text-gray-900">
-                                        {bookingDetails.time && !bookingDetails.time.includes('T') 
-                                            ? bookingDetails.time 
-                                            : bookingDetails.time 
-                                                ? new Date(bookingDetails.time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })
-                                                : 'Not specified'}
+                                        {bookingDetails.time || 'Not specified'}
                                     </p>
                                 </div>
                             </div>
