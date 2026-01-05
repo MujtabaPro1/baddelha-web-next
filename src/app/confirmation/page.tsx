@@ -259,7 +259,7 @@ const Confirmation = () => {
                                         <Phone className="h-4 w-4 text-slate-600" />
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500">{lang[languageContent].phone}</p>
+                                        <p className="text-xs text-gray-500">{lang[languageContent].phoneNumber}</p>
                                         <p className="font-semibold text-gray-900">{bookingDetails.phone || 'Not specified'}</p>
                                     </div>
                                 </div>

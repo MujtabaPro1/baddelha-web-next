@@ -150,13 +150,13 @@ const Navbar: React.FC = () => {
           
           <div className="hidden md:flex items-center space-x-6">
             <div 
-            onClick={() => router.push('tel:920032590')}
+            onClick={() => router.push('tel:+966920032590')}
            dir="ltr"
             className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-white'}`}
             role="button"
             aria-label="Call 920032590">
               <Phone className="h-4 w-4  ml-2 mr-2" />
-              <span className="font-medium ml-2 mr-2">+92 00 32590</span>
+              <span className="font-medium ml-2 mr-2">92 00 32590</span>
             </div>
             <button
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
