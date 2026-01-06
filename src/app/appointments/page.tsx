@@ -219,7 +219,7 @@ const Appointments = () => {
                       <div>
                         <p className="text-xs text-gray-500">Appointment Time</p>
                         <p className="text-sm font-medium text-gray-900">
-                          {formatTime(appointment.appointmentTime)}
+                          {appointment.appointmentTime}
                         </p>
                       </div>
                     </div>
@@ -305,7 +305,7 @@ const Appointments = () => {
                         <h4 className="text-xs font-medium text-gray-500">Time</h4>
                       </div>
                       <p className="text-sm font-medium text-gray-900">
-                        {formatTime(selectedAppointment.appointmentTime)}
+                        {selectedAppointment.appointmentTime}
                       </p>
                     </div>
                   </div>

@@ -473,7 +473,7 @@ const Step3 = () => {
             const bookingData = {
                 branchId: Number(branch),
                 appointmentDate: appointmentDate,
-                appointmentTime: appointmentDate, // Using the same date for now, would need proper time parsing
+                appointmentTime: selectedTimeSlot || '',
                 firstName,
                 lastName,
                 phone,
