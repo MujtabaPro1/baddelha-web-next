@@ -79,6 +79,18 @@ export default function RootLayout({
           }}
         />
         {/* End Google Tag Manager */}
+        
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-159KC7KFNQ" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-159KC7KFNQ');`
+          }}
+        />
+        {/* End Google tag */}
       </head>
       <body>
         {/* Google Tag Manager (noscript) */}
