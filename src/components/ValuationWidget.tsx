@@ -19,6 +19,9 @@ interface CarModel {
   name: string;
 }
 
+
+
+
 const ValuationWidget: React.FC = () => {
   const [makes, setMakes] = useState<CarMake[]>([]);
   const [models, setModels] = useState<CarModel[]>([]);

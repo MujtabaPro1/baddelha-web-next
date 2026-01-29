@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { ChevronDown, Phone, MapPin } from 'lucide-react';
+import { ChevronDown, Phone } from 'lucide-react';
 
 const FAQ = ({bgWhite}: {bgWhite?: boolean}) => {
     const [openItem, setOpenItem] = useState<number | null>(null);
