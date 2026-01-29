@@ -145,8 +145,51 @@ const PriceCalculator = () => {
             'Calculate the price of your ideal car with features and financing tailored to your needs.'}
           </p>
         </header>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        {/* Professional Inspection Section */}
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-8 mb-10">
+          <h2 className="text-2xl font-bold mb-6 text-center">{isAr ? 'فحص سيارة احترافي' : 'Professional Car Inspection'}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <div className="flex items-start mb-4">
+                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold mr-4 flex-shrink-0">
+                  1
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">{isAr ? 'فحص احترافي للسيارة' : 'Professional Car Inspection'}</h3>
+                  <p className="text-gray-600 text-sm">{isAr ? 'بعد حجز الموعد، سيقوم مهندسونا الخبراء بفحص سيارتك بدقة لضمان تقييم عادل ودقيق.' : 'Once you book an appointment, our expert engineers will thoroughly inspect your car to ensure an accurate evaluation.'}</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <div className="flex items-start mb-4">
+                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold mr-4 flex-shrink-0">
+                  2
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">{isAr ? 'استلم سعرًا عادلاً – الخيار لك' : 'Receive a Fair Price – Your Choice'}</h3>
+                  <p className="text-gray-600 text-sm mb-3">{isAr ? 'احصل على سعر عادل وشفاف لسيارتك. يمكنك:' : 'Get a fair and transparent price for your car. You can:'}</p>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-2">●</span>
+                      <span>{isAr ? 'استلام المبلغ نقدًا' : 'Take the amount in cash'}</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-2">●</span>
+                      <span>{isAr ? 'استخدامه كدفعة أولى لشراء سيارة جديدة من JAECOO أو OMODA' : 'Use it as a down payment for a new JAECOO or OMODA car'}</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-green-500 mr-2">●</span>
+                      <span>{isAr ? 'أو رفض العرض – الخيار متروك لك بالكامل' : 'Or decline the offer – the choice is entirely yours'}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Calculator Form */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-sm p-6 mb-6">

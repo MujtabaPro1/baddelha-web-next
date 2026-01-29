@@ -104,10 +104,10 @@ const Footer: React.FC = () => {
               <h3 className="font-semibold text-lg mb-4">Resources</h3>
               <ul className="space-y-3">
                 <li><a href="/blog" className="text-white hover:text-amber-500 transition">{lang[languageContent].blogs}</a></li>
-                {/* <li><a href="/buying-guides" className="text-white hover:text-amber-500 transition">{lang[languageContent].buyingGuides}</a></li> */}
+                <li><a href="/buying-guides" className="text-white hover:text-amber-500 transition">{lang[languageContent].buyingGuides}</a></li>
                 <li><a href="/faq" className="text-white hover:text-amber-500 transition">{lang[languageContent].faq}</a></li>
-                {/* <li><a href="/price-calculator" className="text-white hover:text-amber-500 transition">{lang[languageContent].priceCalculator}</a></li>
-                <li><a href="/car-reviews" className="text-white hover:text-amber-500 transition">{lang[languageContent].carReviews}</a></li> */}
+                <li><a href="/price-calculator" className="text-white hover:text-amber-500 transition">{lang[languageContent].priceCalculator}</a></li>
+                {/* <li><a href="/car-reviews" className="text-white hover:text-amber-500 transition">{lang[languageContent].carReviews}</a></li> */}
               </ul>
             </div>
             

@@ -138,154 +138,36 @@ const BuyingGuides = () => {
           </p>
         </header>
 
-        {/* Search and Filter */}
-        <div className="mb-10">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="relative w-full md:w-1/2">
-              <input
-                type="text"
-                placeholder={isAr ? 'ابحث عن أدلة الشراء...' : 'Search buying guides...'}
-                className="w-full px-4 py-3 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primaryBtn"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                dir={isAr ? 'rtl' : 'ltr'}
-              />
-              <Search className="absolute top-3 right-3 text-gray-400" size={20} />
+        {/* Valuation Process Section */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 mb-10">
+          <h2 className="text-2xl font-bold mb-6 text-center">{isAr ? 'عملية تقييم السيارة' : 'Car Valuation Process'}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg p-6 text-center shadow-sm">
+              <div className="w-12 h-12 bg-primaryBtn rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4">
+                1
+              </div>
+              <h3 className="font-bold text-lg mb-2">{isAr ? 'احصل على تقييم مجاني عبر الإنترنت' : 'Get a Free Online Valuation'}</h3>
+              <p className="text-gray-600 text-sm">{isAr ? 'قيّم سيارتك مجانًا في دقائق معدودة وابدأ العملية فورًا.' : 'Evaluate your car for free in just a few minutes and get started instantly.'}</p>
             </div>
-            <button 
-              onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg md:hidden"
-            >
-              <Filter size={18} />
-              <span>{isAr ? 'تصفية' : 'Filter'}</span>
-            </button>
-          </div>
-          
-          {/* Categories - Desktop */}
-          <div className="hidden md:flex flex-wrap gap-2 mt-6">
-            {categories.map(category => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === category.id ? 'bg-primaryBtn text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-              >
-                {isAr ? category.nameAr : category.name}
-              </button>
-            ))}
-          </div>
-          
-          {/* Categories - Mobile */}
-          {showFilters && (
-            <div className="flex flex-wrap gap-2 mt-4 md:hidden">
-              {categories.map(category => (
-                <button
-                  key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === category.id ? 'bg-primaryBtn text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-                >
-                  {isAr ? category.nameAr : category.name}
-                </button>
-              ))}
+            <div className="bg-white rounded-lg p-6 text-center shadow-sm">
+              <div className="w-12 h-12 bg-primaryBtn rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4">
+                2
+              </div>
+              <h3 className="font-bold text-lg mb-2">{isAr ? 'احجز موعد فحص مجاني' : 'Book a Free Inspection Appointment'}</h3>
+              <p className="text-gray-600 text-sm">{isAr ? 'اختر الوقت المناسب لإجراء فحص احترافي لسيارتك بدون أي رسوم.' : 'Choose a convenient time for a professional inspection at no cost.'}</p>
             </div>
-          )}
+            <div className="bg-white rounded-lg p-6 text-center shadow-sm">
+              <div className="w-12 h-12 bg-primaryBtn rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4">
+                3
+              </div>
+              <h3 className="font-bold text-lg mb-2">{isAr ? 'استلم تقييمك في 30 دقيقة' : 'Receive Your Valuation in 30 Minutes'}</h3>
+              <p className="text-gray-600 text-sm">{isAr ? 'بعد الفحص، احصل على سعر عادل مبني على بيانات السوق — وأكمل العملية في 30 دقيقة.' : 'After the inspection, get a fair market-based price — and complete the process in just 30 minutes.'}</p>
+            </div>
+          </div>
         </div>
 
-        {/* Featured Guides */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">{isAr ? 'أدلة مميزة' : 'Featured Guides'}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {featuredGuides.map(guide => (
-              <div key={guide.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer" onClick={() => router.push(`/buying-guides/${guide.id}`)}>
-                <div className="relative h-64 overflow-hidden">
-                  <img src={guide.image} alt={isAr ? guide.titleAr : guide.title} className="w-full h-full object-cover" />
-                  <div className="absolute top-4 left-4 bg-primaryBtn text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {isAr ? 'مميز' : 'Featured'}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center text-sm text-gray-500 mb-3">
-                    <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full">{isAr ? guide.categoryAr : guide.category}</span>
-                    <div className="flex items-center mx-4">
-                      <Clock size={14} className="mr-1" />
-                      <span>{isAr ? guide.readTimeAr : guide.readTime}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Calendar size={14} className="mr-1" />
-                      <span>{isAr ? guide.dateAr : guide.date}</span>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{isAr ? guide.titleAr : guide.title}</h3>
-                  <p className="text-gray-600 mb-4">{isAr ? guide.excerptAr : guide.excerpt}</p>
-                  <div className="flex items-center text-primaryBtn font-medium">
-                    <span>{isAr ? 'اقرأ المزيد' : 'Read more'}</span>
-                    <ChevronRight size={16} className="ml-1" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
-        {/* All Guides */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">{isAr ? 'جميع الأدلة' : 'All Guides'}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {regularGuides.map(guide => (
-              <div key={guide.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer" onClick={() => router.push(`/buying-guides/${guide.id}`)}>
-                <div className="relative h-48 overflow-hidden">
-                  <img src={guide.image} alt={isAr ? guide.titleAr : guide.title} className="w-full h-full object-cover" />
-                </div>
-                <div className="p-5">
-                  <div className="flex items-center text-xs text-gray-500 mb-3">
-                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full">{isAr ? guide.categoryAr : guide.category}</span>
-                    <div className="flex items-center mx-3">
-                      <Clock size={12} className="mr-1" />
-                      <span>{isAr ? guide.readTimeAr : guide.readTime}</span>
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">{isAr ? guide.titleAr : guide.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{isAr ? guide.excerptAr : guide.excerpt}</p>
-                  <div className="flex items-center text-primaryBtn font-medium text-sm">
-                    <span>{isAr ? 'اقرأ المزيد' : 'Read more'}</span>
-                    <ChevronRight size={14} className="ml-1" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
-        {/* Newsletter Subscription */}
-        <section className="bg-[#3d3d40] rounded-2xl p-8 md:p-10">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-2/3 mb-6 md:mb-0">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                {isAr ? 'احصل على أحدث أدلة الشراء' : 'Get the Latest Buying Guides'}
-              </h3>
-              <p className="text-blue-100">
-                {isAr ? 'اشترك في نشرتنا الإخبارية للحصول على أحدث النصائح والأدلة مباشرة إلى بريدك الوارد.' : 
-                'Subscribe to our newsletter to receive the latest tips and guides directly to your inbox.'}
-              </p>
-            </div>
-            <div className="md:w-1/3">
-              <div className="flex">
-                <input 
-                  type="email" 
-                  placeholder={isAr ? 'أدخل بريدك الإلكتروني' : 'Enter your email'} 
-                  className="flex-grow px-4 py-3 rounded-l-lg focus:outline-none bg-white" 
-                  dir={isAr ? 'rtl' : 'ltr'}
-                />
-                <button className="bg-primaryBtn hover:bg-primaryBtn-600 text-white px-4 py-3 rounded-r-lg transition-colors">
-                  <ArrowRight size={20} />
-                </button>
-              </div>
-              <p className="text-xs text-blue-200 mt-2">
-                {isAr ? 'لن نرسل لك أي بريد عشوائي. اطلع على سياسة الخصوصية الخاصة بنا.' : 
-                'We won\'t send you spam. Check our privacy policy.'}
-              </p>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );
