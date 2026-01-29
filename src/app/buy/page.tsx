@@ -103,7 +103,7 @@ function Buy() {
           <SlidersHorizontal className="h-5 w-5 mr-2" />
           Filters
           {activeFiltersCount > 0 && (
-            <span className="ml-2 bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs px-2 py-1 rounded-full">
+            <span className="ml-2 bg-primaryBtn text-white text-xs px-2 py-1 rounded-full">
               {activeFiltersCount}
             </span>
           )}
@@ -332,7 +332,7 @@ function Buy() {
                     <Filter className="h-4 w-4 mr-2" />
                     Filters
                     {activeFiltersCount > 0 && (
-                      <span className="ml-2 bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs px-2 py-1 rounded-full">
+                      <span className="ml-2 bg-primaryBtn text-white text-xs px-2 py-1 rounded-full">
                         {activeFiltersCount}
                       </span>
                     )}
@@ -477,7 +477,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
               <div className="flex gap-2">
                 <a
                 href={`/buy/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
-                className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white px-4 py-2 rounded-lg transition text-sm">
+                className="bg-primaryBtn hover:bg-primaryBtn text-white px-4 py-2 rounded-lg transition text-sm">
                   View Details
                 </a>
                 {/* <button className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white px-4 py-2 rounded-lg transition text-sm">
@@ -559,7 +559,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
         <div className="flex gap-2">
           <a 
           href={`/buy/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
-           className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white py-2 px-3 rounded-lg transition text-sm text-center">
+           className="flex-1 bg-primaryBtn hover:bg-primaryBtn text-white py-2 px-3 rounded-lg transition text-sm text-center">
             View Details
           </a>
           {/* <a href="#" className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white py-2 px-3 rounded-lg transition text-sm text-center">

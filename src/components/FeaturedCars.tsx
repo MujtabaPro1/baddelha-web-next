@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, ChevronLeft, ChevronRight, Info } from 'lucide-react';
+import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
 
@@ -65,17 +65,27 @@ const cars: Car[] = [
 
 const CarCard: React.FC<{ car: Car }> = ({ car }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const [isCompared, setIsCompared] = useState(false);
   const { language } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
   
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
-      <div className="relative">
+      {/* Image with 16:9 aspect ratio */}
+      <div className="relative aspect-[16/9] overflow-hidden">
         <img 
           src={car.image} 
           alt={`${car.year} ${car.make} ${car.model}`} 
-          className="w-full h-56 object-contain"
+          className="w-full h-full object-contain"
+          loading="lazy"
         />
+        
+        {/* Badge: New or Used */}
+        <div className="absolute top-4 left-4 bg-primaryBtn text-white text-xs font-bold px-3 py-1 rounded-full">
+          {car.mileage === 0 ? (languageContent === 'ar' ? 'جديد' : 'New') : (languageContent === 'ar' ? 'مستعمل' : 'Used')}
+        </div>
+        
+        {/* Favorite button */}
         <button 
           onClick={() => setIsLiked(!isLiked)}
           className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition"
@@ -83,54 +93,69 @@ const CarCard: React.FC<{ car: Car }> = ({ car }) => {
         >
           <Heart className={`h-5 w-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
         </button>
-        
-        {car.featured && (
-          <div className="absolute top-4 left-4 bg-amber-500 text-blue-900 text-xs font-bold px-3 py-1 rounded-full">
-            {lang[languageContent].featured}
-          </div>
-        )}
       </div>
       
       <div className="p-5">
-        <div className="flex justify-between items-start mb-2">
-          <div>
-            <h3 className="font-bold text-lg">{car.make} {car.model}</h3>
-            <p className="text-gray-500 text-sm">{car.year}</p>
+        {/* Title: Make + Model + Year */}
+        <div className="mb-2">
+          <h3 className="font-bold text-lg">{car.make} {car.model} {car.year}</h3>
+        </div>
+        
+        {/* Price (SAR) - large */}
+        <div className="mb-4">
+          <p className="font-bold text-xl text-primaryBtn">SAR {car.price.toLocaleString()}</p>
+        </div>
+        
+        {/* Meta row: mileage, fuel, transmission */}
+        <div className="flex flex-wrap gap-3 mb-5 text-sm text-gray-600">
+          <div className="flex items-center">
+            <span>{car.mileage.toLocaleString()} km</span>
           </div>
-          <div className="text-right">
-            <p className="font-bold text-lg text-blue-800">SAR {car.price.toLocaleString()}</p>
-            <p className="text-gray-500 text-xs">Est. SAR 499/mo</p>
+          <div className="flex items-center">
+            <span>•</span>
+          </div>
+          <div className="flex items-center">
+            <span>{car.fuelType}</span>
+          </div>
+          <div className="flex items-center">
+            <span>•</span>
+          </div>
+          <div className="flex items-center">
+            <span>{car.transmission}</span>
           </div>
         </div>
         
-        <div className="grid grid-cols-2 gap-2 mt-4 text-sm">
-          <div className="flex items-center text-gray-700">
-            <span className="font-medium">{lang[languageContent].mileage}:</span>
-            <span className="ml-1">{car.mileage.toLocaleString()} mi</span>
-          </div>
-          <div className="flex items-center text-gray-700">
-            <span className="font-medium">{lang[languageContent].fuel}:</span>
-            <span className="ml-1">{car.fuelType}</span>
-          </div>
-          <div className="flex items-center text-gray-700">
-            <span className="font-medium">{lang[languageContent].transmission}:</span>
-            <span className="ml-1">{car.transmission}</span>
-          </div>
-        </div>
-        
-        <div className="flex gap-2 mt-5 hidden">
+        {/* CTAs: Explore (primary) + Favorite (icon) + Compare (icon) */}
+        <div className="flex gap-2 mt-5">
           <button  
-            
-            className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-medium py-2 px-4 rounded-lg w-full transition"
-            aria-label={`${lang[languageContent].viewDetails} ${car.make} ${car.model}`}
+            onClick={() => window.location.href = `/cars/${car.id}`}
+            className="bg-primaryBtn hover:bg-primaryBtn-600 text-white font-medium py-2 px-4 rounded-lg flex-grow transition"
+            aria-label={`Explore ${car.make} ${car.model}`}
           >
-            {lang[languageContent].viewDetails}
+            Explore
           </button>
+          
           <button 
-            className="border border-blue-800 text-blue-800 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition flex items-center justify-center"
-            aria-label={`More information about ${car.make} ${car.model}`}
+            onClick={() => setIsCompared(!isCompared)}
+            className="border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium p-2 rounded-lg transition flex items-center justify-center"
+            aria-label={isCompared ? 'Remove from compare' : 'Add to compare'}
           >
-            <Info className="h-4 w-4" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={isCompared ? "text-primaryBtn" : "text-gray-500"}>
+              <path d="M16 3h5v5"></path><path d="M8 3H3v5"></path>
+              <path d="M21 3l-7 7"></path><path d="M3 3l7 7"></path>
+              <path d="M8 21h5v-5"></path><path d="M16 21h5v-5"></path>
+              <path d="M3 21l7-7"></path><path d="M21 21l-7-7"></path>
+            </svg>
+          </button>
+        </div>
+        
+        {/* CTA: Get New Car button */}
+        <div className="mt-3">
+          <button
+            onClick={() => window.location.href = '/step1'}
+            className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition text-center"
+          >
+            Get New Car
           </button>
         </div>
       </div>

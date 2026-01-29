@@ -186,7 +186,7 @@ const Confirmation = () => {
                                 </div>
                                 <div className="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3">
                                     <p className="text-slate-400 text-xs">{lang[languageContent].yourVehicleMarketPrice}</p>
-                                    <p className="text-2xl font-bold text-amber-400">
+                                    <p className="text-2xl font-bold text-by">
                                         SAR {carDetails.price && carDetails.price != '0' ? numberWithCommas(carDetails.price) : 'N/A'}
                                     </p>
                                 </div>

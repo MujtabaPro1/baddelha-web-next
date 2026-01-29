@@ -106,9 +106,9 @@ const ValuationWidget: React.FC = () => {
   return (
     <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 px-6 py-5">
+      <div className="bg-[#f78f37] px-6 py-5">
         <div className="flex items-center gap-3 mb-1">
-          <div className="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
               <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
               <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
@@ -116,7 +116,7 @@ const ValuationWidget: React.FC = () => {
           </div>
           <div>
             <h2 className="text-xl font-bold text-white">{lang[languageContent].getYourCarsValue}</h2>
-            <p className="text-slate-400 text-sm">{lang[languageContent].freeInstantAndAccurateValuation}</p>
+            <p className="text-white text-sm">{lang[languageContent].freeInstantAndAccurateValuation}</p>
           </div>
         </div>
       </div>
@@ -228,7 +228,7 @@ const ValuationWidget: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full md:w-auto bg-slate-900 hover:bg-slate-800 text-white font-semibold py-4 px-8 rounded-xl transition shadow-lg flex items-center justify-center gap-2"
+            className="w-full md:w-auto bg-primaryBtn text-white font-semibold py-4 px-8 rounded-xl transition shadow-lg flex items-center justify-center gap-2"
           >
             {lang[languageContent].getValuation}
             {language == 'en' ? <ArrowRight className="h-5 w-5" /> : <ArrowLeft className="h-5 w-5" />}

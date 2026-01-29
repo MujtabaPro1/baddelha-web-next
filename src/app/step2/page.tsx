@@ -231,7 +231,7 @@ const progressSteps = [
     </div>
     <div className="relative">
         <div className="absolute top-6 left-3 right-3 h-2 rounded-full bg-gray-200 overflow-hidden">
-            <div style={{ width: `${progressPercent}%` }} className="h-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-300 shadow-[0_8px_20px_-10px_rgba(245,158,11,0.9)]" />
+            <div style={{ width: `${progressPercent}%` }} className="h-full bg-by shadow-[0_8px_20px_-10px_rgba(245,158,11,0.9)]" />
         </div>
         <div className="relative flex justify-between">
             {progressSteps.map((step, idx) => {
@@ -239,8 +239,8 @@ const progressSteps = [
                 const isActive = step.state === 'active';
                 return (
                     <div key={step.key} className="flex flex-col items-center gap-1 w-1/3 text-center">
-                        <div className={`h-11 w-11 rounded-full border-2 flex items-center justify-center transition-all ${isDone ? 'bg-gradient-to-r from-amber-500 to-amber-400 border-amber-300 shadow-md' : isActive ? 'bg-white border-amber-400 ring-4 ring-amber-100' : 'bg-white border-gray-200'}`}>
-                            {isDone ? <Check className="h-5 w-5 text-white" /> : <span className={`text-sm font-semibold ${isActive ? 'text-amber-600' : 'text-gray-400'}`}>{idx + 1}</span>}
+                        <div className={`h-11 w-11 rounded-full border-2 flex items-center justify-center transition-all ${isDone ? 'bg-by border-by shadow-md' : isActive ? 'bg-white border-by ring-4 ring-by' : 'bg-white border-gray-200'}`}>
+                            {isDone ? <Check className="h-5 w-5 text-white" /> : <span className={`text-sm font-semibold ${isActive ? 'text-by' : 'text-gray-400'}`}>{idx + 1}</span>}
                         </div>
                         <span className={`text-sm font-semibold ${isActive ? 'text-gray-900' : isDone ? 'text-gray-700' : 'text-gray-500'}`}>{step.label}</span>
                         <span className="text-[11px] text-gray-500">{isDone ? 'Completed' : isActive ? 'Currently filling' : 'Up next'}</span>
@@ -254,10 +254,10 @@ const progressSteps = [
             
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                 {/* Car Header Banner */}
-                <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 px-6 py-5">
-                    <p className="text-slate-400 text-sm mb-1">{language === "en" ? "Your Vehicle" : "سيارتك"}</p>
+                <div className="bg-bb px-6 py-5">
+                    <p className="text-white text-sm mb-1">{language === "en" ? "Your Vehicle" : "سيارتك"}</p>
                     <h2 className="text-xl md:text-2xl font-bold text-white">{carDetails.make} {carDetails.model} {carDetails.year}</h2>
-                    <p className="text-slate-300 text-sm mt-1">{lang[languageContent].enterInformation}</p>
+                    <p className="text-white text-sm mt-1">{lang[languageContent].enterInformation}</p>
                 </div>
                 
                 <form onSubmit={handleSubmit} className="p-4 md:p-6">
@@ -404,7 +404,7 @@ const progressSteps = [
                                 onClick={() => setOption('Basic')} 
                                 className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
                                     option === 'Basic' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -415,7 +415,7 @@ const progressSteps = [
                                 onClick={() => setOption('Mid option')} 
                                 className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
                                     option === 'Mid option' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -426,7 +426,7 @@ const progressSteps = [
                                 onClick={() => setOption('Full option')} 
                                 className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
                                     option === 'Full option' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -444,7 +444,7 @@ const progressSteps = [
                                 onClick={() => setPaint('Original paint')} 
                                 className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
                                     paint === 'Original paint' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -455,7 +455,7 @@ const progressSteps = [
                                 onClick={() => setPaint('Partial repaint')} 
                                 className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
                                     paint === 'Partial repaint' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -466,7 +466,7 @@ const progressSteps = [
                                 onClick={() => setPaint('Total repaint')} 
                                 className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
                                     paint === 'Total repaint' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -484,7 +484,7 @@ const progressSteps = [
                                 onClick={() => setGccSpecs('GCC Specs')} 
                                 className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
                                     gccSpecs === 'GCC Specs' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -495,7 +495,7 @@ const progressSteps = [
                                 onClick={() => setGccSpecs('Non GCC Specs')} 
                                 className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
                                     gccSpecs === 'Non GCC Specs' 
-                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                        ? 'bg-bb text-white shadow-lg' 
                                         : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                 }`}
                             >
@@ -508,7 +508,7 @@ const progressSteps = [
                     <div className="mt-8">
                         <button
                             type="submit"
-                            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-4 px-6 rounded-xl transition shadow-lg flex items-center justify-center gap-2"
+                            className="w-full bg-bb hover:bg-bb text-white font-semibold py-4 px-6 rounded-xl transition shadow-lg flex items-center justify-center gap-2"
                         >
                             {lang[languageContent].continue}
                             <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${language === 'ar' ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">

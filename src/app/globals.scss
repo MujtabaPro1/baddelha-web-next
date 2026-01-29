@@ -1,0 +1,108 @@
+/* Import Tailwind CSS v4 */
+@import "tailwindcss";
+
+/* Define custom colors for Tailwind v4 */
+@theme {
+  --color-primary-btn: #ee3c48;
+  --color-primary-btn-50: #fee2e2;
+  --color-primary-btn-100: #fecaca;
+  --color-primary-btn-200: #fca5a5;
+  --color-primary-btn-300: #f87171;
+  --color-primary-btn-400: #ef4444;
+  --color-primary-btn-500: #ee3c48;
+  --color-primary-btn-600: #dc2626;
+  --color-primary-btn-700: #b91c1c;
+  --color-primary-btn-800: #991b1b;
+  --color-primary-btn-900: #7f1d1d;
+
+  
+  /* Also define as primaryBtn for backward compatibility */
+  --color-primaryBtn: #ee3c48;
+  --color-primaryBtn-600: #dc2626;
+
+
+  --color-secondary: #3d3d40;
+  --color-by: #f78f37;
+  --color-bb: #f78f37;
+}
+
+/* Import critical CSS */
+@import '../styles/critical.css';
+@import '../styles/rtl.scss';
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'SF Pro Display', 'Poppins', system-ui, sans-serif;
+  color: #1f2937; /* text-gray-800 equivalent */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-in-out;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bg-url {
+  background-image: url('/bg.jpeg');
+}
+
+
+
+
+
+/* Algolia Pagination styles */
+
+
+.ais-Pagination-list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.ais-Pagination-item.ais-Pagination-item--page {
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+.ais-Pagination-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 38px;
+  width: 38px;
+  color: #414247;
+  background-color: rgba(65,66,71,.08);
+  border-radius: 4px;
+}
+
+
+.ais-Pagination-item--disabled {
+  opacity: .33;
+}
+.ais-Pagination-item--previousPage , .ais-Pagination-item--nextPage, .ais-Pagination-item--lastPage {
+  background: 0 0;
+  font-size: 32px;
+}
+
+.ais-Pagination-item--selected {
+  background-color: #1F1F1F;
+  color: #fff;
+  font-weight: 700;
+}

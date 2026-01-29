@@ -116,7 +116,7 @@ const Navbar: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : pathname !== '/' ? 'bg-[#3d3d40] py-4' :  'bg-transparent py-4'
+        isScrolled ? 'bg-white/60 backdrop-blur-lg  shadow-md py-2' : pathname !== '/' ? 'bg-[#3d3d40] py-4' :  'bg-transparent py-4'
       }`}
     >
       <div className="container mx-auto px-4">
@@ -142,9 +142,48 @@ const Navbar: React.FC = () => {
               </span>
             </div>
             <nav className="hidden md:flex space-x-8">
-            
-              {/* <Link href={pathname?.includes('buy') ? '/' : '/buy'} className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{pathname?.includes('buy') ? lang[languageContent].sell : lang[languageContent].buy}</Link>
-              <Link href="/tradein" className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} ml-2 mr-2`}>{lang[languageContent].tradeIn}</Link> */}
+              <a 
+                href="/buy" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'شراء سيارة' : 'Buy a car'}
+              </a>
+               <a 
+                href="/auction" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'مزاد' : 'Auction'}
+              </a>
+              <a 
+                href="/locations" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'المواقع' : 'Location'}
+              </a>
+              <a 
+                href="/contactus" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'اتصل بنا' : 'Contact us'}
+              </a>
+              <a 
+                href="/about" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'من نحن' : 'About us'}
+              </a>
+              <a 
+                href="/why-us" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'لماذا نحن' : 'Why Us'}
+              </a>
+              <a 
+                href="/faq" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}
+              </a>
             </nav>
           </div>
           
@@ -168,7 +207,7 @@ const Navbar: React.FC = () => {
             </button>
             {!isAuthenticated ? <button
             onClick={() => router.push('/login')}
-            className="bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-gradient-to-r from-amber-500 to-amber-400 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            className="bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
               {lang[languageContent].signIn}
             </button> : profileView()}
           </div>
@@ -188,9 +227,63 @@ const Navbar: React.FC = () => {
       {isMenuOpen && (
         <div className={`md:hidden bg-white shadow-lg absolute top-full left-0 right-0 p-4 transition-transform`}>
           <nav className="flex flex-col space-y-4 py-4">
-            {/* <Link href="/buy" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'شراء' : 'Buy'}</Link>
-            <Link href="/tradein" className="transition hover:text-blue-600 ml-2 mr-2">{language === 'ar' ? 'استبدال' : 'Trade-In'}</Link> */}
-          </nav>
+              <a 
+                href="/" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'الرئيسية' : 'Home'}
+              </a>
+              <a 
+                href="/buy" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'شراء سيارة' : 'Buy a car'}
+              </a>
+              <a 
+                href="/auction" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'مزاد' : 'Auction'}
+              </a>
+              <a 
+                href="/locations" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'المواقع' : 'Location'}
+              </a>
+              <a 
+                href="/contactus" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'اتصل بنا' : 'Contact us'}
+              </a>
+              <a 
+                href="/about" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'من نحن' : 'About us'}
+              </a>
+              <a 
+                href="/why-us" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'لماذا نحن' : 'Why Us'}
+              </a>
+              <a 
+                href="/faq" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}
+              </a>
+            </nav>
           <div className="mt-4 pt-4 border-t border-gray-100">
             <div 
             dir="ltr"
@@ -208,10 +301,10 @@ const Navbar: React.FC = () => {
               <Globe className="h-4 w-4 mr-1" />
               <span>{language === 'en' ? 'العربية' : 'English'}</span>
             </button>
-            {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-gradient-to-r from-amber-500 to-amber-400 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
               {language === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
             </button>}
-            {isAuthenticated && <button onClick={handleLogout} className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-gradient-to-r from-amber-500 to-amber-400 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            {isAuthenticated && <button onClick={handleLogout} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
               {language === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}
             </button>}
           </div>

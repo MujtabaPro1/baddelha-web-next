@@ -13,7 +13,7 @@ const CtaSection: React.FC = () => {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="bg-gradient-to-r from-blue-800 to-blue-700 rounded-2xl overflow-hidden shadow-xl">
+        <div className="bg-secondary rounded-2xl overflow-hidden shadow-xl">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/2 p-10 md:p-12 flex flex-col justify-center">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -43,7 +43,7 @@ const CtaSection: React.FC = () => {
                     behavior: 'smooth'
                   });
                 }}
-                className="bg-amber-500 hover:bg-amber-400 text-blue-900 font-semibold py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center">
+                className="bg-primaryBtn text-white font-semibold py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center">
                   {lang[languageContent].scheduleAppointment} {language == 'en' ? <ArrowRight className="ml-2 h-5 w-5" /> : <ArrowLeft className="mr-2 h-5 w-5" />}
                 </button>
                 <button 

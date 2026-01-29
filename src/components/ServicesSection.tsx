@@ -39,7 +39,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
         {icon}
       </div>
       <h3 className={`text-xl font-semibold mb-3 ${textColor}`}>{title}</h3>
-      <p className={`mb-5 ${textColor} opacity-90`}>{description}</p>
+      <p className={`mb-5 ${textColor} opacity-90 min-h-[72px]`}>{description}</p>
       <button 
         onClick={() => window.location.href = btnLink} 
         className={`${btnColor} font-medium py-2 px-4 rounded-lg transition hover:opacity-90`}
@@ -65,9 +65,9 @@ const ServicesSection: React.FC = () => {
       icon: <SteeringIcon className="h-6 w-6" />,
       title: lang[languageContent].buyTitle,
       description: lang[languageContent].buyDesc,
-      bgColor: "bg-gradient-to-r from-blue-800 to-blue-700",
+      bgColor: "bg-secondary",
       textColor: "text-white",
-      btnColor: "bg-gradient-to-r from-amber-500 to-amber-400 text-white",
+      btnColor: "bg-primaryBtn text-white",
       btnLink: "/",
       btnText: lang[languageContent].browseCarsBtnText
     },
@@ -75,9 +75,9 @@ const ServicesSection: React.FC = () => {
       icon: <RiyalIcon className="h-6 w-6" />,
       title: lang[languageContent].sellTitle,
       description: lang[languageContent].sellDesc,
-      bgColor: "bg-gradient-to-r from-blue-800 to-blue-700",
+      bgColor: "bg-secondary",
       textColor: "text-white",
-      btnColor: "bg-gradient-to-r from-amber-500 to-amber-400 text-white",
+      btnColor: "bg-primaryBtn text-white",
       btnLink: "/",
       btnText: lang[languageContent].getOfferBtnText
     },
@@ -85,9 +85,9 @@ const ServicesSection: React.FC = () => {
       icon: <Repeat className="h-6 w-6" />,
       title: lang[languageContent].tradeInTitle,
       description: lang[languageContent].tradeInDesc,
-      bgColor: "bg-gradient-to-r from-blue-800 to-blue-700",
+      bgColor: "bg-secondary",
       textColor: "text-white",
-      btnColor: "bg-gradient-to-r from-amber-500 to-amber-400 text-white",
+      btnColor: "bg-primaryBtn text-white",
       btnLink: "/",
       btnText: lang[languageContent].tradeNowBtnText
     },
@@ -95,9 +95,9 @@ const ServicesSection: React.FC = () => {
       icon: <FileText className="h-6 w-6" />,
       title: lang[languageContent].bankValuationTitle,
       description: lang[languageContent].bankValuationDesc,
-      bgColor: "bg-gradient-to-r from-blue-800 to-blue-700",
+      bgColor: "bg-secondary",
       textColor: "text-white",
-      btnColor: "bg-gradient-to-r from-amber-500 to-amber-400 text-white",
+      btnColor: "bg-primaryBtn text-white",
       btnLink: "/",
       btnText: lang[languageContent].getValuationBtnText
     }
@@ -152,7 +152,7 @@ const ServicesSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="text-center">
-                <div className="bg-gradient-to-r from-blue-800 to-blue-700 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
+                <div className="bg-secondary w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
                   {feature.icon}
                 </div>
                 <h4 className="font-semibold mb-2">{feature.title}</h4>

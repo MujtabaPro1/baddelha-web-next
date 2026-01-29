@@ -3,6 +3,7 @@ import HeroSection from '../components/HeroSection';
 import ServicesSection from '../components/ServicesSection';
 import FeaturedCars from '../components/FeaturedCars';
 import CtaSection from '../components/CtaSection';
+import TestimonialsSection from '../components/TestimonialsSection';
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
         <HeroSection />
         <ServicesSection />
         <FeaturedCars />
+        <TestimonialsSection />
         <CtaSection />
     </div>
   );

@@ -9,6 +9,7 @@ interface Testimonial {
   location: string;
   rating: number;
   testimonial: string;
+  testimonialAr?: string;
   image: string;
   service: string;
 }
@@ -16,39 +17,43 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Sarah Johnson",
-    location: "Los Angeles, CA",
+    name: "Mohammed Otaibi",
+    location: "Riyadh, Saudi Arabia",
     rating: 5,
-    testimonial: "I was amazed at how easy it was to sell my car. The valuation was fair, and the entire process took less than an hour. The money was in my account the same day!",
-    image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    service: "Car Selling"
+    testimonial: "My inspection experience with Baddelha was smooth and fast. Everything was clear and professional. I truly appreciate the team for their excellent work and support.",
+    testimonialAr: "تجربتي في فحص السيارة مع بدلها كانت سهلة وسريعة جدًا. كل شيء كان واضح واحترافي، وأشكر فريق العمل على تعاونهم وجهودهم المميزة.",
+    image: "https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    service: "Car Inspection"
   },
   {
     id: 2,
-    name: "Michael Chen",
-    location: "Seattle, WA",
+    name: "Laila Shehry",
+    location: "Jeddah, Saudi Arabia",
     rating: 5,
-    testimonial: "I traded in my old BMW for a newer model, and DriveMarket offered me $3,000 more than any other dealer. The process was transparent and quick.",
-    image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    service: "Trade-In"
+    testimonial: "Baddelha did an amazing job for me. I sold my old car and got a new J7 in just 30 minutes — an incredible and hassle-free experience.",
+    testimonialAr: "بدلها قدموا لي خدمة رائعة. بعت سيارتي القديمة واستلمت سيارة J7 جديدة خلال 30 دقيقة فقط — تجربة سريعة وسلسة بدون أي تعب.",
+    image: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    service: "Selling & Exchange"
   },
   {
     id: 3,
-    name: "Emma Rodriguez",
-    location: "Miami, FL",
-    rating: 4,
-    testimonial: "The bank valuation service was incredibly helpful when refinancing my car loan. The detailed report helped me secure a much better rate with my bank.",
-    image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    service: "Bank Valuation"
+    name: "Sara Al-Mutairi",
+    location: "Dammam, Saudi Arabia",
+    rating: 5,
+    testimonial: "The team was very professional and honest. I felt confident throughout the process, and everything was completed faster than I expected.",
+    testimonialAr: "الفريق كان قمة في الاحترافية والمصداقية. حسّيت بالثقة طوال العملية، وكل شيء تم أسرع مما توقعت.",
+    image: "https://images.pexels.com/photos/1183244/pexels-photo-1183244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    service: "Car Valuation"
   },
   {
     id: 4,
-    name: "David Williams",
-    location: "Chicago, IL",
+    name: "Ahmed Al-Harbi",
+    location: "Riyadh, Saudi Arabia",
     rating: 5,
-    testimonial: "Found my dream car on DriveMarket at a price I couldn't believe. The financing options were flexible, and I drove off with my new car the same day!",
-    image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    service: "Car Buying"
+    testimonial: "From inspection to valuation, the whole process was quick and transparent. Baddelha saved me time and gave me a great deal.",
+    testimonialAr: "من الفحص إلى التقييم، كل الإجراءات كانت سريعة وواضحة. بدلها وفروا علي الوقت وحصلت على عرض ممتاز.",
+    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    service: "Complete Service"
   }
 ];
 
@@ -57,11 +62,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
     <div className="bg-white rounded-xl shadow-md p-6 flex flex-col h-full">
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center">
-          <img 
-            src={testimonial.image} 
-            alt={testimonial.name} 
-            className="w-12 h-12 rounded-full object-cover mr-4"
-          />
+         
           <div>
             <h4 className="font-semibold">{testimonial.name}</h4>
             <p className="text-gray-500 text-sm">{testimonial.location}</p>
@@ -168,6 +169,15 @@ const TestimonialsSection: React.FC = () => {
               } transition-all duration-300`}
             />
           ))}
+        </div>
+        
+        <div className="text-center mt-8">
+          <a 
+            href="/reviews" 
+            className="inline-block bg-primaryBtn text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-300"
+          >
+            Read More Reviews
+          </a>
         </div>
       </div>
     </section>

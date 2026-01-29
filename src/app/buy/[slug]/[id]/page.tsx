@@ -961,7 +961,7 @@ export default function Page() {
                   onClick={() => {
                     window.location.href = `tel:+966920032590`;
                   }}
-                  className="w-full border border-gray-300 bg-gradient-to-r from-amber-500 to-amber-400 text-white font-medium py-3 px-6 rounded-lg transition"
+                  className="w-full border border-gray-300 bg-primaryBtn text-white font-medium py-3 px-6 rounded-lg transition"
                 >
                   {lang[language].interested}
                 </button>

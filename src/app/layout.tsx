@@ -1,10 +1,12 @@
 
 import { LanguageProvider } from '../contexts/LanguageContext';
+import { UserTypeProvider } from '../contexts/UserTypeContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Toaster } from '../components/ui/toaster';
+import UserTypePopupWrapper from '../components/UserTypePopupWrapper';
 import type { Metadata } from 'next';
-import './globals.css';
+import './globals.scss';
 import ReCaptchaProvider from '../components/ReCaptchaProvider'
 
 // Preload critical fonts
@@ -104,14 +106,17 @@ export default function RootLayout({
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         <LanguageProvider>
-          <div className="min-h-screen bg-white">
-            <Navbar />
-            <ReCaptchaProvider>
-              <main>{children}</main>
-            </ReCaptchaProvider>
-            <Footer />
-            <Toaster />
-          </div>
+          <UserTypeProvider>
+            <div className="min-h-screen bg-white">
+              <Navbar />
+              <ReCaptchaProvider>
+                <main>{children}</main>
+              </ReCaptchaProvider>
+              <Footer />
+              <Toaster />
+              <UserTypePopupWrapper />
+            </div>
+          </UserTypeProvider>
         </LanguageProvider>
       </body>
     </html>

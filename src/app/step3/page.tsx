@@ -528,7 +528,7 @@ const Step3 = () => {
     </div>
     <div className="relative">
         <div className="absolute top-6 left-3 right-3 h-2 rounded-full bg-gray-200 overflow-hidden">
-            <div style={{ width: `${progressPercent}%` }} className="h-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-300 shadow-[0_8px_20px_-10px_rgba(245,158,11,0.9)]" />
+            <div style={{ width: `${progressPercent}%` }} className="h-full bg-by shadow-[0_8px_20px_-10px_rgba(245,158,11,0.9)]" />
         </div>
         <div className="relative flex justify-between">
             {progressSteps.map((step, idx) => {
@@ -536,8 +536,8 @@ const Step3 = () => {
                 const isActive = step.state === 'active';
                 return (
                     <div key={step.key} className="flex flex-col items-center gap-1 w-1/3 text-center">
-                        <div className={`h-11 w-11 rounded-full border-2 flex items-center justify-center transition-all ${isDone ? 'bg-gradient-to-r from-amber-500 to-amber-400 border-amber-300 shadow-md' : isActive ? 'bg-white border-amber-400 ring-4 ring-amber-100' : 'bg-white border-gray-200'}`}>
-                            {isDone ? <Check className="h-5 w-5 text-white" /> : <span className={`text-sm font-semibold ${isActive ? 'text-amber-600' : 'text-gray-400'}`}>{idx + 1}</span>}
+                        <div className={`h-11 w-11 rounded-full border-2 flex items-center justify-center transition-all ${isDone ? 'bg-by border-by shadow-md' : isActive ? 'bg-white border-by ring-4 ring-by' : 'bg-white border-gray-200'}`}>
+                            {isDone ? <Check className="h-5 w-5 text-white" /> : <span className={`text-sm font-semibold ${isActive ? 'text-by' : 'text-gray-400'}`}>{idx + 1}</span>}
                         </div>
                         <span className={`text-sm font-semibold ${isActive ? 'text-gray-900' : isDone ? 'text-gray-700' : 'text-gray-500'}`}>{step.label}</span>
                         <span className="text-[11px] text-gray-500">{isDone ? 'Completed' : isActive ? 'Currently filling' : 'Up next'}</span>
@@ -554,7 +554,7 @@ const Step3 = () => {
             <h2 className="text-2xl font-bold text-center mb-8">{lang[languageContent].bookFreeCarInspection}</h2>
             
             {/* Car Summary Banner - Full Width */}
-            <div className="mb-8 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-2xl p-6 shadow-xl">
+            <div className="mb-8 bg-bb rounded-2xl p-6 shadow-xl">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                     {/* Car Info */}
                     <div className="flex items-center gap-4">
@@ -562,15 +562,15 @@ const Step3 = () => {
                             {carLogo && <img src={carLogo} alt="Car Logo" className="w-14 h-14 object-contain" />}
                         </div>
                         <div>
-                            <p className="text-slate-400 text-sm mb-1">{language === "en" ? "Your Vehicle" : "سيارتك"}</p>
+                            <p className="text-white text-sm mb-1">{language === "en" ? "Your Vehicle" : "سيارتك"}</p>
                             <h3 className="text-white text-xl font-bold">
                                 {step1Data ? `${step1Data.make || '—'} ${step1Data.model || '—'} ${step1Data.year || ''}` : '—'}
                             </h3>
                             <div className="flex gap-4 mt-2">
                                 {step2Data && (
                                     <>
-                                        <span className="text-slate-300 text-xs bg-white/10 px-2 py-1 rounded">{step2Data.engineSizeName || '—'}</span>
-                                        <span className="text-slate-300 text-xs bg-white/10 px-2 py-1 rounded">{step2Data.mileageName || '—'}</span>
+                                        <span className="text-white text-xs bg-white/10 px-2 py-1 rounded">{step2Data.engineSizeName || '—'}</span>
+                                        <span className="text-white text-xs bg-white/10 px-2 py-1 rounded">{step2Data.mileageName || '—'}</span>
                                     </>
                                 )}
                             </div>
@@ -579,7 +579,7 @@ const Step3 = () => {
                     
                     {/* Price Section */}
                     <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                        <p className="text-slate-400 text-sm mb-1">{lang[languageContent].yourVehicleMarketPrice}</p>
+                        <p className="text-white text-sm mb-1">{lang[languageContent].yourVehicleMarketPrice}</p>
                         {revealPrice && carPrice ? (
                             <div className="text-3xl font-bold text-amber-400">
                                 SAR {carPrice ? carPrice.toLocaleString() : '—'}
@@ -630,7 +630,7 @@ const Step3 = () => {
                                         setIsLoading(false);
                                     }
                                 }}
-                                className="bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-6 py-3 rounded-lg transition flex items-center gap-2"
+                                className="bg-primaryBtn text-white text-sm font-semibold px-6 py-3 rounded-lg transition flex items-center gap-2"
                             >
                                 {!isLoading ? (
                                     <>
@@ -655,7 +655,7 @@ const Step3 = () => {
                         {/* Branch Selection - Vertical List Style */}
                         <div className="mb-8">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center">
+                                <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
                                     <span className="text-white font-bold">1</span>
                                 </div>
                                 <h3 className="text-lg font-semibold text-gray-900">{lang[languageContent].branches}</h3>
@@ -676,14 +676,14 @@ const Step3 = () => {
                                                 onClick={() => setBranch(branchItem.id)}
                                                 className={`cursor-pointer p-3 md:p-4 rounded-xl transition-all duration-200 ${
                                                     branch === branchItem.id 
-                                                        ? 'bg-slate-900 text-white shadow-lg' 
+                                                        ? 'bg-secondary text-white shadow-lg' 
                                                         : 'bg-slate-50 hover:bg-slate-100 text-gray-900'
                                                 }`}
                                             >
                                                 <div className="flex items-start gap-3">
                                                     <div className={`w-5 h-5 mt-0.5 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
                                                         branch === branchItem.id 
-                                                            ? 'border-amber-400 bg-amber-400' 
+                                                            ? 'border-by bg-by' 
                                                             : 'border-gray-400'
                                                     }`}>
                                                         {branch === branchItem.id && (
@@ -706,7 +706,7 @@ const Step3 = () => {
                                                             onClick={(e) => e.stopPropagation()} 
                                                             className={`inline-flex items-center gap-1 text-xs mt-2 px-2 py-1 rounded-md transition ${
                                                                 branch === branchItem.id 
-                                                                    ? 'bg-white/10 hover:bg-white/20 text-amber-400' 
+                                                                    ? 'bg-white/10 hover:bg-white/20 text-by' 
                                                                     : 'bg-slate-200 hover:bg-slate-300 text-slate-600'
                                                             }`}
                                                         >
@@ -728,7 +728,7 @@ const Step3 = () => {
                         {/* Date and Time Selection - Step Style */}
                         <div className="mb-8">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${branch ? 'bg-slate-900' : 'bg-slate-300'}`}>
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${branch ? 'bg-secondary' : 'bg-slate-300'}`}>
                                     <span className="text-white font-bold">2</span>
                                 </div>
                                 <h3 className="text-lg font-semibold text-gray-900">{lang[languageContent].selectDayTime}</h3>
@@ -759,7 +759,7 @@ const Step3 = () => {
                                                     }}
                                                     className={`flex-shrink-0 w-16 md:w-auto p-2 md:p-3 rounded-xl text-center transition-all ${
                                                         selectedDay === daySchedule.day
-                                                            ? 'bg-slate-900 text-white shadow-lg'
+                                                            ? 'bg-secondary text-white shadow-lg'
                                                             : 'bg-white text-gray-700 hover:bg-slate-100 border border-slate-200'
                                                     }`}
                                                 >
@@ -785,7 +785,7 @@ const Step3 = () => {
                                                             onClick={() => setSelectedTimeSlot(slot.label)}
                                                             className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
                                                                 selectedTimeSlot === slot.label
-                                                                    ? 'bg-amber-500 text-white shadow-md'
+                                                                    ? 'bg-by text-white shadow-md'
                                                                     : 'bg-white text-gray-700 border border-slate-200 hover:border-amber-400 hover:text-amber-600'
                                                             }`}
                                                         >
@@ -810,7 +810,7 @@ const Step3 = () => {
                         {/* Contact Details - Step Style */}
                         <div className="mb-8">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${selectedTimeSlot ? 'bg-slate-900' : 'bg-slate-300'}`}>
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${selectedTimeSlot ? 'bg-secondary' : 'bg-slate-300'}`}>
                                     <span className="text-white font-bold">3</span>
                                 </div>
                                 <h3 className="text-lg font-semibold text-gray-900">{language === "en" ? "Your Details" : "بياناتك"}</h3>
@@ -881,7 +881,7 @@ const Step3 = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-6 rounded-xl transition focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 shadow-lg text-lg"
+                            className="w-full bg-bb hover:bg-bb text-white font-bold py-4 px-6 rounded-xl transition focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 shadow-lg text-lg"
                         >
                             {lang[languageContent].bookAppointment}
                         </button>
