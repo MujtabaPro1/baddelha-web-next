@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
                   { Icon: Ghost, href: ' https://snapchat.com/t/UKEQxf7p' },
                   { Icon: Music2, href: 'https://www.tiktok.com/@baddelha.sa' },
                   { Icon: Instagram, href: 'https://www.instagram.com/baddelha.sa?utm_source=qr&igsh=ZTZ0YThoNnZseXVr' },
-                  { Icon: Facebook, href: 'https://www.facebook.com/baddelha.com.sa' },
+                  { Icon: Facebook, href: 'https://www.facebook.com/people/Baddelha-%D8%A8%D8%AF%D9%84%D9%87%D8%A7/61585713903480/?rdid=JzqsCqDxaOb4CcFe&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CqjQbz6HL%2F%3Fref%3D1' },
                   { Icon: Linkedin, href: 'https://www.linkedin.com/company/baddelha.com.sa' }
                 ].map(({ Icon, href }, index) => (
                   <a
