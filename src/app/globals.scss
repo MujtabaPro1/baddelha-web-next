@@ -29,13 +29,14 @@
 /* Import critical CSS */
 @import '../styles/critical.css';
 @import '../styles/rtl.scss';
+@import url('../../public/fonts/stylesheet.css');
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'SF Pro Display', 'Poppins', system-ui, sans-serif;
+  font-family: 'Shubbak', 'SF Pro Display', 'Poppins', system-ui, sans-serif;
   color: #1f2937; /* text-gray-800 equivalent */
 }
 
