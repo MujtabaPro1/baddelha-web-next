@@ -392,7 +392,7 @@ const lang = {
         "fuelType": "نوع الوقود",
         "testimonials": "الشهادات",
         "hearFromOurHappyCustomers": "نستمع من عملائنا السعداء",
-        "thousandsOfCarOwnersTrustDriveMarketForBuyingSellingAndValuatingTheirVehicles": " آلاف أصحاب السيارات يثقون في Badelha لشراء وبيع وقييم السيارات",
+        "thousandsOfCarOwnersTrustDriveMarketForBuyingSellingAndValuatingTheirVehicles":"ألاف من أصحاب السيارات يثقون في Baddelha لشراء وبيع و تقييم سياراتهم ، صوتك يهمنا",
         "hereIsWhatSomeOfThemHaveToSay": "هنا ما يقول بعضهم",
         "getFreeCarValuation": "احصل على قيمة سيارتك في ثواني",
         "getFreeCarValuationDesc": "احصل على قيمة سيارتك في ثواني",

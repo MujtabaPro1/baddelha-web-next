@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Facebook, Twitter, Instagram, Linkedin, Youtube, Mail, Phone, Send } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Mail, Phone, Send, Ghost, Music2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
 import Image from 'next/image';
@@ -75,10 +75,18 @@ const Footer: React.FC = () => {
               
               {/* Social Links */}
               <div className="flex space-x-4">
-                {[Facebook, Twitter, Instagram, Linkedin, Youtube].map((Icon, index) => (
-                  <a 
-                    key={index} 
-                    href="#" 
+                {[
+                  { Icon: Ghost, href: ' https://snapchat.com/t/UKEQxf7p' },
+                  { Icon: Music2, href: 'https://www.tiktok.com/@baddelha.sa' },
+                  { Icon: Instagram, href: 'https://www.instagram.com/baddelha.sa?utm_source=qr&igsh=ZTZ0YThoNnZseXVr' },
+                  { Icon: Facebook, href: 'https://www.facebook.com/baddelha.com.sa' },
+                  { Icon: Linkedin, href: 'https://www.linkedin.com/company/baddelha.com.sa' }
+                ].map(({ Icon, href }, index) => (
+                  <a
+                    key={index}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
                     className="bg-gray-700 p-2 rounded-full hover:bg-amber-500 transition"
                   >
                     <Icon className="h-5 w-5" />
