@@ -40,13 +40,13 @@ const Footer: React.FC = () => {
 
    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <a 
-              href="/evaluation" 
+              href="#" 
               className="bg-primaryBtn  text-white font-semibold py-4 px-6 rounded-lg text-center transition"
             >
               {lang[languageContent].getInstantValuation}
             </a>
             <a 
-              href="/sell" 
+              href="#" 
               className="bg-transparent border-2 border-white text-white hover:bg-primaryBtn hover:text-white font-semibold py-4 px-6 rounded-lg text-center transition"
             >
              {lang[languageContent].sellYourCarNow}
