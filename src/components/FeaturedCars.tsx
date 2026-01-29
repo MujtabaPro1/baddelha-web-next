@@ -128,7 +128,7 @@ const CarCard: React.FC<{ car: Car }> = ({ car }) => {
         {/* CTAs: Explore (primary) + Favorite (icon) + Compare (icon) */}
         <div className="flex gap-2 mt-5">
           <button  
-            onClick={() => window.location.href = `/cars/${car.id}`}
+            onClick={() => window.location.href = '/'}
             className="bg-primaryBtn hover:bg-primaryBtn-600 text-white font-medium py-2 px-4 rounded-lg flex-grow transition"
             aria-label={`Explore ${car.make} ${car.model}`}
           >
@@ -152,7 +152,7 @@ const CarCard: React.FC<{ car: Car }> = ({ car }) => {
         {/* CTA: Get New Car button */}
         <div className="mt-3">
           <button
-            onClick={() => window.location.href = '/step1'}
+            onClick={() => window.location.href = '/'}
             className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition text-center"
           >
             Get New Car
