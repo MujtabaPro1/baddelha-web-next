@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { ChevronDown, Phone, MapPin } from 'lucide-react';
 
-const FAQ = () => {
+const FAQ = ({bgWhite}: {bgWhite?: boolean}) => {
     const [openItem, setOpenItem] = useState<number | null>(null);
 
     const faqItems = [
@@ -44,8 +44,8 @@ const FAQ = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-[120px] pb-16">
-            <div className="max-w-4xl mx-auto px-4">
+        <div className={bgWhite ? "min-h-screen bg-white mt-[24px] pt-[120px] pb-16" : "min-h-screen bg-white pt-[120px] pb-16"}>
+            <div className={bgWhite ? "max-w-5xl mx-auto px-4" : "max-w-4xl mx-auto px-4"}>
                 {/* Header */}
                 <div className="text-center mb-16">
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>
@@ -107,29 +107,22 @@ const FAQ = () => {
                 </div>
 
                 {/* Need More Help */}
-                <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+                {!bgWhite && <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-4">Need More Help?</h2>
                     <p className="text-lg text-gray-600 mb-8">Still have questions?</p>
                     
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a 
-                            href="/contact" 
+                            href="/contactus" 
                             className="flex items-center justify-center gap-2 px-6 py-3 bg-primaryBtn text-white font-medium rounded-lg hover:bg-red-600 transition-colors"
                         >
                             <Phone className="h-5 w-5" />
                             Contact Us
                         </a>
-                        <a 
-                            href="/locations" 
-                            className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors"
-                        >
-                            <MapPin className="h-5 w-5" />
-                            Visit Locations
-                        </a>
                     </div>
                     
                     <p className="text-gray-500 mt-6">Our team is happy to help.</p>
-                </div>
+                </div>}
             </div>
         </div>
     )

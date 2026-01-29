@@ -69,7 +69,7 @@ const WhyUs = () => {
                     </p>
                     
                     <button
-                        onClick={() => router.push('/step1')}
+                        onClick={() => router.push('/')}
                         className="inline-flex items-center gap-2 px-8 py-4 bg-primaryBtn text-white font-semibold rounded-lg hover:bg-red-600 transition-colors"
                     >
                         Get Started
