@@ -1,6 +1,5 @@
 'use client';
 
-import { useUserType } from '../contexts/UserTypeContext';
 import UserTypePopup from './UserTypePopup';
 import UserTypeDisplay from './UserTypeDisplay';
 

@@ -68,6 +68,7 @@ export default function UserTypePopup() {
       // Show success screen
       setShowSuccess(true);
     } catch (error) {
+      console.log('error',error);
       toast({
         title: "Something went wrong",
         description: "Please try again later.",

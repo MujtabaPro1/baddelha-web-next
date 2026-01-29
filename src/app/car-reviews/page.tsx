@@ -159,7 +159,7 @@ const CarReviews = () => {
 
   // Function to render star rating
   const renderStars = (rating: number) => {
-    const stars = [];
+    const stars: any [] = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= Math.floor(rating)) {
         stars.push(<Star key={i} className="fill-yellow-400 text-yellow-400" size={16} />);
