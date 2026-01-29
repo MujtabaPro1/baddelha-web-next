@@ -142,7 +142,7 @@ const Navbar: React.FC = () => {
               </span>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a 
+              {/* <a 
                 href="/buy" 
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
               >
@@ -159,7 +159,7 @@ const Navbar: React.FC = () => {
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
               >
                 {language === 'ar' ? 'المواقع' : 'Location'}
-              </a>
+              </a> */}
               <a 
                 href="/contactus" 
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
@@ -234,27 +234,27 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'الرئيسية' : 'Home'}
               </a>
-              <a 
+              {/* <a 
                 href="/buy" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {language === 'ar' ? 'شراء سيارة' : 'Buy a car'}
-              </a>
-              <a 
+              </a> */}
+              {/* <a 
                 href="/auction" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {language === 'ar' ? 'مزاد' : 'Auction'}
-              </a>
-              <a 
+              </a> */}
+              {/* <a 
                 href="/locations" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {language === 'ar' ? 'المواقع' : 'Location'}
-              </a>
+              </a> */}
               <a 
                 href="/contactus" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
@@ -292,7 +292,7 @@ const Navbar: React.FC = () => {
             role="button"
             aria-label="Call 920032590">
               <Phone className="h-4 w-4 mr-2" />
-              <span className="font-medium ml-2 mr-2">920032590</span>
+              <span className="font-medium ml-2 mr-2">92 00 32590</span>
             </div>
             <button
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
