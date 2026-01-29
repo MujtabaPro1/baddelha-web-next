@@ -1,125 +1,12 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { Search, ChevronRight, Clock, Calendar, ArrowRight, Filter } from 'lucide-react';
-import { useState } from 'react';
 
-// Sample data for guides
-const guides = [
-  {
-    id: 1,
-    title: 'Complete Guide to Buying Your First Car in UAE',
-    titleAr: 'دليل شامل لشراء سيارتك الأولى في الإمارات',
-    excerpt: 'Everything you need to know about purchasing your first vehicle in the UAE market.',
-    excerptAr: 'كل ما تحتاج لمعرفته حول شراء سيارتك الأولى في سوق الإمارات.',
-    image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=640&auto=format&fit=crop',
-    category: 'First-time buyers',
-    categoryAr: 'المشترون لأول مرة',
-    readTime: '8 min read',
-    readTimeAr: '8 دقائق للقراءة',
-    date: 'Jan 15, 2026',
-    dateAr: '15 يناير 2026',
-    featured: true
-  },
-  {
-    id: 2,
-    title: 'How to Finance Your Dream Car',
-    titleAr: 'كيفية تمويل سيارة أحلامك',
-    excerpt: 'Explore financing options, interest rates, and payment plans to make your dream car affordable.',
-    excerptAr: 'استكشف خيارات التمويل وأسعار الفائدة وخطط الدفع لجعل سيارة أحلامك بأسعار معقولة.',
-    image: 'https://images.unsplash.com/photo-1589262804704-c5aa9e6def89?q=80&w=640&auto=format&fit=crop',
-    category: 'Financing',
-    categoryAr: 'التمويل',
-    readTime: '6 min read',
-    readTimeAr: '6 دقائق للقراءة',
-    date: 'Jan 10, 2026',
-    dateAr: '10 يناير 2026',
-    featured: true
-  },
-  {
-    id: 3,
-    title: 'Electric vs. Gasoline: Which is Right for You?',
-    titleAr: 'السيارات الكهربائية مقابل البنزين: أيهما مناسب لك؟',
-    excerpt: 'Compare the pros and cons of electric and gasoline vehicles in the UAE environment.',
-    excerptAr: 'قارن بين إيجابيات وسلبيات السيارات الكهربائية والبنزين في بيئة الإمارات.',
-    image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=640&auto=format&fit=crop',
-    category: 'Comparison',
-    categoryAr: 'مقارنة',
-    readTime: '10 min read',
-    readTimeAr: '10 دقائق للقراءة',
-    date: 'Dec 28, 2025',
-    dateAr: '28 ديسمبر 2025',
-    featured: false
-  },
-  {
-    id: 4,
-    title: 'Understanding Car Insurance in UAE',
-    titleAr: 'فهم تأمين السيارات في الإمارات',
-    excerpt: 'Learn about the different types of car insurance and what coverage is best for your needs.',
-    excerptAr: 'تعرف على أنواع مختلفة من تأمين السيارات وما هي التغطية الأفضل لاحتياجاتك.',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=640&auto=format&fit=crop',
-    category: 'Insurance',
-    categoryAr: 'التأمين',
-    readTime: '7 min read',
-    readTimeAr: '7 دقائق للقراءة',
-    date: 'Dec 20, 2025',
-    dateAr: '20 ديسمبر 2025',
-    featured: false
-  },
-  {
-    id: 5,
-    title: 'Top 10 SUVs for Families in 2026',
-    titleAr: 'أفضل 10 سيارات دفع رباعي للعائلات في 2026',
-    excerpt: 'Discover the best family-friendly SUVs with top safety ratings and comfort features.',
-    excerptAr: 'اكتشف أفضل سيارات الدفع الرباعي المناسبة للعائلات مع أعلى تصنيفات السلامة وميزات الراحة.',
-    image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=640&auto=format&fit=crop',
-    category: 'Family Cars',
-    categoryAr: 'سيارات العائلة',
-    readTime: '9 min read',
-    readTimeAr: '9 دقائق للقراءة',
-    date: 'Dec 15, 2025',
-    dateAr: '15 ديسمبر 2025',
-    featured: false
-  },
-  {
-    id: 6,
-    title: 'How to Negotiate the Best Price When Buying a Car',
-    titleAr: 'كيفية التفاوض على أفضل سعر عند شراء سيارة',
-    excerpt: 'Expert tips and strategies to help you get the best deal on your next car purchase.',
-    excerptAr: 'نصائح واستراتيجيات الخبراء لمساعدتك في الحصول على أفضل صفقة عند شراء سيارتك التالية.',
-    image: 'https://images.unsplash.com/photo-1560250056-07ba64664864?q=80&w=640&auto=format&fit=crop',
-    category: 'Negotiation',
-    categoryAr: 'التفاوض',
-    readTime: '8 min read',
-    readTimeAr: '8 دقائق للقراءة',
-    date: 'Dec 5, 2025',
-    dateAr: '5 ديسمبر 2025',
-    featured: false
-  }
-];
-
-// Categories for filtering
-const categories = [
-  { id: 'all', name: 'All Guides', nameAr: 'جميع الأدلة' },
-  { id: 'first-time', name: 'First-Time Buyers', nameAr: 'المشترون لأول مرة' },
-  { id: 'financing', name: 'Financing', nameAr: 'التمويل' },
-  { id: 'comparison', name: 'Car Comparison', nameAr: 'مقارنة السيارات' },
-  { id: 'insurance', name: 'Insurance', nameAr: 'التأمين' },
-  { id: 'family', name: 'Family Cars', nameAr: 'سيارات العائلة' },
-  { id: 'negotiation', name: 'Negotiation', nameAr: 'التفاوض' }
-];
 
 const BuyingGuides = () => {
-  const router = useRouter();
   const { language } = useLanguage();
   const isAr = language === 'ar';
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
 
-  const featuredGuides = guides.filter(guide => guide.featured);
-  const regularGuides = guides.filter(guide => !guide.featured);
 
   return (
     <div className={`min-h-screen bg-gray-50 pt-[120px] pb-16 ${isAr ? 'text-right' : 'text-left'}`}>
@@ -165,8 +52,6 @@ const BuyingGuides = () => {
             </div>
           </div>
         </div>
-
-
 
       </div>
     </div>
