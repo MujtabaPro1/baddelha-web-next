@@ -171,14 +171,6 @@ const TestimonialsSection: React.FC = () => {
           ))}
         </div>
         
-        <div className="text-center mt-8">
-          <a 
-            href="/reviews" 
-            className="inline-block bg-primaryBtn text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-300"
-          >
-            Read More Reviews
-          </a>
-        </div>
       </div>
     </section>
   );
