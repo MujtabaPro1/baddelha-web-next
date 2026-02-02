@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation';
 const carImages = [
   '/images/banner/1.webp',
   '/images/banner/2.webp',
-  '/images/banner/3.webp',
-  '/images/banner/4.webp',
-  '/images/banner/5.webp',
+  // '/images/banner/3.webp',
+  // '/images/banner/4.webp',
+  // '/images/banner/5.webp',
 ];
 
 const HeroSection: React.FC = () => {
