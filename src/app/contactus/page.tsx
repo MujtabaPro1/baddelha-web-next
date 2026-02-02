@@ -361,22 +361,12 @@ const ContactUs: React.FC = () => {
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">Our Location</h2>
           <div className="relative w-full overflow-hidden rounded-lg" style={{ paddingBottom: '56.25%' }}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3624.1800215657668!2d46.765712386569454!3d24.720699194178266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDQzJzE0LjUiTiA0NsKwNDYnMTQuMSJF!5e0!3m2!1sen!2sae!4v1765448022928!5m2!1sen!2sae"
+              src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d3624.1800351389593!2d46.770433170639095!3d24.720698728085733!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDQzJzE0LjUiTiA0NsKwNDYnMTQuMSJF!5e0!3m2!1sen!2sae!4v1770026473451!5m2!1sen!2sae" 
               className="absolute inset-0 h-full w-full border-0"
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-            <div 
-            onClick={(e) => e.stopPropagation()}
-            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full">
-              <div className="relative">
-                <div className="absolute left-1/2 top-full h-2 w-2 -translate-x-1/2 rounded-full bg-black/20 blur-[1px]" />
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-lg ring-1 ring-black/10">
-                  <MapPin className="h-6 w-6 text-[#F79626]" />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
