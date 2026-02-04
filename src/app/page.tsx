@@ -6,6 +6,7 @@ import CtaSection from '../components/CtaSection';
 import TestimonialsSection from '../components/TestimonialsSection';
 import { ClipboardCheck, CalendarCheck, HandCoins } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import UserTypeDisplay from '../components/UserTypeDisplay';
 
 function Steps() {
   const { language } = useLanguage();
@@ -89,6 +90,7 @@ function App() {
         <ServicesSection />
         <FeaturedCars />
         <TestimonialsSection />
+        <UserTypeDisplay />
         <CtaSection />
     </div>
   );

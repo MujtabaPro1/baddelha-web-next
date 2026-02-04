@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useUserType } from '../contexts/UserTypeContext';
 import { X } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
+import axiosInstance from '../services/axiosInstance';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 interface FormData {
   name: string;
@@ -29,6 +31,7 @@ export default function UserTypePopup() {
     location: '',
     message: ''
   });
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSelectType = (type: 'seller' | 'buyer') => {
     setSelectedType(type);
@@ -49,10 +52,27 @@ export default function UserTypePopup() {
     if (!selectedType) return;
     
     setIsLoading(true);
+
+    if (!executeRecaptcha) {
+      console.log('Recaptcha not ready');
+      return;
+    }
+
+    const recaptcha =  await executeRecaptcha('buyer-seller-lead');
+
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await axiosInstance.post('/api/1.0/buyer-seller-leads', {
+        fullName: formData.name,
+        email: formData.email,
+        phoneNumber: `+966${formData.phone}`,
+        companyName: formData.company || '',
+        location: formData.location || '',
+        message: formData.message || '',
+        isSeller: selectedType === 'seller',
+        isBuyer: selectedType === 'buyer',
+        recaptchaToken:recaptcha
+      });
       
       // Save user type
       setUserType(selectedType);
@@ -69,9 +89,10 @@ export default function UserTypePopup() {
       setShowSuccess(true);
     } catch (error) {
       console.log('error',error);
+      setIsLoading(false);
       toast({
-        title: "Something went wrong",
-        description: "Please try again later.",
+        title: "Buyer Seller Lead",
+        description: (error as any).response?.data?.message || "Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -318,15 +339,24 @@ export default function UserTypePopup() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
-                  placeholder="+966 50 123 4567"
-                />
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 text-sm text-gray-700 bg-gray-100 border border-r-0 border-gray-300 rounded-l-xl">
+                    +966
+                  </span>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, '').slice(0, 9);
+                      setFormData(prev => ({ ...prev, phone: value }));
+                    }}
+                    required
+                    maxLength={9}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-r-xl focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
+                    placeholder="5XXXXXXXX"
+                  />
+                </div>
               </div>
 
               {(selectedType === 'buyer' || selectedType === 'seller') && (
