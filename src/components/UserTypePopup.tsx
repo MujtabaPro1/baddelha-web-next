@@ -121,20 +121,20 @@ export default function UserTypePopup() {
   const handlePrimaryCTA = () => {
     if (selectedType === 'seller') {
       // Start Sell Process - redirect to step1
-      window.location.href = '/step1';
+      window.location.href = '/';
     } else if (selectedType === 'buyer') {
       // Discover new Opportunity Cars
-      window.location.href = '/cars';
+      window.location.href = '/';
     }
   };
 
   const handleSecondaryCTA = () => {
     if (selectedType === 'seller') {
       // Contact Us - could open modal or navigate
-      window.location.href = '/contact';
+      window.location.href = '/contactus';
     } else if (selectedType === 'buyer') {
       // Request New Listings
-      window.location.href = '/request-listings';
+      window.location.href = '/contactus';
     }
   };
 
