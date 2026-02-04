@@ -554,7 +554,7 @@ const Step3 = () => {
             <h2 className="text-2xl font-bold text-center mb-8">{lang[languageContent].bookFreeCarInspection}</h2>
             
             {/* Car Summary Banner - Full Width */}
-            <div className="mb-8 bg-bb rounded-2xl p-6 shadow-xl">
+            <div className="mb-8 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-2xl p-6 shadow-xl">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                     {/* Car Info */}
                     <div className="flex items-center gap-4">
