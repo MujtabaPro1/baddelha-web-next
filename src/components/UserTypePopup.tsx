@@ -58,7 +58,7 @@ export default function UserTypePopup() {
       return;
     }
 
-    const recaptcha =  await executeRecaptcha('buyer-seller-lead');
+    const recaptcha =  await executeRecaptcha('buyer_seller_lead');
 
     
     try {
