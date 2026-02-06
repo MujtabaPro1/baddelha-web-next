@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Check, ArrowRight, AlertCircle, ArrowLeft } from 'lucide-react';
+import { ArrowRight, AlertCircle, ArrowLeft } from 'lucide-react';
 import Select from 'react-select';
 import axiosInstance from '../services/axiosInstance';
 import { useLanguage } from '../contexts/LanguageContext';

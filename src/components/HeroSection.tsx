@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import ValuationWidget from './ValuationWidget';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
