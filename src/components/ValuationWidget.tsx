@@ -107,9 +107,9 @@ const ValuationWidget: React.FC = () => {
   };
   
   return (
-    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-md">
       {/* Header */}
-      <div className="bg-[#f78f37] px-6 py-5">
+      <div className="bg-[#f78f37] px-2 lg:px-6 py-5">
         <div className="flex items-center gap-3 mb-1">
           <div className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -125,9 +125,9 @@ const ValuationWidget: React.FC = () => {
       </div>
       
       <form onSubmit={handleSubmit} className="p-5 md:p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+        <div className="flex flex-col gap-4 mb-5 max-w-md">
           {/* Make */}
-          <div className="bg-slate-50 rounded-xl p-4">
+          <div>
             <label htmlFor="make" className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].make}</label>
             <Select
               instanceId="make-select"
@@ -159,7 +159,7 @@ const ValuationWidget: React.FC = () => {
           </div>
           
           {/* Model */}
-          <div className="bg-slate-50 rounded-xl p-4">
+          <div>
             <label htmlFor="model" className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].model}</label>
             <Select
               instanceId="model-select"
@@ -191,7 +191,7 @@ const ValuationWidget: React.FC = () => {
           </div>
           
           {/* Year */}
-          <div className="bg-slate-50 rounded-xl p-4">
+          <div>
             <label htmlFor="year" className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].year}</label>
             <Select
               instanceId="year-select"
@@ -222,16 +222,10 @@ const ValuationWidget: React.FC = () => {
           </div>
         )}
         
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="hidden md:flex items-center gap-2 text-slate-500 text-sm">
-            <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-              <Check className="h-3 w-3 text-green-600" />
-            </div>
-            <span>{lang[languageContent].bankApprovedValuation}</span>
-          </div>
+        <div className="flex flex-col w-full items-center justify-between gap-4">
           <button
             type="submit"
-            className="w-full md:w-auto bg-primaryBtn text-white font-semibold py-4 px-8 rounded-xl transition shadow-lg flex items-center justify-center gap-2"
+            className="w-full bg-primaryBtn text-white font-semibold py-3 px-8 rounded-xl transition shadow-lg flex items-center justify-center gap-2"
           >
             {lang[languageContent].getValuation}
             {language == 'en' ? <ArrowRight className="h-5 w-5" /> : <ArrowLeft className="h-5 w-5" />}
@@ -239,33 +233,7 @@ const ValuationWidget: React.FC = () => {
         </div>
       </form>
       
-      {/* Footer Benefits */}
-      <div className="bg-slate-50 px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-3 border-t border-slate-100">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-            <Check className="h-3 w-3 text-green-600" />
-          </div>
-          <span className="text-sm text-slate-600">{lang[languageContent].free}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-            <Check className="h-3 w-3 text-green-600" />
-          </div>
-          <span className="text-sm text-slate-600">{lang[languageContent].noObligations}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-            <Check className="h-3 w-3 text-green-600" />
-          </div>
-          <span className="text-sm text-slate-600">{lang[languageContent].instantResults}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-            <Check className="h-3 w-3 text-green-600" />
-          </div>
-          <span className="text-sm text-slate-600">{lang[languageContent].tradeInOptions}</span>
-        </div>
-      </div>
+     
     </div>
   );
 };

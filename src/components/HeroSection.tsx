@@ -104,7 +104,7 @@ const HeroSection: React.FC = () => {
           >
             {/* Using div with background image for better control */}
             <div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105"
+              className="absolute inset-0 bg-cover bg-no-repeat transform scale-105"
               style={{ backgroundImage: `url(${image})` }}
             />
             {/* Overlay for better text readability */}
@@ -126,23 +126,27 @@ const HeroSection: React.FC = () => {
       </div>
       
       {/* Arrow navigation */}
-      <button 
-        onClick={goToPrevSlide}
-        className="absolute z-10 left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-all"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
-      <button 
-        onClick={goToNextSlide}
-        className="absolute z-10 right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-all"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </button>
+      <div className="hidden md:block">
+        <button 
+          onClick={goToPrevSlide}
+          className="absolute z-10 left-4 top-[45%] -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-all"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button 
+          onClick={goToNextSlide}
+          className="absolute z-10 right-4 top-[45%] -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-all"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+      </div>
       
+      {/* Single section with hero content and valuation widget */}
       <div className="relative container mx-auto px-4 pt-24 pb-32 md:pt-32 md:pb-40">
-        <div className="max-w-3xl text-white">
+        {/* Hero content */}
+        <div className="text-white max-w-3xl mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in">
             <br />{lang[languageContent].buySellTrade}
           </h1>
@@ -171,26 +175,21 @@ const HeroSection: React.FC = () => {
               {lang[languageContent].learnMore}
             </button>
           </div>
+    
         </div>
         
-        <div className="hidden md:flex justify-center mt-12">
-          <div className="animate-bounce" aria-hidden="true">
-            <ChevronDown className="h-8 w-8 text-white" />
-          </div>
+        {/* Valuation widget - aligned with content */}
+        <div 
+          ref={valuationRef}
+          id="valuation" 
+          className={`transition-all duration-700 ease-out w-full md:w-auto md:max-w-md mx-auto md:mx-0 lg:absolute lg:right-0 lg:top-20 ${
+            isVisible 
+              ? 'opacity-100 translate-x-0' 
+              : 'opacity-0 translate-x-16'
+          }`}
+        >
+          <ValuationWidget />
         </div>
-      </div>
-      
-      {/* Valuation widget overlay */}
-      <div 
-        ref={valuationRef}
-        id="valuation" 
-        className={`container mx-auto px-4 relative -mt-20 md:-mt-24 z-10 transition-all duration-700 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-x-0' 
-            : 'opacity-0 translate-x-16'
-        }`}
-      >
-        <ValuationWidget />
       </div>
     </div>
   );
