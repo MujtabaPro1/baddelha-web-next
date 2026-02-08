@@ -15,34 +15,141 @@ const fontPreload = [
 ];
 
 export const metadata: Metadata = {
-  title: 'BADDELHA - Premium Car Marketplace',
-  description: 'Find premium cars for sale in Saudi Arabia',
-  metadataBase: new URL('https://baddelha-web-next.vercel.app'),
+  title: {
+    default: 'BADDELHA - Buy, Sell & Trade Cars in Saudi Arabia',
+    template: '%s | BADDELHA',
+  },
+  description: 'BADDELHA is Saudi Arabia\'s premier car marketplace. Get instant car valuations, competitive trade-in offers, and hassle-free buying and selling experience. Bank-approved valuations available.',
+  keywords: ['car marketplace', 'buy cars Saudi Arabia', 'sell cars', 'trade-in cars', 'car valuation', 'used cars', 'new cars', 'BADDELHA', 'بدلها', 'سيارات للبيع', 'تقييم السيارات'],
+  authors: [{ name: 'BADDELHA' }],
+  creator: 'BADDELHA',
+  publisher: 'BADDELHA',
+  metadataBase: new URL('https://baddelha.com.sa'),
   alternates: {
     canonical: '/',
+    languages: {
+      'en': '/en',
+      'ar': '/ar',
+    },
   },
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
-    apple: '/apple-icon.png',
+    apple: '/apple-touch-icon.png',
     other: {
-      rel: 'apple-touch-icon-precomposed',
-      url: '/apple-touch-icon-precomposed.png',
+      rel: 'apple-touch-icon',
+      url: '/apple-touch-icon.png',
     },
   },
   openGraph: {
-    title: 'BADDELHA - Premium Car Marketplace',
-    description: 'Find premium cars for sale in Saudi Arabia',
-    url: 'https://baddelha-web-next.vercel.app',
+    title: 'BADDELHA - Buy, Sell & Trade Cars in Saudi Arabia',
+    description: 'Saudi Arabia\'s premier car marketplace. Get instant valuations, competitive trade-in offers, and hassle-free car buying and selling.',
+    url: 'https://baddelha.com.sa',
     siteName: 'BADDELHA',
     locale: 'en_US',
+    alternateLocale: 'ar_SA',
     type: 'website',
     images: [{
       url: '/logo.png',
-      width: 800,
-      height: 600,
-      alt: 'BADDELHA Logo',
+      width: 1200,
+      height: 630,
+      alt: 'BADDELHA - Premium Car Marketplace in Saudi Arabia',
     }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BADDELHA - Buy, Sell & Trade Cars in Saudi Arabia',
+    description: 'Saudi Arabia\'s premier car marketplace. Get instant valuations and hassle-free car trading.',
+    images: ['/logo.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'BADDELHA',
+  alternateName: 'بدلها',
+  url: 'https://baddelha.com.sa',
+  logo: 'https://baddelha.com.sa/logo.png',
+  sameAs: [
+    'https://www.facebook.com/baddelha',
+    'https://www.instagram.com/baddelha',
+    'https://www.linkedin.com/company/baddelha',
+    'https://www.tiktok.com/@baddelha',
+    'https://www.snapchat.com/add/baddelha',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+966-92-00-32590',
+    contactType: 'customer service',
+    areaServed: 'SA',
+    availableLanguage: ['English', 'Arabic'],
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'SA',
+    addressLocality: 'Riyadh',
+  },
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'BADDELHA',
+  alternateName: 'بدلها',
+  url: 'https://baddelha.com.sa',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://baddelha.com.sa/search?q={search_term_string}',
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoDealer',
+  name: 'BADDELHA',
+  image: 'https://baddelha.com.sa/logo.png',
+  '@id': 'https://baddelha.com.sa',
+  url: 'https://baddelha.com.sa',
+  telephone: '+966-92-00-32590',
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'SA',
+    addressLocality: 'Riyadh',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 24.7136,
+    longitude: 46.6753,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+    opens: '09:00',
+    closes: '18:00',
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'Saudi Arabia',
   },
 };
 
@@ -83,16 +190,36 @@ export default function RootLayout({
         {/* End Google Tag Manager */}
         
         {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-159KC7KFNQ" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-F0ETQSCQCZ" />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-159KC7KFNQ');`
+              gtag('config', 'G-F0ETQSCQCZ');`
           }}
         />
         {/* End Google tag */}
+        
+        {/* Schema.org structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
+        />
       </head>
       <body>
         {/* Google Tag Manager (noscript) */}
