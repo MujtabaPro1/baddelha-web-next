@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block access to specific files or directories
+Disallow: /api/
+Disallow: /_next/static/
+Disallow: /_vercel/
+
+# Sitemap
+Sitemap: https://baddelha.com.sa/sitemap.xml

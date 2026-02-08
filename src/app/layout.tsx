@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     alternateLocale: 'ar_SA',
     type: 'website',
     images: [{
-      url: '/logo.png',
+      url: '/logo_whatsapp.png',
       width: 1200,
       height: 630,
       alt: 'BADDELHA - Premium Car Marketplace in Saudi Arabia',

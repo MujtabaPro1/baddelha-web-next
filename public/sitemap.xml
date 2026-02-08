@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Homepage -->
+  <url>
+    <loc>https://baddelha.com.sa/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar" />
+  </url>
+  
+  <!-- Main Pages -->
+  <url>
+    <loc>https://baddelha.com.sa/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/about" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/contactus</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/contactus" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/contactus" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/why-us</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/why-us" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/why-us" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/faq" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/faq" />
+  </url>
+  
+  <!-- Car Services -->
+  <!-- <url>
+    <loc>https://baddelha.com.sa/buy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/buy" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/buy" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/tradein</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/tradein" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/tradein" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/bank-valuation</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/bank-valuation" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/bank-valuation" />
+  </url> -->
+  <url>
+    <loc>https://baddelha.com.sa/price-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/price-calculator" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/price-calculator" />
+  </url>
+  
+  <!-- Content Pages -->
+  <url>
+    <loc>https://baddelha.com.sa/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/blog" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/blog" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/buying-guides</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/buying-guides" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/buying-guides" />
+  </url>
+  <!-- <url>
+    <loc>https://baddelha.com.sa/car-reviews</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/car-reviews" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/car-reviews" />
+  </url> -->
+  
+  <!-- User Pages -->
+  <url>
+    <loc>https://baddelha.com.sa/login</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/login" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/login" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/signup</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/signup" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/signup" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/appointments</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/appointments" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/appointments" />
+  </url>
+  
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://baddelha.com.sa/terms</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/terms" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/terms" />
+  </url>
+  <url>
+    <loc>https://baddelha.com.sa/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baddelha.com.sa/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://baddelha.com.sa/ar/privacy" />
+  </url>
+</urlset>
