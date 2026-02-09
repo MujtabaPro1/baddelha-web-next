@@ -361,12 +361,13 @@ const ContactUs: React.FC = () => {
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">Our Location</h2>
           <div className="relative w-full overflow-hidden rounded-lg" style={{ paddingBottom: '56.25%' }}>
             <iframe
-  src="https://maps.google.com/maps?q=24.720698728085733,46.770433170639095&hl=en&z=16&output=embed"
+src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.173545784935!2d46.76878862855837!3d24.7209215664921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f011365b8898d%3A0xa67468c3edef472!2zQmFkZGVsaGEg2KjYr9mE2YfYpw!5e0!3m2!1sen!2sae!4v1770666252219!5m2!1sen!2sae"
               className="absolute inset-0 h-full w-full border-0"
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
+            
           </div>
         </div>
 
