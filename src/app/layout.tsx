@@ -27,10 +27,6 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://baddelha.com.sa'),
   alternates: {
     canonical: '/',
-    languages: {
-      'en': '/en',
-      'ar': '/ar',
-    },
   },
   icons: {
     icon: '/icon.svg',
@@ -116,7 +112,7 @@ const websiteSchema = {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: 'https://baddelha.com.sa/search?q={search_term_string}',
+      urlTemplate: 'https://baddelha.com.sa/?q={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
   },

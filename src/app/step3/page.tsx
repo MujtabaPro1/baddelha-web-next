@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Check, Phone as PhoneIcon, X } from 'lucide-react';
+import { Check, Phone as PhoneIcon, X, MapPin } from 'lucide-react';
 import axiosInstance from '../../services/axiosInstance';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '../../components/ui/input-otp';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -8,6 +8,7 @@ import lang  from '../../locale';
 import { useRouter } from 'next/navigation';
 import { useToast } from '../../hooks/use-toast';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import BranchMapWrapper from './BranchMapWrapper';
 
 const Step3 = () => {
     const [branch, setBranch] = useState('');
@@ -42,7 +43,8 @@ const Step3 = () => {
     const [pendingBookingData, setPendingBookingData] = useState<any>(null);
 
     // State for branches from API
-    const [branches, setBranches] = useState<{id: string; name: string; address: string, enName: string, arName: string, image?: string, location?: string, distance?: string}[]>([]);
+    const [branches, setBranches] = useState<{id: string; name: string; address: string, enName: string, arName: string, image?: string, location?: string, distance?: string, latitude?: number, longitude?: number}[]>([]);
+    const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
     const [loadingBranches, setLoadingBranches] = useState(false);
     const [branchError, setBranchError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +55,23 @@ const Step3 = () => {
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
     
+
+    const deg2rad = (deg: number): number => {
+        return deg * (Math.PI / 180);
+    };
+
+    const calculateDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+        const R = 6371;
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    };
+
 
     
     // State for branch timing slots
@@ -101,6 +120,39 @@ const Step3 = () => {
         }
         
     }, []);
+
+    const recomputeBranchDistances = () => {
+        if (!userLocation) return;
+
+        setBranches((prev) => {
+            let changed = false;
+
+            const next = prev.map((b) => {
+                if (!b.latitude || !b.longitude) return b;
+
+                const km = calculateDistanceKm(userLocation[0], userLocation[1], b.latitude, b.longitude);
+                const nextDistance = `${km.toFixed(1)} ${language === 'en' ? 'km' : 'كم'}`;
+
+                if (b.distance === nextDistance) return b;
+                changed = true;
+
+                return {
+                    ...b,
+                    distance: nextDistance,
+                };
+            });
+
+            return changed ? next : prev;
+        });
+    };
+
+    useEffect(() => {
+        recomputeBranchDistances();
+    }, [userLocation, language]);
+
+    useEffect(() => {
+        recomputeBranchDistances();
+    }, [branches.length, userLocation, language]);
 
     useEffect(()=>{
               prefilUserData();
@@ -326,12 +378,29 @@ const Step3 = () => {
                 const response = await axiosInstance.get('/api/1.0/branch');
                 // Add mock images, locations and distances to branches
                 const branches: any [] = response?.data.filter((r: any)=> r.is_active);
-                const branchesWithImages = (branches || []).map((branch: any, index: number) => ({
-                    ...branch,
-                    image: `https://source.unsplash.com/random/300x200?kiosk,mall,${index}`,
-                    location: branch.address || `${language === 'en' ? 'Mall' : 'مول'} ${index + 1}`,
-                    distance: `${Math.floor(Math.random() * 10) + 1}.${Math.floor(Math.random() * 9)}${language === 'en' ? ' km away' : ' كم'}`
-                }));
+                // Add mock images, locations, distances, and coordinates to branches
+                // Riyadh coordinates with slight variations for different branches
+                const riyadhCoordinates = [
+                    { lat: 24.7136, lng: 46.6753 }, // Riyadh center
+                    { lat: 24.7741, lng: 46.7388 }, // North Riyadh
+                    { lat: 24.6748, lng: 46.7977 }, // East Riyadh
+                    { lat: 24.6231, lng: 46.7651 }, // South Riyadh
+                    { lat: 24.7000, lng: 46.6348 }  // West Riyadh
+                ];
+                
+                const branchesWithImages = (branches || []).map((branch: any, index: number) => {
+                    // Use index to get coordinates, or fallback to Riyadh center
+                    const coords = riyadhCoordinates[index % riyadhCoordinates.length];
+                    
+                    return {
+                        ...branch,
+                        image: `https://source.unsplash.com/random/300x200?kiosk,mall,${index}`,
+                        location: branch.address || `${language === 'en' ? 'Mall' : 'مول'} ${index + 1}`,
+                        distance: undefined,
+                        latitude: coords.lat,
+                        longitude: coords.lng
+                    };
+                });
                 setBranches(branchesWithImages);
                 if (branchesWithImages.length > 0) {
                     // Don't auto-select a branch, let user choose
@@ -669,57 +738,67 @@ const Step3 = () => {
                                 ) : branchError ? (
                                     <div className="py-3 px-4 text-red-500">{branchError}</div>
                                 ) : (
-                                    <div className="space-y-3">
-                                        {branches.map((branchItem) => (
-                                            <div 
-                                                key={branchItem.id} 
-                                                onClick={() => setBranch(branchItem.id)}
-                                                className={`cursor-pointer p-3 md:p-4 rounded-xl transition-all duration-200 ${
-                                                    branch === branchItem.id 
-                                                        ? 'bg-secondary text-white shadow-lg' 
-                                                        : 'bg-slate-50 hover:bg-slate-100 text-gray-900'
-                                                }`}
-                                            >
-                                                <div className="flex items-start gap-3">
-                                                    <div className={`w-5 h-5 mt-0.5 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
+                                    <div>
+                                        {/* Branch Map */}
+                                        <div className="mb-6">
+                                            <h4 className="text-sm font-medium text-gray-700 mb-2">
+                                                <MapPin className="inline-block mr-1 h-4 w-4" />
+                                                {language === "en" ? "Select a branch on the map" : "اختر فرعًا على الخريطة"}
+                                            </h4>
+                                            <BranchMapWrapper 
+                                                branches={branches} 
+                                                selectedBranchId={branch} 
+                                                onBranchSelect={(branchId) => setBranch(branchId)} 
+                                                onUserLocation={(loc) => setUserLocation(loc)}
+                                            />
+                                        </div>
+                                        
+                                        {/* Branch List */}
+                                        <div className="space-y-3 mt-6">
+                                            <h4 className="text-sm font-medium text-gray-700 mb-2">
+                                                {language === "en" ? "Or select from list:" : "أو اختر من القائمة:"}
+                                            </h4>
+                                            {branches.map((branchItem) => (
+                                                <div 
+                                                    key={branchItem.id} 
+                                                    onClick={() => setBranch(branchItem.id)}
+                                                    className={`cursor-pointer p-3 md:p-4 rounded-xl transition-all duration-200 ${
                                                         branch === branchItem.id 
-                                                            ? 'border-by bg-by' 
-                                                            : 'border-gray-400'
-                                                    }`}>
-                                                        {branch === branchItem.id && (
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-slate-900" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                            </svg>
-                                                        )}
-                                                    </div>
-                                                    <div className="flex-1 min-w-0">
-                                                        <h4 className="font-semibold text-sm md:text-base">
-                                                            {language === "en" ? branchItem.enName : branchItem.arName}
-                                                        </h4>
-                                                        <p className={`text-xs md:text-sm truncate ${branch === branchItem.id ? 'text-slate-300' : 'text-gray-500'}`}>
-                                                            {branchItem.location}
-                                                        </p>
-                                                        <a 
-                                                            href={`https://maps.google.com/?q=${encodeURIComponent(branchItem.location || '')}`} 
-                                                            target="_blank" 
-                                                            rel="noopener noreferrer"
-                                                            onClick={(e) => e.stopPropagation()} 
-                                                            className={`inline-flex items-center gap-1 text-xs mt-2 px-2 py-1 rounded-md transition ${
-                                                                branch === branchItem.id 
-                                                                    ? 'bg-white/10 hover:bg-white/20 text-by' 
-                                                                    : 'bg-slate-200 hover:bg-slate-300 text-slate-600'
-                                                            }`}
-                                                        >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                            </svg>
-                                                            {language === "en" ? "View Map" : "الخريطة"}
-                                                        </a>
+                                                            ? 'bg-secondary text-white shadow-lg' 
+                                                            : 'bg-slate-50 hover:bg-slate-100 text-gray-900'
+                                                    }`}
+                                                >
+                                                    <div className="flex items-start gap-3">
+                                                        <div className={`w-5 h-5 mt-0.5 flex-shrink-0 rounded-full border-2 flex items-center justify-center ${
+                                                            branch === branchItem.id 
+                                                                ? 'border-by bg-by' 
+                                                                : 'border-gray-400'
+                                                        }`}>
+                                                            {branch === branchItem.id && (
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-slate-900" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                </svg>
+                                                            )}
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <h4 className="font-semibold text-sm md:text-base">
+                                                                {language === "en" ? branchItem.enName : branchItem.arName}
+                                                            </h4>
+                                                            <p className={`text-xs md:text-sm truncate ${branch === branchItem.id ? 'text-slate-300' : 'text-gray-500'}`}>
+                                                                {branchItem.location}
+                                                            </p>
+                                                            <span className={`inline-block text-xs mt-1 ${branch === branchItem.id ? 'text-slate-300' : 'text-gray-500'}`}>
+                                                                {branchItem.distance
+                                                                    ? branchItem.distance
+                                                                    : userLocation
+                                                                        ? (language === 'en' ? 'Calculating distance…' : 'جارٍ حساب المسافة…')
+                                                                        : (language === 'en' ? 'Enable location to see distance' : 'فعّل الموقع لعرض المسافة')}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
