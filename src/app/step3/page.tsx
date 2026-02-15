@@ -212,11 +212,11 @@ const Step3 = () => {
         setSellerOtpError('');
         
         try {
-            await axiosInstance.post('/api/auth/seller/sign-up', {
+            await axiosInstance.post('/api/1.0/customer/sign-up', {
                 email: email.trim(),
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
-                phone: phone.trim()
+                phone: '+966' + phone.trim()
             });
             
             // Set resend timer: 120s for first resend, 240s thereafter
@@ -246,7 +246,7 @@ const Step3 = () => {
         setSellerOtpError('');
         
         try {
-            const response = await axiosInstance.post('/api/auth/verify-otp', {
+            const response = await axiosInstance.post('/api/1.0/customer/verify-otp', {
                 otp: sellerOtp,
                 target: email.trim()
             });
@@ -1044,12 +1044,12 @@ const Step3 = () => {
                                 </svg>
                             </div>
                             <h3 className="text-xl font-bold">
-                                {language === 'en' ? 'Verify Your Email' : 'تحقق من بريدك الإلكتروني'}
+                                {language === 'en' ? 'Verify Your Phone Number' : 'تحقق من بريدك الإلكتروني'}
                             </h3>
                             <p className="text-gray-600 mt-1">
                                 {language === 'en' 
-                                    ? `We sent a 6-digit code to ${email}` 
-                                    : `لقد أرسلنا رمزًا مكونًا من 6 أرقام إلى ${email}`}
+                                    ? `We sent a 6-digit code to +966 ${phone}` 
+                                    : `لقد أرسلنا رمزًا مكونًا من 6 أرقام إلى +966 ${phone}`}
                             </p>
                         </div>
                         
