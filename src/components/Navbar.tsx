@@ -68,6 +68,8 @@ const Navbar: React.FC = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('authToken');
       localStorage.removeItem('userDetails');
+      localStorage.removeItem('token');
+      localStorage.removeItem('refresh_token');
       setIsAuthenticated(false);
       setUserDetails({});
       router.push('/');
