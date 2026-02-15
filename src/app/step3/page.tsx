@@ -211,7 +211,7 @@ const Step3 = () => {
         setSellerOtpSending(true);
         setSellerOtpError('');
         
-        try {
+
             await axiosInstance.post('/api/1.0/customer/sign-up', {
                 email: email.trim(),
                 firstName: firstName.trim(),
@@ -219,25 +219,25 @@ const Step3 = () => {
                 phone: '+966' + phone.trim()
             }).then((res)=>{
         // Set resend timer: 120s for first resend, 240s thereafter
+                     console.log(res);
                     const timerDuration = resendCount === 0 ? 120 : 240;
                     setResendTimer(timerDuration);
                     setResendCount((prev) => prev + 1);
             
-            }).catch((error)=>{
+            }).catch(async (error)=>{
 
             if(error?.status == 403){
                  await axiosInstance.post('/api/1.0/customer/sign-in', {
                 phone: '+966' + phone.trim()
                }).then((res)=>{
-                    console.log(res);
-                    const timerDuration = resendCount === 0 ? 120 : 240;
+                    console.log(res); 
+                    const timerDuration = resendCount === 0 ? 120 : 120;
                     setResendTimer(timerDuration);
                     setResendCount((prev) => prev + 1);
                }).catch((error)=>{
                     setSellerOtpError(error?.response?.data?.message || 'Failed to send OTP. Please try again.');
-               }).finally(()=>{
-                
                });
+            
             }else{
 
               
@@ -253,7 +253,8 @@ const Step3 = () => {
             }).finally(()=>{
             setSellerOtpSending(false);
             });
-            
+
+     
       
     };
 
