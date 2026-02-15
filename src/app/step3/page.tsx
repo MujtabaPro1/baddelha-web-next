@@ -217,14 +217,30 @@ const Step3 = () => {
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
                 phone: '+966' + phone.trim()
-            });
+            }).then((res)=>{
+        // Set resend timer: 120s for first resend, 240s thereafter
+                    const timerDuration = resendCount === 0 ? 120 : 240;
+                    setResendTimer(timerDuration);
+                    setResendCount((prev) => prev + 1);
             
-            // Set resend timer: 120s for first resend, 240s thereafter
-            const timerDuration = resendCount === 0 ? 120 : 240;
-            setResendTimer(timerDuration);
-            setResendCount((prev) => prev + 1);
-            
-        } catch (error: any) {
+            }).catch((error)=>{
+
+            if(error?.status == 403){
+                 await axiosInstance.post('/api/1.0/customer/sign-in', {
+                phone: '+966' + phone.trim()
+               }).then((res)=>{
+                    console.log(res);
+                    const timerDuration = resendCount === 0 ? 120 : 240;
+                    setResendTimer(timerDuration);
+                    setResendCount((prev) => prev + 1);
+               }).catch((error)=>{
+                    setSellerOtpError(error?.response?.data?.message || 'Failed to send OTP. Please try again.');
+               }).finally(()=>{
+                
+               });
+            }else{
+
+              
             console.error('Error sending OTP:', error);
             toast({
                 title: 'Error',
@@ -233,9 +249,12 @@ const Step3 = () => {
             });
             
             setSellerOtpError(error?.response?.data?.message || 'Failed to send OTP. Please try again.');
-        } finally {
+            }
+            }).finally(()=>{
             setSellerOtpSending(false);
-        }
+            });
+            
+      
     };
 
     // Verify OTP and proceed with booking
