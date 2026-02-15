@@ -246,9 +246,9 @@ const Step3 = () => {
         setSellerOtpError('');
         
         try {
-            const response = await axiosInstance.post('/api/1.0/customer/verify-otp', {
+            const response = await axiosInstance.post('/api/auth/verify-otp', {
                 otp: sellerOtp,
-                target: phone.trim()
+                target: email.trim()
             });
             
             // OTP verified successfully, store tokens and user details
@@ -1044,12 +1044,12 @@ const Step3 = () => {
                                 </svg>
                             </div>
                             <h3 className="text-xl font-bold">
-                                {language === 'en' ? 'Verify Your Phone Number' : 'تحقق من رقم هاتفك'}
+                                {language === 'en' ? 'Verify Your Email' : 'تحقق من بريدك الإلكتروني'}
                             </h3>
                             <p className="text-gray-600 mt-1">
                                 {language === 'en' 
-                                    ? `We sent a 6-digit code to ${phone}` 
-                                    : `لقد أرسلنا رمزًا مكونًا من 6 أرقام إلى ${phone}`}
+                                    ? `We sent a 6-digit code to ${email}` 
+                                    : `لقد أرسلنا رمزًا مكونًا من 6 أرقام إلى ${email}`}
                             </p>
                         </div>
                         
