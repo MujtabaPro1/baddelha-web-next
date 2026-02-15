@@ -150,7 +150,7 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBra
   }
 
   return (
-    <div className="h-[400px] w-full rounded-xl overflow-hidden shadow-md">
+    <div className="relative z-0 h-[400px] w-full rounded-xl overflow-hidden shadow-md">
       <MapContainer 
         center={mapCenter} 
         zoom={mapZoom} 
