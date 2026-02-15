@@ -10,7 +10,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 const fixLeafletIcons = () => {
   // Only run on client side
   if (typeof window !== 'undefined') {
-    // @ts-ignore
+    // @ts-expect-error Leaflet's internal _getIconUrl is not in the public typings
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
