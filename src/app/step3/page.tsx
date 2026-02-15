@@ -248,7 +248,7 @@ const Step3 = () => {
         try {
             const response = await axiosInstance.post('/api/1.0/customer/verify-otp', {
                 otp: sellerOtp,
-                target: email.trim()
+                target: '+966' + phone.trim()
             });
             
             // OTP verified successfully, store tokens and user details
