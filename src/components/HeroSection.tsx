@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
 import {Button} from './ui/button';
@@ -29,8 +29,9 @@ const HeroSection: React.FC = () => {
   
   
   // Slider state
-  const [currentSlide,] = useState(0);
-  
+  const [currentSlide,setCurrentSlide] = useState(0);
+  const isAutoPlaying = true; // Always auto-playing
+  const sliderInterval = useRef<NodeJS.Timeout | null>(null);
 
    const [, setActiveSlide] = useState(0);
   const [showBrandLogos, setShowBrandLogos] = useState(false);
@@ -57,6 +58,26 @@ const HeroSection: React.FC = () => {
       window.clearInterval(intervalId);
     };
   }, []);
+
+
+    
+    // Auto-rotate slider
+    useEffect(() => {
+      if (isAutoPlaying) {
+        sliderInterval.current = setInterval(() => {
+          setCurrentSlide((prev) => (prev + 1) % carImages.length);
+        }, 5000); // Change slide every 5 seconds
+      }
+      
+      return () => {
+        if (sliderInterval.current) {
+          clearInterval(sliderInterval.current);
+        }
+      };
+    }, [isAutoPlaying]);
+  
+
+  
 
   return (
      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-br from-brand-50 via-white to-slate-100 py-[120px] sm:py-[120px]">
@@ -150,6 +171,7 @@ const HeroSection: React.FC = () => {
                   {carImages.map((_, index) => (
                     <span
                       key={index}
+                      onClick={() => setCurrentSlide(index)}
                       className={`h-2 w-2 rounded-full ${index === currentSlide ? 'bg-brand-400' : 'bg-white/60'}`}
                     />
                   ))}
