@@ -24,6 +24,27 @@
   --color-secondary: #3d3d40;
   --color-by: #f78f37;
   --color-bb: #f78f37;
+
+  --color-brand-50: #fdecef;  
+  --color-brand-100: #fbd8dd;
+  --color-brand-200: #f7b2ba;
+  --color-brand-300: #f38c96;
+  --color-brand-400: #f06572;
+  --color-brand-500: #ee3c48;
+  --color-brand-600: #d92d39;
+  --color-brand-700: #b8242e;
+  --color-brand-800: #901c24;
+  --color-brand-900: #69141a;
+
+  --color-primary: #ee3c48;
+  --color-primary-foreground: #fff;
+  --color-destructive: #ee3c48;
+  --color-destructive-foreground: #fff;
+  --color-outline: #ee3c48;
+  --color-outline-foreground: #fff;
+  --color-secondary: #3d3d40;
+  --color-secondary-foreground: #fff;
+
 }
 
 /* Import critical CSS */
@@ -117,4 +138,28 @@ h1, h2, h3, h4, h5, h6 {
 .leaflet-top,
 .leaflet-bottom {
   z-index: 10;
+}
+
+
+@keyframes dream-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer utilities {
+  .dream-marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .dream-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: dream-marquee 22s linear infinite;
+  }
 }

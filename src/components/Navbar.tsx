@@ -5,7 +5,6 @@ import { Menu, X, Phone, Globe } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
-import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 const Navbar: React.FC = () => {
@@ -15,7 +14,6 @@ const Navbar: React.FC = () => {
   const [userDetails, setUserDetails] = useState<any>({});
   const { language, setLanguage } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
-  const pathname = usePathname();
   const router = useRouter();
 
   // Function to check auth state from localStorage
@@ -118,7 +116,7 @@ const Navbar: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/60 backdrop-blur-lg  shadow-md py-2' : pathname !== '/' ? 'bg-[#3d3d40] py-4' :  'bg-transparent py-4'
+         'bg-gradient-to-br from-brand-50 via-white to-slate-100 py-4'
       }`}
     >
       <div className="container mx-auto px-4">
@@ -131,7 +129,7 @@ const Navbar: React.FC = () => {
               role="button"
               aria-label="Go to homepage">
                <Image
-                src={!isScrolled ? '/logo-light.png' : '/logo.png'} 
+                src={'/logo.png'} 
                 alt="Baddelha Logo" 
                 width={150}
                 height={50}
@@ -164,25 +162,25 @@ const Navbar: React.FC = () => {
               </a> */}
               <a 
                 href="/contactus" 
-                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
                 {language === 'ar' ? 'اتصل بنا' : 'Contact us'}
               </a>
               <a 
                 href="/about" 
-                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
                 {language === 'ar' ? 'من نحن' : 'About us'}
               </a>
               <a 
                 href="/why-us" 
-                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
                 {language === 'ar' ? 'لماذا نحن' : 'Why Us'}
               </a>
               <a 
                 href="/faq" 
-                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
                 {language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}
               </a>
@@ -193,7 +191,7 @@ const Navbar: React.FC = () => {
             <div 
             onClick={() => router.push('tel:+966920032590')}
            dir="ltr"
-            className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-white'}`}
+            className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-black'}`}
             role="button"
             aria-label="Call 920032590">
               <Phone className="h-4 w-4  ml-2 mr-2" />
@@ -201,7 +199,7 @@ const Navbar: React.FC = () => {
             </div>
             <button
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-              className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37] transition`}
+              className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37] transition`}
               aria-label={`Switch to ${language === 'en' ? 'Arabic' : 'English'} language`}
             >
               <Globe className="h-4 w-4 mr-1" />&nbsp;
@@ -215,7 +213,7 @@ const Navbar: React.FC = () => {
           </div>
           
           <button 
-            className={`md:hidden ${isScrolled ? 'text-[#3d3d40]' : 'text-white'}`}
+            className={`md:hidden ${isScrolled ? 'text-[#3d3d40]' : 'text-black'}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}

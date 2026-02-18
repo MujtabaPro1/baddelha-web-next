@@ -6,6 +6,7 @@ import axiosInstance from '../services/axiosInstance';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
 import { useRouter } from 'next/navigation';
+import { Card } from './ui/card';
 // Only keep the years array as static data
 const years = Array.from({ length: 20 }, (_, i) => (new Date().getFullYear() - i).toString());
 
@@ -107,27 +108,13 @@ const ValuationWidget: React.FC = () => {
   };
   
   return (
-    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-md">
-      {/* Header */}
-      <div className="bg-[#f78f37] px-2 lg:px-6 py-5">
-        <div className="flex items-center gap-3 mb-1">
-          <div className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-              <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
-            </svg>
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-white">{lang[languageContent].getYourCarsValue}</h2>
-            <p className="text-white text-sm">{lang[languageContent].freeInstantAndAccurateValuation}</p>
-          </div>
-        </div>
-      </div>
-      
+   
+  <Card className="mx-auto w-full border-primary max-w-4xl shadow-lg">
+
       <form onSubmit={handleSubmit} className="p-5 md:p-6">
-        <div className="flex flex-col gap-4 mb-5 max-w-md">
+        <div className="mb-5 grid grid-cols-1 gap-4 md:grid-cols-3">
           {/* Make */}
-          <div>
+          <div className="w-full">
             <label htmlFor="make" className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].make}</label>
             <Select
               instanceId="make-select"
@@ -159,7 +146,7 @@ const ValuationWidget: React.FC = () => {
           </div>
           
           {/* Model */}
-          <div>
+          <div className="w-full">
             <label htmlFor="model" className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].model}</label>
             <Select
               instanceId="model-select"
@@ -191,7 +178,7 @@ const ValuationWidget: React.FC = () => {
           </div>
           
           {/* Year */}
-          <div>
+          <div className="w-full">
             <label htmlFor="year" className="block text-xs font-medium text-slate-500 mb-2">{lang[languageContent].year}</label>
             <Select
               instanceId="year-select"
@@ -233,8 +220,8 @@ const ValuationWidget: React.FC = () => {
         </div>
       </form>
       
-     
-    </div>
+     </Card>
+
   );
 };
 

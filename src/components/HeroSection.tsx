@@ -1,197 +1,165 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import ValuationWidget from './ValuationWidget';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
-import { useRouter } from 'next/navigation';
+import {Button} from './ui/button';
 
 // Array of car images for the slider
 const carImages = [
   '/images/banner/1.webp',
   '/images/banner/2.webp',
-  // '/images/banner/3.webp',
+  '/images/banner/3.webp',
   // '/images/banner/4.webp',
   // '/images/banner/5.webp',
 ];
 
+const brandLogos = [
+  { label: 'Toyota', src: '/images/car-logos/toyota.png' },
+  { label: 'Nissan', src: '/images/car-logos/nissan.jpg' },
+  { label: 'Hyundai', src: '/images/car-logos/hyundai.png' },
+  { label: 'Ford', src: '/images/car-logos/ford.png' },
+  { label: 'BMW', src: '/images/car-logos/bmw.png' },
+  { label: 'Brand', src: '/images/car-logos/generic.webp' },
+];
+
+
 const HeroSection: React.FC = () => {
   const { language } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
-  const router = useRouter();
+  const hero: any = lang[languageContent].hero;
+  
   
   // Slider state
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const isAutoPlaying = true; // Always auto-playing
+  const [currentSlide,] = useState(0);
   
-  // Valuation widget animation state
-  const [isVisible, setIsVisible] = useState(false);
-  const valuationRef = useRef<HTMLDivElement>(null);
-  const sliderInterval = useRef<NodeJS.Timeout | null>(null);
 
-  // Intersection Observer for valuation widget animation
+   const [, setActiveSlide] = useState(0);
+  const [showBrandLogos, setShowBrandLogos] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState('');
+
+  const scrollToValuation = useCallback(() => {
+    document.getElementById('valuation-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
+  const handleBrandClick = useCallback(
+    (brand: any) => {
+      setSelectedBrand(brand);
+      scrollToValuation();
+    },
+    [scrollToValuation],
+  );
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (valuationRef.current) {
-      observer.observe(valuationRef.current);
-    }
+    const intervalId = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % carImages.length);
+    }, 4500);
 
     return () => {
-      if (valuationRef.current) {
-        observer.unobserve(valuationRef.current);
-      }
+      window.clearInterval(intervalId);
     };
   }, []);
-  
-  // Auto-rotate slider
-  useEffect(() => {
-    if (isAutoPlaying) {
-      sliderInterval.current = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % carImages.length);
-      }, 5000); // Change slide every 5 seconds
-    }
-    
-    return () => {
-      if (sliderInterval.current) {
-        clearInterval(sliderInterval.current);
-      }
-    };
-  }, [isAutoPlaying]);
-  
-  // Navigation functions
-  const goToNextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carImages.length);
-    resetAutoPlayTimer();
-  };
-  
-  const goToPrevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? carImages.length - 1 : prev - 1));
-    resetAutoPlayTimer();
-  };
-  
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-    resetAutoPlayTimer();
-  };
-  
-  const resetAutoPlayTimer = () => {
-    if (sliderInterval.current) {
-      clearInterval(sliderInterval.current);
-    }
-    
-    if (isAutoPlaying) {
-      sliderInterval.current = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % carImages.length);
-      }, 5000);
-    }
-  };
-  
+
   return (
-    <div className="relative pt-16">
-      {/* Background image slider */}
-      <div className="absolute inset-0 overflow-hidden">
-        {carImages.map((image, index) => (
-          <div 
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
-          >
-            {/* Using div with background image for better control */}
-            <div 
-              className="absolute inset-0 bg-cover bg-no-repeat transform scale-105"
-              style={{ backgroundImage: `url(${image})` }}
-            />
-            {/* Overlay for better text readability */}
-            <div className="absolute inset-0 bg-[#00000078]"></div>
+     <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-br from-brand-50 via-white to-slate-100 py-[120px] sm:py-[120px]">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div>
+            <p className="inline-flex rounded-full bg-brand-100 px-3 py-1 text-xs font-bold text-brand-700">
+              {hero.badge}
+            </p>
+            <h1 className="mt-4 text-5xl font-extrabold leading-tight text-slate-900 sm:text-6xl lg:text-7xl">
+              {hero.title}
+              <span className="block text-brand-500 text-6xl font-black leading-none sm:text-7xl lg:text-8xl">
+                {hero.titleHighlight}
+              </span>
+            </h1>
+            <p className="mt-4 max-w-xl text-base text-slate-600">{hero.description}</p>
+
+            {showBrandLogos ? (
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {brandLogos.map((brand) => (
+                  <button
+                    type="button"
+                    key={brand.label}
+                    onClick={() => {
+                      handleBrandClick(brand.label);
+                    }}
+                    className={`flex items-center justify-center rounded-xl bg-white/80 px-3 py-3 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-soft ${
+                      selectedBrand === brand.label ? 'ring-2 ring-brand-400' : ''
+                    }`}
+                    aria-label={`${hero.selectBrand} ${brand.label}`}
+                  >
+                    <img src={brand.src} alt={brand.label} className="h-10 w-auto object-contain" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <ul className="mt-5 space-y-2">
+                {hero.quickSteps.map((step: any) => (
+                  <li
+                    key={step}
+                    className="rounded-xl border border-white/60 bg-white/35 px-4 py-3 text-sm font-medium text-slate-700 shadow-[0_8px_24px_rgba(15,23,42,0.08)] backdrop-blur-md ring-1 ring-white/50 transition duration-300 hover:-translate-y-0.5 hover:bg-white/50 hover:shadow-[0_12px_28px_rgba(15,23,42,0.14)]"
+                  >
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button
+                variant="default"
+                onClick={() => {
+                  scrollToValuation();
+                }}
+              >
+                {hero.ctaEvaluation}
+              </Button>
+              <Button onClick={() => scrollToValuation()} variant="ghost">
+                {hero.ctaBooking}
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowBrandLogos((current) => !current);
+                }}
+                variant="ghost"
+                className={showBrandLogos ? 'border border-brand-300 bg-brand-50 text-brand-700' : ''}
+              >
+                {hero.selectBrand}
+              </Button>
+            </div>
           </div>
-        ))}
-      </div>
-      
-      {/* Slider navigation */}
-      <div className="absolute z-10 inset-x-0 bottom-20 flex justify-center space-x-2">
-        {carImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-white scale-125' : 'bg-white/50'}`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-      
-      {/* Arrow navigation */}
-      <div className="hidden md:block">
-        <button 
-          onClick={goToPrevSlide}
-          className="absolute z-10 left-4 top-[45%] -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-all"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-        <button 
-          onClick={goToNextSlide}
-          className="absolute z-10 right-4 top-[45%] -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full transition-all"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
-      </div>
-      
-      {/* Single section with hero content and valuation widget */}
-      <div className="relative container mx-auto px-4 pt-24 pb-32 md:pt-32 md:pb-40">
-        {/* Hero content */}
-        <div className="text-white max-w-3xl mb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in">
-            <br />{lang[languageContent].buySellTrade}
-          </h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-100 max-w-2xl">
-            {lang[languageContent].premiumServices}
-          </p>
-          
-          <div className="flex flex-wrap gap-4 mb-12">
-            <button 
-            onClick={() => {
-              document.scrollingElement?.scrollTo({
-                top: document.getElementById('valuation')?.offsetTop || 0,
-                behavior: 'smooth'
-              });
-            }}
-            className="bg-primaryBtn text-[#FFF] font-semibold px-6 py-3 rounded-lg transition transform hover:scale-105 flex items-center"
-            aria-label={lang[languageContent].getStarted}>
-              {lang[languageContent].getStarted} <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
-            <button
-            onClick={() => {
-             router.push('/about');
-            }}
-            className="bg-transparent border-2 border-white hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg transition"
-            aria-label={lang[languageContent].learnMore}>
-              {lang[languageContent].learnMore}
-            </button>
+
+          <div className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/40 shadow-soft backdrop-blur">
+            <div className="relative aspect-[16/11] sm:aspect-[16/10]">
+              {carImages.map((slide, index) => (
+                <img
+                  key={slide}
+                  src={slide}
+                  alt={slide}
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+                    index === currentSlide ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                />
+              ))}
+
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 to-transparent px-4 pb-4 pt-10 text-white">
+                <h2 className="text-lg font-extrabold">{hero.sliderTitle}</h2>
+                <p className="mt-1 text-sm text-slate-100">{hero.sliderSubtitle}</p>
+                <div className="mt-3 flex gap-2">
+                  {carImages.map((_, index) => (
+                    <span
+                      key={index}
+                      className={`h-2 w-2 rounded-full ${index === currentSlide ? 'bg-brand-400' : 'bg-white/60'}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-    
-        </div>
-        
-        {/* Valuation widget - aligned with content */}
-        <div 
-          ref={valuationRef}
-          id="valuation" 
-          className={`transition-all duration-700 ease-out w-full md:w-auto md:max-w-md mx-auto md:mx-0 lg:absolute lg:right-0 lg:top-20 ${
-            isVisible 
-              ? 'opacity-100 translate-x-0' 
-              : 'opacity-0 translate-x-16'
-          }`}
-        >
-          <ValuationWidget />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -300,7 +300,95 @@ const lang = {
         "faq": "FAQ",
         "priceCalculator": "Price Calculator",
         "carReviews": "Car Reviews",
-        "contact": "Contact"
+        "contact": "Contact",
+        "hero": {
+      "badge": 'Free Evaluation & Inspection',
+      "title": 'Buy,Sell, Trade in',
+      "titleHighlight": '30 Minutes',
+      "description":
+        'A fast platform to evaluate your car, book an expert inspection, and move forward with clarity.',
+      "ctaEvaluation": 'Start Free Evaluation',
+      "ctaBooking": 'Book Inspection',
+      "selectBrand": 'Select a Brand',
+      "quickSteps": [
+        'BOOK FREE APPOINTMENT',
+        'INSPECT YOUR CAR FOR FREE',
+        "RECIEVE YOUR'E FAIR VALUATION",
+      ],
+      "sliderTitle": 'Trusted Inspection Standards',
+      "sliderSubtitle": 'Real experts and clear reports for better decisions.',
+      "slideAlts": ['Vehicle inspector with report', 'Comprehensive car inspection scene'],
+        },
+        "features_widget": {
+        "title": 'Free Evaluation Request',
+        "subtitle": 'Enter your basic details and get an initial valuation quickly',
+        "submit": 'Submit Request',
+        },
+        "howItWorksSteps": {
+      "title": 'How It Works',
+      "subtitle": 'A clean process built for speed and clarity',
+      "dreamTitle": 'Dream Car Type',
+      "dreamTypes": ['Sport', 'hatchback', 'Pickup', 'Crossover', 'Sedan', 'SUV'],
+      "steps": [
+        {
+          "title": 'Free Booking',
+          "description": 'After the free valuation on the website, you can book a full free inspection.',
+        },
+        {
+          "title": '30 Min Free Valuation',
+          "description":
+            'After booking the appointment and completing the inspection by our certified engineers, you will receive a fair and suitable offer for your car’s value.',
+        },
+        {
+          "title": 'Sell / Trade',
+          "description":
+            'After the free inspection, we present you with a fair price. The decision is yours: sell your car, use the amount as a down payment, or trade it for another car.',
+        },
+      ],
+    
+    },
+       "testimonials_items": {
+      title: 'Testimonials',
+      subtitle: "we care about your'e voice",
+      items: [
+        {
+          platform: 'Instagram',
+          rating: '★★★★★',
+          comment: 'The valuation was fast, accurate, and the team was very professional.',
+          author: '@alex_auto',
+        },
+        {
+          platform: 'X (Twitter)',
+          rating: '★★★★★',
+          comment: 'Booking and inspection were smooth. I got a fair offer the same day.',
+          author: '@noahdrives',
+        },
+        {
+          platform: 'TikTok',
+          rating: '★★★★☆',
+          comment: 'Great experience overall. Clear process and friendly support team.',
+          author: '@mia.cars',
+        },
+      ],
+    },
+      "inspection_items": {
+      title: 'Comprehensive Car Inspection',
+      highlightWord: 'Inspection',
+      subtitle: 'A structured report that covers key safety and performance points',
+      checks: [
+        'Engine and transmission check',
+        'Body and paint condition',
+        'Electrical systems check',
+        'Brakes and suspension check',
+        'Tires and chassis check',
+        'Complete report summary',
+      ],
+      cardTitle: 'Quick Booking',
+      cardText: 'Reserve your inspection slot in under a minute.',
+      cta: 'Book Free Inspection',
+      settingsIconAlt: 'Inspection settings icon',
+      cardImageAlt: 'Car inspection preview image',
+    },
                  
        } ,
        ar: {
@@ -408,9 +496,9 @@ const lang = {
         "contactUs": "اتصل بنا",
         "footerText": "BADDELHA | بدلها هي شركتك الموثوقة لجميع خدمات السيارات. من شراء وبيع إلى تقييم وتمويل، نجعل العملية سهلة، مفتوحة، وممتعة.",
         "address": "العنوان",
-  "select": "اختر السيارة",
-  "condition": "حالة السيارة",
-  "book": "احجز موعدًا",
+        "select": "اختر السيارة",
+        "condition": "حالة السيارة",
+        "book": "احجز موعدًا",
         "enterInformation": "يرجى إدخال المعلومات التالية لمعرفة تقييم سيارتك",
         "byContinuingYouAgreeToThe": "بالمتابعة، فإنك توافق على",
         "termsAndConditions": "الشروط والأحكام",
@@ -605,8 +693,90 @@ const lang = {
         "faq": "الأسئلة الشائعة",
         "priceCalculator": "حاسبة الأسعار",
         "carReviews": "مراجعات السيارات",
-        "contact": "تواصل معنا"
-         
+        "contact": "تواصل معنا",
+        "hero": {
+            "badge": 'تقييم وفحص مجاني',
+            "title": 'اشترِ، بِع، بدّل خلال',
+            "titleHighlight": '30 دقيقة',
+            "description": 'منصة عربية تساعدك على تقييم سيارتك وحجز فحص احترافي بسرعة، مع تجربة واضحة بالكامل.',
+            "ctaEvaluation": 'ابدأ التقييم المجاني',
+            "ctaBooking": 'احجز موعد فحص',
+            "selectBrand": 'اختر الماركة',
+            "quickSteps": ['أدخل بيانات سيارتك خلال دقيقة', 'اختر أقرب فرع وموعد مناسب', 'استلم تقييمًا واضحًا وعادلاً'],
+            "sliderTitle": 'فحص احترافي بمعايير موثوقة',
+            "sliderSubtitle": 'نتائج دقيقة تساعدك على اتخاذ القرار بسرعة.',
+            "slideAlts": ['خبير فحص سيارات', 'مشهد فحص شامل للسيارة'],
+       },
+       "features_widget": {
+            "title": 'طلب تقييم مجاني',
+            "subtitle": 'أدخل البيانات الأساسية وسنرسل لك تقييمًا أوليًا بسرعة',
+            "submit": 'إرسال الطلب',
+       },
+      "howItWorksSteps": {
+      "title": 'كيف تعمل المنصة',
+      "subtitle": 'خطوات واضحة وسهلة من أول زيارة',
+      "dreamTitle": 'Dream Car Type',
+      "dreamTypes": ['Sport', 'hatchback', 'Pickup', 'Crossover', 'Sedan', 'SUV'],
+      "steps": [
+        {
+          "title": 'حجز مجاني',
+          "description": 'بعد التقييم المجاني على الموقع، يمكنك حجز فحص كامل مجاني.',
+        },
+        {
+          "title": 'تقييم مجاني خلال 30 دقيقة',
+          "description":
+            'بعد حجز الموعد وإكمال الفحص بواسطة مهندسينا المعتمدين، ستحصل على عرض عادل ومناسب لقيمة سيارتك.',
+        },
+        {
+          "title": 'بيع / استبدال',
+          "description":
+            'بعد الفحص المجاني، نقدم لك سعرًا عادلًا. القرار لك: بيع سيارتك، أو استخدام المبلغ كدفعة أولى، أو استبدالها بسيارة أخرى.',
+        },
+      ],
+    },
+    "testimonials_items": {
+      title: 'آراء العملاء',
+      subtitle: 'تعليقات حقيقية من منصات التواصل',
+      items: [
+        {
+          platform: 'Instagram',
+          rating: '★★★★★',
+          comment: 'التقييم كان سريع جدًا والخدمة احترافية من البداية للنهاية.',
+          author: '@saad_auto',
+        },
+        {
+          platform: 'X (Twitter)',
+          rating: '★★★★★',
+          comment: 'الفحص واضح وعادل، واستلمت عرض مناسب خلال وقت قصير.',
+          author: '@mohammed_cars',
+        },
+        {
+          platform: 'TikTok',
+          rating: '★★★★☆',
+          comment: 'التجربة سهلة وحجز الموعد كان في دقائق، أنصح فيهم.',
+          author: '@reem_drive',
+        },
+      ],
+    },
+       "inspection_items": {
+      title: 'فحص شامل لسيارتك',
+      highlightWord: 'فحص',
+      subtitle: 'تقرير واضح يغطي أهم نقاط السلامة والأداء',
+      checks: [
+        'فحص المحرك وناقل الحركة',
+        'فحص الهيكل الخارجي والدهان',
+        'فحص الأنظمة الكهربائية',
+        'فحص المكابح والتعليق',
+        'فحص الإطارات والعفشة',
+        'تقرير شامل بالنتائج',
+      ],
+      cardTitle: 'حجز سريع',
+      cardText: 'احجز فحصك الآن خلال أقل من دقيقة.',
+      cta: 'احجز فحص مجاني',
+      settingsIconAlt: 'أيقونة إعدادات الفحص',
+      cardImageAlt: 'صورة فحص السيارة',
+    },
+       
        } 
     }
 
