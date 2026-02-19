@@ -401,11 +401,7 @@ const Step3 = () => {
                 // Add mock images, locations, distances, and coordinates to branches
                 // Riyadh coordinates with slight variations for different branches
                 const riyadhCoordinates = [
-                    { lat: 24.7136, lng: 46.6753 }, // Riyadh center
-                    { lat: 24.7741, lng: 46.7388 }, // North Riyadh
-                    { lat: 24.6748, lng: 46.7977 }, // East Riyadh
-                    { lat: 24.6231, lng: 46.7651 }, // South Riyadh
-                    { lat: 24.7000, lng: 46.6348 }  // West Riyadh
+                    { lat: 24.7207364, lng: 46.7705267 }, // Riyadh center
                 ];
                 
                 const branchesWithImages = (branches || []).map((branch: any, index: number) => {

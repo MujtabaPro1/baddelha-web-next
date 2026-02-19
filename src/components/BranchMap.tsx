@@ -122,11 +122,13 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBra
   useEffect(() => {
     const selectedBranch = branches.find(branch => branch.id === selectedBranchId);
     if (selectedBranch && selectedBranch.latitude && selectedBranch.longitude) {
-      const branchLoc: [number, number] = [selectedBranch.latitude, selectedBranch.longitude];
+      const branchLoc: [number, number] = [selectedBranch.latitude || 24.7207364, selectedBranch.longitude || 46.7705267];
+      console.log('branchLoc', branchLoc);
       setSelectedBranchLocation(branchLoc);
 
       // Draw route line from user location to selected branch (solid red)
       if (userLocation) {
+        console.log('userLocation', userLocation,branchLoc);
         setRouteLine([userLocation, branchLoc]);
       } else {
         setRouteLine([]);
