@@ -86,7 +86,7 @@ interface BranchMapProps {
 const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBranchSelect, onUserLocation }) => {
   const { language } = useLanguage();
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
-  const [mapCenter, setMapCenter] = useState<[number, number]>([24.7136, 46.6753]); // Default to Riyadh
+  const [mapCenter, setMapCenter] = useState<[number, number]>([24.7207364, 46.7705267]); // Default to Riyadh
   const [mapZoom, setMapZoom] = useState(10);
   const [routeLine, setRouteLine] = useState<[number, number][]>([]);
   const [selectedBranchLocation, setSelectedBranchLocation] = useState<[number, number] | null>(null);
