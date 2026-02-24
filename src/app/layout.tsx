@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'BADDELHA' }],
   creator: 'BADDELHA',
   publisher: 'BADDELHA',
-  metadataBase: new URL('https://badelha.com.sa'),
+  metadataBase: new URL('https://baddelha.com.sa'),
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',

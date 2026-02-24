@@ -9,7 +9,7 @@ export default function DynamicCanonical() {
   const [canonicalUrl, setCanonicalUrl] = useState('');
 
   useEffect(() => {
-    const baseUrl = 'https://badelha.com.sa';
+    const baseUrl = 'https://baddelha.com.sa';
     const path = pathname === '/' ? '' : pathname;
     setCanonicalUrl(`${baseUrl}${path}`);
   }, [pathname]);
