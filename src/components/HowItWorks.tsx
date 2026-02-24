@@ -1,3 +1,4 @@
+'use client';
 import { memo } from 'react';
 import  Card  from './ui/card-v1';
 import Section from './ui/section';

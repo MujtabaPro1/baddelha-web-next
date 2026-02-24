@@ -7,7 +7,8 @@ import { Toaster } from '../components/ui/toaster';
 import UserTypePopupWrapper from '../components/UserTypePopupWrapper';
 import type { Metadata } from 'next';
 import './globals.scss';
-import ReCaptchaProvider from '../components/ReCaptchaProvider'
+import ReCaptchaProvider from '../components/ReCaptchaProvider';
+import DynamicCanonical from '../components/DynamicCanonical';
 
 // Preload critical fonts
 const fontPreload = [
@@ -24,10 +25,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'BADDELHA' }],
   creator: 'BADDELHA',
   publisher: 'BADDELHA',
-  metadataBase: new URL('https://baddelha.com.sa'),
-  alternates: {
-    canonical: '/',
-  },
+  metadataBase: new URL('https://badelha.com.sa'),
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
@@ -196,6 +194,9 @@ export default function RootLayout({
           }}
         />
         {/* End Google tag */}
+        
+        {/* Dynamic Canonical URL */}
+        <DynamicCanonical />
         
         {/* Schema.org structured data */}
         <script

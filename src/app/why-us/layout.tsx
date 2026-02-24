@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+
 export const metadata: Metadata = {
   title: 'Why BADDELHA',
   description:
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Why BADDELHA',
     description:
       'Discover why BADDELHA is trusted for professional inspection, fair market valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
-    url: 'https://baddelha.com.sa/why-us',
+    url: 'https://badelha.com.sa/why-us',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,10 +29,10 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/why-us',
+    canonical: '/why-us',
   },
 };
 
-export default function WhyUsLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

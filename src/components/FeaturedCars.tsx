@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
