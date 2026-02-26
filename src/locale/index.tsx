@@ -389,7 +389,112 @@ const lang = {
       settingsIconAlt: 'Inspection settings icon',
       cardImageAlt: 'Car inspection preview image',
     },
-                 
+      
+    "hero_section": {
+    title: 'About Us',
+    subtitle:
+      'A leading platform in used car valuation and purchase across Saudi Arabia, delivering an integrated, smooth and transparent experience you can trust.',
+    ctaOutline: 'Contact us',
+    ctaPrimary: 'Start valuing your car now'
+   },
+  
+    "story": {
+    title: 'Our Story',
+    paragraphs: [
+      'In the used car market, we saw a major gap in transparency and trust between sellers and buyers. Many people struggle to know the true value of their cars.',
+      'That is where Badilha came from — combining free valuation with hands-on expertise to deliver accurate and fair pricing, with fast procedures and transparent communication.',
+      'We believe selling a car should be simple and trustworthy, ensuring you get the best possible price with no surprises.'
+    ],
+    badge: 'Transparency • Speed • Fair Pricing',
+    image:
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop'
+  },
+  "values": [
+    {
+      title: 'Our Values',
+      text:
+        'Transparency at every step, professionalism in service, speed in execution, and commitment to great value for our customers.'
+    },
+    {
+      title: 'Our Mission',
+      text:
+        'Simplify selling by providing fast, accurate valuation with the best possible price and highest service standards.'
+    },
+    {
+      title: 'Our Vision',
+      text:
+        'To be the most trusted platform in Saudi Arabia for valuing and purchasing used cars with full transparency.'
+    }
+  ],
+  "stats": [
+    { value: '2', label: 'Branches in KSA' },
+    { value: '99%', label: 'Customer satisfaction' },
+    { value: '+1500', label: 'Customers' },
+    { value: '+5000', label: 'Cars valued' }
+  ],
+  "howItWorksContent": {
+    title: 'How We Work',
+    subtitle: 'A simple, well-organized process from start to finish',
+    steps: [
+      {
+        id: '01',
+        title: 'Smart car valuation',
+        desc:
+          'We collect your car data and analyze it using the latest tools and techniques.'
+      },
+      {
+        id: '02',
+        title: 'Professional full inspection',
+        desc:
+          'Our expert team checks your car carefully across 150+ inspection points.'
+      },
+      {
+        id: '03',
+        title: 'Fair analysis and pricing',
+        desc:
+          'We analyze market data to ensure you receive the best possible price.'
+      },
+      {
+        id: '04',
+        title: 'Formal offer',
+        desc:
+          'We present a clear official offer to accept or negotiate with us.'
+      }
+    ]
+  },
+  "team": {
+    title: 'Our Team',
+    subtitle: 'Specialists at your service',
+    members: [
+      {
+        name: 'Mohammed Al-Otaibi',
+        role: 'CEO',
+        bio: '15 years of experience in automotive and valuation',
+        img: 'https://images.unsplash.com/photo-1531123414780-f7423bdbef60?q=80&w=400&auto=format&fit=crop'
+      },
+      {
+        name: 'Sara Al-Qahtani',
+        role: 'Head of Customer Success',
+        bio: 'Specialist in customer experience design',
+        img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop'
+      },
+      {
+        name: 'Abdullah Al-Mutairi',
+        role: 'Head of Technical Valuation',
+        bio: 'Certified expert in used car inspection and valuation',
+        img: 'https://images.unsplash.com/photo-1546456073-6712f79251bb?q=80&w=400&auto=format&fit=crop'
+      }
+    ]
+  },
+  "cta": {
+    title: 'Ready to start your journey with us?',
+    text:
+      'Get a fast, accurate valuation now. Professional service, fair prices, and quick procedures.',
+    button: 'Get a free valuation now',
+    bullets: ['Certified inspection', 'Instant valuation', 'Best pricing']
+  },
+ 
+  
        } ,
        ar: {
         "phone": "920032590",
@@ -776,6 +881,136 @@ const lang = {
       settingsIconAlt: 'أيقونة إعدادات الفحص',
       cardImageAlt: 'صورة فحص السيارة',
     },
+
+      hero_section: {
+    title: 'من نحن',
+    subtitle:
+      'منصة رائدة في مجال تقييم وشراء السيارات المستعملة في المملكة العربية السعودية، نقدم خدمات متكاملة تضمن لك تجربة سلسة وشفافة وموثوقة',
+    ctaOutline: 'تواصل معنا',
+    ctaPrimary: 'ابدأ تقييم سيارتك الآن'
+  },
+  story: {
+    title: 'قصتنا',
+    paragraphs: [
+      'في سوق السيارات المستعملة بالمملكة، لاحظنا وجود فجوة كبيرة في الشفافية والثقة بين البائعين والمشترين. كثير من الأشخاص يواجهون صعوبة في معرفة القيمة الحقيقية لسياراتهم.',
+      'من هنا جاءت فكرة (بدلها) - منصة تجمع بين التقييم المجاني والخبرة العملية لتقديم تقييم دقيق وعادل، مع ضمان سرعة الإجراءات وشفافية التعامل.',
+      'نحن نؤمن بأن بيع السيارة يجب أن يكون تجربة بسيطة وموثوقة، حيث يحصل العميل على أفضل سعر ممكن دون تعقيدات أو مفاجآت.'
+    ],
+    badge: 'شفافية • سرعة • تسعير عادل',
+    image:
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop'
+  },
+  values: [
+    {
+      title: 'قيمنا',
+      text:
+        'الشفافية في كل خطوة، الاحترافية في التعامل، السرعة في التنفيذ، والالتزام بتقديم أفضل قيمة لعملائنا'
+    },
+    {
+      title: 'مهمتنا',
+      text:
+        'تبسيط عملية بيع السيارات من خلال تقديم تقييم دقيق وسريع، مع ضمان أفضل الأسعار وأعلى مستويات الخدمة والشفافية'
+    },
+    {
+      title: 'رؤيتنا',
+      text:
+        'أن نكون المنصة الأولى والأكثر موثوقية في المملكة العربية السعودية لتقييم وشراء السيارات المستعملة بشفافية كاملة'
+    }
+  ],
+  stats: [
+    { value: '2', label: 'فروع داخل المملكة' },
+    { value: '99%', label: 'رضا العملاء' },
+    { value: '+1500', label: 'عميل' },
+    { value: '+5000', label: 'سيارة تم تقييمها' }
+  ],
+  howItWorksContent: {
+    title: 'كيف نعمل',
+    subtitle: 'عملية بسيطة ومنظمة من البداية حتى النهاية',
+    steps: [
+      {
+        id: '01',
+        title: 'تقييم ذكي للسيارة',
+        desc:
+          'نقوم بجمع معلومات سيارتك وتحليلها باستخدام أحدث الأنظمة والتقنيات'
+      },
+      {
+        id: '02',
+        title: 'فحص احترافي شامل',
+        desc:
+          'فريقنا المتخصص يفحص سيارتك بدقة على أكثر من 150 نقطة فحص'
+      },
+      {
+        id: '03',
+        title: 'تحليل وتسعير عادل',
+        desc:
+          'نحلل بيانات السوق لضمان حصولك على أفضل سعر ممكن لسيارتك'
+      },
+      {
+        id: '04',
+        title: 'تقديم عرض رسمي',
+        desc:
+          'نقدم لك عرضًا واضحًا ورسمياً يمكنك الموافقة أو التفاوض معنا'
+      }
+    ]
+  },
+  team: {
+    title: 'فريقنا',
+    subtitle: 'خبراء متخصصون لخدمتك',
+    members: [
+      {
+        name: 'محمد العتيبي',
+        role: 'المدير التنفيذي',
+        bio: 'خبرة 15 عاماً في مجال السيارات والتقييم',
+        img: 'https://images.unsplash.com/photo-1531123414780-f7423bdbef60?q=80&w=400&auto=format&fit=crop'
+      },
+      {
+        name: 'سارة القحطاني',
+        role: 'مديرة خدمة العملاء',
+        bio: 'متخصصة في تطوير تجربة العملاء',
+        img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop'
+      },
+      {
+        name: 'عبدالله المطيري',
+        role: 'رئيس قسم التقييم الفني',
+        bio: 'خبير معتمد في فحص وتقييم السيارات',
+        img: 'https://images.unsplash.com/photo-1546456073-6712f79251bb?q=80&w=400&auto=format&fit=crop'
+      }
+    ]
+  },
+  cta: {
+    title: 'جاهز تبدأ رحلتك معنا؟',
+    text:
+      'احصل على تقييم دقيق وسريع لسيارتك الآن. خدمة احترافية، أسعار عادلة، وإجراءات سريعة',
+    button: 'احصل على تقييم مجاني الآن',
+    bullets: ['فحص معتمد', 'تقييم فوري', 'أفضل التسعير']
+  },
+  footer: {
+    brand: 'بدلها',
+    description:
+      'منصة موثوقة لتقييم وبيع السيارات المستعملة بأفضل الأسعار في المملكة العربية السعودية',
+    columns: [
+      {
+        title: 'الشركة',
+        items: ['من نحن', 'لماذا نحن', 'فريق العمل', 'الوظائف']
+      },
+      {
+        title: 'الخدمات',
+        items: ['تقييم السيارات', 'فحص السيارات', 'بيع السيارات', 'شراء السيارات']
+      },
+      {
+        title: 'الدعم',
+        items: ['الأسئلة الشائعة', 'تواصل معنا', 'سياسة الخصوصية', 'الشروط والأحكام']
+      }
+    ],
+    contact: {
+      phone: '+966 11 234 5578',
+      email: 'info@careva.sa',
+      location: 'الرياض، المملكة العربية السعودية'
+    },
+    copyright: '© 2025 جميع الحقوق محفوظة - منصة تقييم السيارات',
+    socials: ['LinkedIn', 'Instagram', 'Twitter', 'Facebook']
+  }
+
        
        } 
     }

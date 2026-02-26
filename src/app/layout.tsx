@@ -106,14 +106,6 @@ const websiteSchema = {
   name: 'BADDELHA',
   alternateName: 'بدلها',
   url: 'https://baddelha.com.sa',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://baddelha.com.sa/?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  },
 };
 
 const localBusinessSchema = {
