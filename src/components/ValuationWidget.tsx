@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, AlertCircle, ArrowLeft } from 'lucide-react';
-import Select from 'react-select';
+import { ArrowRight, AlertCircle, ArrowLeft, Car } from 'lucide-react';
+import Select, { components } from 'react-select';
 import axiosInstance from '../services/axiosInstance';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
@@ -9,6 +9,63 @@ import { useRouter } from 'next/navigation';
 import { Card } from './ui/card';
 // Only keep the years array as static data
 const years = Array.from({ length: 20 }, (_, i) => (new Date().getFullYear() - i).toString());
+
+// Car brand logo utility - using CarLogos.org API
+const getCarLogo = (brandName: string): string => {
+  //https://www.carlogos.org/car-logos/honda-logo.png
+  const formattedName = brandName.toLowerCase().replace(/\s+/g, '-');
+  return `https://www.carlogos.org/car-logos/${formattedName}-logo.png`;
+};
+
+// Custom Option component with logo
+const CustomOption = (props: any) => {
+  const [imgError, setImgError] = useState(false);
+  
+  return (
+    <components.Option {...props}>
+      <div className="flex items-center gap-3">
+        {!imgError ? (
+          <img
+            src={getCarLogo(props.data.label)}
+            alt={props.data.label}
+            className="w-6 h-6 object-contain"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="w-6 h-6 flex items-center justify-center bg-slate-100 rounded">
+            <Car className="w-4 h-4 text-slate-400" />
+          </div>
+        )}
+        <span>{props.data.label}</span>
+      </div>
+    </components.Option>
+  );
+};
+
+// Custom SingleValue component with logo
+const CustomSingleValue = (props: any) => {
+  const [imgError, setImgError] = useState(false);
+  
+  return (
+    <components.SingleValue {...props}>
+      <div className="flex items-center gap-3">
+        {!imgError ? (
+          <img
+            src={getCarLogo(props.data.label)}
+            alt={props.data.label}
+            className="w-5 h-5 object-contain"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="w-5 h-5 flex items-center justify-center bg-slate-100 rounded">
+            <Car className="w-3 h-3 text-slate-400" />
+          </div>
+        )}
+        <span>{props.data.label}</span>
+      </div>
+    </components.SingleValue>
+  );
+};
 
 interface CarMake {
   id: string;
@@ -129,6 +186,7 @@ const ValuationWidget: React.FC = () => {
               isLoading={loading.makes}
               isDisabled={loading.makes}
               isClearable
+              components={{ Option: CustomOption, SingleValue: CustomSingleValue }}
               menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
               classNames={{
                 control: () => '!rounded-xl !border-0 !bg-white !shadow-none ring-1 ring-inset ring-slate-200 hover:ring-slate-300',
