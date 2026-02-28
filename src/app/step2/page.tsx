@@ -17,6 +17,11 @@ const Step2 = () => {
     const [option, setOption] = useState('Basic');
     const [paint, setPaint] = useState('Original paint');
     const [gccSpecs, setGccSpecs] = useState('GCC Specs');
+    const [ownershipStatus, setOwnershipStatus] = useState('First owner');
+    const [fuelType, setFuelType] = useState('Gasoline');
+    const [transmissionType, setTransmissionType] = useState('Automatic');
+    const [accidentHistory, setAccidentHistory] = useState('No');
+    const [vehicleCondition, setVehicleCondition] = useState('Excellent');
 
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
@@ -202,7 +207,12 @@ const Step2 = () => {
             gccSpecs,
             bodyTypeName,
             engineSizeName,
-            mileageName
+            mileageName,
+            ownershipStatus,
+            fuelType,
+            transmissionType,
+            accidentHistory,
+            vehicleCondition
         };
         sessionStorage.setItem('step2Data', JSON.stringify(step2Data));
         
@@ -254,7 +264,7 @@ const progressSteps = [
             
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                 {/* Car Header Banner */}
-                <div className="bg-bb px-6 py-5">
+                <div className="bg-secondary px-6 py-5">
                     <p className="text-white text-sm mb-1">{language === "en" ? "Your Vehicle" : "سيارتك"}</p>
                     <h2 className="text-xl md:text-2xl font-bold text-white">{carDetails.make} {carDetails.model} {carDetails.year}</h2>
                     <p className="text-white text-sm mt-1">{lang[languageContent].enterInformation}</p>
@@ -395,112 +405,343 @@ const progressSteps = [
                         </div>
                     </div>
                     
-                    {/* Option Buttons */}
-                    <div className="mb-5">
-                        <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].option}</label>
-                        <div className="grid grid-cols-3 gap-2">
-                            <button 
-                                type="button" 
-                                onClick={() => setOption('Basic')} 
-                                className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
-                                    option === 'Basic' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                Basic
-                            </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setOption('Mid option')} 
-                                className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
-                                    option === 'Mid option' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                Mid option
-                            </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setOption('Full option')} 
-                                className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
-                                    option === 'Full option' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                Full option
-                            </button>
+                    {/* Two Column Grid Layout for Better Space Usage */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+                        {/* Left Column */}
+                        <div className="space-y-5">
+                            {/* Option Buttons */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].option}</label>
+                                <div className="grid grid-cols-3 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setOption('Basic')} 
+                                        className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                            option === 'Basic' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Basic
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setOption('Mid option')} 
+                                        className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                            option === 'Mid option' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Mid
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setOption('Full option')} 
+                                        className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                            option === 'Full option' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Full
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* GCC Specs Buttons */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].gccSpecs}</label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setGccSpecs('GCC Specs')} 
+                                        className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                                            gccSpecs === 'GCC Specs' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        GCC Specs
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setGccSpecs('Non GCC Specs')} 
+                                        className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                                            gccSpecs === 'Non GCC Specs' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Non GCC
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Fuel Type */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">Fuel Type</label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setFuelType('Gasoline')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            fuelType === 'Gasoline' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Gasoline
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setFuelType('Diesel')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            fuelType === 'Diesel' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Diesel
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setFuelType('Hybrid')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            fuelType === 'Hybrid' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Hybrid
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setFuelType('Electric')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            fuelType === 'Electric' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Electric
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Accident History */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">Accident History</label>
+                                <div className="grid grid-cols-3 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setAccidentHistory('No')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            accidentHistory === 'No' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        No
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setAccidentHistory('Yes')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            accidentHistory === 'Yes' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Yes
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setAccidentHistory('Minor')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            accidentHistory === 'Minor' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Minor
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    {/* Paint Buttons */}
-                    <div className="mb-5">
-                        <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].paint}</label>
-                        <div className="grid grid-cols-3 gap-2">
-                            <button 
-                                type="button" 
-                                onClick={() => setPaint('Original paint')} 
-                                className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
-                                    paint === 'Original paint' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                Original
-                            </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setPaint('Partial repaint')} 
-                                className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
-                                    paint === 'Partial repaint' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                Partial
-                            </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setPaint('Total repaint')} 
-                                className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
-                                    paint === 'Total repaint' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                Total Repaint
-                            </button>
-                        </div>
-                    </div>
-                    
-                    {/* GCC Specs Buttons */}
-                    <div className="mb-6">
-                        <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].gccSpecs}</label>
-                        <div className="grid grid-cols-2 gap-2">
-                            <button 
-                                type="button" 
-                                onClick={() => setGccSpecs('GCC Specs')} 
-                                className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
-                                    gccSpecs === 'GCC Specs' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                GCC Specs
-                            </button>
-                            <button 
-                                type="button" 
-                                onClick={() => setGccSpecs('Non GCC Specs')} 
-                                className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
-                                    gccSpecs === 'Non GCC Specs' 
-                                        ? 'bg-bb text-white shadow-lg' 
-                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                                }`}
-                            >
-                                Non GCC Specs
-                            </button>
+                        
+                        {/* Right Column */}
+                        <div className="space-y-5">
+                            {/* Paint Buttons */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">{lang[languageContent].paint}</label>
+                                <div className="grid grid-cols-3 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setPaint('Original paint')} 
+                                        className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                            paint === 'Original paint' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Original
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setPaint('Partial repaint')} 
+                                        className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                            paint === 'Partial repaint' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Partial
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setPaint('Total repaint')} 
+                                        className={`py-3 px-2 rounded-xl text-sm font-medium transition-all ${
+                                            paint === 'Total repaint' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Total
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Ownership Status */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">Ownership Status</label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setOwnershipStatus('First owner')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            ownershipStatus === 'First owner' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        First owner
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setOwnershipStatus('Second owner')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            ownershipStatus === 'Second owner' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Second owner
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setOwnershipStatus('Fleet')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            ownershipStatus === 'Fleet' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Fleet
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setOwnershipStatus('Company')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            ownershipStatus === 'Company' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Company
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Transmission Type */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">Transmission Type</label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setTransmissionType('Automatic')} 
+                                        className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                                            transmissionType === 'Automatic' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Automatic
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setTransmissionType('Manual')} 
+                                        className={`py-3 px-4 rounded-xl text-sm font-medium transition-all ${
+                                            transmissionType === 'Manual' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Manual
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Vehicle Condition */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-900 mb-3">Vehicle Condition</label>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setVehicleCondition('Excellent')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            vehicleCondition === 'Excellent' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Excellent
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setVehicleCondition('Good')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            vehicleCondition === 'Good' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Good
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setVehicleCondition('Fair')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            vehicleCondition === 'Fair' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Fair
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setVehicleCondition('Needs Work')} 
+                                        className={`py-3 px-3 rounded-xl text-sm font-medium transition-all ${
+                                            vehicleCondition === 'Needs Work' 
+                                                ? 'bg-bb text-white shadow-lg' 
+                                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        }`}
+                                    >
+                                        Needs Work
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
