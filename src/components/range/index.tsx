@@ -39,10 +39,20 @@ export function RangeSlider(props: any) {
     //    setValue({ start: from, end: to });
     //}, [from, to]);
 
-    // Show empty component if min and max are both 0 or if they're the same value
-    if (min === 0 && max === 0 || min === max) {
+    // Show empty component if min and max are both 0
+    if (min === 0 && max === 0) {
         console.log("Range slider hidden due to invalid min/max values");
-        return <div className="text-sm text-gray-500 py-2">Price range not available</div>;
+        return <div className="text-sm text-gray-500 py-2">Range not available</div>;
+    }
+    
+    // Show single value when min equals max (no range to slide)
+    if (min === max) {
+        const displayValue = props?.attribute === 'modelYear' ? min : `SAR ${numberWithCommas(min)}`;
+        return (
+            <div className="py-2">
+                <div className="text-sm text-gray-700 font-medium">{displayValue}</div>
+            </div>
+        );
     }
 
     // Ensure we have valid numeric values for the slider

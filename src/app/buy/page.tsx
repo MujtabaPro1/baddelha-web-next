@@ -399,6 +399,8 @@ function Buy() {
 
 
 const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggleLike: () => void }> = ({ car, viewMode, isLiked, onToggleLike }) => {
+  const [isError,setError] = useState(false);
+
   console.log('CarCard');
   if (viewMode === 'list') {
     return (
@@ -406,10 +408,11 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
         <div className="flex flex-col md:flex-row">
           <div className="md:w-80 relative">
             <img 
-              src={car?.imageUrl || 'https://miamiconcours.com/wp-content/themes/miami/assets/image/vote-placeholder.png'}
+              src={isError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' : car?.imageUrl || 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko='}
                  alt={`${car.modelYear} ${car.make} ${car.model}`}
               className="w-full h-48 md:h-full object-cover"
               onError={()=>{
+                setError(true);
                 console.log('onError');
               }}
             />
@@ -495,11 +498,12 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative">
         <img 
-          src={car?.imageUrl || 'https://miamiconcours.com/wp-content/themes/miami/assets/image/vote-placeholder.png'} 
+          src={isError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' :  car?.imageUrl} 
           alt={`${car.modelYear} ${car.make} ${car.model}`}
           className="w-full h-[280px] object-cover"
           onError={()=>{
             console.log('onError');
+            setError(true);
           }}
         />
       

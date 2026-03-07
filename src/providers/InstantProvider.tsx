@@ -9,7 +9,8 @@ export const InstantWrapper = (props: any) => {
   //http://ec2-15-184-133-49.me-south-1.compute.amazonaws.com:7700/indexes/cars/search
   //http://127.0.0.1 baddelha
   //cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg
-  const searchClient: any = instantMeiliSearch('https://stg-service.bddelha.com/meili', 'cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg', {
+  //https://stg-service.bddelha.com/meili
+  const searchClient: any = instantMeiliSearch('https://service.baddelha.com.sa/meili', 'cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg', {
     finitePagination: true,
     primaryKey: "id",
     placeholderSearch: true,

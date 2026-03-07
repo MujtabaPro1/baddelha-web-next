@@ -12,7 +12,7 @@ export async function generateMetadata({
 
   const {id} = await params;
   console.log(id);
-  const data = await fetch(`https://stg-service.bddelha.com/api/1.0/car/car-details/${id}`
+  const data = await fetch(`https://service.baddelha.com.sa/api/1.0/car/car-details/${id}`
   ).then((res) => res.json());
 
 
