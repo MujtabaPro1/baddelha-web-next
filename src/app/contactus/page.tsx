@@ -4,9 +4,15 @@ import { MapPin, Phone, Mail, Clock, Send, Loader2 } from 'lucide-react';
 import { useToast } from '../../hooks/use-toast';
 import axiosInstance from '../../services/axiosInstance';
 import FAQ from '../faq/page';
+import { useLanguage } from '../../contexts/LanguageContext';
+import lang from '../../locale';
 
 const ContactUs: React.FC = () => {
   const { toast } = useToast();
+  const { language } = useLanguage();
+  const languageContent = language === 'ar' ? 'ar' : 'en';
+  const t = lang[languageContent].contactUsPage;
+  
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -39,35 +45,35 @@ const ContactUs: React.FC = () => {
     
     // Full Name validation
     if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
+      newErrors.fullName = t.fullNameRequired;
     } else if (formData.fullName.trim().length < 2) {
-      newErrors.fullName = 'Full name must be at least 2 characters';
+      newErrors.fullName = t.fullNameMin;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t.emailRequired;
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = t.emailInvalid;
     }
     
     // Phone validation (Saudi format)
     const phoneRegex = /^\+966\d{9}$/;
-    if (formData.phoneNumber.trim() && !phoneRegex.test(formData.phoneNumber)) {
-      newErrors.phoneNumber = 'Please enter a valid Saudi phone number (format: +966XXXXXXXXX)';
+    if (formData.phoneNumber.trim() && !phoneRegex.test('+966' + formData.phoneNumber)) {
+      newErrors.phoneNumber = t.phoneInvalid;
     }
     
     // Subject validation
     if (!formData.subject.trim()) {
-      newErrors.subject = 'Please select a subject';
+      newErrors.subject = t.subjectRequired;
     }
     
     // Message validation
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+      newErrors.message = t.messageRequired;
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
+      newErrors.message = t.messageMin;
     }
     
     setErrors(newErrors);
@@ -79,10 +85,10 @@ const ContactUs: React.FC = () => {
     
     if (!validateForm()) {
       toast({
-        title: 'Error',
-        description: 'Please fix the errors in the form',
+        title: t.errorTitle,
+        description: t.errorFixForm,
         variant: 'destructive',
-        className: 'bg-red-500 border-0 shadow-none',
+        className: 'bg-red-100 border-0 shadow-none',
       });
       return;
     }
@@ -90,7 +96,10 @@ const ContactUs: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await axiosInstance.post('api/1.0/contact', formData);
+      const response = await axiosInstance.post('api/1.0/contact', {
+        ...formData,
+        phoneNumber: '966' + formData.phoneNumber
+      });
       
       if (!response.data.success) {
         throw new Error(response.data.message || 'Failed to submit the form');
@@ -98,8 +107,8 @@ const ContactUs: React.FC = () => {
       
       setSubmitted(true);
       toast({
-        title: 'Success',
-        description: 'Your message has been sent successfully. We\'ll get back to you soon.',
+        title: t.successTitle,
+        description: t.successMessage,
         variant: 'default',
         className: 'bg-green-50 border-0 shadow-none',
       });
@@ -119,10 +128,10 @@ const ContactUs: React.FC = () => {
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to submit the form. Please try again later.',
+        title: t.errorTitle,
+        description: error instanceof Error ? error.message : t.errorSubmit,
         variant: 'destructive',
-        className: 'bg-red-500 border-0 shadow-none',
+        className: 'bg-red-100 border-0 shadow-none',
       });
     } finally {
       setIsSubmitting(false);
@@ -134,9 +143,9 @@ const ContactUs: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 text-gray-800">Contact Us</h1>
+          <h1 className="text-4xl font-bold mb-4 text-gray-800">{t.title}</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We'd love to hear from you. Please fill out the form below or use our contact information.
+            {t.subtitle}
           </p>
         </div>
 
@@ -144,7 +153,7 @@ const ContactUs: React.FC = () => {
           {/* Contact Information */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-md p-8 h-full">
-              <h2 className="text-2xl font-semibold mb-6 text-gray-800">Get in Touch</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-gray-800">{t.getInTouch}</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start">
@@ -152,10 +161,9 @@ const ContactUs: React.FC = () => {
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-800 mb-1">Our Location</h3>
+                    <h3 className="font-medium text-gray-800 mb-1">{t.ourLocation}</h3>
                     <p className="text-gray-600">
-                      Luxury Vehicles Showroom, Al Khurais Road, Riyadh,<br />
-                      Saudi Arabia
+                      {t.locationAddress}
                     </p>
                   </div>
                 </div>
@@ -165,7 +173,7 @@ const ContactUs: React.FC = () => {
                     <Phone className="h-6 w-6 text-white" />
                   </div>
                   <div className='cursor-pointer' onClick={() => window.open('tel:+966920032590','_blank')}>
-                    <h3 className="font-medium text-gray-800 mb-1">Phone Number</h3>
+                    <h3 className="font-medium text-gray-800 mb-1">{t.phoneNumber}</h3>
                     <p className="text-dark">+966 92 00 32590</p>
                   </div>
                 </div>
@@ -175,7 +183,7 @@ const ContactUs: React.FC = () => {
                     <Mail className="h-6 w-6 text-white" />
                   </div>
                   <div className='cursor-pointer' onClick={() => window.open('mailto:info@baddelha.com','_blank')}>
-                    <h3 className="font-medium text-gray-800 mb-1">Email Address</h3>
+                    <h3 className="font-medium text-gray-800 mb-1">{t.emailAddress}</h3>
                     <p className="text-dark">info@baddelha.com</p>
                   </div>
                 </div>
@@ -185,15 +193,15 @@ const ContactUs: React.FC = () => {
                     <Clock className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-800 mb-1">Working Hours</h3>
-                    <p className="text-gray-600">Saturday - Thursday: 10:00 AM - 10:00 PM</p>
-                    <p className="text-gray-600">Friday : 4:00 PM - 11:00 PM</p>
+                    <h3 className="font-medium text-gray-800 mb-1">{t.workingHours}</h3>
+                    <p className="text-gray-600">{t.satToThurs}</p>
+                    <p className="text-gray-600">{t.friday}</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 pt-6 border-t border-gray-200">
-                <h3 className="font-medium text-gray-800 mb-4">Follow Us</h3>
+                <h3 className="font-medium text-gray-800 mb-4">{t.followUs}</h3>
                 <div className="flex space-x-4">
                   <a href="#" className="bg-primaryBtn p-3 rounded-full hover:bg-blue-100 transition">
                     <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -223,7 +231,7 @@ const ContactUs: React.FC = () => {
           {/* Contact Form */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-md p-8">
-              <h2 className="text-2xl font-semibold mb-6 text-gray-800">Send Us a Message</h2>
+              <h2 className="text-2xl font-semibold mb-6 text-gray-800">{t.sendMessage}</h2>
               
               {submitted ? (
                 <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
@@ -231,7 +239,7 @@ const ContactUs: React.FC = () => {
                     <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Thank you! Your message has been sent successfully. We'll get back to you soon.</span>
+                    <span>{t.thankYou}</span>
                   </div>
                 </div>
               ) : null}
@@ -239,7 +247,7 @@ const ContactUs: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">{t.fullName}</label>
                     <input
                       type="text"
                       id="fullName"
@@ -247,13 +255,13 @@ const ContactUs: React.FC = () => {
                       value={formData.fullName}
                       onChange={handleChange}
                       className={`w-full px-4 py-2 border ${errors.fullName ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-                      placeholder="Your name"
+                      placeholder={t.yourName}
                       disabled={isSubmitting}
                     />
                     {errors.fullName && <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>}
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">{t.email}</label>
                     <input
                       type="email"
                       id="email"
@@ -261,7 +269,7 @@ const ContactUs: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-                      placeholder="your.email@example.com"
+                      placeholder={t.emailPlaceholder}
                       disabled={isSubmitting}
                     />
                     {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
@@ -269,22 +277,27 @@ const ContactUs: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      value={formData.phoneNumber}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-2 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-                      placeholder="+966XXXXXXXXX"
-                      disabled={isSubmitting}
-                    />
+                  <div dir="ltr">
+                    <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">{t.phone}</label>
+                    <div className="flex">
+                      <span className="inline-flex items-center px-3 text-sm text-gray-700 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md">
+                        +966
+                      </span>
+                      <input
+                        type="tel"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                        className={`flex-1 px-4 py-2 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                        placeholder="5XXXXXXXX"
+                        disabled={isSubmitting}
+                      />
+                    </div>
                     {errors.phoneNumber && <p className="mt-1 text-sm text-red-600">{errors.phoneNumber}</p>}
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">{t.subject}</label>
                     <select
                       id="subject"
                       name="subject"
@@ -293,19 +306,19 @@ const ContactUs: React.FC = () => {
                       className={`w-full px-4 py-2 border ${errors.subject ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
                       disabled={isSubmitting}
                     >
-                      <option value="" disabled>Select a subject</option>
-                      <option value="General Inquiry">General Inquiry</option>
-                      <option value="Sales">Sales</option>
-                      <option value="Support">Support</option>
-                      <option value="Feedback">Feedback</option>
-                      <option value="Partnership">Partnership</option>
+                      <option value="" disabled>{t.selectSubject}</option>
+                      <option value="General Inquiry">{t.generalInquiry}</option>
+                      <option value="Sales">{t.sales}</option>
+                      <option value="Support">{t.support}</option>
+                      <option value="Feedback">{t.feedback}</option>
+                      <option value="Partnership">{t.partnership}</option>
                     </select>
                     {errors.subject && <p className="mt-1 text-sm text-red-600">{errors.subject}</p>}
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">{t.message}</label>
                   <textarea
                     id="message"
                     name="message"
@@ -313,7 +326,7 @@ const ContactUs: React.FC = () => {
                     onChange={handleChange}
                     rows={6}
                     className={`w-full px-4 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-                    placeholder="How can we help you?"
+                    placeholder={t.messagePlaceholder}
                     disabled={isSubmitting}
                   ></textarea>
                   {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
@@ -328,7 +341,7 @@ const ContactUs: React.FC = () => {
                     required
                   />
                   <label htmlFor="privacy-policy" className="ml-2 block text-sm text-gray-700">
-                    I agree to the <a href="/privacy" className="text-[#F79626] hover:underline">Privacy Policy</a> and <a href="/terms" className="text-[#F79626] hover:underline">Terms of Service</a>.
+                    {t.privacyAgree} <a href="/privacy" className="text-[#F79626] hover:underline">{t.privacyPolicy}</a> {t.and} <a href="/terms" className="text-[#F79626] hover:underline">{t.termsOfService}</a>.
                   </label>
                 </div>
 
@@ -341,12 +354,12 @@ const ContactUs: React.FC = () => {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                        Sending...
+                        {t.sending}
                       </>
                     ) : (
                       <>
                         <Send className="h-5 w-5 mr-2" />
-                        Send Message
+                        {t.sendMessageBtn}
                       </>
                     )}
                   </button>
@@ -358,7 +371,7 @@ const ContactUs: React.FC = () => {
 
         {/* Map Section */}
         <div className="mt-12 bg-white rounded-xl shadow-md p-8">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Our Location</h2>
+          <h2 className="text-2xl font-semibold mb-6 text-gray-800">{t.mapTitle}</h2>
           <div className="relative w-full overflow-hidden rounded-lg" style={{ paddingBottom: '56.25%' }}>
             <iframe
 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.173545784935!2d46.76878862855837!3d24.7209215664921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f011365b8898d%3A0xa67468c3edef472!2zQmFkZGVsaGEg2KjYr9mE2YfYpw!5e0!3m2!1sen!2sae!4v1770666252219!5m2!1sen!2sae"
