@@ -30,8 +30,8 @@ const cars = [
   },
   {
     id: 2,
-    make: "ICAUR",
-    model: "V27 Premium",
+    make: "iCaur",
+    model: "V27 Performance AWD",
     year: 2026,
     price: 162000,
     image: "https://dhihk6wcjzylk.cloudfront.net/carprices/media/catalog/a019f9c1-b0b0-40bb-9fac-f6448e2c82df_iCaur-V27-front-uae-ksa.webp",
@@ -85,8 +85,8 @@ const cars = [
   },
   {
     id: 7,
-    make: "ICAUR",
-    model: "V27 Standard",
+    make: "iCaur",
+    model: "V27 Luxury AWD",
     year: 2026,
     price: 143585,
     image: "https://dhihk6wcjzylk.cloudfront.net/carprices/media/catalog/a019f9c1-b0b0-40bb-9fac-f6448e2c82df_iCaur-V27-front-uae-ksa.webp",
@@ -129,8 +129,8 @@ const cars = [
   },
   {
     id: 11,
-    make: "ICAUR",
-    model: "V27 Full Option",
+    make: "iCaur",
+    model: "V27 Royal AWD",
     year: 2026,
     price: 170000,
     image: "https://dhihk6wcjzylk.cloudfront.net/carprices/media/catalog/a019f9c1-b0b0-40bb-9fac-f6448e2c82df_iCaur-V27-front-uae-ksa.webp",
