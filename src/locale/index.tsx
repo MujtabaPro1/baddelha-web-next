@@ -357,6 +357,40 @@ const lang = {
             "messageRequired": "Message is required",
             "messageMin": "Message must be at least 10 characters"
         },
+        "whyUs": {
+            "title": "Why Baddelha?",
+            "subtitle": "A smarter way to sell, inspect, or exchange your car.",
+            "whatMakesUsDifferent": "What Makes Us Different",
+            "features": [
+                {
+                    "title": "Fast & Efficient",
+                    "description": "Complete inspections and valuations in as little as 30 minutes."
+                },
+                {
+                    "title": "Professional Inspection",
+                    "description": "Detailed checks by experts, with clear and reliable reports."
+                },
+                {
+                    "title": "Fair Market Value",
+                    "description": "Real market-based pricing to ensure you get the best deal."
+                },
+                {
+                    "title": "Flexible Options",
+                    "description": "Sell your car, exchange it, or list it in our auction — you choose."
+                },
+                {
+                    "title": "No Hassle, No Hidden Fees",
+                    "description": "Simple steps, full transparency, and zero pressure."
+                }
+            ],
+            "ctaTitle": "Start with Confidence",
+            "ctaDescription": "Inspect your car, get a fair price, and complete your transaction — all in one place.",
+            "getStarted": "Get Started",
+            "tagline": "Baddelha.",
+            "faster": "Faster.",
+            "smarter": "Smarter.",
+            "trusted": "Trusted."
+        },
         "hero": {
       "badge": 'Free Evaluation & Inspection',
       "title": 'Buy,Sell, Trade in',
@@ -909,6 +943,40 @@ const lang = {
             "subjectRequired": "يرجى اختيار موضوع",
             "messageRequired": "الرسالة مطلوبة",
             "messageMin": "يجب أن تكون الرسالة 10 أحرف على الأقل"
+        },
+        "whyUs": {
+            "title": "لماذا بادلها؟",
+            "subtitle": "طريقة أذكى لبيع أو فحص أو استبدال سيارتك.",
+            "whatMakesUsDifferent": "ما يميزنا",
+            "features": [
+                {
+                    "title": "سريع وفعال",
+                    "description": "إكمال الفحص والتقييم في أقل من 30 دقيقة."
+                },
+                {
+                    "title": "فحص احترافي",
+                    "description": "فحص تفصيلي من قبل خبراء، مع تقارير واضحة وموثوقة."
+                },
+                {
+                    "title": "قيمة السوق العادلة",
+                    "description": "تسعير يعتمد على السوق الحقيقي لضمان حصولك على أفضل صفقة."
+                },
+                {
+                    "title": "خيارات مرنة",
+                    "description": "بع سيارتك، أو استبدلها، أو اعرضها في مزادنا - الخيار لك."
+                },
+                {
+                    "title": "بلا متاعب، بلا رسوم خفية",
+                    "description": "خطوات بسيطة، شفافية كاملة، وبدون ضغط."
+                }
+            ],
+            "ctaTitle": "ابدأ بثقة",
+            "ctaDescription": "افحص سيارتك، احصل على سعر عادل، وأكمل معاملتك - كل شيء في مكان واحد.",
+            "getStarted": "ابدأ الآن",
+            "tagline": "بادلها.",
+            "faster": "أسرع.",
+            "smarter": "أذكى.",
+            "trusted": "موثوق."
         },
         "hero": {
             "badge": 'تقييم وفحص مجاني',
