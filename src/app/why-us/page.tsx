@@ -9,7 +9,6 @@ import lang  from '../../locale';
 const WhyUs = () => {
     const router = useRouter();
     const { language } = useLanguage();
-    const isAr = language === 'ar';   
     const languageContent = language === 'ar' ? 'ar' : 'en';
     const t = lang[languageContent].whyUs;
 
