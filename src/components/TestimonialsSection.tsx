@@ -18,52 +18,74 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Mohammed Otaibi",
+    name: "Khalid Al-Rashid",
     location: "Riyadh, Saudi Arabia",
     rating: 5,
-    testimonial: "My inspection experience with Baddelha was smooth and fast. Everything was clear and professional. I truly appreciate the team for their excellent work and support.",
-    testimonialAr: "تجربتي في فحص السيارة مع بدلها كانت سهلة وسريعة جدًا. كل شيء كان واضح واحترافي، وأشكر فريق العمل على تعاونهم وجهودهم المميزة.",
-    image: "https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    service: "Car Inspection"
+    testimonial: "Excellent service! Sold my 2019 Camry here and the whole process was incredibly smooth. The staff was professional and gave me a fair price. Highly recommend Baddelha for anyone looking to sell their car quickly and hassle-free.",
+    testimonialAr: "خدمة ممتازة! بعت كامري 2019 هنا والعملية كانت سلسة جداً. الموظفين محترفين وأعطوني سعر عادل. أنصح بشدة ببادلها لأي شخص يريد يبيع سيارته بسرعة وبدون تعب.",
+    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    service: "Car Sale"
   },
   {
     id: 2,
-    name: "Laila Shehry",
-    location: "Jeddah, Saudi Arabia",
+    name: "Fatima Al-Zahra",
+    location: "Jeddah, Saudi Arabia", 
     rating: 5,
-    testimonial: "Baddelha did an amazing job for me. I sold my old car and got a new J7 in just 30 minutes — an incredible and hassle-free experience.",
-    testimonialAr: "بدلها قدموا لي خدمة رائعة. بعت سيارتي القديمة واستلمت سيارة J7 جديدة خلال 30 دقيقة فقط — تجربة سريعة وسلسة بدون أي تعب.",
+    testimonial: "Amazing experience! The inspection was thorough and professional. They explained everything clearly and I felt confident in their assessment. Great location, easy parking, and friendly staff. Will definitely come back!",
+    testimonialAr: "تجربة رائعة! الفحص كان شامل ومحترف. شرحوا لي كل شيء بوضوح وحسيت بالثقة في تقييمهم. موقع ممتاز، مواقف سهلة، وموظفين ودودين. أكيد راح أرجع مرة ثانية!",
     image: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    service: "Selling & Exchange"
+    service: "Car Inspection"
   },
   {
     id: 3,
-    name: "Sara Al-Mutairi",
+    name: "Omar Al-Mansouri",
     location: "Dammam, Saudi Arabia",
     rating: 5,
-    testimonial: "The team was very professional and honest. I felt confident throughout the process, and everything was completed faster than I expected.",
-    testimonialAr: "الفريق كان قمة في الاحترافية والمصداقية. حسّيت بالثقة طوال العملية، وكل شيء تم أسرع مما توقعت.",
+    testimonial: "Best car dealership in Riyadh! Traded in my old car and got a great deal on a newer model. The team was honest, transparent, and made the whole process stress-free. Couldn't be happier with the service.",
+    testimonialAr: "أفضل معرض سيارات في الرياض! استبدلت سيارتي القديمة وحصلت على صفقة ممتازة لموديل أحدث. الفريق كان صادق وشفاف وخلى العملية بدون ضغط. ما أقدر أكون أسعد من كذا بالخدمة.",
     image: "https://images.pexels.com/photos/1183244/pexels-photo-1183244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    service: "Car Valuation"
+    service: "Car Trade"
   },
   {
     id: 4,
-    name: "Ahmed Al-Harbi",
+    name: "Nora Al-Saud",
     location: "Riyadh, Saudi Arabia",
     rating: 5,
-    testimonial: "From inspection to valuation, the whole process was quick and transparent. Baddelha saved me time and gave me a great deal.",
-    testimonialAr: "من الفحص إلى التقييم، كل الإجراءات كانت سريعة وواضحة. بدلها وفروا علي الوقت وحصلت على عرض ممتاز.",
+    testimonial: "Outstanding service from start to finish! Got my car evaluated and the price was very fair. The staff was knowledgeable and patient with all my questions. Clean facility and professional atmosphere. Highly recommended!",
+    testimonialAr: "خدمة متميزة من البداية للنهاية! قيمت سيارتي والسعر كان عادل جداً. الموظفين كانوا خبراء وصبورين مع كل أسئلتي. المكان نظيف وجو مهني. أنصح فيه بقوة!",
+    image: "https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    service: "Car Valuation"
+  },
+  {
+    id: 5,
+    name: "Abdullah Al-Otaibi",
+    location: "Riyadh, Saudi Arabia",
+    rating: 5,
+    testimonial: "Fantastic experience! Quick, efficient, and professional service. The inspection was detailed and they provided a comprehensive report. Fair pricing and no hidden fees. This is how car dealerships should operate!",
+    testimonialAr: "تجربة رائعة! خدمة سريعة وفعالة ومحترفة. الفحص كان مفصل وقدموا تقرير شامل. أسعار عادلة وما في رسوم مخفية. كذا لازم تشتغل معارض السيارات!",
     image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     service: "Complete Service"
+  },
+  {
+    id: 6,
+    name: "Maha Al-Dosari",
+    location: "Riyadh, Saudi Arabia",
+    rating: 5,
+    testimonial: "Excellent customer service! The team was very helpful and made me feel comfortable throughout the entire process. Great location on Al Khurais Road, easy to find. Will definitely recommend to friends and family.",
+    testimonialAr: "خدمة عملاء ممتازة! الفريق كان متعاون جداً وخلاني مرتاحة طوال العملية. موقع ممتاز في طريق الخريص، سهل الوصول إليه. أكيد راح أنصح الأصدقاء والعائلة.",
+    image: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    service: "Customer Service"
   }
 ];
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => {
+  const { language } = useLanguage();
+  const isArabic = language === 'ar';
+  
   return (
     <div className="bg-white rounded-xl shadow-md p-6 flex flex-col h-full">
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center">
-         
           <div>
             <h4 className="font-semibold">{testimonial.name}</h4>
             <p className="text-gray-500 text-sm">{testimonial.location}</p>
@@ -85,7 +107,9 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
       
       <div className="flex-grow relative">
         <Quote className="absolute top-0 left-0 h-8 w-8 text-blue-100 -translate-x-2 -translate-y-2" />
-        <p className="text-gray-700 italic relative z-10 pl-3">{testimonial.testimonial}</p>
+        <p className={`text-gray-700 italic relative z-10 pl-3 ${isArabic ? 'text-right' : 'text-left'}`}>
+          {isArabic && testimonial.testimonialAr ? testimonial.testimonialAr : testimonial.testimonial}
+        </p>
       </div>
     </div>
   );
