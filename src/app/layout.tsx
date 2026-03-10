@@ -9,6 +9,7 @@ import type { Metadata } from 'next';
 import './globals.scss';
 import ReCaptchaProvider from '../components/ReCaptchaProvider';
 import DynamicCanonical from '../components/DynamicCanonical';
+import CookieConsent from '../components/CookieConsent';
 
 // Preload critical fonts
 const fontPreload = [
@@ -231,6 +232,7 @@ export default function RootLayout({
               <Footer />
               <Toaster />
               <UserTypePopupWrapper />
+              <CookieConsent />
             </div>
           </UserTypeProvider>
         </LanguageProvider>
