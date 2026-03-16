@@ -99,6 +99,7 @@ const Step3 = () => {
         option: string;
         paint: string;
         gccSpecs: string;
+        mileageValue: string;
     } | null>(null);
 
     // State for Step1 data (car details)
@@ -550,7 +551,7 @@ const Step3 = () => {
                 ...step1Data,
                 ...step2Data,
                 engineSize: step2Data?.engineSizeName,
-                mileage: step2Data?.mileage,
+                mileage: Number(step2Data?.mileageValue),
                 carPrice: carPrice ? carPrice : 0,
             });
             
@@ -689,7 +690,7 @@ const Step3 = () => {
                                             make: step1Data?.make,
                                             model: step1Data?.model,
                                             year: Number(step1Data?.year),
-                                            mileage: Number(step2Data?.mileage),
+                                            mileage: Number(step2Data?.mileageValue),
                                             bodyType: step2Data?.bodyType,
                                             engineType: 'Petrol',
                                             engineSize: step2Data?.engineSizeName,

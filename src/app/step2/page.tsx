@@ -13,6 +13,7 @@ const Step2 = () => {
     const [engineSize, setEngineSize] = useState('');
     const [engineSizeName, setEngineSizeName] = useState('');
     const [mileage, setMileage] = useState('');
+    const [mileageValue, setMileageValue] = useState('');
     const [mileageName, setMileageName] = useState('');
     const [option, setOption] = useState('Basic');
     const [paint, setPaint] = useState('Original paint');
@@ -179,6 +180,7 @@ const Step2 = () => {
                 setMileageOptions(response?.data || []);
                 if (response?.data?.length > 0) {
                     setMileage(response?.data[0].id);
+                    setMileageValue(response?.data[0].value);
                     setMileageName(response?.data[0].label || response?.data[0].name);
                 }
             } catch (err) {
@@ -208,6 +210,7 @@ const Step2 = () => {
             bodyTypeName,
             engineSizeName,
             mileageName,
+            mileageValue,
             ownershipStatus,
             fuelType,
             transmissionType,
@@ -370,7 +373,8 @@ const progressSteps = [
                                 <select
                                     value={mileage}
                                     onChange={(e: {target: {value: string}}) => {
-                                        setMileage(mileageOptions.find(option => option.id == e.target.value)?.value || '')
+                                        setMileage(e.target.value)
+                                        setMileageValue(mileageOptions.find(option => option.id == e.target.value)?.value || '')
                                         setMileageName(mileageOptions.find(option => option.id == e.target.value)?.label || '')
                                     }}
                                     className="block w-full rounded-xl border-0 bg-white py-3 px-4 pr-10 ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 appearance-none font-medium text-gray-900"
