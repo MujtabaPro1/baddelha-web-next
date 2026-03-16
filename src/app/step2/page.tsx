@@ -214,6 +214,8 @@ const Step2 = () => {
             accidentHistory,
             vehicleCondition
         };
+
+        console.log('step2Data', step2Data);
         sessionStorage.setItem('step2Data', JSON.stringify(step2Data));
         
         // Navigate to the next step
@@ -368,7 +370,7 @@ const progressSteps = [
                                 <select
                                     value={mileage}
                                     onChange={(e: {target: {value: string}}) => {
-                                        setMileage(e.target.value)
+                                        setMileage(mileageOptions.find(option => option.id == e.target.value)?.value || '')
                                         setMileageName(mileageOptions.find(option => option.id == e.target.value)?.label || '')
                                     }}
                                     className="block w-full rounded-xl border-0 bg-white py-3 px-4 pr-10 ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 appearance-none font-medium text-gray-900"

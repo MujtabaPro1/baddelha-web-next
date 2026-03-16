@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Check, Calendar, MapPin, Clock, Phone, Mail, User } from 'lucide-react';
+import { Check, Calendar, MapPin, Clock, Phone, Mail, User, Copy, CheckCheck } from 'lucide-react';
 import Link from 'next/link';
 import axiosInstance from '../../services/axiosInstance';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -45,6 +45,7 @@ const numberWithCommas = (x: string) => {
 const Confirmation = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [copied, setCopied] = useState(false);
     const [bookingDetails, setBookingDetails] = useState<BookingDetails>({
         branch: '',
         date: '',
@@ -66,6 +67,24 @@ const Confirmation = () => {
 
     const { language }: any = useLanguage();
     const languageContent: any = language === 'ar' ? 'ar' : 'en';
+
+    // Create car slug from make-model-year
+    const createCarSlug = () => {
+        const parts = [carDetails.make, carDetails.model, carDetails.year].filter(Boolean);
+        return parts.join('-').toLowerCase().replace(/\s+/g, '-');
+    };
+
+    // Copy to clipboard function
+    const handleCopy = async () => {
+        const slug = createCarSlug();
+        try {
+            await navigator.clipboard.writeText(slug);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+    };
 
 
     useEffect(() => {
@@ -164,10 +183,23 @@ const Confirmation = () => {
                         </div>
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{lang[languageContent].bookingConfirmed}</h1>
                         <p className="text-gray-600">{lang[languageContent].bookingConfirmedDesc}</p>
-                        {bookingDetails.bookingId && (
-                            <p className="text-sm text-gray-500 mt-2 font-mono bg-gray-100 inline-block px-3 py-1 rounded-lg">
-                                {lang[languageContent].bookingId}: {bookingDetails.bookingId}
-                            </p>
+                        {(carDetails.make || carDetails.model || carDetails.year) && (
+                            <div className="mt-4 inline-flex items-center gap-2 bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-2 rounded-lg border border-amber-200">
+                                <p className="text-sm font-mono font-semibold text-gray-700">
+                                    {createCarSlug()}
+                                </p>
+                                <button
+                                    onClick={handleCopy}
+                                    className="p-1.5 hover:bg-white rounded-md transition-all duration-200 group"
+                                    title={copied ? "Copied!" : "Copy to clipboard"}
+                                >
+                                    {copied ? (
+                                        <CheckCheck className="h-4 w-4 text-green-600" />
+                                    ) : (
+                                        <Copy className="h-4 w-4 text-gray-600 group-hover:text-amber-600" />
+                                    )}
+                                </button>
+                            </div>
                         )}
                     </div>
 

@@ -550,7 +550,7 @@ const Step3 = () => {
                 ...step1Data,
                 ...step2Data,
                 engineSize: step2Data?.engineSizeName,
-                mileage: step2Data?.mileageName,
+                mileage: step2Data?.mileage,
                 carPrice: carPrice ? carPrice : 0,
             });
             
@@ -689,7 +689,7 @@ const Step3 = () => {
                                             make: step1Data?.make,
                                             model: step1Data?.model,
                                             year: Number(step1Data?.year),
-                                            mileage: step2Data?.mileageName,
+                                            mileage: Number(step2Data?.mileage),
                                             bodyType: step2Data?.bodyType,
                                             engineType: 'Petrol',
                                             engineSize: step2Data?.engineSizeName,
