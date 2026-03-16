@@ -35,7 +35,7 @@ const Step2 = () => {
     // State for API data
     const [bodyTypes, setBodyTypes,bodyTypesRef] = useStateRef<{id: string; name: string}[]>([]);
     const [engineSizes, setEngineSizes,engineSizesRef] = useStateRef<{id: string; name: string}[]>([]);
-    const [mileageOptions, setMileageOptions] = useState<{id: string; name: string, label: string}[]>([]);
+    const [mileageOptions, setMileageOptions] = useState<{id: string; name: string, label: string, value: string}[]>([]);
     
     // Loading states
     const [loading, setLoading] = useState({
