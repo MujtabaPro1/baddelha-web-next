@@ -360,7 +360,7 @@ function Buy() {
                   </div>
 
                   {/* View Toggle */}
-                  <div className="flex bg-gray-100 rounded-lg p-1">
+                  <div className="hidden flex bg-gray-100 rounded-lg p-1">
                     <button
                       onClick={() => setViewMode('grid')}
                       className={`p-2 rounded-md transition ${
@@ -403,8 +403,9 @@ function Buy() {
 const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggleLike: () => void }> = ({ car, viewMode, isLiked, onToggleLike }) => {
   const [isError,setError] = useState(false);
 
-  console.log('CarCard', BASE_URL + car?.imageUrl);
+
   if (viewMode === 'list') {
+
     return (
       <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
         <div className="flex flex-col md:flex-row">
@@ -498,12 +499,12 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative">
         <img 
           src={isError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' :  BASE_URL + '/api/1.0/media/' +  car?.imageUrl} 
           alt={`${car.modelYear} ${car.make} ${car.model}`}
-          className="w-full h-[280px] object-cover"
+          className="w-full h-[180px] object-cover"
           onError={()=>{
             console.log('onError');
             setError(true);
@@ -512,67 +513,57 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
       
         <button
           onClick={onToggleLike}
-          className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white transition"
+          className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-md hover:bg-white transition"
         >
-          <Heart className={`h-5 w-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
+          <Heart className={`h-4 w-4 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
         </button>
         
       </div>
       
-      <div className="p-5">
-        <div className="flex justify-between items-start mb-3">
-          <div>
-            <h3 className="font-bold text-lg text-gray-900">
+      <div className="p-3">
+        <div className="mb-2">
+          <h3 className="font-bold text-base text-gray-900 line-clamp-1">
             {car.make} {car.model} {car.modelYear}
-            </h3>
-            <p className="text-gray-600 text-sm">{car.bodyType}</p>
-          </div>
-      
+          </h3>
+          <p className="text-gray-600 text-xs">{car.bodyType}</p>
         </div>
         
-        <div className="grid grid-cols-2 gap-y-3 mb-4 text-sm">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-2 mb-3 text-xs">
           <div className="flex items-center text-gray-600">
-            <Settings className="h-4 w-4 mr-2 text-[#f78f37]" />
-            <span className="font-bold">{car.exactMileage || '0'} km</span>
+            <Settings className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <span className="font-medium truncate">{car.exactMileage || '0'} km</span>
           </div>
           <div className="flex items-center text-gray-600">
-            <Fuel className="h-4 w-4 mr-2 text-[#f78f37]" />
-            <span className="font-bold">{car.fuelType || 'Petrol'}</span>
+            <Fuel className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <span className="font-medium truncate">{car.fuelType || 'Petrol'}</span>
           </div>
           <div className="flex items-center text-gray-600">
-            <Calendar className="h-4 w-4 mr-2 text-[#f78f37]" />
-            <span className="font-bold">{car.transmission || 'Automatic'}</span>
+            <Calendar className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <span className="font-medium truncate">{car.transmission || 'Automatic'}</span>
           </div>
           <div className="flex items-center text-gray-600">
-            <MapPin className="h-4 w-4 mr-2 text-[#f78f37]" />
-            <span className="font-bold">{car.location || 'Saudi Arabia'}</span>
+            <MapPin className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <span className="font-medium truncate">{car.location || 'Saudi Arabia'}</span>
           </div>
         </div>
 
-       
-
-        <div className="text-xs text-gray-600 mb-4">
-          Sold by: <span className="font-medium"><span className="font-medium">{car?.organizationId ? 'Company' : 'Private'}</span></span>
+        <div className="text-xs text-gray-600 mb-2">
+          <span className="font-medium">{car?.organizationId ? 'Company' : 'Private'}</span>
         </div>
         
-
-        <div className="flex justify-between items-center mb-4">
-            <div className="font-bold text-md text-[#3d3d40]">
-              SAR {numberWithCommas(car?.sellingPrice || car.bookValue)}
-            </div>
-            <div className="text-xs text-gray-600">Est. SAR {((car?.sellingPrice || car.bookValue) / 50).toFixed(0).toLocaleString()}/mo</div>
+        <div className="flex justify-between items-center mb-3">
+          <div className="font-bold text-base text-[#3d3d40]">
+            SAR {numberWithCommas(car?.sellingPrice || car.bookValue)}
           </div>
+          <div className="text-xs text-gray-500">SAR {((car?.sellingPrice || car.bookValue) / 50).toFixed(0)}/mo</div>
+        </div>
 
-        <div className="flex gap-2">
-          <a 
+        <a 
           href={`/buy/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
-           className="flex-1 bg-primaryBtn hover:bg-primaryBtn text-white py-2 px-3 rounded-lg transition text-sm text-center">
-            View Details
-          </a>
-          {/* <a href="#" className="flex-1 bg-gradient-to-r from-amber-500 to-amber-400 hover:bg-[#e67d26] text-white py-2 px-3 rounded-lg transition text-sm text-center">
-            Inquire
-          </a> */}
-        </div>
+          className="block w-full bg-primaryBtn hover:bg-primaryBtn text-white py-2 px-3 rounded-lg transition text-sm text-center font-medium"
+        >
+          View Details
+        </a>
       </div>
     </div>
   );
