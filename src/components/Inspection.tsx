@@ -5,6 +5,7 @@ import {Button} from './ui/button';
 import Card from './ui/card-v1';
 import Section from './ui/section';
 import lang from '../locale';
+import RevealOnScroll from './ui/reveal-on-scroll';
 
 const Inspection = memo(function Inspection() {
   const { language } = useLanguage();
@@ -24,7 +25,17 @@ const Inspection = memo(function Inspection() {
     );
 
   return (
-    <Section title={inspectionTitle} subtitle={inspection.subtitle}>
+    <Section title={null} subtitle={null}>
+      <header className="mb-8 text-center">
+        <RevealOnScroll>
+          <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">
+            {inspectionTitle}
+          </h2>
+        </RevealOnScroll>
+        <RevealOnScroll delay={80}>
+          <p className="mt-2 text-sm text-slate-600 sm:text-base">{inspection.subtitle}</p>
+        </RevealOnScroll>
+      </header>
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <Card className="relative overflow-hidden bg-white/90">
           <span className="pointer-events-none absolute -top-16 -start-16 h-44 w-44 rounded-full bg-brand-100/80 blur-3xl" />

@@ -4,6 +4,8 @@ import  Card  from './ui/card-v1';
 import Section from './ui/section';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
+import BlurText from './ui/blur-text';
+import TiltCard from './ui/tilt-card';
 
 const stepIcons = ['/icons/appointment.gif', '/icons/car-inspection.png', '/icons/payment.gif'];
 
@@ -22,22 +24,40 @@ const HowItWorks = memo(function HowItWorks() {
   const dreamItems = [...howItWorks.dreamTypes, ...howItWorks.dreamTypes];
 
   return (
-    <Section title={<span className="text-[#f78f37]">{howItWorks.title}</span>} subtitle={howItWorks.subtitle}>
+    <Section title={null} subtitle={null}>
+      <header className="mb-8 text-center">
+        <BlurText
+          text={howItWorks.title}
+          className="text-3xl font-extrabold text-slate-900 sm:text-4xl"
+          animateBy="words"
+          direction="top"
+          delay={60}
+        />
+        <BlurText
+          text={howItWorks.subtitle}
+          className="mt-2 text-sm text-slate-600 sm:text-base"
+          animateBy="words"
+          direction="bottom"
+          delay={30}
+        />
+      </header>
       <div className="grid gap-4 md:grid-cols-3">
         {howItWorks.steps.map((step, index) => (
-          <Card key={step.title} className="relative pt-10">
-            <span className="absolute right-5 top-4 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-extrabold text-[#ee3c48] ring-1 ring-slate-200">
-              {index + 1}
-            </span>
-            <img
-              src={stepIcons[index]}
-              alt={step.title}
-              className="h-12 w-12 rounded-lg object-contain"
-              loading="lazy"
-            />
-            <h3 className="text-base font-extrabold text-slate-900">{step.title}</h3>
-            <p className="mt-2 text-sm text-slate-600">{step.description}</p>
-          </Card>
+          <TiltCard key={step.title}>
+            <Card className="relative pt-10 min-h-[195px]">
+              <span className="absolute right-5 top-4 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-extrabold text-[#ee3c48] ring-1 ring-slate-200">
+                {index + 1}
+              </span>
+              <img
+                src={stepIcons[index]}
+                alt={step.title}
+                className="h-12 w-12 rounded-lg object-contain"
+                loading="lazy"
+              />
+              <h3 className="text-base font-extrabold text-slate-900">{step.title}</h3>
+              <p className="mt-2 text-sm text-slate-600">{step.description}</p>
+            </Card>
+          </TiltCard>
         ))}
       </div>
 

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
+import RevealOnScroll from './ui/reveal-on-scroll';
+import BlurText from './ui/blur-text';
 
 interface Testimonial {
   id: number;
@@ -142,13 +144,27 @@ const TestimonialsSection: React.FC = () => {
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">{lang[languageContent].testimonials}</span>
-          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">{lang[languageContent].hearFromOurHappyCustomers}</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            {lang[languageContent].thousandsOfCarOwnersTrustDriveMarketForBuyingSellingAndValuatingTheirVehicles}
-            {lang[languageContent].hereIsWhatSomeOfThemHaveToSay}
-          </p>
+
+          <div className="mb-12">
+          <RevealOnScroll>
+            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">
+              {lang[languageContent].testimonials}
+            </span>
+           </RevealOnScroll>
+          <BlurText
+            text={lang[languageContent].hearFromOurHappyCustomers}
+            className="text-3xl md:text-4xl font-bold mt-2 mb-4"
+            animateBy="words"
+            direction="top"
+            delay={60}
+          />
+          <BlurText
+            text={`${lang[languageContent].thousandsOfCarOwnersTrustDriveMarketForBuyingSellingAndValuatingTheirVehicles} ${lang[languageContent].hereIsWhatSomeOfThemHaveToSay}`}
+            className="text-gray-600 max-w-2xl"
+            animateBy="words"
+            direction="bottom"
+            delay={26}
+          />
         </div>
         
         <div className="relative">

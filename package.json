@@ -30,6 +30,7 @@
     "radix-ui": "^1.4.3",
     "rc-slider": "^11.1.9",
     "rc-tooltip": "^6.4.0",
+    "motion": "^12.35.2",
     "react": "19.1.0",
     "react-day-picker": "^9.11.0",
     "react-dom": "19.1.0",

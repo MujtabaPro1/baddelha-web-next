@@ -12,6 +12,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
 import RiyalIcon from './icons/RiyalIcon';
 import SteeringIcon from './icons/SteeringIcon';
+import RevealOnScroll from './ui/reveal-on-scroll';
+import TiltCard from './ui/tilt-card';
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -128,37 +130,61 @@ const ServicesSection: React.FC = () => {
   ];
 
   return (
-    <section id="services" className="py-20 bg-gray-50" aria-label="Our Services">
+    <section id="services" className="relative overflow-hidden py-20 bg-white" aria-label="Our Services">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-35"
+        style={{
+          backgroundImage:
+            `radial-gradient(600px 280px at 12% 0%, var(--color-brand-500) 0%, transparent 60%), 
+             radial-gradient(500px 260px at 88% 20%, var(--color-by) 0%, transparent 60%)`,
+        }}
+      />
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h3 className="text-[#F7AF37] font-semibold text-sm uppercase tracking-wider">{lang[languageContent].ourServices}</h3>
-          <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">{lang[languageContent].everythingYouNeedForYourCar}</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            {lang[languageContent].driveMarketProvidesComprehensiveAutomotiveServicesToMakeYourCarBuyingSellingAndOwnershipExperienceSeamlessAndEnjoyable}
-          </p>
+          <RevealOnScroll>
+            <h3 className="text-[#F7AF37] font-semibold text-sm uppercase tracking-wider">{lang[languageContent].ourServices}</h3>
+          </RevealOnScroll>
+          <RevealOnScroll delay={80}>
+            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">{lang[languageContent].everythingYouNeedForYourCar}</h2>
+          </RevealOnScroll>
+          <RevealOnScroll delay={140}>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              {lang[languageContent].driveMarketProvidesComprehensiveAutomotiveServicesToMakeYourCarBuyingSellingAndOwnershipExperienceSeamlessAndEnjoyable}
+            </p>
+          </RevealOnScroll>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {services.map((service, index) => (
-            <ServiceCard key={index} {...service} />
+            <RevealOnScroll key={index} delay={index * 120}>
+              <TiltCard>
+                <ServiceCard {...service} />
+              </TiltCard>
+            </RevealOnScroll>
           ))}
         </div>
         
-        <div className="bg-white rounded-xl shadow-lg p-8 mt-16">
+        <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg p-8 mt-16">
           <div className="text-center mb-10">
-            <h3 className="text-2xl font-bold">{lang[languageContent].whyChooseDriveMarket}</h3>
-            <p className="text-gray-600 mt-2">{lang[languageContent].experienceTheDifferenceWithOurPremiumCarServices}</p>
+            <RevealOnScroll>
+              <h3 className="text-2xl font-bold">{lang[languageContent].whyChooseDriveMarket}</h3>
+            </RevealOnScroll>
+            <RevealOnScroll delay={80}>
+              <p className="text-gray-600 mt-2">{lang[languageContent].experienceTheDifferenceWithOurPremiumCarServices}</p>
+            </RevealOnScroll>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-secondary w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
-                  {feature.icon}
+              <RevealOnScroll key={index} delay={index * 100}>
+                <div className="text-center">
+                  <div className="bg-secondary w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-white">
+                    {feature.icon}
+                  </div>
+                  <h4 className="font-semibold mb-2">{feature.title}</h4>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
                 </div>
-                <h4 className="font-semibold mb-2">{feature.title}</h4>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
-              </div>
+              </RevealOnScroll>
             ))}
           </div>
         </div>

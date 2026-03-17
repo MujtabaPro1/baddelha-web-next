@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
 import {Button} from './ui/button';
+import BlurText from './ui/blur-text';
 
 // Array of car images for the slider
 const carImages = [
@@ -81,19 +82,37 @@ const HeroSection: React.FC = () => {
   
 
   return (
-     <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-br from-brand-50 via-white to-slate-100 py-[120px] sm:py-[120px]">
+     <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-br from-brand-100 via-white to-slate-100 py-[120px] sm:py-[120px]">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 opacity-50"
+        style={{
+          backgroundImage:
+            `radial-gradient(700px 300px at 20% -10%, var(--color-brand-500) 0%, transparent 60%),
+             radial-gradient(600px 280px at 85% 10%, var(--color-by) 0%, transparent 60%)`,
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
             <p className="inline-flex rounded-full bg-brand-100 px-3 py-1 text-xs font-bold text-brand-700">
               {hero.badge}
             </p>
-            <h1 className="mt-4 text-5xl font-extrabold leading-tight text-slate-900 sm:text-6xl lg:text-7xl">
-              {hero.title}
-              <span className="block text-brand-500 text-6xl font-black leading-none sm:text-7xl lg:text-8xl">
-                {hero.titleHighlight}
-              </span>
-            </h1>
+            <div className="mt-4">
+              <BlurText
+                text={hero.title}
+                className="text-5xl font-extrabold leading-tight text-slate-900 sm:text-6xl lg:text-7xl"
+                animateBy="words"
+                direction="top"
+                delay={80}
+              />
+              <BlurText
+                text={hero.titleHighlight}
+                className="block text-brand-500 text-6xl font-black leading-none sm:text-7xl lg:text-8xl"
+                animateBy="letters"
+                direction="top"
+                delay={40}
+              />
+            </div>
             <p className="mt-4 max-w-xl text-base text-slate-600">{hero.description}</p>
 
             {showBrandLogos ? (
