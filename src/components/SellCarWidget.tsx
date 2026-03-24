@@ -105,11 +105,18 @@ const SellCarWidget = () => {
               </span>
             </button>
             
-            <p className="text-sm text-gray-600 mt-4">
-              {isArabic 
-                ? 'متاح من السبت إلى الخميس، 9 صباحاً - 6 مساءً'
-                : 'Available Saturday to Thursday, 9 AM - 6 PM'}
-            </p>
+            <div className="text-sm text-gray-600 mt-4 space-y-1">
+              <p>
+                {isArabic 
+                  ? 'متاح من السبت إلى الخميس: 10 صباحاً - 10 مساءً'
+                  : 'Available Saturday to Thursday: 10 AM - 10 PM'}
+              </p>
+              <p>
+                {isArabic 
+                  ? 'الجمعة: 4 مساءً - 11 مساءً'
+                  : 'Friday: 4 PM - 11 PM'}
+              </p>
+            </div>
           </div>
         </div>
       </div>
