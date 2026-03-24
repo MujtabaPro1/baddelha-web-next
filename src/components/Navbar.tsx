@@ -191,7 +191,7 @@ const Navbar: React.FC = () => {
             <div 
             onClick={() => router.push('tel:+966920032590')}
            dir="ltr"
-            className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-black'}`}
+            className={`flex items-center text-black`}
             role="button"
             aria-label="Call 920032590">
               <Phone className="h-4 w-4  ml-2 mr-2" />
