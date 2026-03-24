@@ -6,7 +6,7 @@ const SellCarWidget = () => {
   const { language } = useLanguage();
   const isArabic = language === 'ar';
 
-  const whatsappNumber = '966920032590'; // Replace with your actual WhatsApp business number
+  const whatsappNumber = '966560867725'; // Replace with your actual WhatsApp business number
   const whatsappMessage = isArabic 
     ? 'مرحباً، أنا مهتم ببيع سيارتي'
     : 'Hello, I am interested in selling my car';
