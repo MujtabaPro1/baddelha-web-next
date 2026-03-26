@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
             alt="Profile" 
           />
           <div>
-            <p className={`font-medium ${isScrolled ? 'text-[#000]' : 'text-white'}`}>{userDetails.firstName || 'User'}</p>
+            <p className={`font-medium text-[#000]`}>{userDetails.firstName || 'User'}</p>
           </div>
         </div>
         
