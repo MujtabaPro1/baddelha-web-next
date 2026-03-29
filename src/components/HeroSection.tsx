@@ -108,7 +108,7 @@ const HeroSection: React.FC = () => {
               <BlurText
                 text={hero.titleHighlight}
                 className="block text-brand-500 text-6xl font-black leading-none sm:text-7xl lg:text-8xl"
-                animateBy="letters"
+                animateBy="words"
                 direction="top"
                 delay={40}
               />
