@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import Section from './ui/section';
-import SellCarWidget from './SellCarWidget';
+import ValuationWidget from './ValuationWidget';
 import lang from '../locale';
 
 const Features = memo(function Features() {
@@ -12,7 +12,7 @@ const Features = memo(function Features() {
 
   return (
     <Section id="valuation-card" title={features.title} subtitle={features.subtitle}>
-      <SellCarWidget />
+      <ValuationWidget/>
     </Section>
   );
 });
