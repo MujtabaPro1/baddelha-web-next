@@ -26,7 +26,7 @@ const CustomOption = (props: any) => {
       <div className="flex items-center gap-3">
         {!imgError ? (
           <img
-            src={getCarLogo(props.data.label)}
+            src={getCarLogo(props.data.brandName)}
             alt={props.data.label}
             className="w-6 h-6 object-contain"
             onError={() => setImgError(true)}
@@ -70,11 +70,13 @@ const CustomSingleValue = (props: any) => {
 interface CarMake {
   id: string;
   name: string;
+  nameAr: string;
 }
 
 interface CarModel {
   id: string;
   name: string;
+  nameAr: string;
 }
 
 
@@ -181,7 +183,7 @@ const ValuationWidget: React.FC = () => {
                 setMake(option?.label || '');
                 setMakeId(option?.value || '');
               }}
-              options={makes?.map(makeItem => ({ value: makeItem.id, label: makeItem.name }))}
+              options={makes?.map(makeItem => ({ value: makeItem.id, brandName: makeItem.name,  label: makeItem.name + (languageContent === 'ar' && makeItem.nameAr ? ' - ' + makeItem.nameAr : '') }))}
               placeholder={lang[languageContent].selectMake}
               isLoading={loading.makes}
               isDisabled={loading.makes}
@@ -214,7 +216,7 @@ const ValuationWidget: React.FC = () => {
                 setModel(option?.label || '');
                 setModelId(option?.value || '');
               }}
-              options={models.map(modelItem => ({ value: modelItem.id, label: modelItem.name }))}
+              options={models.map(modelItem => ({ value: modelItem.id, label: modelItem.name + (languageContent === 'ar' ? ' - ' + modelItem.nameAr : '') }))}
               placeholder={lang[languageContent].selectModel}
               isLoading={loading.models}
               isDisabled={loading.models || !make}
