@@ -11,7 +11,7 @@ export const InstantWrapper = (props: any) => {
   //cQ1LoLfnMm5rmdHhHXX3_piDBOU3LZb5Dwa_C_PmzCg
   //https://stg-service.bddelha.com/meili
   //
-  const searchClient: any = instantMeiliSearch('https://service.baddelha.com.sa/meili', '7451c8dd18cd7afa7ba8064f9e2969f68d78090d11c027c8135ae5a4b5b719e0', {
+  const searchClient: any = instantMeiliSearch('https://service.baddelha.com.sa/meili', 'fc5fe0dbd032b6bc0299be6bee5285683289bc7d85856e7a1ba8c66a901b7706', {
     finitePagination: true,
     primaryKey: "id",
     placeholderSearch: true,
