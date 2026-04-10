@@ -583,6 +583,43 @@ const lang = {
     button: 'Get a free valuation now',
     bullets: ['Certified inspection', 'Instant valuation', 'Best pricing']
   },
+  "auction": {
+    badge: "Dealer-Only Auctions Now Open",
+    headline1: "Join Baddelha",
+    headline2: "Auto Auctions",
+    subheading: "Approved dealers access curated vehicle inventory, bid in real time, and close deals faster on Baddelha's trusted auction platform.",
+    ctaButton: "Auction Now",
+    trustBadges: {
+      verifiedDealer: "Verified Dealer Access",
+      curatedInventory: "Curated Inventory",
+      transparentBidding: "Transparent Bidding",
+      fasterAcquisition: "Faster Acquisition"
+    },
+    howTo: {
+      badge: "Simple Process",
+      title1: "How to",
+      title2: "Auction",
+      subtitle: "Get started in three simple steps and begin bidding on premium vehicles through Baddelha's trusted platform.",
+      steps: [
+        {
+          number: "01",
+          title: "Registration",
+          description: "Create your account in minutes and submit your basic business details to begin the process."
+        },
+        {
+          number: "02",
+          title: "Get Approved as a Dealer",
+          description: "Our team reviews your profile and verifies eligibility so you can access trusted auction inventory."
+        },
+        {
+          number: "03",
+          title: "Start Auction",
+          description: "Once approved, browse available vehicles, place bids, and follow auction activity in real time."
+        }
+      ],
+      ctaButton: "Start Your Auction Journey"
+    }
+  },
   
        } ,
        ar: {
@@ -1162,6 +1199,43 @@ const lang = {
       'احصل على تقييم دقيق وسريع لسيارتك الآن. خدمة احترافية، أسعار عادلة، وإجراءات سريعة',
     button: 'احصل على تقييم مجاني الآن',
     bullets: ['فحص معتمد', 'تقييم فوري', 'أفضل التسعير']
+  },
+  "auction": {
+    badge: "مزادات حصرية للتجار مفتوحة الآن",
+    headline1: "انضم إلى بدلها",
+    headline2: "مزادات السيارات",
+    subheading: "يحصل التجار المعتمدون على مخزون سيارات مختار، ويزايدون في الوقت الفعلي، ويغلقون الصفقات بشكل أسرع على منصة بدلها الموثوقة.",
+    ctaButton: "زايد الآن",
+    trustBadges: {
+      verifiedDealer: "وصول تاجر موثق",
+      curatedInventory: "مخزون مختار",
+      transparentBidding: "مزايدة شفافة",
+      fasterAcquisition: "استحواذ أسرع"
+    },
+    howTo: {
+      badge: "عملية بسيطة",
+      title1: "كيفية",
+      title2: "المزايدة",
+      subtitle: "ابدأ في ثلاث خطوات بسيطة وابدأ المزايدة على السيارات المميزة عبر منصة بدلها الموثوقة.",
+      steps: [
+        {
+          number: "01",
+          title: "التسجيل",
+          description: "أنشئ حسابك في دقائق وقدم بيانات عملك الأساسية لبدء العملية."
+        },
+        {
+          number: "02",
+          title: "احصل على الموافقة كتاجر",
+          description: "يراجع فريقنا ملفك الشخصي ويتحقق من أهليتك للوصول إلى مخزون المزاد الموثوق."
+        },
+        {
+          number: "03",
+          title: "ابدأ المزايدة",
+          description: "بمجرد الموافقة، تصفح السيارات المتاحة، وقدم عروضك، وتابع نشاط المزاد في الوقت الفعلي."
+        }
+      ],
+      ctaButton: "ابدأ رحلة المزايدة"
+    }
   },
   footer: {
     brand: 'بدلها',

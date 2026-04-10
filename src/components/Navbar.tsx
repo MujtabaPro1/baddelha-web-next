@@ -188,6 +188,12 @@ const Navbar: React.FC = () => {
           </div>
           
           <div className="hidden md:flex items-center space-x-6">
+             <a 
+                href="/auction" 
+                className={`transition font-bold ${isScrolled ? 'text-[#3d3d40]' : 'text-primary'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'المزاد' : 'Auction'}
+              </a>
             <div 
             onClick={() => router.push('tel:+966920032590')}
            dir="ltr"
@@ -207,7 +213,7 @@ const Navbar: React.FC = () => {
             </button>
             {!isAuthenticated ? <button
             onClick={() => router.push('/login')}
-            className="bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            className="bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-md transition transform hover:scale-105">
               {lang[languageContent].signIn}
             </button> : profileView()}
           </div>
@@ -276,13 +282,21 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'لماذا نحن' : 'Why Us'}
               </a>
-              <a 
-                href="/faq" 
-                className="transition text-[#3d3d40] hover:text-[#f78f37]"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}
-              </a>
+                <a 
+                  href="/faq" 
+                  className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}
+                </a>
+                <a 
+                  href="/auction" 
+                  className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                    {language === 'ar' ? 'المزاد' : 'Auction'}
+                  </a>
+
             </nav>
           <div className="mt-4 pt-4 border-t border-gray-100">
             <div 
@@ -301,10 +315,10 @@ const Navbar: React.FC = () => {
               <Globe className="h-4 w-4 mr-1" />
               <span>{language === 'en' ? 'العربية' : 'English'}</span>
             </button>
-            {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-md transition transform hover:scale-105">
               {language === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
             </button>}
-            {isAuthenticated && <button onClick={handleLogout} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-full transition transform hover:scale-105">
+            {isAuthenticated && <button onClick={handleLogout} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-md transition transform hover:scale-105">
               {language === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}
             </button>}
           </div>
