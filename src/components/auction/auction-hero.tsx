@@ -121,7 +121,11 @@ export function AuctionHero() {
             variants={fadeUp}
             className="mt-8 flex items-center justify-center"
           >
-            <button className="group relative w-full overflow-hidden rounded-xl bg-[#ee3c48] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#ee3c48]/25 transition-all hover:shadow-xl hover:shadow-[#ee3c48]/30 sm:w-auto">
+            <button 
+            onClick={()=>{
+              window.location.href = 'https://dealer.baddelha.com.sa';
+            }}
+            className="group cursor-pointer relative w-full overflow-hidden rounded-xl bg-[#ee3c48] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#ee3c48]/25 transition-all hover:shadow-xl hover:shadow-[#ee3c48]/30 sm:w-auto">
               <span className="relative z-10">{t.ctaButton}</span>
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
             </button>

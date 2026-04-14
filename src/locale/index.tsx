@@ -586,7 +586,7 @@ const lang = {
   "auction": {
     badge: "Dealer-Only Auctions Now Open",
     headline1: "Join Baddelha",
-    headline2: "Auto Auctions",
+    headline2: "Car Auctions",
     subheading: "Approved dealers access curated vehicle inventory, bid in real time, and close deals faster on Baddelha's trusted auction platform.",
     ctaButton: "Auction Now",
     trustBadges: {

@@ -21,6 +21,9 @@ import {
   ThumbsUp,
   Plus,
   Info,
+  CheckCheck,
+  CheckCircle2Icon,
+  TimerIcon,
 } from 'lucide-react';
 import axiosInstance from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
@@ -30,6 +33,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '../../../../components/
 import { useLanguage } from '../../../../contexts/LanguageContext';
 import lang from '../../../../locale';
 import { Skeleton } from '../../../../components/ui/skeleton';
+import { CrossCircledIcon } from '@radix-ui/react-icons';
 
 export default function Page() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -40,10 +44,12 @@ export default function Page() {
   const [inspectionDetails, setInspectionDetails]: any = useState(null);
   const [inspectionSchema, setInspectionSchema]: any = useState(null);
   const [extraData, setExtraData] = useState<any>(null);
+  const [similarCars, setSimilarCars] = useState<any>([]);
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const { language } = useLanguage();
+
   
   const toggleSection = (sectionKey: string) => {
     setExpandedSections(prev => ({
@@ -128,6 +134,8 @@ export default function Page() {
               // Set car data
               setCar(_car);
 
+              getSimilarCar(_car.make,_car.model,_car.year);
+
               if(res?.data?.car?.Inspection?.length){
               setInspectionDetails(res?.data?.car?.Inspection?.[0]);
               setInspectionSchema(res?.data?.car?.Inspection?.[0]?.inspectionJson);
@@ -165,6 +173,15 @@ export default function Page() {
               }, 2000);
           })
       };
+
+
+      const getSimilarCar = (make:string,model:string,year:string) => {
+           axiosInstance.get('/api/1.0/car/similar?page=1&limit=10&make=' + make + '&model=' + model + '&year=' + year).then((res)=>{
+            setSimilarCars(res?.data?.data);
+           }).catch((err)=>{
+              console.log('err',err);
+           })
+      }
 
 
  
@@ -308,8 +325,11 @@ export default function Page() {
                   {[
                     { id: 'overview', label: lang[language].overview },
                     { id: 'inspection', label: lang[language].inspection },
-                    { id: 'similar', label: lang[language].similarCars },
-                  ].map(({ id, label }) => (
+                    similarCars?.length ? { id: 'similar', label: lang[language].similarCars } : null,
+                  ].map((item) => {
+                    if (!item) return null;
+                    const { id, label } = item;
+                    return (
                     <button
                       key={id}
                       onClick={() => setActiveTab(id as any)}
@@ -321,7 +341,8 @@ export default function Page() {
                     >
                       {label}
                     </button>
-                  ))}
+                  );
+                })}
                 </nav>
               </div>
 
@@ -711,7 +732,11 @@ export default function Page() {
                                                     className="flex justify-between items-center py-2 px-3 bg-gray-50 rounded-lg"
                                                   >
                                                     <span className="text-sm text-gray-600">{field.label}</span>
-                                                    <span className="text-sm font-medium text-gray-900">{field.value || 'N/A'}</span>
+                                                    <span className="text-sm font-medium text-gray-900 flex items-center gap-2">{field.value || 'N/A'}
+                                                    {field.value  == 'Pass' ? <CheckCircle2Icon className="h-4 w-4 text-green-500" /> : field.value  == 'Fail' ? <CrossCircledIcon  className="h-4 w-4 text-red-500" />  : null}
+
+                                                    </span>
+
                                                   </div>
                                                 ))}
                                               </div>
@@ -858,29 +883,30 @@ export default function Page() {
               
               
                 {/* Similar Cars Tab */}
-                {activeTab === 'similar' && (
+                {activeTab === 'similar' && similarCars?.length && (
                   <div>
                     <h3 className="text-lg font-medium mb-4">{lang[language].similarCars}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       {/* Car 1 */}
-                      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
+                      {similarCars?.map((car:any)=>{
+                         return <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
                         <div className="relative">
                           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8l0IRdya6kunKn7-nw6HW0MjMVD34HaN8YQ&s" 
                             alt="Similar Car 1" 
                             className="w-full h-36 object-cover" />
                         </div>
                         <div className="p-3">
-                          <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">2021 Mercedes-Benz C-Class</h4>
+                          <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">{car?.make}&nbsp;{car?.model}</h4>
                           <div className="flex justify-between items-center mb-2">
-                            <span className="font-bold text-red-500 text-sm">SAR 129,900</span>
-                            <span className="text-xs text-gray-500">38,200 km</span>
+                            <span className="font-bold text-red-500 text-sm">{car.price}</span>
+                            <span className="text-xs text-gray-500">{car.mileage}</span>
                           </div>
                           <div className="grid grid-cols-2 gap-1 mb-2">
                             <div className="flex items-center text-xs text-gray-600">
-                              <Calendar className="h-3 w-3 mr-1" /> {lang[language].year}
+                              <Calendar className="h-3 w-3 mr-1" /> {car?.modelYear}
                             </div>
                             <div className="flex items-center text-xs text-gray-600">
-                              <Fuel className="h-3 w-3 mr-1" /> {lang[language].fuelType}
+                              <Fuel className="h-3 w-3 mr-1" /> {car?.fuelType}
                             </div>
                           </div>
                           <button className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs font-medium py-1 px-2 rounded transition">
@@ -888,87 +914,11 @@ export default function Page() {
                           </button>
                         </div>
                       </div>
+                      })}
                       
-                      {/* Car 2 */}
-                      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
-                        <div className="relative">
-                          <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                            alt="Similar Car 2" 
-                            className="w-full h-36 object-cover" />
-                        </div>
-                        <div className="p-3">
-                          <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">2020 BMW 3 Series</h4>
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="font-bold text-red-500 text-sm">SAR 119,500</span>
-                            <span className="text-xs text-gray-500">45,600 km</span>
-                          </div>
-                          <div className="grid grid-cols-2 gap-1 mb-2">
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Calendar className="h-3 w-3 mr-1" /> {lang[language].year}
-                            </div>
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Fuel className="h-3 w-3 mr-1" /> {lang[language].fuelType}
-                            </div>
-                          </div>
-                          <button className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs font-medium py-1 px-2 rounded transition">
-                            {lang[language].viewDetails}
-                          </button>
-                        </div>
-                      </div>
+                   
                       
-                      {/* Car 3 */}
-                      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
-                        <div className="relative">
-                          <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                            alt="Similar Car 3" 
-                            className="w-full h-36 object-cover" />
-                        </div>
-                        <div className="p-3">
-                          <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">2021 Audi A4</h4>
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="font-bold text-red-500 text-sm">SAR 124,750</span>
-                            <span className="text-xs text-gray-500">32,100 km</span>
-                          </div>
-                          <div className="grid grid-cols-2 gap-1 mb-2">
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Calendar className="h-3 w-3 mr-1" /> {lang[language].year}
-                            </div>
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Fuel className="h-3 w-3 mr-1" /> {lang[language].fuelType}
-                            </div>
-                          </div>
-                          <button className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs font-medium py-1 px-2 rounded transition">
-                            {lang[language].viewDetails}
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Car 4 */}
-                      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
-                        <div className="relative">
-                          <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                            alt="Similar Car 4" 
-                            className="w-full h-36 object-cover" />
-                        </div>
-                        <div className="p-3">
-                          <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">2022 Lexus ES</h4>
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="font-bold text-red-500 text-sm">SAR 135,000</span>
-                            <span className="text-xs text-gray-500">25,800 km</span>
-                          </div>
-                          <div className="grid grid-cols-2 gap-1 mb-2">
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Calendar className="h-3 w-3 mr-1" /> {lang[language].year}
-                            </div>
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Fuel className="h-3 w-3 mr-1" /> {lang[language].fuelType}
-                            </div>
-                          </div>
-                          <button className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs font-medium py-1 px-2 rounded transition">
-                            {lang[language].viewDetails}
-                          </button>
-                        </div>
-                      </div>
+                   
                     </div>
                     
                     <div className="mt-6 text-center">
