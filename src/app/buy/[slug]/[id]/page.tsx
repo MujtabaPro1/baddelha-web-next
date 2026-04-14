@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
+  ChevronDown,
   Heart, 
   Share2, 
   MapPin, 
@@ -41,7 +42,15 @@ export default function Page() {
   const [extraData, setExtraData] = useState<any>(null);
   const params = useParams();
   const [loading, setLoading] = useState(true);
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const { language } = useLanguage();
+  
+  const toggleSection = (sectionKey: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionKey]: !prev[sectionKey]
+    }));
+  };
   
   
   // These state variables are initialized but not currently used
@@ -71,7 +80,7 @@ export default function Page() {
    },[params?.id]);
 
    const carDetails = (id: any) => {
-          axiosInstance.get('/api/1.0/car/car-details/' + id).then((res)=>{
+          axiosInstance.get('/api/1.0/car/car-details-v2/' + id).then((res)=>{
               // Process car data
               const _car = res?.data?.car;
               const _inspectionData = inspectionData;
@@ -298,7 +307,6 @@ export default function Page() {
                 <nav className="flex px-4 overflow-x-auto">
                   {[
                     { id: 'overview', label: lang[language].overview },
-                    { id: 'features', label: lang[language].features },
                     { id: 'inspection', label: lang[language].inspection },
                     { id: 'similar', label: lang[language].similarCars },
                   ].map(({ id, label }) => (
@@ -657,60 +665,110 @@ export default function Page() {
                             </div>
                           </div>
                           
-                          {/* Detailed Inspection Information */}
+                          {/* Detailed Inspection Information - Collapsible Sections */}
                           <div className="border-t border-gray-200 pt-6">
                             <h4 className="font-semibold text-gray-700 mb-4">{lang[language].detailedInspectionReport}</h4>
                             
-                            <div className="space-y-4">
-                              {inspectionDetails && (
-                                <div>
-                                  {Object.keys(inspectionDetails?.inspectionJson).map((category, index) => {
-                                    if(category === 'overview' || category === 'extraData') return null;
+                            <div className="space-y-3">
+                              {inspectionDetails && inspectionSchema && (
+                                <>
+                                  {/* Check if new format with sections containing label and fields */}
+                                  {Object.keys(inspectionSchema).map((sectionKey, sectionIndex) => {
+                                    const section = inspectionSchema[sectionKey];
                                     
-                                    return (
-                                      <div key={category + index} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-4">
-                                        <h5 className="font-semibold text-gray-700 mb-2">{category.replace(/_/g, " ")}</h5>
-                                        <div className="text-sm flex items-center">
-                                          {typeof inspectionDetails?.inspectionJson[category] === 'object' && inspectionDetails?.inspectionJson[category]?.length ? (
-                                            <span>{inspectionDetails?.inspectionJson[category][0].value}</span>
-                                          ) : typeof inspectionDetails?.inspectionJson[category] === 'object' && !inspectionDetails?.inspectionJson[category]?.length ? (
-                                            <span>{inspectionDetails?.inspectionJson[category]?.value || 'N/A'}</span>
-                                          ) : (
-                                            <span>{inspectionDetails?.inspectionJson[category] === "" ? "N/A" : inspectionDetails?.inspectionJson[category]}</span>
-                                          )}
+                                    // Skip non-section keys like extraData
+                                    if (sectionKey === 'extraData' || !section || typeof section !== 'object') return null;
+                                    
+                                    // Handle new format: { label: "Section Name", fields: [{label, value}] }
+                                    if (section.label && section.fields && Array.isArray(section.fields)) {
+                                      const isExpanded = expandedSections[sectionKey] ?? (sectionIndex === 0);
+                                      
+                                      return (
+                                        <div key={sectionKey} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                                          {/* Section Header - Clickable */}
+                                          <button
+                                            onClick={() => toggleSection(sectionKey)}
+                                            className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white hover:from-gray-100 hover:to-gray-50 transition-colors"
+                                          >
+                                            <div className="flex items-center">
+                                              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center mr-3">
+                                                <span className="text-white text-sm font-bold">{sectionIndex + 1}</span>
+                                              </div>
+                                              <h5 className="font-semibold text-gray-800 text-left">{section.label}</h5>
+                                            </div>
+                                            <ChevronDown 
+                                              className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
+                                            />
+                                          </button>
                                           
-                                          {/* Check if this field has extra data */}
-                                          {extraData && extraData[category] && (
-                                            <Popover>
-                                              <PopoverTrigger>
-                                                <Info className="h-4 w-4 ml-2 text-blue-500 cursor-pointer" />
-                                              </PopoverTrigger>
-                                              <PopoverContent className="w-80 p-0 bg-white">
-                                                <div className="p-4">
-                                                  <h5 className="font-medium text-gray-900 mb-2">{category.replace(/_/g, " ")} {lang[language].details}</h5>
-                                                  {extraData[category].image && (
-                                                    <div className="mb-3">
-                                                      <img 
-                                                        src={extraData[category].image} 
-                                                        alt={category.replace(/_/g, " ")} 
-                                                        className="w-full h-auto rounded-md"
-                                                      />
-                                                    </div>
-                                                  )}
-                                                  {extraData[category].comment && (
-                                                    <p className="text-sm text-gray-700">
-                                                      <span className="font-medium">{lang[language].comment}</span> {extraData[category].comment}
-                                                    </p>
-                                                  )}
-                                                </div>
-                                              </PopoverContent>
-                                            </Popover>
-                                          )}
+                                          {/* Section Fields - Collapsible */}
+                                          <div className={`transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                                            <div className="p-4 pt-0 border-t border-gray-100">
+                                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                                                {section.fields.map((field: any, fieldIndex: number) => (
+                                                  <div 
+                                                    key={fieldIndex} 
+                                                    className="flex justify-between items-center py-2 px-3 bg-gray-50 rounded-lg"
+                                                  >
+                                                    <span className="text-sm text-gray-600">{field.label}</span>
+                                                    <span className="text-sm font-medium text-gray-900">{field.value || 'N/A'}</span>
+                                                  </div>
+                                                ))}
+                                              </div>
+                                            </div>
+                                          </div>
                                         </div>
-                                      </div>
-                                    );
+                                      );
+                                    }
+                                    
+                                    // Handle old format: direct key-value pairs
+                                    if (sectionKey !== 'overview') {
+                                      return (
+                                        <div key={sectionKey + sectionIndex} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                          <h5 className="font-semibold text-gray-700 mb-2">{sectionKey.replace(/_/g, " ")}</h5>
+                                          <div className="text-sm flex items-center">
+                                            {typeof section === 'object' && section?.length ? (
+                                              <span>{section[0].value}</span>
+                                            ) : typeof section === 'object' && !section?.length ? (
+                                              <span>{section?.value || 'N/A'}</span>
+                                            ) : (
+                                              <span>{section === "" ? "N/A" : section}</span>
+                                            )}
+                                            
+                                            {extraData && extraData[sectionKey] && (
+                                              <Popover>
+                                                <PopoverTrigger>
+                                                  <Info className="h-4 w-4 ml-2 text-blue-500 cursor-pointer" />
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-80 p-0 bg-white">
+                                                  <div className="p-4">
+                                                    <h5 className="font-medium text-gray-900 mb-2">{sectionKey.replace(/_/g, " ")} {lang[language].details}</h5>
+                                                    {extraData[sectionKey].image && (
+                                                      <div className="mb-3">
+                                                        <img 
+                                                          src={extraData[sectionKey].image} 
+                                                          alt={sectionKey.replace(/_/g, " ")} 
+                                                          className="w-full h-auto rounded-md"
+                                                        />
+                                                      </div>
+                                                    )}
+                                                    {extraData[sectionKey].comment && (
+                                                      <p className="text-sm text-gray-700">
+                                                        <span className="font-medium">{lang[language].comment}</span> {extraData[sectionKey].comment}
+                                                      </p>
+                                                    )}
+                                                  </div>
+                                                </PopoverContent>
+                                              </Popover>
+                                            )}
+                                          </div>
+                                        </div>
+                                      );
+                                    }
+                                    
+                                    return null;
                                   })}
-                                </div>
+                                </>
                               )}
                             </div>
                           </div>
