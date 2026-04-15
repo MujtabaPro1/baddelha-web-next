@@ -21,9 +21,7 @@ import {
   ThumbsUp,
   Plus,
   Info,
-  CheckCheck,
-  CheckCircle2Icon,
-  TimerIcon,
+  CheckCircle2Icon
 } from 'lucide-react';
 import axiosInstance from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
