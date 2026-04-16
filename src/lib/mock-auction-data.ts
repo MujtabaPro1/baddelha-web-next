@@ -65,7 +65,7 @@ export const auctionCars: AuctionCar[] = [
     status: "Approved",
     timeLeft: "05:42:15",
     location: "Riyadh",
-    image: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1761318752375-978b6922a157?w=600&h=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8R01DJTIwWXVrb258ZW58MHx8MHx8fDA%3D",
   },
   {
     id: "5",
@@ -78,7 +78,7 @@ export const auctionCars: AuctionCar[] = [
     status: "Live",
     timeLeft: "01:19:22",
     location: "Khobar",
-    image: "https://images.unsplash.com/photo-1631295868223-63265b40d9e4?w=600&h=400&fit=crop",
+    image: "https://www.dubicars.com/images/83312f/w_1300x760/al-sayed-khamis/88abdaf5-dac5-400c-b36e-68016604a463.jpg",
   },
   {
     id: "6",
@@ -91,6 +91,6 @@ export const auctionCars: AuctionCar[] = [
     status: "Hot Bid",
     timeLeft: "00:52:08",
     location: "Riyadh",
-    image: "https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=600&h=400&fit=crop",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTixz5eQTU85GllhntdTyDM65IvzC94Ibv3Hg&s",
   },
 ];
