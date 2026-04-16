@@ -26,7 +26,7 @@ export const auctionCars: AuctionCar[] = [
     status: "Live",
     timeLeft: "02:14:33",
     location: "Riyadh",
-    image: "https://images.unsplash.com/photo-1650530579355-7ad9d4766043?q=80&w=600&h=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK28v31mlv02RDYVkYlctRgvtwFyhEhU_S7Q&s",
   },
   {
     id: "2",
@@ -39,7 +39,7 @@ export const auctionCars: AuctionCar[] = [
     status: "Ending Soon",
     timeLeft: "00:34:10",
     location: "Jeddah",
-    image: "https://images.unsplash.com/photo-1615106806531-183c31fccfdc?w=600&h=400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TGV4dXMlMjBFUyUyMDM1MHxlbnwwfHwwfHx8MA%3D%3D",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG_u-sPs2AqBFWdSUz3N-A6aickM2iH1u8dQ&s",
   },
   {
     id: "3",
