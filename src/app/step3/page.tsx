@@ -691,7 +691,7 @@ const Step3 = () => {
                                             model: step1Data?.model,
                                             year: Number(step1Data?.year),
                                             mileage: Number(step2Data?.mileageValue),
-                                            bodyType: step2Data?.bodyType,
+                                            bodyType: Number(step2Data?.bodyType),
                                             engineType: 'Petrol',
                                             engineSize: step2Data?.engineSizeName,
                                             gearType: 'Automatic',
