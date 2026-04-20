@@ -94,14 +94,21 @@ const Navbar: React.FC = () => {
 
         {showProfileMenu && (
           <div className='absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50'>
-            <a 
-              href="/appointments" 
+            <a
+              href="/profile"
+              className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+              aria-label={language === 'ar' ? 'الملف الشخصي' : 'Profile'}
+            >
+             {language === 'ar' ? 'الملف الشخصي' : 'Profile'}
+            </a>
+            <a
+              href="/appointments"
               className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
               aria-label={language === 'ar' ? 'المواعيد' : 'My Appointments'}
             >
              {language === 'ar' ? 'المواعيد' : 'My Appointments'}
             </a>
-            <button 
+            <button
               onClick={handleLogout}
               className='w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
             >
@@ -318,9 +325,19 @@ const Navbar: React.FC = () => {
             {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-md transition transform hover:scale-105">
               {language === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
             </button>}
-            {isAuthenticated && <button onClick={handleLogout} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-md transition transform hover:scale-105">
-              {language === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}
-            </button>}
+            {isAuthenticated && (
+              <div className="flex flex-col gap-2 mt-4">
+                <a href="/profile" className="w-full text-center bg-gray-100 text-gray-700 px-5 py-2 rounded-md transition hover:bg-gray-200">
+                  {language === 'ar' ? 'الملف الشخصي' : 'Profile'}
+                </a>
+                <a href="/appointments" className="w-full text-center bg-gray-100 text-gray-700 px-5 py-2 rounded-md transition hover:bg-gray-200">
+                  {language === 'ar' ? 'المواعيد' : 'My Appointments'}
+                </a>
+                <button onClick={handleLogout} className="w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-md transition transform hover:scale-105">
+                  {language === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
