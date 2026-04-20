@@ -86,6 +86,7 @@ const Confirmation = () => {
         }
     };
 
+    
 
     useEffect(() => {
         const fetchBookingData = async () => {
