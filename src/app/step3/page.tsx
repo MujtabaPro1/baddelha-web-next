@@ -170,7 +170,7 @@ const Step3 = () => {
             setLastName(user.lastName);
             }
             if(user.phone){
-            setPhone(user.phone);
+            setPhone(user.phone.replace(/^\+966/, ''));
             }
             if(user.email){
             setEmail(user.email);
@@ -285,7 +285,7 @@ const Step3 = () => {
                 id,
                 firstName: resFirstName || firstName.trim(),
                 lastName: resLastName || lastName.trim(),
-                phone: resPhone || phone.trim(),
+                phone: (resPhone || phone.trim()).replace(/^\+966/, ''),
                 email: resEmail || email.trim(),
                 avatar
             }));
