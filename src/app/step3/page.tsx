@@ -49,7 +49,8 @@ const Step3 = () => {
     const [branchError, setBranchError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const { executeRecaptcha } = useGoogleReCaptcha();
-    const [, setRecaptchaReady] = useState(false);
+    const [recaptchaReady, setRecaptchaReady] = useState(false);
+    const [recaptchaRetryCount, setRecaptchaRetryCount] = useState(0);
     const { toast } = useToast();
 
     const { language } = useLanguage();
@@ -182,16 +183,34 @@ const Step3 = () => {
     };
 
 
-        // Monitor reCAPTCHA availability
+    // Monitor reCAPTCHA availability with retry mechanism
     useEffect(() => {
         if (executeRecaptcha) {
-        console.log('reCAPTCHA is available');
-
-        // Just mark as ready when the hook is available
-        // We'll execute it only when the form is submitted
-        setRecaptchaReady(true);
+            console.log('reCAPTCHA is available');
+            setRecaptchaReady(true);
+            setRecaptchaRetryCount(0);
+        } else if (recaptchaRetryCount < 10) {
+            // Retry checking for reCAPTCHA availability up to 10 times (10 seconds total)
+            const retryTimer = setTimeout(() => {
+                console.log(`reCAPTCHA not ready, retry attempt ${recaptchaRetryCount + 1}/10`);
+                setRecaptchaRetryCount(prev => prev + 1);
+            }, 1000);
+            return () => clearTimeout(retryTimer);
+        } else if (recaptchaRetryCount >= 10 && !executeRecaptcha) {
+            // After 10 retries, try to reload the reCAPTCHA script
+            console.warn('reCAPTCHA failed to load after 10 attempts, attempting script reload');
+            const existingScript = document.querySelector('script[src*="recaptcha"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            const script = document.createElement('script');
+            script.src = `https://www.google.com/recaptcha/api.js?render=6Le8uTcsAAAAAFQicqxQlu3jXqCdwEJw7TjL7X_q`;
+            script.async = true;
+            document.head.appendChild(script);
+            // Reset retry count to allow checking again
+            setTimeout(() => setRecaptchaRetryCount(0), 2000);
         }
-    }, [executeRecaptcha]);
+    }, [executeRecaptcha, recaptchaRetryCount]);
 
     
 
@@ -562,7 +581,7 @@ const Step3 = () => {
                 appointmentTime: selectedTimeSlot || '',
                 firstName,
                 lastName,
-                phone,
+                phone: "+966" + phone,
                 email,
                 carDetail,
                 status: 'Scheduled',
