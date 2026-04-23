@@ -186,7 +186,7 @@ const Step3 = () => {
     // Monitor reCAPTCHA availability with retry mechanism
     useEffect(() => {
         if (executeRecaptcha) {
-            console.log('reCAPTCHA is available');
+            console.log('reCAPTCHA is available',recaptchaReady);
             setRecaptchaReady(true);
             setRecaptchaRetryCount(0);
         } else if (recaptchaRetryCount < 10) {
