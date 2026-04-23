@@ -1,5 +1,6 @@
 const lang = {
     en: {
+        "findings": "Findings",
         "phone": "92 00 32590",
         "sell": "Sell",
         "buy": "Buy",
@@ -623,6 +624,7 @@ const lang = {
   
        } ,
        ar: {
+        "findings": "النتائج",
         "phone": "920032590",
         "sell": "بيع",
         "buy": "شراء",
