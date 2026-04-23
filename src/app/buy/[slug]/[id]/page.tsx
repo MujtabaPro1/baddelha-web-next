@@ -39,6 +39,7 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'inspection'  | 'similar'>('overview');
   const [car, setCar] = useState<any>(null);
   const [images, setImages] = useState<string[]>([]);
+  const [inspectionImages,setInspectionImage] = useState(null)
   const [inspectionDetails, setInspectionDetails]: any = useState(null);
   const [inspectionSchema, setInspectionSchema]: any = useState(null);
   const [extraData, setExtraData] = useState<any>(null);
@@ -142,15 +143,18 @@ export default function Page() {
               // Process images
               if (res?.data?.images && res.data.images.length > 0) {
                   // Reorder images if needed
-                  const imageUrls = res.data.images.map((img: any) => img.url || img.imageUrl || img);
-                  setImages(imageUrls);
+                  let carImageUrls = res.data.images.map((img: any)=> img.caption && (img.caption == 'Front' || img.caption == 'Back' || img.caption == 'Left' || img.caption == 'Right') ? img : null).filter((img: any) => img !== null);
+                  let otherImages = res.data.images.map((img: any)=> img.caption && (img.caption != 'Front' && img.caption != 'Back' && img.caption != 'Left' && img.caption != 'Right') ? img : null).filter((img: any) => img !== null);
+                  carImageUrls = carImageUrls.map((im: any)=> im.url || im.imageUrl || im);
+                  setImages(carImageUrls);
+                  setInspectionImage(otherImages);
               } else if (_car.images && _car.images.length > 0) {
                   // Use car images if available
                   setImages(_car.images);
               }
               else if (res?.data?.carImages && res.data.carImages.length > 0) {
-                  const imageUrls = res.data.carImages.map((img: any) => img.url || img.imageUrl || img);
-                  setImages(imageUrls);
+                  const carImageUrls = res.data.carImages.map((img: any) => img.url || img.imageUrl || img);
+                  setImages(carImageUrls);
               }
               
               // Process car videos if available
@@ -845,6 +849,32 @@ export default function Page() {
                         )}
                       </div>
                     </div>
+                    
+                    {/* Findings / Other Inspection Images */}
+                    {inspectionImages && (inspectionImages as any[]).length > 0 && (
+                      <div>
+                        <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+                          <Info className="h-5 w-5 mr-2 text-[#f78f37]" /> {lang[language].findings || 'Findings'}
+                        </h3>
+                        
+                        <div className="bg-gray-50 p-6 rounded-lg">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                            {(inspectionImages as any[]).map((img: any, index: number) => (
+                              <div key={index} className="bg-white p-2 rounded-lg shadow-sm border border-gray-200">
+                                <img 
+                                  src={img.url || img.imageUrl || img} 
+                                  alt={img.caption || `Finding ${index + 1}`} 
+                                  className="w-full h-32 object-cover rounded-md mb-2" 
+                                />
+                                <p className="text-xs text-gray-600 text-center truncate font-medium">
+                                  {img.caption.toString().split('_').join(' ') || `Finding ${index + 1}`}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Inspection Certificate */}
                     <div>

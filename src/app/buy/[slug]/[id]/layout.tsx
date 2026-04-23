@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Page from "./page";
+import { BASE_URL } from "../../../../services/axiosInstance";
 
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +13,7 @@ export async function generateMetadata({
 
   const {id} = await params;
   console.log(id);
-  const data = await fetch(`https://service.baddelha.com.sa/api/1.0/car/car-details/${id}`
+  const data = await fetch( `${BASE_URL}/api/1.0/car/car-details/${id}`
   ).then((res) => res.json());
 
 
