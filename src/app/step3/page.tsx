@@ -480,7 +480,8 @@ const Step3 = () => {
             setSelectedTimeSlot(null);
             
             try {
-                const response = await axiosInstance.get('/api/1.0/branch-timing');
+                //https://stg-service.baddelha.com.sa/api/1.0/branch/schedule/availability/1
+                const response = await axiosInstance.get(`/api/1.0/branch/schedule/availability/${branch}`);
                 setBranchTimings(response?.data || []);
                 if (response?.data?.length > 0) {
                     // Don't auto-select a day/time, let user choose
