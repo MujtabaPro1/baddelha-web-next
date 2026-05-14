@@ -26,6 +26,7 @@ const Step3 = () => {
     const [otp, setOtp] = useState('');
     const [otpVerified, setOtpVerified] = useState(false);
     const [otpError, setOtpError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
     const [autoFill, setAutoFill] = useState(false);
     const [showPricePopup, setShowPricePopup] = useState(false);
     const [expectedPrice, setExpectedPrice] = useState<number | null>(null);
@@ -529,6 +530,8 @@ const Step3 = () => {
             
             if (!phone.trim()) {
                 validationErrors.push('Please enter your phone number');
+            } else if (!/^5[0-9]{8}$/.test(phone.trim())) {
+                validationErrors.push('Please enter a valid Saudi mobile number (e.g. 5XXXXXXXX)');
             }
             
             if (!email.trim()) {
@@ -970,12 +973,24 @@ const Step3 = () => {
                                                 type="tel"
                                                 disabled={autoFill}
                                                 value={phone}
-                                                onChange={(e) => setPhone(e.target.value)}
-                                                placeholder={lang[languageContent].mobile}
-                                                className={`block w-full rounded-r-xl border-0 py-3 px-4 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-slate-900 ${autoFill ? 'bg-slate-100' : 'bg-white'}`}
+                                                onChange={(e) => {
+                                                    const digits = e.target.value.replace(/\D/g, '').slice(0, 9);
+                                                    setPhone(digits);
+                                                    if (digits && !/^5[0-9]{8}$/.test(digits)) {
+                                                        setPhoneError(language === 'ar' ? 'رقم غير صحيح. مثال: 5XXXXXXXX' : 'Invalid number. Must start with 5 and be 9 digits');
+                                                    } else {
+                                                        setPhoneError('');
+                                                    }
+                                                }}
+                                                placeholder="5XXXXXXXX"
+                                                maxLength={9}
+                                                className={`block w-full rounded-r-xl border-0 py-3 px-4 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-slate-900 ${autoFill ? 'bg-slate-100' : 'bg-white'} ${phoneError ? 'ring-red-400' : 'ring-slate-200'}`}
                                                 required
                                             />
                                         </div>
+                                        {phoneError && (
+                                            <p className="mt-1 text-xs text-red-500">{phoneError}</p>
+                                        )}
                                     </div>
                                     
                                     <div>
