@@ -481,8 +481,8 @@ const Step3 = () => {
             setSelectedTimeSlot(null);
             
             try {
-                //https://stg-service.baddelha.com.sa/api/1.0/branch/schedule/availability/1
-                const response = await axiosInstance.get(`/api/1.0/branch-timing`);
+                //
+                const response = await axiosInstance.get(`/api/1.0/branch/schedule/availability/1`);
                 setBranchTimings(response?.data || []);
                 if (response?.data?.length > 0) {
                     // Don't auto-select a day/time, let user choose
@@ -559,16 +559,18 @@ const Step3 = () => {
             // Format the appointment date and time
             // Extract date parts from the selectedDayObj.date (format: "Jun 30")
             // We've already validated selectedDayObj exists above, but add a safety check
-            const [month, day] = selectedDayObj?.date?.split(' ') || [];
-            const currentYear = new Date().getFullYear();
+            console.log(selectedDayObj);
+            // const [month, day] = selectedDayObj?.date?.split(' ') || [];
+            // const currentYear = new Date().getFullYear();
             
-            // Create a date string in ISO format
-            // Make sure we have valid date parts before creating the date
-            if (!month || !day) {
-                throw new Error('Invalid date format');
-            }
-            const appointmentDate = new Date(`${month} ${day}, ${currentYear}`).toISOString();
+            // // Create a date string in ISO format
+            // // Make sure we have valid date parts before creating the date
+            // if (!month || !day) {
+            //     throw new Error('Invalid date format');
+            // }
+            const appointmentDate = new Date(selectedDayObj?.date).toISOString();
             
+            console.log(selectedTimeSlot);
             // Combine all car details from step1 and step2
             const carDetail = JSON.stringify({
                 ...step1Data,
