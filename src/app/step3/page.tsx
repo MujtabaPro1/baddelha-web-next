@@ -482,7 +482,7 @@ const Step3 = () => {
             
             try {
                 //
-                const response = await axiosInstance.get(`/api/1.0/branch/schedule/availability/1`);
+                const response = await axiosInstance.get(`/api/1.0/branch/schedule/availability/${branch}`);
                 setBranchTimings(response?.data || []);
                 if (response?.data?.length > 0) {
                     // Don't auto-select a day/time, let user choose
@@ -689,7 +689,7 @@ const Step3 = () => {
                     </div>
                     
                     {/* Price Section */}
-                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                    <div className="hidden bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                         <p className="text-white text-sm mb-1">{lang[languageContent].yourVehicleMarketPrice}</p>
                         {revealPrice && carPrice ? (
                             <div className="text-3xl font-bold text-amber-400">
@@ -878,14 +878,14 @@ const Step3 = () => {
                                                         setSelectedDay(daySchedule.day);
                                                         setSelectedTimeSlot(null);
                                                     }}
-                                                    className={`flex-shrink-0 w-16 md:w-auto p-2 md:p-3 rounded-xl text-center transition-all ${
+                                                    className={`flex-shrink-0 lg:w-auto w-32 p-2 md:p-3 rounded-xl text-center transition-all ${
                                                         selectedDay === daySchedule.day
                                                             ? 'bg-secondary text-white shadow-lg'
                                                             : 'bg-white text-gray-700 hover:bg-slate-100 border border-slate-200'
                                                     }`}
                                                 >
                                                     <div className="text-[10px] md:text-xs font-medium opacity-70">{daySchedule.day.slice(0, 3)}</div>
-                                                    <div className="text-base md:text-lg font-bold mt-0.5 md:mt-1">{daySchedule.date.split(' ')[1] || daySchedule.date}</div>
+                                                    <div className="text-base md:text-sm font-bold mt-0.5 md:mt-1">{daySchedule.date.split(' ')[1] || daySchedule.date}</div>
                                                 </button>
                                             ))}
                                         </div>
