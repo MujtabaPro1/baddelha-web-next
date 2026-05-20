@@ -568,7 +568,7 @@ const Step3 = () => {
             // if (!month || !day) {
             //     throw new Error('Invalid date format');
             // }
-            const appointmentDate = new Date(selectedDayObj?.date).toISOString();
+            const appointmentDate = new Date(selectedDayObj?.date || new Date()).toISOString();
             
             console.log(selectedTimeSlot);
             // Combine all car details from step1 and step2
