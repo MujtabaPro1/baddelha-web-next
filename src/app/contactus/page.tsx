@@ -174,7 +174,7 @@ const ContactUs: React.FC = () => {
                   </div>
                   <div className='cursor-pointer' onClick={() => window.open('tel:+966920032590','_blank')}>
                     <h3 className="font-medium text-gray-800 mb-1">{t.phoneNumber}</h3>
-                    <p className="text-dark">+966 92 00 32590</p>
+                    <p dir="ltr" className="text-dark">+966 92 00 32590</p>
                   </div>
                 </div>
 
