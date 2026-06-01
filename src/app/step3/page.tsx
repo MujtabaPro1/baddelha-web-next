@@ -420,22 +420,25 @@ const Step3 = () => {
                 // Add mock images, locations and distances to branches
                 const branches: any [] = response?.data.filter((r: any)=> r.is_active);
                 // Add mock images, locations, distances, and coordinates to branches
-                // Riyadh coordinates with slight variations for different branches
-                const riyadhCoordinates = [
-                    { lat: 24.7207364, lng: 46.7705267 }, // Riyadh center
-                ];
-                
+                const knownBranchCoords: Record<string, { lat: number; lng: number }> = {
+                    'riyadh khurais road': { lat: 24.7478, lng: 46.7953 },
+                    'panorama mall': { lat: 24.692234, lng: 46.670279 },
+                };
+                const defaultCoords = { lat: 24.7207364, lng: 46.7705267 };
+
                 const branchesWithImages = (branches || []).map((branch: any, index: number) => {
-                    // Use index to get coordinates, or fallback to Riyadh center
-                    const coords = riyadhCoordinates[index % riyadhCoordinates.length];
-                    
+                    const nameKey = (branch.enName || branch.name || '').toLowerCase().trim();
+                    const known = knownBranchCoords[nameKey];
+                    const lat = branch.latitude ?? branch.lat ?? known?.lat ?? defaultCoords.lat;
+                    const lng = branch.longitude ?? branch.lng ?? known?.lng ?? defaultCoords.lng;
+
                     return {
                         ...branch,
                         image: `https://source.unsplash.com/random/300x200?kiosk,mall,${index}`,
                         location: branch.address || `${language === 'en' ? 'Mall' : 'مول'} ${index + 1}`,
                         distance: undefined,
-                        latitude: coords.lat,
-                        longitude: coords.lng
+                        latitude: lat,
+                        longitude: lng
                     };
                 });
                 setBranches(branchesWithImages);

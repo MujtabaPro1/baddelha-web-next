@@ -41,6 +41,20 @@ function ChangeMapView({ center, zoom }: { center: [number, number]; zoom: numbe
   return null;
 }
 
+const MAX_FIT_DISTANCE_KM = 300;
+
+function haversineKm(a: [number, number], b: [number, number]) {
+  const R = 6371;
+  const dLat = ((b[0] - a[0]) * Math.PI) / 180;
+  const dLon = ((b[1] - a[1]) * Math.PI) / 180;
+  const x =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((a[0] * Math.PI) / 180) *
+      Math.cos((b[0] * Math.PI) / 180) *
+      Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+}
+
 function FitSelectedBounds({
   userLocation,
   selectedBranchLocation,
@@ -51,14 +65,23 @@ function FitSelectedBounds({
   const map = useMap();
 
   useEffect(() => {
-    if (!userLocation || !selectedBranchLocation) return;
-
-    const bounds = L.latLngBounds([userLocation, selectedBranchLocation]);
-    map.fitBounds(bounds, {
-      padding: [40, 40],
-      maxZoom: 15,
-      animate: true,
-    });
+    if (!selectedBranchLocation) return;
+    
+    // If we have both user location and branch location
+    if (userLocation) {
+      const dist = haversineKm(userLocation, selectedBranchLocation);
+      if (dist > MAX_FIT_DISTANCE_KM) {
+        // Too far — just center on branch instead of zooming way out
+        map.setView(selectedBranchLocation, 13, { animate: true });
+        return;
+      }
+      // Fit both markers in view with route line
+      const bounds = L.latLngBounds([userLocation, selectedBranchLocation]);
+      map.fitBounds(bounds, { padding: [60, 60], maxZoom: 15, animate: true });
+    } else {
+      // No user location, just center on branch
+      map.setView(selectedBranchLocation, 15, { animate: true });
+    }
   }, [map, userLocation, selectedBranchLocation]);
 
   return null;
@@ -87,7 +110,7 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBra
   const { language } = useLanguage();
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const [mapCenter, setMapCenter] = useState<[number, number]>([24.7207364, 46.7705267]); // Default to Riyadh
-  const [mapZoom, setMapZoom] = useState(10);
+  const [mapZoom, setMapZoom] = useState(11);
   const [routeLine, setRouteLine] = useState<[number, number][]>([]);
   const [selectedBranchLocation, setSelectedBranchLocation] = useState<[number, number] | null>(null);
 
@@ -96,7 +119,7 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBra
     fixLeafletIcons();
   }, []);
 
-  // Get user's location
+  // Get user's location — only for distance labels and the marker, never move the map center
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -105,36 +128,24 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBra
           const loc: [number, number] = [latitude, longitude];
           setUserLocation(loc);
           onUserLocation?.(loc);
-          
-          // If no branch is selected, center on user location
-          if (!selectedBranchId) {
-            setMapCenter([latitude, longitude]);
-          }
         },
         (error) => {
           console.error('Error getting user location:', error);
         }
       );
     }
-  }, [selectedBranchId]);
+  }, []);
 
-  // Center map on selected branch
+  // Center map on selected branch and draw route line
   useEffect(() => {
     const selectedBranch = branches.find(branch => branch.id === selectedBranchId);
-    if (selectedBranch && selectedBranch.latitude && selectedBranch.longitude) {
-      const branchLoc: [number, number] = [selectedBranch.latitude || 24.7207364, selectedBranch.longitude || 46.7705267];
-      console.log('branchLoc', branchLoc);
+    if (selectedBranch?.latitude && selectedBranch?.longitude) {
+      const branchLoc: [number, number] = [selectedBranch.latitude, selectedBranch.longitude];
       setSelectedBranchLocation(branchLoc);
-
-      // Draw route line from user location to selected branch (solid red)
-      if (userLocation) {
-        console.log('userLocation', userLocation,branchLoc);
-        setRouteLine([userLocation, branchLoc]);
-      } else {
-        setRouteLine([]);
-      }
-
-      // If we don't have user location, fallback to centering on branch
+      setRouteLine(userLocation ? [userLocation, branchLoc] : []);
+      
+      // Always center on selected branch when it changes
+      // The FitSelectedBounds component will handle fitting both markers if user location exists
       if (!userLocation) {
         setMapCenter(branchLoc);
         setMapZoom(15);
@@ -166,16 +177,11 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBra
         
         {/* User location marker */}
         {userLocation && (
-          <Marker 
-            position={userLocation} 
-            icon={createCustomIcon('blue')}
-          >
-            <Popup>
-              {language === 'en' ? 'Your location' : 'موقعك'}
-            </Popup>
+          <Marker position={userLocation} icon={createCustomIcon('blue')}>
+            <Popup>{language === 'en' ? 'Your location' : 'موقعك'}</Popup>
           </Marker>
         )}
-        
+
         {/* Branch markers */}
         {branches.map((branch) => {
           // Skip branches without coordinates
@@ -213,20 +219,12 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, selectedBranchId, onBra
           );
         })}
         
-        {/* Route line from user to selected branch */}
+        {/* Route line from user location to selected branch */}
         {routeLine.length === 2 && (
-          <Polyline 
-            positions={routeLine}
-            color="#ef4444"
-            weight={4}
-            opacity={0.85}
-          />
+          <Polyline positions={routeLine} color="#ef4444" weight={3} opacity={0.8} dashArray="8 6" />
         )}
-        
-        {/* Update map view when we don't have both points */}
-        <ChangeMapView center={mapCenter} zoom={mapZoom} />
 
-        {/* When both points exist, zoom out to show both markers */}
+        <ChangeMapView center={mapCenter} zoom={mapZoom} />
         <FitSelectedBounds userLocation={userLocation} selectedBranchLocation={selectedBranchLocation} />
       </MapContainer>
     </div>
