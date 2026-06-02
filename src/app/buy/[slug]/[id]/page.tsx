@@ -898,7 +898,13 @@ export default function Page() {
                             {lang[language].safety} ✓
                             </div>
                           </div>
-                          <button className="text-[#f78f37] hover:text-[#e67d26] font-medium">
+                          <button
+                          onClick={()=>{
+                            const carDetails = `${car?.modelYear} ${car?.make} ${car?.model}`;
+                            const message = `Hello, I'm interested for ${carDetails} inspection report`;
+                           window.location.href = `whatsapp://send?phone=+966920032590&text=${encodeURIComponent(message)}`;
+                          }}
+                          className="text-[#f78f37] hover:text-[#e67d26] font-medium">
                             {lang[language].downloadCertificate}
                           </button>
                         </div>
