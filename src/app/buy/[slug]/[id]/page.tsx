@@ -641,7 +641,7 @@ export default function Page() {
                               <div className="bg-gradient-to-r from-amber-500 to-amber-400 h-2.5 rounded-full" style={{ width: '92%' }}></div>
                             </div>
                             <div className="flex justify-between text-xs text-gray-500 mt-1">
-                              <span>{lang[language].poor}</span>
+                              <span>{lang[language].fair}</span>
                               <span>{lang[language].excellent}</span>
                             </div>
                           </div>
