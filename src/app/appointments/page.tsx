@@ -46,13 +46,15 @@ const Appointments = () => {
         throw new Error('User details not found. Please login again.');
       }
       
-      const { email } = JSON.parse(userDetails);
-      if (!email) {
-        throw new Error('Email not found in user details. Please login again.');
+      const { email , phone } = JSON.parse(userDetails);
+
+
+      if (!email && !phone) {
+        throw new Error('Email or phone not found in user details. Please login again.');
       }
       
-      // Make API call with email as query parameter
-      const response = await axiosInstance.get(`/api/1.0/book-appointment?search=${email}`);
+      // Make API call with phone as query parameter
+      const response = await axiosInstance.get(`/api/1.0/book-appointment?search=${phone}`);
       
       if (response.data && response.data.length > 0) {
         // Sort appointments by date (newest first)
