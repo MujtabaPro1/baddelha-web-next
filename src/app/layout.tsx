@@ -10,6 +10,8 @@ import './globals.scss';
 import ReCaptchaProvider from '../components/ReCaptchaProvider';
 import DynamicCanonical from '../components/DynamicCanonical';
 import CookieConsent from '../components/CookieConsent';
+import VariantCapture from '../components/VariantCapture';
+import { Suspense } from 'react';
 
 // Preload critical fonts
 const fontPreload = [
@@ -233,6 +235,7 @@ export default function RootLayout({
               <Toaster />
               <UserTypePopupWrapper />
               <CookieConsent />
+              <Suspense fallback={null}><VariantCapture /></Suspense>
             </div>
           </UserTypeProvider>
         </LanguageProvider>

@@ -20,6 +20,7 @@ const Step3 = () => {
     const [email, setEmail] = useState('');
     const [revealPrice, setRevealPrice] = useState(false);
     const [carPrice, setCarPrice] = useState<number | null>(null);
+    const [carPriceRange, setCarPriceRange] = useState<{min: number, max: number} | null>(null);
     const [showPhoneVerification, setShowPhoneVerification] = useState(false);
     const [verificationPhone, setVerificationPhone] = useState('');
     const [otpSent, setOtpSent] = useState(false);
@@ -53,6 +54,11 @@ const Step3 = () => {
     const [recaptchaReady, setRecaptchaReady] = useState(false);
     const [recaptchaRetryCount, setRecaptchaRetryCount] = useState(0);
     const { toast } = useToast();
+    const [isPriceTest, setIsPriceTest] = useState(false);
+
+    useEffect(() => {
+        setIsPriceTest(localStorage.getItem('ab_variant') === 'price_test');
+    }, []);
 
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
@@ -692,11 +698,22 @@ const Step3 = () => {
                     </div>
                     
                     {/* Price Section */}
-                    <div className="hidden bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                   {isPriceTest ? <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                         <p className="text-white text-sm mb-1">{lang[languageContent].yourVehicleMarketPrice}</p>
                         {revealPrice && carPrice ? (
-                            <div className="text-3xl font-bold text-amber-400">
-                                SAR {carPrice ? carPrice.toLocaleString() : '—'}
+                            <div>
+                                {carPriceRange ? (
+                                    <div>
+                                        <div className="text-2xl font-bold text-amber-400">
+                                            SAR {carPriceRange.min.toLocaleString()}
+                                        </div>
+                                        <p className="text-xs text-white/60 mt-1">{language === 'en' ? 'Fair Market Range' : 'نطاق السوق العادل'}</p>
+                                    </div>
+                                ) : (
+                                    <div className="text-3xl font-bold text-amber-400">
+                                        SAR {carPrice.toLocaleString()}
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <button
@@ -726,10 +743,25 @@ const Step3 = () => {
                                             specs: step2Data?.gccSpecs,
                                             recaptchaToken,
                                         };
-                                        const response = await axiosInstance.post('/api/1.0/core/evaluate/car', carData);
+                                        const response = await axiosInstance.post('/api/1.0/car/estimation/market-value', carData);
                                         
                                         if (response.data) {
-                                            setCarPrice(response.data.priceEstimate?.valueRange?.low);
+                                            // Extract price range from new API response structure
+                                            const marketValue = response.data.raw?.data?.marketValue;
+                                            const adjustedPrice = marketValue?.adjustedPrice;
+                                            const basePrice = marketValue?.basePrice;
+                                            
+                                            if (adjustedPrice?.min && adjustedPrice?.max) {
+                                                setCarPriceRange({ min: adjustedPrice.min, max: adjustedPrice.max });
+                                                setCarPrice(adjustedPrice.min);
+                                            } else if (basePrice?.min && basePrice?.max) {
+                                                setCarPriceRange({ min: basePrice.min, max: basePrice.max });
+                                                setCarPrice(basePrice.min);
+                                            } else {
+                                                const price = response.data.marketValue || response.data.estimatedPrice;
+                                                setCarPrice(price);
+                                                setCarPriceRange(null);
+                                            }
                                         }
                                         setRevealPrice(true);
                                         setIsLoading(false);
@@ -759,7 +791,7 @@ const Step3 = () => {
                                 )}
                             </button>
                         )}
-                    </div>
+                    </div>: <></>}
                 </div>
             </div>
             
