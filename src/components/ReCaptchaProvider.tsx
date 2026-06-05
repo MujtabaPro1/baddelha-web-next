@@ -10,9 +10,9 @@ export default function ReCaptchaProvider({
   return (
     <GoogleReCaptchaProvider
       scriptProps={{
-        async: false,
-        defer: false,
-        appendTo: 'head',
+        async: true,
+        defer: true,
+        appendTo: 'body',
         nonce: undefined,
       }}
       reCaptchaKey={'6Lc2Cj8sAAAAAJi90fdNKuQDvS-5BBA9Woj6sYvl'}
