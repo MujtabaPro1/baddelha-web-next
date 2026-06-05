@@ -193,35 +193,23 @@ const Step3 = () => {
     // Monitor reCAPTCHA availability with retry mechanism
     useEffect(() => {
         if (executeRecaptcha) {
-            console.log('reCAPTCHA is available',recaptchaReady);
             setRecaptchaReady(true);
             setRecaptchaRetryCount(0);
-        } else if (recaptchaRetryCount < 10) {
-            // Retry checking for reCAPTCHA availability up to 10 times (10 seconds total)
+        } else if (recaptchaRetryCount < 30) {
             const retryTimer = setTimeout(() => {
-                console.log(`reCAPTCHA not ready, retry attempt ${recaptchaRetryCount + 1}/10`);
                 setRecaptchaRetryCount(prev => prev + 1);
             }, 1000);
             return () => clearTimeout(retryTimer);
-        } else if (recaptchaRetryCount >= 10 && !executeRecaptcha) {
-            // After 10 retries, try to reload the reCAPTCHA script
-            console.warn('reCAPTCHA failed to load after 10 attempts, attempting script reload');
-            const existingScript = document.querySelector('script[src*="recaptcha"]');
-            if (existingScript) {
-                existingScript.remove();
-            }
-            const script = document.createElement('script');
-            script.src = `https://www.google.com/recaptcha/api.js?render=6Le8uTcsAAAAAFQicqxQlu3jXqCdwEJw7TjL7X_q`;
-            script.async = true;
-            document.head.appendChild(script);
-            // Reset retry count to allow checking again
-            setTimeout(() => setRecaptchaRetryCount(0), 2000);
+        } else {
+            // reCAPTCHA failed to load after 30s — unlock the button so user can still book
+            console.warn('reCAPTCHA failed to load, allowing submission without it');
+            setRecaptchaReady(true);
         }
     }, [executeRecaptcha, recaptchaRetryCount]);
 
     
-
-        // Resend timer countdown effect
+    
+    // Resend timer countdown effect
     useEffect(() => {
         if (resendTimer > 0) {
             const interval = setInterval(() => {
@@ -638,7 +626,8 @@ const Step3 = () => {
 
 
     return (
-        <div className="max-w-6xl mt-[120px] mx-auto px-4 py-8">
+        <>
+        <div className="max-w-6xl mt-[120px] mx-auto px-4 py-8 pb-28">
             {/* Progress Indicator */}
             <div className="mb-8">
             <div className="bg-white border border-gray-100 rounded-2xl shadow-sm px-5 py-4">
@@ -1049,9 +1038,12 @@ const Step3 = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full bg-bb hover:bg-bb text-white font-bold py-4 px-6 rounded-xl transition focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 shadow-lg text-lg"
+                            disabled={!recaptchaReady}
+                            className={`w-full bg-bb text-white font-bold py-4 px-6 rounded-xl transition focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 shadow-lg text-lg ${!recaptchaReady ? 'opacity-60 cursor-not-allowed' : 'hover:bg-bb'}`}
                         >
-                            {lang[languageContent].bookAppointment}
+                            {!recaptchaReady
+                                ? (language === 'ar' ? 'جارٍ التحميل...' : 'Loading...')
+                                : lang[languageContent].bookAppointment}
                         </button>
                     </form>
                 </div>
@@ -1347,7 +1339,43 @@ const Step3 = () => {
                 <p className="mt-2">{lang[languageContent].assumption5}</p>
             </div>
         </div>
-    )};
+
+        {/* Floating Car Summary + WhatsApp Help Bar */}
+        {step1Data && (
+            <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+                <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                        <div className="bg-secondary rounded-xl px-4 py-2">
+                            <p className="text-white/70 text-[10px] uppercase tracking-wider">{language === 'en' ? 'Your Vehicle' : 'سيارتك'}</p>
+                            <p className="text-white font-bold text-sm">{step1Data.make} {step1Data.model} {step1Data.year}</p>
+                        </div>
+                        <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500">
+                            {step2Data?.engineSizeName && <span className="bg-slate-100 rounded-full px-2 py-1">{step2Data.engineSizeName}</span>}
+                            {step2Data?.mileageName && <span className="bg-slate-100 rounded-full px-2 py-1">{step2Data.mileageName}</span>}
+                            {step2Data?.gccSpecs && <span className="bg-slate-100 rounded-full px-2 py-1">{step2Data.gccSpecs}</span>}
+                        </div>
+                    </div>
+                    <a
+                        href={`https://wa.me/966920032590?text=${encodeURIComponent(
+                            language === 'en'
+                                ? `Hi, I'm having trouble making an appointment.\n\nMy car details:\n• Make: ${step1Data.make}\n• Model: ${step1Data.model}\n• Year: ${step1Data.year}\n• Engine Size: ${step2Data?.engineSizeName || '-'}\n• Mileage: ${step2Data?.mileageName || '-'}\n• Specs: ${step2Data?.gccSpecs || '-'}\n• Paint: ${step2Data?.paint || '-'}\n• Option: ${step2Data?.option || '-'}\n\nPlease assist me.`
+                                : `مرحباً، أواجه صعوبة في حجز موعد.\n\nتفاصيل سيارتي:\n• الماركة: ${step1Data.make}\n• الموديل: ${step1Data.model}\n• السنة: ${step1Data.year}\n• حجم المحرك: ${step2Data?.engineSizeName || '-'}\n• المسافة المقطوعة: ${step2Data?.mileageName || '-'}\n• المواصفات: ${step2Data?.gccSpecs || '-'}\n• الدهان: ${step2Data?.paint || '-'}\n• الخيار: ${step2Data?.option || '-'}\n\nأرجو المساعدة.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-[#25D366] hover:bg-[#1db954] text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all shadow-md whitespace-nowrap"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        {language === 'en' ? 'Having Issue? Chat with Us' : 'مشكلة في الحجز؟ تواصل معنا'}
+                    </a>
+                </div>
+            </div>
+        )}
+        </>
+    );
+};
 
 
 export default Step3;
