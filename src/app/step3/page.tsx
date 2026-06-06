@@ -349,11 +349,11 @@ const Step3 = () => {
             console.log('reCAPTCHA token:', recaptchaToken);
             bookingData.recaptchaToken = recaptchaToken;
             } catch (recaptchaError) {
-                toast({
-                    title: 'Error',
-                    description: 'reCAPTCHA execution error',
-                    variant: 'destructive',
-                });
+                // toast({
+                //     title: 'Error',
+                //     description: 'reCAPTCHA execution error',
+                //     variant: 'destructive',
+                // });
             console.error('reCAPTCHA execution error:', recaptchaError);
             // Continue without reCAPTCHA for now
             }
