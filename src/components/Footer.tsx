@@ -1,21 +1,14 @@
-'use client';
-import React, { useState } from 'react';
-import { Facebook, Instagram, Linkedin, Mail, Phone, Send, Ghost, Music2 } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
+import React from 'react';
+import { Facebook, Instagram, Linkedin, Mail, Phone, Ghost, Music2 } from 'lucide-react';
 import lang from '../locale';
 import Image from 'next/image';
+import { cookies } from 'next/headers';
 
-const Footer: React.FC = () => {
-  const { language } = useLanguage();
+const Footer: React.FC = async () => {
+  const cookieStore = await cookies();
+  const language = (cookieStore.get('language')?.value as 'en' | 'ar') || 'en';
   const languageContent = language === 'ar' ? 'ar' : 'en';
-  const [email, setEmail] = useState('');
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle newsletter submission
-    console.log('Newsletter signup:', email);
-    setEmail('');
-  };
 
   return (
     <>
@@ -54,7 +47,7 @@ const Footer: React.FC = () => {
           </div>
 
               {/* Newsletter Signup */}
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <h4 className="font-semibold mb-3">{lang[languageContent].newsletter}</h4>
                 <form onSubmit={handleNewsletterSubmit} className="relative flex">
                   <input
@@ -71,7 +64,7 @@ const Footer: React.FC = () => {
                     <Send className="h-4 w-4" />
                   </button>
                 </form>
-              </div>
+              </div> */}
               
               {/* Social Links */}
               <div className="flex space-x-4">
