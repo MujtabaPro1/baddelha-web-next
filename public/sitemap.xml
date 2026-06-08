@@ -41,21 +41,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.baddelha.com.sa/login</loc>
-    <lastmod>2026-02-08</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.baddelha.com.sa/signup</loc>
-    <lastmod>2026-02-08</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.baddelha.com.sa/appointments</loc>
-    <lastmod>2026-02-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.baddelha.com.sa/terms</loc>
     <lastmod>2026-02-08</lastmod>
     <priority>0.3</priority>
