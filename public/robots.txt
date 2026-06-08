@@ -7,4 +7,4 @@ Disallow: /_next/static/
 Disallow: /_vercel/
 
 # Sitemap
-Sitemap: https://baddelha.com.sa/sitemap.xml
+Sitemap: https://www.baddelha.com.sa/sitemap.xml
