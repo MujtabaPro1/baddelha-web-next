@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Car Price Calculator',
     description:
       'Estimate your car price and financing options with BADDELHA’s price calculator. Explore costs, features, and monthly payments in Saudi Arabia.',
-    url: 'https://baddelha.com.sa/price-calculator',
+    url: 'https://www.baddelha.com.sa/price-calculator',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/price-calculator',
+    canonical: 'https://www.baddelha.com.sa/price-calculator',
   },
 };
 

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Contact BADDELHA',
     description:
       'Contact BADDELHA for car valuation, inspection, selling, and trade-in support in Saudi Arabia. We are ready to help.',
-    url: 'https://baddelha.com.sa/contactus',
+    url: 'https://www.baddelha.com.sa/contactus',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/contactus',
+    canonical: 'https://www.baddelha.com.sa/contactus',
   },
 };
 

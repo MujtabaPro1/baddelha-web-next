@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Buying Guides',
     description:
       'Learn about BADDELHA and how we make buying, selling, and trading cars in Saudi Arabia faster, smarter, and more transparent.',
-    url: 'https://baddelha.com.sa/buying-guides',
+    url: 'https://www.baddelha.com.sa/buying-guides',
     siteName: 'BADDELHA',
     type: 'article',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/buying-guides',
+    canonical: 'https://www.baddelha.com.sa/buying-guides',
   },
 };
 

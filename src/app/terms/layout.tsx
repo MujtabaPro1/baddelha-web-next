@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Terms and Conditions',
     description:
       'Review BADDELHA terms and conditions for using our website and services, including car inspection, valuation, and marketplace processes.',
-    url: 'https://baddelha.com.sa/terms',
+    url: 'https://www.baddelha.com.sa/terms',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/terms',
+    canonical: 'https://www.baddelha.com.sa/terms',
   },
 };
 

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Privacy Policy',
     description:
       'Read BADDELHA’s privacy policy to understand how we collect, use, and protect your data when you use our car marketplace services.',
-    url: 'https://baddelha.com.sa/privacy',
+    url: 'https://www.baddelha.com.sa/privacy',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/privacy',
+    canonical: 'https://www.baddelha.com.sa/privacy',
   },
 };
 

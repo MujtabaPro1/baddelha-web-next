@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Blog',
     description:
       'Read BADDELHA insights on car valuation, inspections, and the Saudi car market. Tips to sell your car faster and get a fair price.',
-    url: 'https://baddelha.com.sa/blog',
+    url: 'https://www.baddelha.com.sa/blog',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/blog',
+    canonical: 'https://www.baddelha.com.sa/blog',
   },
 };
 

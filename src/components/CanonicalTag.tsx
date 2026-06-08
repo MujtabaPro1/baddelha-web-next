@@ -9,7 +9,7 @@ export default function CanonicalTag() {
 
   useEffect(() => {
     // Create the canonical URL based on the current path
-    const baseUrl = 'https://badelha.com.sa';
+    const baseUrl = 'https://www.baddelha.com.sa';
     const path = pathname === '/' ? '' : pathname;
     setCanonicalUrl(`${baseUrl}${path}`);
   }, [pathname]);

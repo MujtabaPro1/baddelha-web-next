@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'About BADDELHA',
     description:
       'Learn about BADDELHA and how we make buying, selling, and trading cars in Saudi Arabia faster, smarter, and more transparent.',
-    url: 'https://baddelha.com.sa/about',
+    url: 'https://www.baddelha.com.sa/about',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/about',
+    canonical: 'https://www.baddelha.com.sa/about',
   },
 };
 

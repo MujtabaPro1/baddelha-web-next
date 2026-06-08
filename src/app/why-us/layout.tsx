@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Why BADDELHA',
     description:
       'Discover why BADDELHA is trusted for professional inspection, fair market valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
-    url: 'https://badelha.com.sa/why-us',
+    url: 'https://www.baddelha.com.sa/why-us',
     siteName: 'BADDELHA',
     type: 'website',
     images: [

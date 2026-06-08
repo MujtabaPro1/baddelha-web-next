@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'BADDELHA' }],
   creator: 'BADDELHA',
   publisher: 'BADDELHA',
-  metadataBase: new URL('https://baddelha.com.sa'),
+  metadataBase: new URL('https://www.baddelha.com.sa'),
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'BADDELHA - Buy, Sell & Trade Cars in Saudi Arabia',
     description: 'Saudi Arabia\'s premier car marketplace. Get instant valuations, competitive trade-in offers, and hassle-free car buying and selling.',
-    url: 'https://baddelha.com.sa',
+    url: 'https://www.baddelha.com.sa',
     siteName: 'BADDELHA',
     locale: 'en_US',
     alternateLocale: 'ar_SA',
@@ -80,8 +80,8 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'BADDELHA',
   alternateName: 'بدلها',
-  url: 'https://baddelha.com.sa',
-  logo: 'https://baddelha.com.sa/logo.png',
+  url: 'https://www.baddelha.com.sa',
+  logo: 'https://www.baddelha.com.sa/logo.png',
   sameAs: [
     'https://www.facebook.com/baddelha',
     'https://www.instagram.com/baddelha',
@@ -108,16 +108,16 @@ const websiteSchema = {
   '@type': 'WebSite',
   name: 'BADDELHA',
   alternateName: 'بدلها',
-  url: 'https://baddelha.com.sa',
+  url: 'https://www.baddelha.com.sa',
 };
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'AutoDealer',
   name: 'BADDELHA',
-  image: 'https://baddelha.com.sa/logo.png',
-  '@id': 'https://baddelha.com.sa',
-  url: 'https://baddelha.com.sa',
+  image: 'https://www.baddelha.com.sa/logo.png',
+  '@id': 'https://www.baddelha.com.sa',
+  url: 'https://www.baddelha.com.sa',
   telephone: '+966-92-00-32590',
   priceRange: '$$',
   address: {

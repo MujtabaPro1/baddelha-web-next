@@ -10,7 +10,7 @@ interface HeadTagsProps {
 
 export default function HeadTags({ title, description }: HeadTagsProps) {
   const pathname = usePathname();
-  const baseUrl = 'https://badelha.com.sa';
+  const baseUrl = 'https://www.baddelha.com.sa';
   const canonicalUrl = `${baseUrl}${pathname === '/' ? '' : pathname}`;
   
   const pageTitle = title || 'BADDELHA - Buy, Sell & Trade Cars in Saudi Arabia';

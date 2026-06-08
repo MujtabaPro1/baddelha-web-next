@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'FAQ',
     description:
       'Find answers to common questions about BADDELHA services, car inspection, valuation process, selling, exchanging, and auctions in Saudi Arabia.',
-    url: 'https://baddelha.com.sa/faq',
+    url: 'https://www.baddelha.com.sa/faq',
     siteName: 'BADDELHA',
     type: 'website',
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
-    canonical: 'https://baddelha.com.sa/faq',
+    canonical: 'https://www.baddelha.com.sa/faq',
   },
 };
 
