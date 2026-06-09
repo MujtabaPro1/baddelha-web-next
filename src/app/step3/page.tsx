@@ -54,11 +54,8 @@ const Step3 = () => {
     const [recaptchaReady, setRecaptchaReady] = useState(false);
     const [recaptchaRetryCount, setRecaptchaRetryCount] = useState(0);
     const { toast } = useToast();
-    const [isPriceTest, setIsPriceTest] = useState(false);
+    const [isPriceTest, setIsPriceTest] = useState(true);
 
-    useEffect(() => {
-        setIsPriceTest(localStorage.getItem('ab_variant') === 'price_test');
-    }, []);
 
     const { language } = useLanguage();
     const languageContent = language === 'ar' ? 'ar' : 'en';
@@ -543,8 +540,8 @@ const Step3 = () => {
                 return;
             }
             
-            // Check if car price is null, if so show the price popup
-            if (carPrice === null) {
+            // Check if car price is missing or zero, prompt user for expected price
+            if (carPrice === null || carPrice === 0) {
                 setShowPricePopup(true);
                 return;
             }
@@ -689,7 +686,7 @@ const Step3 = () => {
                     {/* Price Section */}
                    {isPriceTest ? <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                         <p className="text-white text-sm mb-1">{lang[languageContent].yourVehicleMarketPrice}</p>
-                        {revealPrice && carPrice ? (
+                        {revealPrice && carPrice !== null ? (
                             <div>
                                 {carPriceRange ? (
                                     <div>
@@ -746,8 +743,11 @@ const Step3 = () => {
                                             } else if (basePrice?.min && basePrice?.max) {
                                                 setCarPriceRange({ min: basePrice.min, max: basePrice.max });
                                                 setCarPrice(basePrice.min);
+                                            } else if (response.data.priceRange?.min && response.data.priceRange?.max) {
+                                                setCarPriceRange({ min: response.data.priceRange.min, max: response.data.priceRange.max });
+                                                setCarPrice(response.data.priceRange.min);
                                             } else {
-                                                const price = response.data.marketValue || response.data.estimatedPrice;
+                                                const price = response.data.marketValue ?? response.data.estimatedPrice ?? response.data.estimatedValue ?? 0;
                                                 setCarPrice(price);
                                                 setCarPriceRange(null);
                                             }

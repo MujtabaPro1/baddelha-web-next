@@ -75,58 +75,69 @@ const Step2 = () => {
             const data = response?.data;
             console.log('Vehicle specs API response:', data);
             
-            // Check if we got valid data with bodyTypes or engineSizes arrays
-            if (data && (data.bodyTypes?.length > 0 || data.engineSizes?.length > 0)) {
-                let specsApplied = false;
-                
-                // Replace bodyTypes dropdown completely with API data
-                if (data.bodyTypes && Array.isArray(data.bodyTypes) && data.bodyTypes.length > 0) {
-                    // Always use all bodyTypes from API response
-                    setBodyTypes(data.bodyTypes);
-                    
-                    // Find the first available body type, or use the first one if none are marked available
-                    const firstAvailable = data.bodyTypes.find((bt: any) => bt.available) || data.bodyTypes[0];
-                    
-                    if (firstAvailable) {
-                        setBodyType(firstAvailable.id);
-                        setBodyTypeName(firstAvailable.name);
-                        console.log('Replaced bodyTypes with API data, selected:', firstAvailable.name);
-                        specsApplied = true;
-                    }
-                }
-                
-                // Replace engineSizes dropdown with API data
-                if (data.engineSizes && Array.isArray(data.engineSizes) && data.engineSizes.length > 0) {
-                    // Convert engine size strings to objects matching the expected format
-                    const engineSizeObjects = data.engineSizes.map((size: string) => ({
-                        id: size,
-                        name: size
-                    }));
-                    
-                    setEngineSizes(engineSizeObjects);
-                    
-                    // Set the first engine size as selected
-                    if (engineSizeObjects.length > 0) {
-                        setEngineSize(engineSizeObjects[0].id);
-                        setEngineSizeName(engineSizeObjects[0].name);
-                        console.log('Applied engineSizes from new API, selected:', engineSizeObjects[0].name);
-                        specsApplied = true;
-                    }
-                }
-                
-                // Set trims if available
-                if (data.trims && Array.isArray(data.trims) && data.trims.length > 0) {
-                    setTrims(data.trims);
-                    // Auto-select first trim
-                    setTrim(String(data.trims[0].id));
-                    setTrimName(data.trims[0].name);
-                    console.log('Applied trims from new API:', data.trims.length, 'trims available');
-                }
-                
-                return specsApplied;
+            // Check if API returned data (not just empty arrays)
+            if (!data) {
+                console.log('No data returned from vehicle specs API');
+                return false;
             }
             
-            return false;
+            // Check if we got valid non-empty data
+            const hasBodyTypes = data.bodyTypes && Array.isArray(data.bodyTypes) && data.bodyTypes.length > 0;
+            const hasEngineSizes = data.engineSizes && Array.isArray(data.engineSizes) && data.engineSizes.length > 0;
+            const hasTrims = data.trims && Array.isArray(data.trims) && data.trims.length > 0;
+            
+            // If all arrays are empty, don't update state - fallback to old API
+            if (!hasBodyTypes && !hasEngineSizes && !hasTrims) {
+                console.log('Vehicle specs API returned empty arrays, falling back to old API');
+                return false;
+            }
+            
+            let specsApplied = false;
+            
+            // Only update bodyTypes if we have data
+            if (hasBodyTypes) {
+                setBodyTypes(data.bodyTypes);
+                
+                // Find the first available body type, or use the first one if none are marked available
+                const firstAvailable = data.bodyTypes.find((bt: any) => bt.available) || data.bodyTypes[0];
+                
+                if (firstAvailable) {
+                    setBodyType(firstAvailable.id);
+                    setBodyTypeName(firstAvailable.name);
+                    console.log('Replaced bodyTypes with API data, selected:', firstAvailable.name);
+                    specsApplied = true;
+                }
+            }
+            
+            // Only update engineSizes if we have data
+            if (hasEngineSizes) {
+                // Convert engine size strings to objects matching the expected format
+                const engineSizeObjects = data.engineSizes.map((size: string) => ({
+                    id: size,
+                    name: size
+                }));
+                
+                setEngineSizes(engineSizeObjects);
+                
+                // Set the first engine size as selected
+                if (engineSizeObjects.length > 0) {
+                    setEngineSize(engineSizeObjects[0].id);
+                    setEngineSizeName(engineSizeObjects[0].name);
+                    console.log('Applied engineSizes from new API, selected:', engineSizeObjects[0].name);
+                    specsApplied = true;
+                }
+            }
+            
+            // Only set trims if we have data
+            if (hasTrims) {
+                setTrims(data.trims);
+                // Auto-select first trim
+                setTrim(String(data.trims[0].id));
+                setTrimName(data.trims[0].name);
+                console.log('Applied trims from new API:', data.trims.length, 'trims available');
+            }
+            
+            return specsApplied;
         } catch (error) {
             console.log('New vehicle specs API failed or returned empty, falling back to existing flow:', error);
             return false;
@@ -136,23 +147,23 @@ const Step2 = () => {
     const getCarSpecs = async () => {
         const storedCarDetails: any = sessionStorage.getItem('carDetails');
         const _carDetails = JSON.parse(storedCarDetails);
-        
+
         // First, try the new API
         const newApiSuccess = await fetchVehicleSpecs(
             _carDetails.make,
             _carDetails.model,
             _carDetails.year
         );
-        
+
         // If new API returned data, we're done
         if (newApiSuccess) {
             console.log('Successfully applied specs from new API');
             return;
         }
-        
+
         // Otherwise, fall back to the old API
         console.log('Falling back to old car specs API...');
-        axiosInstance.post(`/api/1.0/car/specs`,{
+        axiosInstance.post('/api/1.0/car/specs', {
             make: _carDetails.make,
             model: _carDetails.model,
             year: Number(_carDetails.year)
@@ -161,17 +172,15 @@ const Step2 = () => {
                 console.log('Car specs:', response.data);
                 const data = response.data;
 
-                if(engineSizesRef?.current?.length > 0 && bodyTypesRef?.current?.length > 0 ){
-                    // Use Set to prevent duplicates
+                if (engineSizesRef?.current?.length > 0 && bodyTypesRef?.current?.length > 0) {
                     const bodyTypeSet = new Set<string>();
                     const newBodyType: any[] = [];
-                    
                     const engineSizeSet = new Set<string>();
                     const newEngineSize: any[] = [];
-                    
+
                     data.bodyTypes?.forEach((item: any) => {
                         bodyTypesRef?.current.forEach((bodyType: any) => {
-                            if(bodyType.name === item && !bodyTypeSet.has(bodyType.name)){
+                            if (bodyType.name === item && !bodyTypeSet.has(bodyType.name)) {
                                 bodyTypeSet.add(bodyType.name);
                                 newBodyType.push(bodyType);
                             }
@@ -180,7 +189,7 @@ const Step2 = () => {
 
                     data.engineSizes?.forEach((item: any) => {
                         engineSizesRef?.current.forEach((engineSize: any) => {
-                            if(engineSize.name === item && !engineSizeSet.has(engineSize.name)){
+                            if (engineSize.name === item && !engineSizeSet.has(engineSize.name)) {
                                 engineSizeSet.add(engineSize.name);
                                 newEngineSize.push(engineSize);
                             }
@@ -189,28 +198,25 @@ const Step2 = () => {
 
                     console.log('Filtered (no duplicates):', newBodyType, newEngineSize);
 
-                    if(newBodyType.length > 0){
+                    if (newBodyType.length > 0) {
                         setBodyTypes(newBodyType);
                         setBodyType(newBodyType[0].name);
                         setBodyTypeName(newBodyType[0].name);
                     }
-                    if(newEngineSize.length > 0){
+                    if (newEngineSize.length > 0) {
                         setEngineSizes(newEngineSize);
                         setEngineSize(newEngineSize[0].name);
                         setEngineSizeName(newEngineSize[0].name);
                     }
                 }
-                
-                // Handle trims if available
-                if(data.trims && Array.isArray(data.trims) && data.trims.length > 0){
-                    // Remove duplicates from trims
+
+                if (data.trims && Array.isArray(data.trims) && data.trims.length > 0) {
                     const trimSet = new Set<number>();
                     const uniqueTrims = data.trims.filter((t: any) => {
-                        if(trimSet.has(t.id)) return false;
+                        if (trimSet.has(t.id)) return false;
                         trimSet.add(t.id);
                         return true;
                     });
-                    
                     setTrims(uniqueTrims);
                     setTrim(String(uniqueTrims[0].id));
                     setTrimName(uniqueTrims[0].name);
@@ -220,8 +226,8 @@ const Step2 = () => {
             .catch((error) => {
                 console.error('Error fetching car specs:', error);
             });
-    }
-    
+    };
+
     // Fetch body types
     useEffect(() => {
         const fetchBodyTypes = async () => {
@@ -262,7 +268,6 @@ const Step2 = () => {
             }
 
             getCarSpecs();
-
         } catch (err) {
             console.error('Error fetching engine sizes:', err);
             setError(prev => ({ ...prev, engineSizes: 'Failed to load engine sizes' }));
