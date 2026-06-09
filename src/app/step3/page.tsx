@@ -54,7 +54,7 @@ const Step3 = () => {
     const [recaptchaReady, setRecaptchaReady] = useState(false);
     const [recaptchaRetryCount, setRecaptchaRetryCount] = useState(0);
     const { toast } = useToast();
-    const [isPriceTest, setIsPriceTest] = useState(true);
+    const isPriceTest = true;
 
 
     const { language } = useLanguage();
