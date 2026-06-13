@@ -96,10 +96,25 @@ const Step2 = () => {
             
             // Only update bodyTypes if we have data
             if (hasBodyTypes) {
-                setBodyTypes(data.bodyTypes);
+                // Normalize body types - fix malformed data where name/label are objects instead of strings
+                const normalizedBodyTypes = data.bodyTypes.map((bt: any) => {
+                    // Check if name is an object (malformed) - extract the correct values from it
+                    if (bt.name && typeof bt.name === 'object' && bt.name.id !== undefined) {
+                        return {
+                            id: bt.name.id,
+                            name: bt.name.name,
+                            label: bt.name.label,
+                            available: bt.name.available ?? bt.available ?? true
+                        };
+                    }
+                    // Already in correct format
+                    return bt;
+                });
+                
+                setBodyTypes(normalizedBodyTypes);
                 
                 // Find the first available body type, or use the first one if none are marked available
-                const firstAvailable = data.bodyTypes.find((bt: any) => bt.available) || data.bodyTypes[0];
+                const firstAvailable = normalizedBodyTypes.find((bt: any) => bt.available) || normalizedBodyTypes[0];
                 
                 if (firstAvailable) {
                     setBodyType(firstAvailable.id);
