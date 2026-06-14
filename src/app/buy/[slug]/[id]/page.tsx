@@ -365,7 +365,7 @@ export default function Page() {
                   {[
                     { id: 'overview', label: lang[language].overview },
                     { id: 'inspection', label: lang[language].inspection },
-                    similarCars?.length ? { id: 'similar', label: lang[language].similarCars } : null,
+                    // similarCars?.length ? { id: 'similar', label: lang[language].similarCars } : null,
                   ].map((item) => {
                     if (!item) return null;
                     const { id, label } = item;

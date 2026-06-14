@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useLanguage } from '../contexts/LanguageContext';
 import lang from '../locale';
 import { useRouter } from 'next/navigation';
+import { useToast } from '../hooks/use-toast';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,6 +16,7 @@ const Navbar: React.FC = () => {
   const { language, setLanguage } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
   const router = useRouter();
+  const { toast } = useToast();
 
   // Function to check auth state from localStorage
   const checkAuthState = () => {
@@ -36,6 +38,17 @@ const Navbar: React.FC = () => {
   // Client-side only code to handle localStorage
   useEffect(() => {
     checkAuthState();
+    
+    // Check for auth error message (set when user is logged out due to 401)
+    const authError = sessionStorage.getItem('authError');
+    if (authError) {
+      toast({
+        title: language === 'ar' ? 'انتهت الجلسة' : 'Session Expired',
+        description: authError,
+        variant: 'destructive',
+      });
+      sessionStorage.removeItem('authError');
+    }
     
     // Listen for auth state changes
     const handleAuthChange = () => checkAuthState();
@@ -149,6 +162,13 @@ const Navbar: React.FC = () => {
               </span>
             </div>
             <nav className="hidden md:flex space-x-8">
+              <a 
+                href="/buy" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'شراء سيارة' : 'Buy a car'}
+              </a>
+              
               {/* <a 
                 href="/buy" 
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} hover:text-[#f78f37]`}
@@ -247,13 +267,13 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'الرئيسية' : 'Home'}
               </a>
-              {/* <a 
+              <a 
                 href="/buy" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {language === 'ar' ? 'شراء سيارة' : 'Buy a car'}
-              </a> */}
+              </a>
               {/* <a 
                 href="/auction" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
