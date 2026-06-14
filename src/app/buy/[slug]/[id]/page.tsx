@@ -23,7 +23,7 @@ import {
   Info,
   CheckCircle2Icon
 } from 'lucide-react';
-import axiosInstance from '../../../../services/axiosInstance';
+import axiosInstance, { BASE_URL } from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
 import CarBodySvgView from '../../../../components/CarBodyView';
 import { useParams } from 'next/navigation';
@@ -32,6 +32,44 @@ import { useLanguage } from '../../../../contexts/LanguageContext';
 import lang from '../../../../locale';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { CrossCircledIcon } from '@radix-ui/react-icons';
+
+
+function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) {
+
+  const [isError,setIsError] = useState(false);
+
+  return   <div
+  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
+                        <div className="relative">
+
+                          <img
+                             src={isError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' :  BASE_URL + '/api/1.0/media/' + car?.coverImage}
+                            alt={car?.make + '-' + car?.model} 
+                            onError={()=>{
+                              setIsError(true);
+                            }}
+                            className="w-full h-36 object-cover" />
+                        </div>
+                        <div className="p-3">
+                          <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">{car?.make}&nbsp;{car?.model}</h4>
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="font-bold text-red-500 text-sm">{car.price}</span>
+                            <span className="text-xs text-gray-500">{car.mileage}</span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-1 mb-2">
+                            <div className="flex items-center text-xs text-gray-600">
+                              <Calendar className="h-3 w-3 mr-1" /> {car?.modelYear}
+                            </div>
+                            <div className="flex items-center text-xs text-gray-600">
+                              <Fuel className="h-3 w-3 mr-1" /> {car?.fuelType}
+                            </div>
+                          </div>
+                          <button className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs font-medium py-1 px-2 rounded transition">
+                            {lang[language].viewDetails}
+                          </button>
+                        </div>
+                      </div>
+}
 
 export default function Page() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -923,31 +961,11 @@ export default function Page() {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       {/* Car 1 */}
                       {similarCars?.map((car:any)=>{
-                         return <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
-                        <div className="relative">
-                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8l0IRdya6kunKn7-nw6HW0MjMVD34HaN8YQ&s" 
-                            alt="Similar Car 1" 
-                            className="w-full h-36 object-cover" />
-                        </div>
-                        <div className="p-3">
-                          <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">{car?.make}&nbsp;{car?.model}</h4>
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="font-bold text-red-500 text-sm">{car.price}</span>
-                            <span className="text-xs text-gray-500">{car.mileage}</span>
-                          </div>
-                          <div className="grid grid-cols-2 gap-1 mb-2">
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Calendar className="h-3 w-3 mr-1" /> {car?.modelYear}
-                            </div>
-                            <div className="flex items-center text-xs text-gray-600">
-                              <Fuel className="h-3 w-3 mr-1" /> {car?.fuelType}
-                            </div>
-                          </div>
-                          <button className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs font-medium py-1 px-2 rounded transition">
-                            {lang[language].viewDetails}
-                          </button>
-                        </div>
-                      </div>
+                         return <VehicleCard
+                           key={car?.id}
+                           car={car} 
+                           lang={lang} 
+                           language={language} />
                       })}
                       
                    

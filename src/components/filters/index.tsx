@@ -22,21 +22,21 @@ export const Filters = ({ isLanding = false }) => {
       attribute: "model",
       icon: Car,
     },
-    {
-      title: 'Body Type',
-      attribute: "bodyType",
-      icon: Car,
-    },
+    // {
+    //   title: 'Body Type',
+    //   attribute: "bodyType",
+    //   icon: Car,
+    // },
     {
       title: 'Year',
       attribute: "modelYear",
       icon: Car,
     },
-    {
-      title: 'Selling Price',
-      attribute: "sellingPrice",
-      icon: Car,
-    },
+    // {
+    //   title: 'Selling Price',
+    //   attribute: "sellingPrice",
+    //   icon: Car,
+    // },
 
   ];
 
