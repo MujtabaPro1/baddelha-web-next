@@ -10,6 +10,7 @@ import { Card } from './ui/card';
 // Only keep the years array as static data
 const years = Array.from({ length: 21 }, (_, i) => (new Date().getFullYear() + 1 - i).toString());
 
+
 // Car brand logo utility - using CarLogos.org API
 const getCarLogo = (brandName: string): string => {
   //https://www.carlogos.org/car-logos/honda-logo.png
