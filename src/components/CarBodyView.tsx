@@ -7,10 +7,14 @@ type BodyCondition = {
 
 type CarBodySvgProps = {
   data: BodyCondition;
+  showLegend?: boolean;
+  lang?: 'en' | 'ar';
 };
 
 const CarBodySvgView: React.FC<CarBodySvgProps> = ({
-  data
+  data,
+  showLegend = true,
+  lang = 'en'
 }) => {
 
   
@@ -26,6 +30,7 @@ const CarBodySvgView: React.FC<CarBodySvgProps> = ({
   };
 
   return (
+    <>
     <svg version="1.1" id="car_unfolded" xmlns="http://www.w3.org/2000/svg"
        x="0px" y="0px" viewBox="-7 97 595.3 600"
        enableBackground="new -7 97 595.3 600" height="600" xmlSpace="preserve">
@@ -37,7 +42,7 @@ const CarBodySvgView: React.FC<CarBodySvgProps> = ({
           
           .part:hover,
           .part:active {
-            fill: #ffcccc;
+            fill: #ffd6d6;
           }
           
           .part.original {
@@ -46,19 +51,19 @@ const CarBodySvgView: React.FC<CarBodySvgProps> = ({
           }
           
           .part.damaged {
-            fill: orange;
+            fill: #FFE5A0;
           }
           
           .part.repainted {
-            fill: red;
+            fill: #F5A5A5;
           }
           
           .part.portion-repainted {
-            fill: yellow;
+            fill: #FFE5A0;
           }
           
           .part.not-available {
-            fill: gray;
+            fill: #e0e0e0;
             opacity: 0.8;
           }`}
         </style>
@@ -331,6 +336,20 @@ const CarBodySvgView: React.FC<CarBodySvgProps> = ({
     />
     <path id="antenna" fill="none" stroke="#032D37" strokeWidth="2" d="M280.3,460.3l13.9-13.9" />
     </svg>
+    
+    {showLegend && (
+      <div className="flex items-center justify-center gap-6 mt-4 text-sm">
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded" style={{ backgroundColor: '#FFE5A0', border: '1px solid #032D37' }} />
+          <span className="text-gray-700">{lang === 'ar' ? 'ضرر' : 'Damaged'} - {lang === 'ar' ? 'Damaged' : 'ضرر'}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded" style={{ backgroundColor: '#F5A5A5', border: '1px solid #032D37' }} />
+          <span className="text-gray-700">{lang === 'ar' ? 'مرشوش' : 'Repainted'} - {lang === 'ar' ? 'Repainted' : 'مرشوش'}</span>
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 
