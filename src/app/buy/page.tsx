@@ -135,11 +135,11 @@ function Buy() {
             
                         setSortBy(e.target.value);
                       }}
-                      className="appearance-none w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-7 sm:pr-8 focus:ring-2 focus:ring-[#f78f37] focus:border-transparent text-xs sm:text-sm"
+                      className="appearance-none w-full min-w-[180px] sm:w-auto bg-white border border-gray-300 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-7 sm:pr-8 focus:ring-2 focus:ring-[#f78f37] focus:border-transparent text-xs sm:text-sm"
                     >
                        <option value="cars">Recommended</option>
-                      {/* <option value="price">Price: Low to High</option>
-                      <option value="price-high">Price: High to Low</option> */}
+                      <option value="cars:sellingPrice:asc">Price: Low to High</option>
+                      <option value="cars:sellingPrice:desc">Price: High to Low</option>
                       <option value="cars:createdAt:desc">Year: Newest First</option>
                       <option value="cars:createdAt:asc">Year: Oldest First</option>
                       {/* <option value="mileage:asc">Mileage: Low to High</option>

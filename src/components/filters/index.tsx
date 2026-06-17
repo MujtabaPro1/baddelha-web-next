@@ -32,11 +32,11 @@ export const Filters = ({ isLanding = false }) => {
       attribute: "modelYear",
       icon: Car,
     },
-    // {
-    //   title: 'Selling Price',
-    //   attribute: "sellingPrice",
-    //   icon: Car,
-    // },
+    {
+      title: 'Selling Price',
+      attribute: "sellingPrice",
+      icon: Car,
+    },
 
   ];
 
