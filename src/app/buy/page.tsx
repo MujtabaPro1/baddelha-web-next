@@ -7,7 +7,6 @@ import { PaginationComponent } from '../../components/pagination';
 import { Filters } from '../../components/filters';
 import { SearchBox } from '../../components/search';
 import { BASE_URL } from '../../services/axiosInstance';
-import { set } from 'date-fns';
 
 
 const numberWithCommas = (x: number) => {
