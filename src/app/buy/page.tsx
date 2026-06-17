@@ -7,6 +7,7 @@ import { PaginationComponent } from '../../components/pagination';
 import { Filters } from '../../components/filters';
 import { SearchBox } from '../../components/search';
 import { BASE_URL } from '../../services/axiosInstance';
+import { set } from 'date-fns';
 
 
 const numberWithCommas = (x: number) => {
@@ -43,7 +44,7 @@ const CarView = ({viewMode,likedCars,toggleLike}: {viewMode: 'grid' | 'list',lik
 
 function Buy() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [sortBy, setSortBy] = useState('price-low');
+  const [sortBy, setSortBy] = useState('cars');
   const [showFilters, setShowFilters] = useState(false);
   const [likedCars, setLikedCars] = useState<Set<number>>(new Set());
 
@@ -83,7 +84,7 @@ function Buy() {
 
 
   return (
-    <InstantWrapper searchIndex={'cars'} >
+    <InstantWrapper searchIndex={sortBy} >
     <div className="min-h-screen bg-gray-50 pt-[60px]">
       {/* Hero Section */}
       <div className="bg-[#3d3d40] text-white py-8 sm:py-12 md:py-16">
@@ -130,15 +131,19 @@ function Buy() {
                   <div className="relative flex-1 sm:flex-none">
                     <select
                       value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
+                      onChange={(e) => {
+            
+                        setSortBy(e.target.value);
+                      }}
                       className="appearance-none w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-7 sm:pr-8 focus:ring-2 focus:ring-[#f78f37] focus:border-transparent text-xs sm:text-sm"
                     >
-                      <option value="price-low">Price: Low to High</option>
-                      <option value="price-high">Price: High to Low</option>
-                      <option value="year-new">Year: Newest First</option>
-                      <option value="year-old">Year: Oldest First</option>
-                      <option value="mileage-low">Mileage: Low to High</option>
-                      <option value="mileage-high">Mileage: High to Low</option>
+                       <option value="cars">Recommended</option>
+                      {/* <option value="price">Price: Low to High</option>
+                      <option value="price-high">Price: High to Low</option> */}
+                      <option value="cars:createdAt:desc">Year: Newest First</option>
+                      <option value="cars:createdAt:asc">Year: Oldest First</option>
+                      {/* <option value="mileage:asc">Mileage: Low to High</option>
+                      <option value="mileage:desc">Mileage: High to Low</option> */}
                     </select>
                     <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 text-gray-400 pointer-events-none" />
                   </div>
