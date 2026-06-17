@@ -65,7 +65,7 @@ export const Filters = ({ isLanding = false }) => {
 
   return (
     <div className="rounded-lg overflow-hidden shadow-soft">
-      <div className="bg-white p-5 border-b w-64 flex items-center justify-between">
+      <div className="bg-white p-4 sm:p-5 border-b w-full lg:w-64 flex items-center justify-between">
         <h2 className="font-bold text-xl text-gray-800">Filters</h2>
         {isLanding ? (
           <button 
@@ -85,7 +85,7 @@ export const Filters = ({ isLanding = false }) => {
         return (
           <div
             key={"_Filters-" + index + "_Item"}
-            className="w-64 border-gray-200 border-b last:border-b-0"
+            className="w-full lg:w-64 border-gray-200 border-b last:border-b-0"
           >
             <button
               onClick={(e) => {

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { Filter, Grid, List, Heart, MapPin, Fuel, Calendar, Settings, ChevronDown, X, SlidersHorizontal } from 'lucide-react';
+import { Filter, Grid, List, Heart, MapPin, Fuel, Calendar, Settings, ChevronDown, X } from 'lucide-react';
 import { InstantWrapper } from '../../providers/InstantProvider';
 import { useHits, useInstantSearch, useStats } from "react-instantsearch";
 import { PaginationComponent } from '../../components/pagination';
@@ -13,11 +13,6 @@ const numberWithCommas = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-const makes = ['All Makes', 'BMW', 'Mercedes-Benz', 'Audi', 'Lexus', 'Tesla', 'Toyota'];
-const bodyTypes = ['All Types', 'Sedan', 'SUV', 'Hatchback', 'Coupe', 'Convertible'];
-const fuelTypes = ['All Fuel Types', 'Gasoline', 'Hybrid', 'Electric', 'Diesel'];
-const conditions = ['All Conditions', 'New', 'Used', 'Certified Pre-Owned'];
-const locations = ['All Locations', 'Riyadh', 'Jeddah', 'Dammam', 'Mecca', 'Medina'];
 
 
 const CarView = ({viewMode,likedCars,toggleLike}: {viewMode: 'grid' | 'list',likedCars: Set<number>,toggleLike: (carId: number) => void}) => {
@@ -29,9 +24,9 @@ const CarView = ({viewMode,likedCars,toggleLike}: {viewMode: 'grid' | 'list',lik
   console.log('hits',hits);
   console.log('results',results);
   console.log('status',status);
-  if(status == 'loading'){
-    return <div>Loading...</div>
-  }
+  // if(status == 'loading'){
+  //   return <div>Loading...</div>
+  // }
 
 
   return <>{hits.map((car: any) => (
@@ -47,14 +42,6 @@ const CarView = ({viewMode,likedCars,toggleLike}: {viewMode: 'grid' | 'list',lik
 }
 
 function Buy() {
-  const [selectedMake, setSelectedMake] = useState('All Makes');
-  const [selectedBodyType, setSelectedBodyType] = useState('All Types');
-  const [selectedFuelType, setSelectedFuelType] = useState('All Fuel Types');
-  const [selectedCondition, setSelectedCondition] = useState('All Conditions');
-  const [selectedLocation, setSelectedLocation] = useState('All Locations');
-  const [priceRange, setPriceRange] = useState([0, 300000]);
-  const [yearRange, setYearRange] = useState([2020, 2024]);
-  const [mileageRange, setMileageRange] = useState([0, 50000]);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('price-low');
   const [showFilters, setShowFilters] = useState(false);
@@ -70,211 +57,12 @@ function Buy() {
     setLikedCars(newLikedCars);
   };
 
-  const clearFilters = () => {
-    setSelectedMake('All Makes');
-    setSelectedBodyType('All Types');
-    setSelectedFuelType('All Fuel Types');
-    setSelectedCondition('All Conditions');
-    setSelectedLocation('All Locations');
-    setPriceRange([0, 300000]);
-    setYearRange([2020, 2024]);
-    setMileageRange([0, 50000]);
-  };
-
-  const activeFiltersCount = [
-    selectedMake !== 'All Makes',
-    selectedBodyType !== 'All Types',
-    selectedFuelType !== 'All Fuel Types',
-    selectedCondition !== 'All Conditions',
-    selectedLocation !== 'All Locations',
-    priceRange[0] !== 0 || priceRange[1] !== 300000,
-    yearRange[0] !== 2020 || yearRange[1] !== 2024,
-    mileageRange[0] !== 0 || mileageRange[1] !== 50000
-  ].filter(Boolean).length;
-
-  const FilterView = (isShowFilter: boolean) => {
-
-    if(!isShowFilter){
-      return null;
-    }
-
-    return  <div className={`lg:w-80 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-    <div className="hidden bg-white rounded-xl shadow-md p-6 sticky top-24">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold flex items-center">
-          <SlidersHorizontal className="h-5 w-5 mr-2" />
-          Filters
-          {activeFiltersCount > 0 && (
-            <span className="ml-2 bg-primaryBtn text-white text-xs px-2 py-1 rounded-full">
-              {activeFiltersCount}
-            </span>
-          )}
-        </h3>
-        {activeFiltersCount > 0 && (
-          <button
-            onClick={clearFilters}
-            className="text-sm text-gray-500 hover:text-gray-700 flex items-center"
-          >
-            <X className="h-4 w-4 mr-1" />
-            Clear All
-          </button>
-        )}
+  const FilterView = () => {
+    return (
+      <div className="lg:w-72 sticky top-24">
+        <Filters />
       </div>
-
-      <div className="space-y-6">
-        {/* Make Filter */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Make</label>
-          <select
-            value={selectedMake}
-            onChange={(e) => setSelectedMake(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
-          >
-            {makes.map(make => (
-              <option key={make} value={make}>{make}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Body Type Filter */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Body Type</label>
-          <select
-            value={selectedBodyType}
-            onChange={(e) => setSelectedBodyType(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
-          >
-            {bodyTypes.map(type => (
-              <option key={type} value={type}>{type}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Condition Filter */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Condition</label>
-          <select
-            value={selectedCondition}
-            onChange={(e) => setSelectedCondition(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
-          >
-            {conditions.map(condition => (
-              <option key={condition} value={condition}>{condition}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Fuel Type Filter */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Fuel Type</label>
-          <select
-            value={selectedFuelType}
-            onChange={(e) => setSelectedFuelType(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
-          >
-            {fuelTypes.map(fuel => (
-              <option key={fuel} value={fuel}>{fuel}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Location Filter */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-          <select
-            value={selectedLocation}
-            onChange={(e) => setSelectedLocation(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
-          >
-            {locations.map(location => (
-              <option key={location} value={location}>{location}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Price Range */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Price Range: SAR {priceRange[0].toLocaleString()} - SAR {priceRange[1].toLocaleString()}
-          </label>
-          <div className="space-y-2">
-            <input
-              type="range"
-              min="0"
-              max="300000"
-              step="5000"
-              value={priceRange[0]}
-              onChange={(e) => setPriceRange([parseInt(e.target.value), priceRange[1]])}
-              className="w-full"
-            />
-            <input
-              type="range"
-              min="0"
-              max="300000"
-              step="5000"
-              value={priceRange[1]}
-              onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-              className="w-full"
-            />
-          </div>
-        </div>
-
-        {/* Year Range */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Year: {yearRange[0]} - {yearRange[1]}
-          </label>
-          <div className="space-y-2">
-            <input
-              type="range"
-              min="2015"
-              max="2024"
-              value={yearRange[0]}
-              onChange={(e) => setYearRange([parseInt(e.target.value), yearRange[1]])}
-              className="w-full"
-            />
-            <input
-              type="range"
-              min="2015"
-              max="2024"
-              value={yearRange[1]}
-              onChange={(e) => setYearRange([yearRange[0], parseInt(e.target.value)])}
-              className="w-full"
-            />
-          </div>
-        </div>
-
-        {/* Mileage Range */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Mileage: {mileageRange[0].toLocaleString()} - {mileageRange[1].toLocaleString()} km
-          </label>
-          <div className="space-y-2">
-            <input
-              type="range"
-              min="0"
-              max="100000"
-              step="1000"
-              value={mileageRange[0]}
-              onChange={(e) => setMileageRange([parseInt(e.target.value), mileageRange[1]])}
-              className="w-full"
-            />
-            <input
-              type="range"
-              min="0"
-              max="100000"
-              step="1000"
-              value={mileageRange[1]}
-              onChange={(e) => setMileageRange([mileageRange[0], parseInt(e.target.value)])}
-              className="w-full"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <Filters/>
-  </div>
-
+    );
   }
 
 
@@ -298,56 +86,52 @@ function Buy() {
     <InstantWrapper searchIndex={'cars'} >
     <div className="min-h-screen bg-gray-50 pt-[60px]">
       {/* Hero Section */}
-      <div className="bg-[#3d3d40] text-white py-16">
-        <div className="container mx-auto px-4">
+      <div className="bg-[#3d3d40] text-white py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto px-3 sm:px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
               Find Your Perfect Car
             </h1>
-            <p className="text-xl text-gray-200 mb-8">
+            <p className="text-xs sm:text-sm md:text-base lg:text-xl text-gray-200 mb-6 sm:mb-8">
               Browse thousands of quality vehicles from trusted dealers across Saudi Arabia
             </p>
-            
+
             {/* Search Bar */}
             <SearchBox />
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-2 py-4 pb-[200px]">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
-          {FilterView(true)}
-
+      <div className="container mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-4 pb-[200px]">
+        <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8">
+          {/* Filters Sidebar - Desktop */}
+          <div className="hidden lg:block">
+            <FilterView />
+          </div>
 
           {/* Main Content */}
           <div className="flex-1">
             {/* Results Header */}
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-md p-3 sm:p-4 md:p-6 mb-4 sm:mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 md:gap-4">
+                <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-wrap">
                   <Head/>
                   <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className="lg:hidden flex items-center px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+                    className="lg:hidden flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition text-xs sm:text-sm"
                   >
-                    <Filter className="h-4 w-4 mr-2" />
+                    <Filter className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     Filters
-                    {activeFiltersCount > 0 && (
-                      <span className="ml-2 bg-primaryBtn text-white text-xs px-2 py-1 rounded-full">
-                        {activeFiltersCount}
-                      </span>
-                    )}
                   </button>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-3 md:gap-4 w-full sm:w-auto">
                   {/* Sort Dropdown */}
-                  <div className="relative">
+                  <div className="relative flex-1 sm:flex-none">
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value)}
-                      className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:ring-2 focus:ring-[#f78f37] focus:border-transparent"
+                      className="appearance-none w-full sm:w-auto bg-white border border-gray-300 rounded-lg px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 pr-7 sm:pr-8 focus:ring-2 focus:ring-[#f78f37] focus:border-transparent text-xs sm:text-sm"
                     >
                       <option value="price-low">Price: Low to High</option>
                       <option value="price-high">Price: High to Low</option>
@@ -356,7 +140,7 @@ function Buy() {
                       <option value="mileage-low">Mileage: Low to High</option>
                       <option value="mileage-high">Mileage: High to Low</option>
                     </select>
-                    <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                    <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 text-gray-400 pointer-events-none" />
                   </div>
 
                   {/* View Toggle */}
@@ -382,10 +166,24 @@ function Buy() {
               </div>
             </div>
 
-            
-            <div className={viewMode === 'grid' 
-                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6' 
-                : 'space-y-4'
+            {/* Mobile Filters - shown when showFilters is true */}
+            {showFilters && (
+              <div className="lg:hidden mb-4 rounded-xl shadow-md overflow-hidden relative">
+                <button
+                  onClick={() => setShowFilters(false)}
+                  className="absolute top-3 right-3 z-10 p-1.5 bg-gray-100 hover:bg-gray-200 rounded-full transition"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+                <div className="max-h-[50vh] overflow-y-auto">
+                  <Filters/>
+                </div>
+              </div>
+            )}
+
+            <div className={viewMode === 'grid'
+                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6'
+                : 'space-y-3 sm:space-y-4'
               }>
                 <CarView viewMode={viewMode} likedCars={likedCars} toggleLike={toggleLike} />
               </div>
