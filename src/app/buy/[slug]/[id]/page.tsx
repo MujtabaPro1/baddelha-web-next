@@ -182,7 +182,7 @@ export default function Page() {
               if (res?.data?.images && res.data.images.length > 0) {
                   // Reorder images if needed
                   let carImageUrls = res.data.images.map((img: any)=> img.caption && (img.caption == 'Front' || img.caption == 'Back' || img.caption == 'Left' || img.caption == 'Right') ? img : null).filter((img: any) => img !== null);
-                  const otherImages = res.data.images.map((img: any)=> img.caption && (img.caption != 'Front' && img.caption != 'Back' && img.caption != 'Left' && img.caption != 'Right') ? img : null).filter((img: any) => img !== null);
+                  const otherImages = res.data.images.map((img: any)=> img.caption && (img.caption != 'Front' && img.caption != 'Back' && img.caption != 'Left' && img.caption != 'Right' && img.caption != 'Seller ID Front' && img.caption != 'Seller ID Back' && img.caption != 'Registration Sticker' && img.caption != 'VIN Number Plate' && img.caption != 'VIN Number Plate Firewall') ? img : null).filter((img: any) => img !== null);
                   carImageUrls = carImageUrls.map((im: any)=> im.url || im.imageUrl || im);
                   setImages(carImageUrls);
                   setInspectionImage(otherImages);
