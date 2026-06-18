@@ -22,8 +22,7 @@ import {
   Plus,
   Info,
   CheckCircle2Icon,
-  MessageCircleWarningIcon
-} from 'lucide-react';
+  } from 'lucide-react';
 import axiosInstance, { BASE_URL } from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
 import CarBodySvgView from '../../../../components/CarBodyView';
@@ -32,7 +31,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '../../../../components/
 import { useLanguage } from '../../../../contexts/LanguageContext';
 import lang from '../../../../locale';
 import { Skeleton } from '../../../../components/ui/skeleton';
-import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
+import { InfoCircledIcon } from '@radix-ui/react-icons';
 
 
 function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) {
