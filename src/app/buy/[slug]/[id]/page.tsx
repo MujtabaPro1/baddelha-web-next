@@ -21,7 +21,8 @@ import {
   ThumbsUp,
   Plus,
   Info,
-  CheckCircle2Icon
+  CheckCircle2Icon,
+  MessageCircleWarningIcon
 } from 'lucide-react';
 import axiosInstance, { BASE_URL } from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
@@ -31,7 +32,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '../../../../components/
 import { useLanguage } from '../../../../contexts/LanguageContext';
 import lang from '../../../../locale';
 import { Skeleton } from '../../../../components/ui/skeleton';
-import { CrossCircledIcon } from '@radix-ui/react-icons';
+import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
 
 
 function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) {
@@ -837,7 +838,7 @@ export default function Page() {
                                                   >
                                                     <span className="text-xs sm:text-sm text-gray-600">{field.label}</span>
                                                     <span className="text-xs sm:text-sm font-medium text-gray-900 flex items-center gap-1 flex-shrink-0">{field.value || 'N/A'}
-                                                    {field.value == 'Pass' ? <CheckCircle2Icon className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" /> : field.value == 'Fail' ? <CrossCircledIcon className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" /> : null}
+                                                    {field.value == 'Pass' ? <CheckCircle2Icon className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" /> : field.value == 'Fail' ||  field.value == 'Damaged' ||  field.value == 'Leak' ? <InfoCircledIcon className="h-3 w-3 sm:h-4 sm:w-4 text-[#E1AD01]" /> : null}
                                                     </span>
                                                   </div>
                                                 ))}

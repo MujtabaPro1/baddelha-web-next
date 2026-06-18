@@ -621,7 +621,36 @@ const lang = {
       ctaButton: "Start Your Auction Journey"
     }
   },
-  
+  "buy_page": {
+    heroTitle: "Find Your Perfect Car",
+    heroSubtitle: "Browse thousands of quality vehicles from trusted dealers across Saudi Arabia",
+    searchPlaceholder: "Baddehla Inventory",
+    carsFound: "Cars Found",
+    filters: "Filters",
+    clearAll: "Clear All",
+    sortRecommended: "Recommended",
+    sortPriceLowToHigh: "Price: Low to High",
+    sortPriceHighToLow: "Price: High to Low",
+    sortYearNewest: "Year: Newest First",
+    sortYearOldest: "Year: Oldest First",
+    filterMake: "Make",
+    filterModel: "Model",
+    filterYear: "Year",
+    filterSellingPrice: "Selling Price",
+    mileage: "Mileage",
+    fuelType: "Fuel Type",
+    transmission: "Transmission",
+    location: "Location",
+    petrol: "Petrol",
+    automatic: "Automatic",
+    saudiArabia: "Saudi Arabia",
+    soldBy: "Sold by",
+    company: "Company",
+    private: "Private",
+    viewDetails: "View Details",
+    perMonth: "/mo"
+  },
+
        } ,
        ar: {
         "findings": "النتائج",
@@ -1238,6 +1267,35 @@ const lang = {
       ],
       ctaButton: "ابدأ رحلة المزايدة"
     }
+  },
+  "buy_page": {
+    heroTitle: "اعثر على سيارتك المثالية",
+    heroSubtitle: "تصفح آلاف السيارات ذات الجودة من تجار موثوقين في جميع أنحاء المملكة العربية السعودية",
+    searchPlaceholder: "مخزون بدلها",
+    carsFound: "سيارة متوفرة",
+    filters: "الفلاتر",
+    clearAll: "مسح الكل",
+    sortRecommended: "الموصى به",
+    sortPriceLowToHigh: "السعر: من الأقل إلى الأعلى",
+    sortPriceHighToLow: "السعر: من الأعلى إلى الأقل",
+    sortYearNewest: "السنة: الأحدث أولاً",
+    sortYearOldest: "السنة: الأقدم أولاً",
+    filterMake: "الماركة",
+    filterModel: "الموديل",
+    filterYear: "السنة",
+    filterSellingPrice: "سعر البيع",
+    mileage: "المسافة المقطوعة",
+    fuelType: "نوع الوقود",
+    transmission: "ناقل الحركة",
+    location: "الموقع",
+    petrol: "بنزين",
+    automatic: "أوتوماتيك",
+    saudiArabia: "المملكة العربية السعودية",
+    soldBy: "البائع",
+    company: "شركة",
+    private: "فرد",
+    viewDetails: "عرض التفاصيل",
+    perMonth: "/شهرياً"
   },
   footer: {
     brand: 'بدلها',

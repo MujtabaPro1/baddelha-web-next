@@ -5,20 +5,26 @@ import { RefinementList, useRefinementList, useClearRefinements } from "react-in
 import { useRouter } from "next/navigation";
 import {  RangeSlider }   from "../range";
 import { Car, ChevronDown, ChevronRight} from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
+import lang from "../../locale";
 
 export const Filters = ({ isLanding = false }) => {
   const { refine: clearRefinements } = useClearRefinements();
   const router = useRouter();
+  const { language } = useLanguage();
+  const t: any = lang[language === 'ar' ? 'ar' : 'en'].buy_page;
   const [selectedFilter, setSelectedFilter] = useState(["Make"]);
 
   const currentFilters = [
     {
       title: 'Make',
+      label: t.filterMake,
       icon: Car,
       attribute: "make",
     },
     {
       title: 'Model',
+      label: t.filterModel,
       attribute: "model",
       icon: Car,
     },
@@ -29,11 +35,13 @@ export const Filters = ({ isLanding = false }) => {
     // },
     {
       title: 'Year',
+      label: t.filterYear,
       attribute: "modelYear",
       icon: Car,
     },
     {
       title: 'Selling Price',
+      label: t.filterSellingPrice,
       attribute: "sellingPrice",
       icon: Car,
     },
@@ -66,16 +74,16 @@ export const Filters = ({ isLanding = false }) => {
   return (
     <div className="rounded-lg overflow-hidden shadow-soft">
       <div className="bg-white p-4 sm:p-5 border-b w-full lg:w-64 flex items-center justify-between">
-        <h2 className="font-bold text-xl text-gray-800">Filters</h2>
+        <h2 className="font-bold text-xl text-gray-800">{t.filters}</h2>
         {isLanding ? (
-          <button 
-            className="cursor-pointer text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200" 
+          <button
+            className="cursor-pointer text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
             onClick={() => {
               clearRefinements();
               router.push('/')
             }}
           >
-            Clear All
+            {t.clearAll}
           </button>
         ) : null}
       </div>
@@ -108,7 +116,7 @@ export const Filters = ({ isLanding = false }) => {
                     : "text-gray-700"
                   }`}
                 >
-                  {filter.title}
+                  {filter.label}
                 </span>
               </div>
               {renderIcon(filter?.title)}
