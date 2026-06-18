@@ -274,45 +274,6 @@ export function LoginForm() {
       
       <CardContent className="space-y-6">
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* User Type Selection */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium text-gray-700">
-              Sign in as
-            </Label>
-            <div className="grid grid-cols-2 gap-3 p-1 bg-gray-100 rounded-lg">
-              <button
-                type="button"
-                onClick={() => handleInputChange('userType', 'user')}
-                className={`py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-                  formData.userType === 'user'
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                User
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  handleInputChange('userType', 'dealer')
-                  if(confirm("Are you sure you want to switch to dealer portal?")) {
-                    window.location.href = 'https://dealer.baddelha.com.sa'
-                    // User confirmed, do nothing
-                  } else {
-                    // User cancelled, revert to user mode
-                    handleInputChange('userType', 'user')
-                  }
-                }}
-                className={`py-2.5 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
-                  formData.userType === 'dealer'
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Dealer
-              </button>
-            </div>
-          </div>
           
           {!showOtpField ? (
             <div className="space-y-2">
