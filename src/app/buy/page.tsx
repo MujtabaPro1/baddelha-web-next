@@ -139,8 +139,8 @@ function Buy() {
                        <option value="cars">Recommended</option>
                       <option value="cars:sellingPrice:asc">Price: Low to High</option>
                       <option value="cars:sellingPrice:desc">Price: High to Low</option>
-                      <option value="cars:createdAt:desc">Year: Newest First</option>
-                      <option value="cars:createdAt:asc">Year: Oldest First</option>
+                      <option value="cars:modelYear:desc">Year: Newest First</option>
+                      <option value="cars:modelYear:asc">Year: Oldest First</option>
                       {/* <option value="mileage:asc">Mileage: Low to High</option>
                       <option value="mileage:desc">Mileage: High to Low</option> */}
                     </select>
