@@ -22,6 +22,9 @@ import {
   Plus,
   Info,
   CheckCircle2Icon,
+  Gauge,
+  Settings,
+  Phone,
   } from 'lucide-react';
 import axiosInstance, { BASE_URL } from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
@@ -53,7 +56,7 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                         <div className="p-3">
                           <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">{car?.make}&nbsp;{car?.model}</h4>
                           <div className="flex justify-between items-center mb-2">
-                            <span className="font-bold text-red-500 text-sm">{car.price}</span>
+                            <span className="font-bold text-[#f78f37] text-sm">{car.price}</span>
                             <span className="text-xs text-gray-500">{car.mileage}</span>
                           </div>
                           <div className="grid grid-cols-2 gap-1 mb-2">
@@ -64,7 +67,7 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                               <Fuel className="h-3 w-3 mr-1" /> {car?.fuelType}
                             </div>
                           </div>
-                          <button className="w-full bg-gradient-to-r from-amber-500 to-amber-400 text-white text-xs font-medium py-1 px-2 rounded transition">
+                          <button className="w-full bg-[#f78f37] hover:bg-[#e67d26] text-white text-xs font-medium py-1.5 px-2 rounded-lg transition">
                             {lang[language].viewDetails}
                           </button>
                         </div>
@@ -73,8 +76,9 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
 
 export default function Page() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMainImageError, setIsMainImageError] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'inspection'  | 'similar'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'specifications' | 'features' | 'inspection'>('overview');
   const [car, setCar] = useState<any>(null);
   const [images, setImages] = useState<string[]>([]);
   const [inspectionImages,setInspectionImage] = useState(null)
@@ -102,13 +106,15 @@ export default function Page() {
 
 
   const nextImage = () => {
-    const imagesArray = images.length > 0 ? images : [];
-    setCurrentImageIndex((prev) => (prev + 1) % imagesArray.length);
+    if (images.length === 0) return;
+    setIsMainImageError(false);
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
 
   const prevImage = () => {
-    const imagesArray = images.length > 0 ? images : [];
-    setCurrentImageIndex((prev) => (prev - 1 + imagesArray.length) % imagesArray.length);
+    if (images.length === 0) return;
+    setIsMainImageError(false);
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
 
@@ -238,51 +244,59 @@ export default function Page() {
         </div>
       }
 
+      const isCertifiedSeller = !car?.seller?.name;
 
   return (
-    <div className="min-h-screen bg-white mt-[60px] sm:mt-[80px] lg:mt-[120px]">
+    <div className="min-h-screen bg-white lg:mt-[80px] mt-[120px]">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
         {/* Breadcrumb */}
         <nav className="mb-4">
           <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 overflow-x-auto">
-            <a href="/buy" className="hover:text-red-500 transition whitespace-nowrap">{lang[language].buy}</a>
+            <a href="/buy" className="hover:text-[#f78f37] transition whitespace-nowrap">{lang[language].buy}</a>
             <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-            <a href="/buy" className="hover:text-red-500 transition whitespace-nowrap">{car?.make}</a>
+            <a href="/buy" className="hover:text-[#f78f37] transition whitespace-nowrap">{car?.make}</a>
             <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
             <span className="text-gray-900 whitespace-nowrap">{car?.model}</span>
           </div>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-start">
           {/* Left Column - Images and Main Info (Image and Title only) */}
           <div className="lg:col-span-2 space-y-6">
             {/* Image Slider */}
-            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-              <div className="relative">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+              <div className="relative bg-gray-100">
                 <img
-                  src={images.length > 0 ? images?.[currentImageIndex] : car?.images?.[currentImageIndex]}
+                  src={isMainImageError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' : (images.length > 0 ? images?.[currentImageIndex] : car?.images?.[currentImageIndex])}
                   alt={car ? `${car.year || ''} ${car.make || ''} ${car.model || ''}` : `${car?.year} ${car?.make} ${car?.model}`}
+                  onError={() => setIsMainImageError(true)}
                   className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover"
                 />
-                
+
                 {/* Navigation Arrows */}
-                <button
-                  onClick={prevImage}
-                  className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition"
-                >
-                  <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition"
-                >
-                  <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
-                </button>
+                {images.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition"
+                    >
+                      <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition"
+                    >
+                      <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
+                    </button>
+                  </>
+                )}
 
                 {/* Image Counter */}
-                <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 bg-black/70 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm">
-                  {currentImageIndex + 1} / {images.length > 0 ? images.length : 0}
-                </div>
+                {images.length > 0 && (
+                  <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 bg-black/70 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm">
+                    {currentImageIndex + 1} / {images.length}
+                  </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex space-x-1 sm:space-x-2">
@@ -290,7 +304,7 @@ export default function Page() {
                     onClick={() => setIsLiked(!isLiked)}
                     className="bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-md transition"
                   >
-                    <Heart className={`h-4 w-4 sm:h-5 sm:w-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+                    <Heart className={`h-4 w-4 sm:h-5 sm:w-5 ${isLiked ? 'fill-[#f78f37] text-[#f78f37]' : 'text-gray-600'}`} />
                   </button>
                   <button className="bg-white/90 hover:bg-white p-1.5 sm:p-2 rounded-full shadow-md transition">
                     <Share2 className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
@@ -304,9 +318,9 @@ export default function Page() {
                   {(images.length > 0 ? images : []).map((image, index) => (
                     <button
                       key={index}
-                      onClick={() => setCurrentImageIndex(index)}
+                      onClick={() => { setIsMainImageError(false); setCurrentImageIndex(index); }}
                       className={`flex-shrink-0 w-14 h-12 sm:w-20 sm:h-16 rounded-lg overflow-hidden border-2 transition ${
-                        index === currentImageIndex ? 'border-red-500' : 'border-gray-200'
+                        index === currentImageIndex ? 'border-[#f78f37]' : 'border-gray-200'
                       }`}
                     >
                       <img src={image} alt={`View ${index + 1}`} className="w-full h-full object-cover" />
@@ -317,7 +331,7 @@ export default function Page() {
             </div>
 
             {/* Car Title and Basic Info */}
-            <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 sm:p-6">
               <div className="flex justify-between items-start mb-4 gap-2">
                 <div>
                   <h1 className="text-lg sm:text-2xl font-bold text-gray-900">
@@ -326,110 +340,47 @@ export default function Page() {
                   <div className="flex items-center mt-2 text-gray-600 text-xs sm:text-sm">
                     <span className="flex items-center">
                       <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      {car?.location || 'Riyadh, Saudi Arabia'}
+                      {car?.location || lang[language].defaultLocation}
                     </span>
                   </div>
                 </div>
                 <div className="text-right sm:mt-0 mt-2 lg:hidden">
-                  <div className="text-xl sm:text-2xl font-bold text-red-500">
+                  <div className="text-xl sm:text-2xl font-bold text-[#f78f37]">
                     SAR {numberWithCommas(car?.sellingPrice || car?.bookValue)}
                   </div>
                 </div>
               </div>
 
-              {/* Key Stats */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
-                <div className="text-center pb-3 sm:border-r sm:border-gray-200 sm:last:border-r-0">
-                  <div className="text-xs sm:text-sm text-gray-500">{lang[language].year}</div>
-                  <div className="font-semibold mt-1 text-sm sm:text-base">{car?.year || '2022'}</div>
-                </div>
-                <div className="text-center pb-3 sm:border-r sm:border-gray-200 sm:last:border-r-0 sm:pb-0  border-gray-200">
-                  <div className="text-xs sm:text-sm text-gray-500">{lang[language].mileage}</div>
-                  <div className="font-semibold mt-1 text-sm sm:text-base">{car?.mileage ? car.mileage.toLocaleString() : '42,500'} km</div>
-                </div>
-                <div className="text-center pb-3 sm:border-r sm:border-gray-200 sm:last:border-r-0 sm:pb-0 border-gray-200">
-                  <div className="text-xs sm:text-sm text-gray-500">{lang[language].fuelType}</div>
-                  <div className="font-semibold mt-1 text-sm sm:text-base">{car?.fuelType || 'Petrol'}</div>
-                </div>
-                <div className="text-center sm:border-r sm:border-gray-200 sm:last:border-r-0">
-                  <div className="text-xs sm:text-sm text-gray-500">{lang[language].transmission}</div>
-                  <div className="font-semibold mt-1 text-sm sm:text-base">{car?.transmission || 'Automatic'}</div>
-                </div>
+              {/* Quick Spec Pills */}
+              <div className="flex flex-wrap items-center gap-2 mt-4">
+                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+                  <Gauge className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
+                  {car?.mileage ? car.mileage.toLocaleString() : '42,500'} km
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+                  <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
+                  {car?.year || '2022'}
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+                  <Settings className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
+                  {car?.transmission || lang[language].defaultTransmission}
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+                  <Fuel className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
+                  {car?.fuelType || lang[language].defaultFuelType}
+                </span>
               </div>
             </div>
-          </div>
-
-          {/* Right Column - Contact and Actions */}
-          <div className="space-y-4 sm:space-y-6 lg:col-span-1">
-            {/* Price and Actions */}
-            <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6 lg:sticky lg:top-20 z-20">
-              <div className="mb-4 sm:mb-6">
-                <div className="text-xl sm:text-2xl font-bold text-red-500 mb-1">
-                  SAR {numberWithCommas(car?.sellingPrice || car?.bookValue)}
-                </div>
-                <div className="text-xs sm:text-sm text-gray-500">
-                  {lang[language].priceIncludesVAT}
-                </div>
-              </div>
-
-              <div className="space-y-2 sm:space-y-3">
-                <button
-                  onClick={() => {
-                    const carDetails = `${car?.modelYear} ${car?.make} ${car?.model}`;
-                    const carPrice = `SAR ${numberWithCommas(car?.sellingPrice || car?.bookValue)}`;
-                    const currentUrl = window.location.href;
-                    const message = `Hello, I'm interested in the ${carDetails} (${carPrice}) that I found on your website. Can I schedule a test drive? Here's the car link: ${currentUrl}`;
-                    window.location.href = `whatsapp://send?phone=+966920032590&text=${encodeURIComponent(message)}`;
-                  }}
-                  className="w-full flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition text-sm sm:text-base"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                  </svg>
-                  {lang[language].whatsapp}
-                </button>
-                <button
-                  onClick={() => {
-                    window.location.href = `tel:+966920032590`;
-                  }}
-                  className="w-full border border-gray-300 bg-primaryBtn text-white font-medium py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition text-sm sm:text-base"
-                >
-                  {lang[language].interested}
-                </button>
-              </div>
-            </div>
-
-            {/* Seller Info */}
-            <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
-              <h3 className="text-base sm:text-lg font-medium mb-4">{lang[language].sellerInfo}</h3>
-              <div className="flex items-center mb-4">
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-3 flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-medium text-sm sm:text-base">{car?.seller?.name || 'Certified Seller'}</div>
-                </div>
-              </div>
-              <div className="text-xs sm:text-sm text-gray-700 mb-4">
-                <div className="flex items-center mb-1">
-                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-gray-400 flex-shrink-0" />
-                  {car?.location || 'Riyadh, Saudi Arabia'}
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Specifications Section - full width below image+price */}
-          <div className="col-span-1 sm:col-span-3 lg:col-span-2">
-            <div className="bg-white border border-gray-200 rounded-lg">
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
               <div className="border-b border-gray-200">
                 <nav className="flex px-3 sm:px-4 overflow-x-auto">
                   {[
                     { id: 'overview', label: lang[language].overview },
-                    { id: 'inspection', label: lang[language].inspection },
-                    // similarCars?.length ? { id: 'similar', label: lang[language].similarCars } : null,
+                    { id: 'specifications', label: lang[language].specifications },
+                    { id: 'inspection', label: lang[language].inspectionReport },
+                    isCertifiedSeller ? null : { id: 'features', label: lang[language].keyFeatures },
                   ].map((item) => {
                     if (!item) return null;
                     const { id, label } = item;
@@ -439,7 +390,7 @@ export default function Page() {
                       onClick={() => setActiveTab(id as any)}
                       className={`py-3 sm:py-4 px-3 sm:px-4 border-b-2 font-medium text-xs sm:text-sm transition whitespace-nowrap ${
                         activeTab === id
-                          ? 'border-amber-500 text-amber-500'
+                          ? 'border-[#f78f37] text-[#f78f37]'
                           : 'border-transparent text-gray-500 hover:text-gray-700'
                       }`}
                     >
@@ -453,75 +404,78 @@ export default function Page() {
               <div className="p-4 sm:p-6">
                 {/* Overview Tab */}
                 {activeTab === 'overview' && (
+                  <div className="grid grid-cols-2 gap-y-5 gap-x-4 sm:gap-x-8">
+                    <div>
+                      <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].make}</div>
+                      <div className="font-semibold text-sm sm:text-base">{car?.make || lang[language].defaultMake}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].model}</div>
+                      <div className="font-semibold text-sm sm:text-base">{car?.model || lang[language].defaultModel}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].year}</div>
+                      <div className="font-semibold text-sm sm:text-base">{car?.year || '2022'}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].bodyType}</div>
+                      <div className="font-semibold text-sm sm:text-base">{car?.bodyType || lang[language].defaultBodyType}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].exteriorColor}</div>
+                      <div className="font-semibold text-sm sm:text-base">{car?.exteriorColor || lang[language].defaultExteriorColor}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].interiorColor}</div>
+                      <div className="font-semibold text-sm sm:text-base">{car?.interiorColor || lang[language].defaultInteriorColor}</div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Specifications Tab */}
+                {activeTab === 'specifications' && (
                   <div>
-                    {/* Specifications Table */}
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full">
-                        <tbody>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-2 sm:py-3 text-xs sm:text-sm text-gray-500 w-1/2 pr-2 sm:pr-0">{lang[language].make}</td>
-                            <td className="py-2 sm:py-3 text-xs sm:text-sm font-medium">{car?.make || 'Toyota'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].model}</td>
-                            <td className="py-3 text-sm font-medium">{car?.model || 'RAV4'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].year}</td>
-                            <td className="py-3 text-sm font-medium">{car?.year || '2022'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].mileage}</td>
-                            <td className="py-3 text-sm font-medium">{car?.mileage ? car.mileage.toLocaleString() : '42,500'} km</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].fuelType}</td>
-                            <td className="py-3 text-sm font-medium">{car?.fuelType || 'Petrol'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].transmission}</td>
-                            <td className="py-3 text-sm font-medium">{car?.transmission || 'Automatic'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].engine}</td>
-                            <td className="py-3 text-sm font-medium">{car?.engine || '2.5L 4-Cylinder'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].driveType}</td>
-                            <td className="py-3 text-sm font-medium">{car?.driveType || 'AWD'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].exteriorColor}</td>
-                            <td className="py-3 text-sm font-medium">{car?.exteriorColor || 'White'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].interiorColor}</td>
-                            <td className="py-3 text-sm font-medium">{car?.interiorColor || 'Black'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].bodyType}</td>
-                            <td className="py-3 text-sm font-medium">{car?.bodyType || 'SUV'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].doors}</td>
-                            <td className="py-3 text-sm font-medium">{car?.doors || '5'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].seats}</td>
-                            <td className="py-3 text-sm font-medium">{car?.seats || '5'}</td>
-                          </tr>
-                          <tr className="border-b border-gray-200">
-                            <td className="py-3 text-sm text-gray-500">{lang[language].vin}</td>
-                            <td className="py-3 text-sm font-medium font-mono">{car?.vin || 'JTMWRREV7ND123456'}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+                      <div className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-lg py-3 px-2 text-center">
+                        <Settings className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37]" />
+                        <div className="text-xs sm:text-sm text-gray-500">{lang[language].transmission}</div>
+                        <div className="font-semibold text-sm sm:text-base">{car?.transmission || lang[language].defaultTransmission}</div>
+                      </div>
+                      <div className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-lg py-3 px-2 text-center">
+                        <Car className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37]" />
+                        <div className="text-xs sm:text-sm text-gray-500">{lang[language].seats}</div>
+                        <div className="font-semibold text-sm sm:text-base">{car?.seats || '5'}</div>
+                      </div>
+                      <div className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-lg py-3 px-2 text-center">
+                        <Wrench className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37]" />
+                        <div className="text-xs sm:text-sm text-gray-500">{lang[language].engine}</div>
+                        <div className="font-semibold text-sm sm:text-base">{car?.engine || lang[language].defaultEngine}</div>
+                      </div>
+                      <div className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-lg py-3 px-2 text-center">
+                        <Fuel className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37]" />
+                        <div className="text-xs sm:text-sm text-gray-500">{lang[language].fuelType}</div>
+                        <div className="font-semibold text-sm sm:text-base">{car?.fuelType || lang[language].defaultFuelType}</div>
+                      </div>
+                      <div className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-lg py-3 px-2 text-center">
+                        <Gauge className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37]" />
+                        <div className="text-xs sm:text-sm text-gray-500">{lang[language].driveType}</div>
+                        <div className="font-semibold text-sm sm:text-base">{car?.driveType || lang[language].defaultDriveType}</div>
+                      </div>
+                      <div className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-lg py-3 px-2 text-center">
+                        <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37]" />
+                        <div className="text-xs sm:text-sm text-gray-500">{lang[language].doors}</div>
+                        <div className="font-semibold text-sm sm:text-base">{car?.doors || '5'}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-3 sm:mt-4 bg-gray-50 rounded-lg py-3 px-4">
+                      <span className="text-xs sm:text-sm text-gray-500">{lang[language].vin}</span>
+                      <span className="text-xs sm:text-sm font-medium font-mono">{car?.vin || 'JTMWRREV7ND123456'}</span>
                     </div>
                   </div>
                 )}
 
                 {/* Features Tab */}
-                {activeTab === 'features' && (
+                {activeTab === 'features' && !isCertifiedSeller && (
                   <div className="space-y-6 sm:space-y-8">
                     <div>
                       <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
@@ -734,13 +688,13 @@ export default function Page() {
                           <div className="mb-6 sm:mb-8">
                             <div className="flex justify-between items-center mb-4 gap-2">
                               <h4 className="font-semibold text-gray-700 text-sm sm:text-base">{lang[language].overallCondition}</h4>
-                              <div className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-bold px-3 py-1 rounded-full text-xs sm:text-sm">
+                              <div className="bg-gradient-to-r from-[#f78f37] to-[#ffac5f] text-white font-bold px-3 py-1 rounded-full text-xs sm:text-sm">
                                 {lang[language].excellent}
                               </div>
                             </div>
                             
                             <div className="w-full bg-gray-200 rounded-full h-2.5">
-                              <div className="bg-gradient-to-r from-amber-500 to-amber-400 h-2.5 rounded-full" style={{ width: '92%' }}></div>
+                              <div className="bg-gradient-to-r from-[#f78f37] to-[#ffac5f] h-2.5 rounded-full" style={{ width: '92%' }}></div>
                             </div>
                             <div className="flex justify-between text-xs text-gray-500 mt-1">
                               <span>{lang[language].fair}</span>
@@ -816,7 +770,7 @@ export default function Page() {
                                             className="w-full flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-gray-50 to-white hover:from-gray-100 hover:to-gray-50 transition-colors gap-2"
                                           >
                                             <div className="flex items-center min-w-0">
-                                              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+                                              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-[#f78f37] to-[#ffac5f] flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
                                                 <span className="text-white text-xs sm:text-sm font-bold">{sectionIndex + 1}</span>
                                               </div>
                                               <h5 className="font-semibold text-gray-800 text-left text-sm sm:text-base truncate">{section.label}</h5>
@@ -1016,37 +970,140 @@ export default function Page() {
             
               
               
-                {/* Similar Cars Tab */}
-                {activeTab === 'similar' && similarCars?.length && (
-                  <div>
-                    <h3 className="text-base sm:text-lg font-medium mb-4">{lang[language].similarCars}</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                      {/* Car 1 */}
-                      {similarCars?.map((car:any)=>{
-                         return <VehicleCard
-                           key={car?.id}
-                           car={car}
-                           lang={lang}
-                           language={language} />
-                      })}
-                    </div>
+              </div>
+            </div>
+          </div>
 
-                    <div className="mt-6 text-center">
-                      <button className="bg-white hover:bg-gray-50 text-red-500 font-medium py-2 px-4 sm:px-6 rounded border border-red-500 transition inline-flex items-center text-xs sm:text-sm">
-                        {lang[language].viewMoreSimilarCars} <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
-                      </button>
-                    </div>
+          {/* Right Column - Contact and Actions */}
+          <div className="space-y-4 sm:space-y-6 lg:col-span-1">
+            {/* Price and Actions */}
+            <div className="bg-white border border-gray-200 rounded-xl shadow-md p-4 sm:p-6 lg:sticky lg:top-20 z-20">
+              <div className="pb-4 sm:pb-6 mb-4 sm:mb-6 border-b border-gray-200">
+                <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].cashPrice}</div>
+                <div className="text-xl sm:text-2xl font-bold text-gray-900">
+                  SAR {numberWithCommas(car?.sellingPrice || car?.bookValue)}
+                </div>
+              </div>
+
+              <div className="space-y-2 sm:space-y-3 pb-4 sm:pb-6 mb-4 sm:mb-6 border-b border-gray-200">
+                <button
+                  onClick={() => {
+                    const carDetails = `${car?.modelYear} ${car?.make} ${car?.model}`;
+                    const carPrice = `SAR ${numberWithCommas(car?.sellingPrice || car?.bookValue)}`;
+                    const currentUrl = window.location.href;
+                    const message = `Hello, I'm interested in the ${carDetails} (${carPrice}) that I found on your website. Can I schedule a test drive? Here's the car link: ${currentUrl}`;
+                    window.location.href = `whatsapp://send?phone=+966920032590&text=${encodeURIComponent(message)}`;
+                  }}
+                  className="w-full bg-[#f78f37] hover:bg-[#e67d26] text-white font-medium py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition text-sm sm:text-base cursor-pointer"
+                >
+                  {lang[language].interested}
+                </button>
+                <button
+                  onClick={() => {
+                    const carDetails = `${car?.modelYear} ${car?.make} ${car?.model}`;
+                    const carPrice = `SAR ${numberWithCommas(car?.sellingPrice || car?.bookValue)}`;
+                    const currentUrl = window.location.href;
+                    const message = `Hello, I'd like to reserve the ${carDetails} (${carPrice}) that I found on your website. Here's the car link: ${currentUrl}`;
+                    window.location.href = `whatsapp://send?phone=+966920032590&text=${encodeURIComponent(message)}`;
+                  }}
+                  className="w-full border border-gray-300 bg-white hover:bg-gray-50 text-gray-900 font-medium py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition text-sm sm:text-base cursor-pointer"
+                >
+                  {lang[language].reserveCar}
+                </button>
+              </div>
+
+              <div className="space-y-4 sm:space-y-5">
+                <button
+                  onClick={() => {
+                    const carDetails = `${car?.modelYear} ${car?.make} ${car?.model}`;
+                    const currentUrl = window.location.href;
+                    const message = `Hello, I have a question about the ${carDetails} that I found on your website. Here's the car link: ${currentUrl}`;
+                    window.location.href = `whatsapp://send?phone=+966920032590&text=${encodeURIComponent(message)}`;
+                  }}
+                  className="w-full flex items-start gap-3 text-left group cursor-pointer"
+                >
+                  <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-bold text-sm sm:text-base text-gray-900">{lang[language].connectWhatsappTitle}</div>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-0.5">{lang[language].connectWhatsappSubtitle}</p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 flex-shrink-0 mt-2 group-hover:text-gray-600 transition" />
+                </button>
+
+                <button
+                  onClick={() => {
+                    window.location.href = `tel:+966920032590`;
+                  }}
+                  className="w-full flex items-start gap-3 text-left group cursor-pointer"
+                >
+                  <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0">
+                    <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37]" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-bold text-sm sm:text-base text-gray-900">{lang[language].talkDirectlyTitle}</div>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-0.5">{lang[language].talkDirectlySubtitle}</p>
+                  </div>
+                  <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 flex-shrink-0 mt-2 group-hover:text-gray-600 transition" />
+                </button>
+              </div>
+            </div>
+
+            {/* Seller Info */}
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-medium mb-4">{lang[language].sellerInfo}</h3>
+              <div className="flex items-center mb-4">
+                {isCertifiedSeller ? (
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white border border-gray-200 flex items-center justify-center mr-3 flex-shrink-0 overflow-hidden">
+                    <img src="/logo.png" alt="Baddelha" className="h-7 w-7 sm:h-8 sm:w-8 object-contain" />
+                  </div>
+                ) : (
+                  <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-orange-50 flex items-center justify-center text-[#f78f37] mr-3 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
                   </div>
                 )}
-                      
-                      </div>
-                    </div>
-                  </div>
-               
-      
+                <div>
+                  <div className="font-medium text-sm sm:text-base">{car?.seller?.name || lang[language].defaultSellerName}</div>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm text-gray-700 mb-4">
+                <div className="flex items-center mb-1">
+                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-2 text-gray-400 flex-shrink-0" />
+                  {car?.location || lang[language].defaultLocation}
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Similar Cars */}
+        {similarCars?.length > 0 && (
+          <div className="mt-6 sm:mt-8">
+            <h3 className="text-base sm:text-lg font-medium mb-4">{lang[language].similarCars}</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+              {similarCars?.map((car: any) => {
+                return <VehicleCard
+                  key={car?.id}
+                  car={car}
+                  lang={lang}
+                  language={language} />
+              })}
+            </div>
+
+            <div className="mt-6 text-center">
+              <button className="bg-white hover:bg-orange-50 text-[#f78f37] font-medium py-2 px-4 sm:px-6 rounded-lg border border-[#f78f37] transition inline-flex items-center text-xs sm:text-sm">
+                {lang[language].viewMoreSimilarCars} <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
