@@ -163,9 +163,9 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
               <Car className="w-6 h-6 text-white" />
             </div>
           </div>
-          <DialogTitle className="text-center">Verify to continue</DialogTitle>
+          <DialogTitle className="text-center">Sign in to continue</DialogTitle>
           <DialogDescription className="text-center">
-            Verify your phone number to view the inspection report
+            Sign in to view the inspection report
           </DialogDescription>
         </DialogHeader>
 
