@@ -25,6 +25,7 @@ import {
   Gauge,
   Settings,
   Phone,
+  Lock,
   } from 'lucide-react';
 import axiosInstance, { BASE_URL } from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
@@ -35,6 +36,7 @@ import { useLanguage } from '../../../../contexts/LanguageContext';
 import lang from '../../../../locale';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
+import LoginModal from '../../../../components/LoginModal';
 
 
 function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) {
@@ -90,8 +92,20 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const { language } = useLanguage();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
-  
+  useEffect(() => {
+    const checkAuthState = () => {
+      const authToken = localStorage.getItem('authToken') || localStorage.getItem('token');
+      setIsAuthenticated(!!authToken);
+    };
+    checkAuthState();
+    window.addEventListener('authStateChanged', checkAuthState);
+    return () => window.removeEventListener('authStateChanged', checkAuthState);
+  }, []);
+
+
   const toggleSection = (sectionKey: string) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -232,21 +246,105 @@ export default function Page() {
 
  
       if(loading){
-        return     <div className="min-h-screen bg-white mt-[120px]">
-           <div className="max-w-7xl mx-auto px-4 py-6">
-          <Skeleton
-           className="h-[300px] w-full bg-gray-200"
-          />
-          <Skeleton
-           className="h-[300px] w-full bg-gray-200 mt-4"
-          />
+        return (
+          <div className="min-h-screen bg-white lg:mt-[80px] mt-[120px]">
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+              {/* Breadcrumb */}
+              <div className="mb-4 flex items-center gap-2">
+                <Skeleton className="h-4 w-12 bg-gray-200" />
+                <Skeleton className="h-4 w-4 bg-gray-200" />
+                <Skeleton className="h-4 w-16 bg-gray-200" />
+                <Skeleton className="h-4 w-4 bg-gray-200" />
+                <Skeleton className="h-4 w-20 bg-gray-200" />
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-start">
+                {/* Left Column */}
+                <div className="lg:col-span-2 space-y-6">
+                  {/* Image Gallery */}
+                  <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <Skeleton className="h-48 sm:h-64 md:h-80 lg:h-96 w-full bg-gray-200 rounded-none" />
+                    <div className="flex space-x-1 sm:space-x-2 overflow-x-auto p-2 sm:p-3">
+                      {[0, 1, 2, 3].map((i) => (
+                        <Skeleton key={i} className="w-14 h-12 sm:w-20 sm:h-16 bg-gray-200 flex-shrink-0" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Title / Location / Badges */}
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6 space-y-3">
+                    <Skeleton className="h-6 sm:h-7 w-2/3 bg-gray-200" />
+                    <Skeleton className="h-4 w-1/3 bg-gray-200" />
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {[0, 1, 2, 3].map((i) => (
+                        <Skeleton key={i} className="h-8 w-24 rounded-full bg-gray-200" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tabs */}
+                  <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <div className="flex border-b border-gray-200 px-4 sm:px-6 gap-6 py-3">
+                      <Skeleton className="h-5 w-16 bg-gray-200" />
+                      <Skeleton className="h-5 w-24 bg-gray-200" />
+                      <Skeleton className="h-5 w-32 bg-gray-200" />
+                    </div>
+                    <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {[0, 1, 2, 3, 4, 5].map((i) => (
+                        <Skeleton key={i} className="h-10 w-full bg-gray-200" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-4 sm:space-y-6 lg:col-span-1">
+                  {/* Price / Actions */}
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6 space-y-4">
+                    <Skeleton className="h-4 w-20 bg-gray-200" />
+                    <Skeleton className="h-7 w-32 bg-gray-200" />
+                    <Skeleton className="h-12 w-full rounded-lg bg-gray-200" />
+                    <Skeleton className="h-12 w-full rounded-lg bg-gray-200" />
+                    <div className="space-y-4 pt-2">
+                      <div className="flex items-start gap-3">
+                        <Skeleton className="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0" />
+                        <div className="space-y-2 flex-1">
+                          <Skeleton className="h-4 w-2/3 bg-gray-200" />
+                          <Skeleton className="h-3 w-full bg-gray-200" />
+                          <Skeleton className="h-3 w-5/6 bg-gray-200" />
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Skeleton className="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0" />
+                        <div className="space-y-2 flex-1">
+                          <Skeleton className="h-4 w-2/3 bg-gray-200" />
+                          <Skeleton className="h-3 w-full bg-gray-200" />
+                          <Skeleton className="h-3 w-5/6 bg-gray-200" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Seller Information */}
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6 space-y-4">
+                    <Skeleton className="h-5 w-36 bg-gray-200" />
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gray-200 flex-shrink-0" />
+                      <Skeleton className="h-4 w-32 bg-gray-200" />
+                    </div>
+                    <Skeleton className="h-4 w-1/2 bg-gray-200" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        );
       }
 
       const isCertifiedSeller = !car?.seller?.name;
 
   return (
+    <>
     <div className="min-h-screen bg-white lg:mt-[80px] mt-[120px]">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
         {/* Breadcrumb */}
@@ -665,8 +763,116 @@ export default function Page() {
                   </div>
                 )}
 
-                {/* Inspection Tab */}
-                {activeTab === 'inspection' && (
+                {/* Inspection Tab - Unverified Glimpse */}
+                {activeTab === 'inspection' && !isAuthenticated && (
+                  <div className="space-y-6">
+                    {/* Inspection Summary - visible glimpse */}
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+                        <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-[#f78f37] flex-shrink-0" /> <span>{lang[language].inspectionSummary}</span>
+                      </h3>
+
+                      <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
+                        {/* Inspection Score */}
+                        <div className="mb-6 sm:mb-8">
+                          <div className="flex justify-between items-center mb-4 gap-2">
+                            <h4 className="font-semibold text-gray-700 text-sm sm:text-base">{lang[language].overallCondition}</h4>
+                            <div className="bg-gradient-to-r from-[#f78f37] to-[#ffac5f] text-white font-bold px-3 py-1 rounded-full text-xs sm:text-sm">
+                              {lang[language].excellent}
+                            </div>
+                          </div>
+
+                          <div className="w-full bg-gray-200 rounded-full h-2.5">
+                            <div className="bg-gradient-to-r from-[#f78f37] to-[#ffac5f] h-2.5 rounded-full" style={{ width: '92%' }}></div>
+                          </div>
+                          <div className="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>{lang[language].fair}</span>
+                            <span>{lang[language].excellent}</span>
+                          </div>
+                        </div>
+
+                        {/* Key Inspection Points */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <div className="flex items-center mb-2">
+                              <Wrench className="h-5 w-5 text-[#f78f37] mr-2" />
+                              <h5 className="font-semibold text-gray-700">{lang[language].mechanical}</h5>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm text-gray-600">{lang[language].condition}</span>
+                              <div className="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded">
+                                {lang[language].excellent}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <div className="flex items-center mb-2">
+                              <Car className="h-5 w-5 text-[#f78f37] mr-2" />
+                              <h5 className="font-semibold text-gray-700">{lang[language].exterior}</h5>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm text-gray-600">{lang[language].condition}</span>
+                              <div className="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded">
+                                {lang[language].veryGood}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                            <div className="flex items-center mb-2">
+                              <Star className="h-5 w-5 text-[#f78f37] mr-2" />
+                              <h5 className="font-semibold text-gray-700">{lang[language].interior}</h5>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm text-gray-600">{lang[language].condition}</span>
+                              <div className="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded">
+                                {lang[language].excellent}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed report - blurred teaser with verify CTA */}
+                    <div className="relative">
+                      <div className="pointer-events-none select-none blur-sm opacity-60">
+                        <h4 className="font-semibold text-gray-700 mb-4 text-sm sm:text-base">{lang[language].detailedInspectionReport}</h4>
+                        <div className="space-y-3">
+                          {[0, 1, 2].map((i) => (
+                            <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 sm:p-4 flex items-center gap-3">
+                              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-[#f78f37] to-[#ffac5f] flex items-center justify-center flex-shrink-0">
+                                <span className="text-white text-xs sm:text-sm font-bold">{i + 1}</span>
+                              </div>
+                              <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="absolute inset-0 flex items-center justify-center bg-white/60 rounded-lg">
+                        <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-6 sm:p-8 text-center max-w-sm">
+                          <Lock className="h-9 w-9 sm:h-10 sm:w-10 mx-auto text-gray-400 mb-3" />
+                          <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">
+                            {lang[language].loginToViewInspection || 'Verify your phone to view the inspection report'}
+                          </h3>
+                          <p className="text-sm text-gray-500 mb-5">
+                            {lang[language].loginToViewInspectionDesc || 'Quickly verify your phone number to unlock the full inspection report for this car.'}
+                          </p>
+                          <button
+                            onClick={() => setShowLoginModal(true)}
+                            className="bg-[#f78f37] hover:bg-[#e67d26] text-white font-medium py-2.5 px-6 rounded-lg transition"
+                          >
+                            {lang[language].loginToView || 'Verify to Continue'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'inspection' && isAuthenticated && (
                   <div className="space-y-8">
                     {/* Inspection Summary */}
                     <div>
@@ -1104,6 +1310,12 @@ export default function Page() {
         )}
       </div>
     </div>
+    <LoginModal
+      open={showLoginModal}
+      onOpenChange={setShowLoginModal}
+      onSuccess={() => setIsAuthenticated(true)}
+    />
+    </>
   );
 };
 
