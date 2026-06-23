@@ -47,7 +47,7 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                         <div className="relative">
 
                           <img
-                             src={car?.coverImage?.url}
+                             src={'https://baddelha-production.s3.eu-west-1.amazonaws.com/' + car?.coverImage?.filePath}
                             alt={car?.make + '-' + car?.model} 
                             className="w-full h-36 object-cover" />
                         </div>
