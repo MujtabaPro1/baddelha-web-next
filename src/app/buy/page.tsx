@@ -363,7 +363,6 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
           <div className="font-bold text-base text-[#3d3d40]">
             SAR {numberWithCommas(car?.sellingPrice || car.bookValue)}
           </div>
-          <div className="text-xs text-gray-500">SAR {((car?.sellingPrice || car.bookValue) / 50).toFixed(0)}{t.perMonth}</div>
         </div>
 
         <a
