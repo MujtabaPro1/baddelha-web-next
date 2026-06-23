@@ -23,6 +23,7 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
   const [showOtpField, setShowOtpField] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
   const [resendDisabled, setResendDisabled] = useState(false);
+  const [resendCount, setResendCount] = useState(0);
 
   useEffect(() => {
     if (!open) {
@@ -32,6 +33,7 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
       setShowOtpField(false);
       setResendTimer(0);
       setResendDisabled(false);
+      setResendCount(0);
     }
   }, [open]);
 
@@ -51,10 +53,16 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
     }
     setError('');
     setIsLoading(true);
+
     try {
-      await axiosInstance.post('/api/1.0/customer/sign-in', { phone: `+966${phone}` });
+      // First try sign-up
+      await axiosInstance.post('/api/1.0/customer/sign-up', {
+        phone: `+966${phone}`,
+      });
       setShowOtpField(true);
-      setResendTimer(80);
+      const timerDuration = resendCount === 0 ? 120 : 120;
+      setResendTimer(timerDuration);
+      setResendCount((prev) => prev + 1);
       setResendDisabled(true);
       toast({
         title: 'Success',
@@ -63,16 +71,44 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
         className: 'bg-green-50 border-green-200',
       });
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to send OTP');
-      toast({
-        title: 'Error',
-        description: err.response?.data?.message || 'Failed to send OTP',
-        variant: 'destructive',
-      });
+      // If 403 (user already exists), try sign-in
+      if (err?.response?.status === 403) {
+        try {
+          await axiosInstance.post('/api/1.0/customer/sign-in', { phone: `+966${phone}` });
+          setShowOtpField(true);
+          const timerDuration = resendCount === 0 ? 120 : 120;
+          setResendTimer(timerDuration);
+          setResendCount((prev) => prev + 1);
+          setResendDisabled(true);
+          toast({
+            title: 'Success',
+            description: 'OTP sent to your phone',
+            variant: 'default',
+            className: 'bg-green-50 border-green-200',
+          });
+        } catch (signInErr: any) {
+          setError(signInErr.response?.data?.message || 'Failed to send OTP');
+          toast({
+            title: 'Error',
+            description: signInErr.response?.data?.message || 'Failed to send OTP',
+            variant: 'destructive',
+          });
+        }
+      } else {
+        setError(err.response?.data?.message || 'Failed to send OTP');
+        toast({
+          title: 'Error',
+          description: err.response?.data?.message || 'Failed to send OTP',
+          variant: 'destructive',
+        });
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
+
+  
 
   const verifyOtp = async () => {
     if (!/^\d{6}$/.test(otp)) {
@@ -124,9 +160,15 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
     if (resendDisabled) return;
     setResendDisabled(true);
     setIsLoading(true);
+
     try {
-      await axiosInstance.post('/api/1.0/customer/sign-in', { phone: `+966${phone}` });
-      setResendTimer(80);
+      // First try sign-up
+      await axiosInstance.post('/api/1.0/customer/sign-up', {
+        phone: `+966${phone}`,
+      });
+      const timerDuration = resendCount === 0 ? 120 : 120;
+      setResendTimer(timerDuration);
+      setResendCount((prev) => prev + 1);
       toast({
         title: 'Success',
         description: 'OTP resent successfully',
@@ -134,12 +176,35 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
         className: 'bg-green-50 border-green-200',
       });
     } catch (err: any) {
-      toast({
-        title: 'Error',
-        description: err.response?.data?.message || 'Failed to resend OTP',
-        variant: 'destructive',
-      });
-      setResendDisabled(false);
+      // If 403 (user already exists), try sign-in
+      if (err?.response?.status === 403) {
+        try {
+          await axiosInstance.post('/api/1.0/customer/sign-in', { phone: `+966${phone}` });
+          const timerDuration = resendCount === 0 ? 120 : 120;
+          setResendTimer(timerDuration);
+          setResendCount((prev) => prev + 1);
+          toast({
+            title: 'Success',
+            description: 'OTP resent successfully',
+            variant: 'default',
+            className: 'bg-green-50 border-green-200',
+          });
+        } catch (signInErr: any) {
+          toast({
+            title: 'Error',
+            description: signInErr.response?.data?.message || 'Failed to resend OTP',
+            variant: 'destructive',
+          });
+          setResendDisabled(false);
+        }
+      } else {
+        toast({
+          title: 'Error',
+          description: err.response?.data?.message || 'Failed to resend OTP',
+          variant: 'destructive',
+        });
+        setResendDisabled(false);
+      }
     } finally {
       setIsLoading(false);
     }
