@@ -23,7 +23,6 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
   const [showOtpField, setShowOtpField] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
   const [resendDisabled, setResendDisabled] = useState(false);
-  const [resendCount, setResendCount] = useState(0);
   const [isSignUp, setIsSignUp] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -37,7 +36,6 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
       setShowOtpField(false);
       setResendTimer(0);
       setResendDisabled(false);
-      setResendCount(0);
       setIsSignUp(false);
       setFirstName('');
       setLastName('');
@@ -83,7 +81,6 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
       setShowOtpField(true);
       const timerDuration = 120;
       setResendTimer(timerDuration);
-      setResendCount((prev) => prev + 1);
       setResendDisabled(true);
       toast({
         title: 'Success',
@@ -190,7 +187,6 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
     const onResendSuccess = () => {
       const timerDuration = 120;
       setResendTimer(timerDuration);
-      setResendCount((prev) => prev + 1);
       toast({
         title: 'Success',
         description: 'OTP resent successfully',
