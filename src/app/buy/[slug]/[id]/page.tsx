@@ -1293,7 +1293,7 @@ export default function Page() {
               })}
             </div>
 
-            <div className="mt-6 text-center">
+            <div className="hidden mt-6 text-center">
               <button className="bg-white hover:bg-orange-50 text-[#f78f37] font-medium py-2 px-4 sm:px-6 rounded-lg border border-[#f78f37] transition inline-flex items-center text-xs sm:text-sm">
                 {lang[language].viewMoreSimilarCars} <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 ml-2" />
               </button>

@@ -280,7 +280,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
                 <p className="font-medium">{t.location} &nbsp;</p>
                 <div className="flex items-center">
                   <MapPin className="h-4 w-4 mr-2 text-[#f78f37]" />
-                  <span className="font-bold">{car.location || t.saudiArabia}</span>
+                  <span className="font-bold">{car.location || 'Riyadh'}</span>
                 </div>
               </div>
             </div>
@@ -351,7 +351,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
           </div>
           <div className="flex items-center text-gray-600">
             <MapPin className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
-            <span className="font-medium truncate">{car.location || t.saudiArabia}</span>
+            <span className="font-medium truncate">{car.location || 'Riyadh'}</span>
           </div>
         </div>
 
