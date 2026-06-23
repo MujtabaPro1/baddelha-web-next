@@ -13,7 +13,7 @@ export const Filters = ({ isLanding = false }) => {
   const router = useRouter();
   const { language } = useLanguage();
   const t: any = lang[language === 'ar' ? 'ar' : 'en'].buy_page;
-  const [selectedFilter, setSelectedFilter] = useState(["Make"]);
+  const [selectedFilter, setSelectedFilter] = useState(["Make","Model"]);
 
   const currentFilters = [
     {
