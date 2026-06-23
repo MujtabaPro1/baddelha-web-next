@@ -41,6 +41,7 @@ import LoginModal from '../../../../components/LoginModal';
 
 function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) {
 
+  console.log(car);
   const [isError,setIsError] = useState(false);
 
   return   <div
@@ -48,7 +49,7 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                         <div className="relative">
 
                           <img
-                             src={isError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' :  BASE_URL + '/api/1.0/media/' + car?.coverImage}
+                             src={car?.coverImage?.url}
                             alt={car?.make + '-' + car?.model} 
                             onError={()=>{
                               setIsError(true);
@@ -58,7 +59,7 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                         <div className="p-3">
                           <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">{car?.make}&nbsp;{car?.model}</h4>
                           <div className="flex justify-between items-center mb-2">
-                            <span className="font-bold text-[#f78f37] text-sm">{car.price}</span>
+                            <span className="font-bold text-[#f78f37] text-sm">SAR {car.sellingPrice}</span>
                             <span className="text-xs text-gray-500">{car?.exactMileage || car?.mileage}</span>
                           </div>
                           <div className="grid grid-cols-2 gap-1 mb-2">
@@ -66,7 +67,7 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                               <Calendar className="h-3 w-3 mr-1" /> {car?.modelYear}
                             </div>
                             <div className="flex items-center text-xs text-gray-600">
-                              <Fuel className="h-3 w-3 mr-1" /> {car?.fuelType}
+                              <Fuel className="h-3 w-3 mr-1" /> {car?.fuelType || 'Petrol'}
                             </div>
                           </div>
                           <button className="w-full bg-[#f78f37] hover:bg-[#e67d26] text-white text-xs font-medium py-1.5 px-2 rounded-lg transition">
