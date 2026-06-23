@@ -27,7 +27,7 @@ import {
   Phone,
   Lock,
   } from 'lucide-react';
-import axiosInstance, { BASE_URL } from '../../../../services/axiosInstance';
+import axiosInstance from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
 import CarBodySvgView from '../../../../components/CarBodyView';
 import { useParams } from 'next/navigation';
