@@ -59,7 +59,7 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                           <h4 className="font-medium text-gray-800 mb-1 truncate text-ellipsis text-sm">{car?.make}&nbsp;{car?.model}</h4>
                           <div className="flex justify-between items-center mb-2">
                             <span className="font-bold text-[#f78f37] text-sm">{car.price}</span>
-                            <span className="text-xs text-gray-500">{car.mileage}</span>
+                            <span className="text-xs text-gray-500">{car?.exactMileage || car?.mileage}</span>
                           </div>
                           <div className="grid grid-cols-2 gap-1 mb-2">
                             <div className="flex items-center text-xs text-gray-600">
@@ -191,7 +191,7 @@ export default function Page() {
               // Set car data
               setCar(_car);
 
-              getSimilarCar(_car.make,_car.model,_car.year);
+              getSimilarCar(_car.make,_car.model,_car.modelYear);
 
               if(res?.data?.car?.Inspection?.length){
               setInspectionDetails(res?.data?.car?.Inspection?.[0]);
@@ -453,15 +453,11 @@ export default function Page() {
               <div className="flex flex-wrap items-center gap-2 mt-4">
                 <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
                   <Gauge className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
-                  {car?.mileage ? car.mileage.toLocaleString() : '42,500'} km
+                  {car?.exactMileage ? car.exactMileage.toLocaleString() : car?.mileage ? car.mileage.toLocaleString() : '42,500'} km
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
                   <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
-                  {car?.year || '2022'}
-                </span>
-                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
-                  <Settings className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
-                  {car?.transmission || lang[language].defaultTransmission}
+                  {car?.modelYear || '2022'}
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
                   <Fuel className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#f78f37]" />
@@ -513,7 +509,7 @@ export default function Page() {
                     </div>
                     <div>
                       <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].year}</div>
-                      <div className="font-semibold text-sm sm:text-base">{car?.year || '2022'}</div>
+                      <div className="font-semibold text-sm sm:text-base">{car?.modelYear || '2022'}</div>
                     </div>
                     <div>
                       <div className="text-xs sm:text-sm text-gray-500 mb-1">{lang[language].bodyType}</div>
