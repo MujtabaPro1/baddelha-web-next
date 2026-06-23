@@ -92,18 +92,18 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const { language } = useLanguage();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  useEffect(() => {
-    const checkAuthState = () => {
-      const authToken = localStorage.getItem('authToken') || localStorage.getItem('token');
-      setIsAuthenticated(!!authToken);
-    };
-    checkAuthState();
-    window.addEventListener('authStateChanged', checkAuthState);
-    return () => window.removeEventListener('authStateChanged', checkAuthState);
-  }, []);
+  // useEffect(() => {
+  //   // const checkAuthState = () => {
+  //   //   const authToken = localStorage.getItem('authToken') || localStorage.getItem('token');
+  //   //   setIsAuthenticated(!!authToken);
+  //   // };
+  //  // checkAuthState();
+  //   // window.addEventListener('authStateChanged', checkAuthState);
+  //   // return () => window.removeEventListener('authStateChanged', checkAuthState);
+  // }, []);
 
 
   const toggleSection = (sectionKey: string) => {
