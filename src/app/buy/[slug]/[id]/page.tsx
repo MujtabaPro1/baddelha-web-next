@@ -41,8 +41,6 @@ import LoginModal from '../../../../components/LoginModal';
 
 function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) {
 
-  console.log(car);
-  const [isError,setIsError] = useState(false);
 
   return   <div
   className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition">
@@ -51,9 +49,6 @@ function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) 
                           <img
                              src={car?.coverImage?.url}
                             alt={car?.make + '-' + car?.model} 
-                            onError={()=>{
-                              setIsError(true);
-                            }}
                             className="w-full h-36 object-cover" />
                         </div>
                         <div className="p-3">
