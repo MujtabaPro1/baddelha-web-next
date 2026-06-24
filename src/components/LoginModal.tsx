@@ -101,17 +101,24 @@ export default function LoginModal({ open, onOpenChange, onSuccess }: LoginModal
         });
         onOtpSuccess();
       } else {
-        // Sign-in flow: try sign-up first, if 403 then sign-in
+        // Sign-in flow
         try {
-          await axiosInstance.post('/api/1.0/customer/sign-up', {
+          await axiosInstance.post('/api/1.0/customer/sign-in', {
             phone: `+966${phone}`,
           });
           onOtpSuccess();
         } catch (err: any) {
-          if (err?.response?.status === 403) {
-            // User exists, try sign-in
-            await axiosInstance.post('/api/1.0/customer/sign-in', { phone: `+966${phone}` });
-            onOtpSuccess();
+          // User doesn't exist, show signup form
+          if (err?.response?.status === 404 || err?.response?.data?.message?.toLowerCase().includes('not found') || err?.response?.data?.message?.toLowerCase().includes('not exist')) {
+            setIsSignUp(true);
+            setError('Account not found. Please sign up to continue.');
+            toast({
+              title: 'Account not found',
+              description: 'Please fill in your details to create an account',
+              variant: 'default',
+            });
+            setIsLoading(false);
+            return;
           } else {
             throw err;
           }
