@@ -37,6 +37,7 @@ import lang from '../../../../locale';
 import { Skeleton } from '../../../../components/ui/skeleton';
 import { InfoCircledIcon } from '@radix-ui/react-icons';
 import LoginModal from '../../../../components/LoginModal';
+import BuyerQueryModal from '../../../../components/BuyerQueryModal';
 
 
 function VehicleCard ({car,lang,language}: {car:any,lang:any,language: string}) {
@@ -90,6 +91,7 @@ export default function Page() {
   const { language } = useLanguage();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showBuyerQueryModal, setShowBuyerQueryModal] = useState(false);
 
   useEffect(() => {
     const checkAuthState = () => {
@@ -1185,13 +1187,7 @@ export default function Page() {
 
               <div className="space-y-2 sm:space-y-3 pb-4 sm:pb-6 mb-4 sm:mb-6 border-b border-gray-200">
                 <button
-                  onClick={() => {
-                    const carDetails = `${car?.modelYear} ${car?.make} ${car?.model}`;
-                    const carPrice = `SAR ${numberWithCommas(car?.sellingPrice || car?.bookValue)}`;
-                    const currentUrl = window.location.href;
-                    const message = `Hello, I'm interested in the ${carDetails} (${carPrice}) that I found on your website. Can I schedule a test drive? Here's the car link: ${currentUrl}`;
-                    window.location.href = `whatsapp://send?phone=+966920032590&text=${encodeURIComponent(message)}`;
-                  }}
+                  onClick={() => setShowBuyerQueryModal(true)}
                   className="w-full bg-[#f78f37] hover:bg-[#e67d26] text-white font-medium py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg transition text-sm sm:text-base cursor-pointer"
                 >
                   {lang[language].interested}
@@ -1306,6 +1302,12 @@ export default function Page() {
       open={showLoginModal}
       onOpenChange={setShowLoginModal}
       onSuccess={() => setIsAuthenticated(true)}
+    />
+    <BuyerQueryModal
+      open={showBuyerQueryModal}
+      onOpenChange={setShowBuyerQueryModal}
+      image={images?.[0]}
+      car={car}
     />
     </>
   );
