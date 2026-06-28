@@ -139,7 +139,10 @@ const ValuationWidget: React.FC = () => {
       
       try {
         const response = await axiosInstance.get(`/api/1.0/car-options/car-model/${makeId}`);
-        setModels(response?.data);
+        const sortedModels = response?.data?.sort((a: any, b: any) => 
+          a.name?.localeCompare(b.name, undefined, { sensitivity: 'base' })
+        );
+        setModels(sortedModels);
       } catch (err) {
         console.error('Error fetching car models:', err);
         setError(prev => ({ ...prev, models: 'Failed to load car models' }));
