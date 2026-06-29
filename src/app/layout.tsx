@@ -15,7 +15,7 @@ import { Suspense } from 'react';
 
 // Preload critical fonts
 const fontPreload = [
-  { rel: 'preload', href: '/fonts/sf-pro-display.woff2', as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' as const },
+  { rel: 'preload', href: '/fonts/v1/NeueHaasDisplayRoman.ttf', as: 'font', type: 'font/ttf', crossOrigin: 'anonymous' as const },
 ];
 
 export const metadata: Metadata = {

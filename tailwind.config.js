@@ -7,7 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'SF Pro Display',
+          'Neue Haas Grotesk Display Pro',
           'Poppins',
           'system-ui',
           'sans-serif'

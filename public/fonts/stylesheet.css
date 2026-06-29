@@ -1,4 +1,44 @@
 @font-face {
+    font-family: 'Neue Haas Grotesk Display Pro';
+    src: url('v1/NHaasGroteskDSPro-35XLt.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Neue Haas Grotesk Display Pro';
+    src: url('v1/NeueHaasDisplayLight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Neue Haas Grotesk Display Pro';
+    src: url('v1/NeueHaasDisplayRoman.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Neue Haas Grotesk Display Pro';
+    src: url('v1/NeueHaasDisplayMediu.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Neue Haas Grotesk Display Pro';
+    src: url('v1/NeueHaasDisplayBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
     font-family: 'Shubbak';
     src: url('Shubbak-Light.eot');
     src: local('Shubbak Light'), local('Shubbak-Light'),
