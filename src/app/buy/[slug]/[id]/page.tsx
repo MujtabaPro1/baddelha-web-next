@@ -973,7 +973,7 @@ export default function Page() {
                                               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-[#f78f37] to-[#ffac5f] flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
                                                 <span className="text-white text-xs sm:text-sm font-bold">{sectionIndex + 1}</span>
                                               </div>
-                                              <h5 className="font-semibold text-gray-800 text-left text-sm sm:text-base truncate">{section.label}</h5>
+                                              <h5 className="font-semibold text-gray-800 text-left text-sm sm:text-base truncate">{section.label == 'extras' ? language == 'en' ?  'Additional Info' : 'معلومات إضافية' : section.label}</h5>
                                             </div>
                                             <ChevronDown
                                               className={`h-4 w-4 sm:h-5 sm:w-5 text-gray-500 transition-transform duration-200 flex-shrink-0 ${isExpanded ? 'rotate-180' : ''}`}
@@ -984,17 +984,20 @@ export default function Page() {
                                           <div className={`transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                                             <div className="p-3 sm:p-4 pt-0 border-t border-gray-100">
                                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mt-3">
-                                                {section.fields.map((field: any, fieldIndex: number) => (
-                                                  <div
-                                                    key={fieldIndex}
-                                                    className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 px-2 sm:px-3 bg-gray-50 rounded-lg gap-1 sm:gap-2"
-                                                  >
-                                                    <span className="text-xs sm:text-sm text-gray-600">{field.label}</span>
-                                                    <span className="text-xs sm:text-sm font-medium text-gray-900 flex items-center gap-1 flex-shrink-0">{field.value || 'N/A'}
-                                                    {field.value == 'Pass' ? <CheckCircle2Icon className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" /> : field.value == 'Fail' ||  field.value == 'Damaged' ||  field.value == 'Leak' ? <InfoCircledIcon className="h-3 w-3 sm:h-4 sm:w-4 text-[#E1AD01]" /> : null}
-                                                    </span>
-                                                  </div>
-                                                ))}
+                                                {section.fields.map((field: any, fieldIndex: number) => {
+                                                  const isTextArea = field.fieldType === 'TextArea' || field.label?.toLowerCase() === 'remarks';
+                                                  return (
+                                                    <div
+                                                      key={fieldIndex}
+                                                      className={`flex flex-col py-2 px-2 sm:px-3 bg-gray-50 rounded-lg gap-1 sm:gap-2${isTextArea ? ' sm:col-span-2' : ' sm:flex-row sm:justify-between sm:items-center'}`}
+                                                    >
+                                                      <span className="text-xs sm:text-sm text-gray-600">{field.label == 'remarks' ? 'Remarks' : field.label}</span>
+                                                      <span className="text-xs sm:text-sm font-medium text-gray-900 break-words whitespace-pre-wrap">{field.value || 'N/A'}
+                                                      {!isTextArea && (field.value == 'Pass' ? <CheckCircle2Icon className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 inline ml-1" /> : field.value == 'Fail' || field.value == 'Damaged' || field.value == 'Leak' ? <InfoCircledIcon className="h-3 w-3 sm:h-4 sm:w-4 text-[#E1AD01] inline ml-1" /> : null)}
+                                                      </span>
+                                                    </div>
+                                                  );
+                                                })}
                                               </div>
                                             </div>
                                           </div>
