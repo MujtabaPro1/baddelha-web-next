@@ -736,13 +736,28 @@ const Step3 = () => {
                                             const marketValue = response.data.raw?.data?.marketValue;
                                             const adjustedPrice = marketValue?.adjustedPrice;
                                             const basePrice = marketValue?.basePrice;
+                                            const currentYear = new Date().getFullYear();
+                                            const carYear = Number(step1Data?.year);
+                                            const isNewCar = currentYear - carYear <= 2;
                                             
                                             if (adjustedPrice?.min && adjustedPrice?.max) {
-                                                setCarPriceRange({ min: adjustedPrice.min, max: adjustedPrice.max });
-                                                setCarPrice(adjustedPrice.min);
+                                                // Check if car is 2 years old or less and min is 4x lesser than max
+                                                if (isNewCar && adjustedPrice.max >= adjustedPrice.min * 4) {
+                                                    setCarPriceRange({ min: adjustedPrice.max, max: adjustedPrice.max });
+                                                    setCarPrice(adjustedPrice.max);
+                                                } else {
+                                                    setCarPriceRange({ min: adjustedPrice.min, max: adjustedPrice.max });
+                                                    setCarPrice(adjustedPrice.min);
+                                                }
                                             } else if (basePrice?.min && basePrice?.max) {
-                                                setCarPriceRange({ min: basePrice.min, max: basePrice.max });
-                                                setCarPrice(basePrice.min);
+                                                // Check if car is 2 years old or less and min is 4x lesser than max
+                                                if (isNewCar && basePrice.max >= basePrice.min * 4) {
+                                                    setCarPriceRange({ min: basePrice.max, max: basePrice.max });
+                                                    setCarPrice(basePrice.max);
+                                                } else {
+                                                    setCarPriceRange({ min: basePrice.min, max: basePrice.max });
+                                                    setCarPrice(basePrice.min);
+                                                }
                                             } else if (response.data.priceRange?.min && response.data.priceRange?.max) {
                                                 setCarPriceRange({ min: response.data.priceRange.min, max: response.data.priceRange.max });
                                                 setCarPrice(response.data.priceRange.min);
