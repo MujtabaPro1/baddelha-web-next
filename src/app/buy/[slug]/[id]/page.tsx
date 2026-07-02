@@ -26,6 +26,7 @@ import {
   Settings,
   Phone,
   Lock,
+  X,
   } from 'lucide-react';
 import axiosInstance from '../../../../services/axiosInstance';
 import { inspectionData, numberWithCommas } from '../../../../lib/utils';
@@ -92,6 +93,37 @@ export default function Page() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showBuyerQueryModal, setShowBuyerQueryModal] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<any[] | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number>(0);
+  const [lightboxZoom, setLightboxZoom] = useState<number>(1);
+
+  const openLightbox = (imgs: any[], index: number) => {
+    setLightboxImages(imgs);
+    setLightboxIndex(index);
+    setLightboxZoom(1);
+  };
+
+  const closeLightbox = () => {
+    setLightboxImages(null);
+    setLightboxZoom(1);
+  };
+
+  const goToLightboxIndex = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxZoom(1);
+  };
+
+  const toggleLightboxZoom = () => {
+    setLightboxZoom((prev) => (prev === 1 ? 2 : 1));
+  };
+
+  const handleLightboxWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    setLightboxZoom((prev) => {
+      const next = prev - e.deltaY * 0.001;
+      return Math.min(4, Math.max(1, next));
+    });
+  };
 
   useEffect(() => {
     const checkAuthState = () => {
@@ -366,7 +398,8 @@ export default function Page() {
                   src={isMainImageError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' : (images.length > 0 ? images?.[currentImageIndex] : car?.images?.[currentImageIndex])}
                   alt={car ? `${car.year || ''} ${car.make || ''} ${car.model || ''}` : `${car?.year} ${car?.make} ${car?.model}`}
                   onError={() => setIsMainImageError(true)}
-                  className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover"
+                  onClick={() => images.length > 0 && openLightbox(images, currentImageIndex)}
+                  className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover cursor-pointer"
                 />
 
                 {/* Navigation Arrows */}
@@ -415,6 +448,7 @@ export default function Page() {
                     <button
                       key={index}
                       onClick={() => { setIsMainImageError(false); setCurrentImageIndex(index); }}
+                      onDoubleClick={() => openLightbox(images, index)}
                       className={`flex-shrink-0 w-14 h-12 sm:w-20 sm:h-16 rounded-lg overflow-hidden border-2 transition ${
                         index === currentImageIndex ? 'border-[#f78f37]' : 'border-gray-200'
                       }`}
@@ -986,13 +1020,14 @@ export default function Page() {
                                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mt-3">
                                                 {section.fields.map((field: any, fieldIndex: number) => {
                                                   const isTextArea = field.fieldType === 'TextArea' || field.label?.toLowerCase() === 'remarks';
+                                                  const isVinField = /vin|chassis/i.test(field.label || '');
                                                   return (
                                                     <div
                                                       key={fieldIndex}
                                                       className={`flex flex-col py-2 px-2 sm:px-3 bg-gray-50 rounded-lg gap-1 sm:gap-2${isTextArea ? ' sm:col-span-2' : ' sm:flex-row sm:justify-between sm:items-center'}`}
                                                     >
                                                       <span className="text-xs sm:text-sm text-gray-600">{field.label == 'remarks' ? 'Remarks' : field.label}</span>
-                                                      <span className="text-xs sm:text-sm font-medium text-gray-900 break-words whitespace-pre-wrap">{field.value || 'N/A'}
+                                                      <span className={`text-xs sm:text-sm font-medium text-gray-900 break-words whitespace-pre-wrap${isVinField ? ' blur-sm select-none' : ''}`}>{field.value || 'N/A'}
                                                       {!isTextArea && (field.value == 'Pass' ? <CheckCircle2Icon className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 inline ml-1" /> : field.value == 'Fail' || field.value == 'Damaged' || field.value == 'Leak' ? <InfoCircledIcon className="h-3 w-3 sm:h-4 sm:w-4 text-[#E1AD01] inline ml-1" /> : null)}
                                                       </span>
                                                     </div>
@@ -1087,7 +1122,11 @@ export default function Page() {
                         {images?.length > 0 ? (
                           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
                             {images.map((img: any, index: number) => (
-                              <div key={index} className="bg-white p-1 sm:p-2 rounded-lg shadow-sm border border-gray-200">
+                              <div
+                                key={index}
+                                className="bg-white p-1 sm:p-2 rounded-lg shadow-sm border border-gray-200 cursor-pointer hover:shadow-md transition-shadow"
+                                onClick={() => openLightbox(images, index)}
+                              >
                                 <img
                                   src={img}
                                   alt={`Inspection image ${index + 1}`}
@@ -1117,7 +1156,11 @@ export default function Page() {
                         <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
                           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
                             {(inspectionImages as any[]).map((img: any, index: number) => (
-                              <div key={index} className="bg-white p-1 sm:p-2 rounded-lg shadow-sm border border-gray-200">
+                              <div
+                                key={index}
+                                className="bg-white p-1 sm:p-2 rounded-lg shadow-sm border border-gray-200 cursor-pointer hover:shadow-md transition-shadow"
+                                onClick={() => openLightbox(inspectionImages as any[], index)}
+                              >
                                 <img
                                   src={img.url || img.imageUrl || img}
                                   alt={img.caption || `Finding ${index + 1}`}
@@ -1312,6 +1355,73 @@ export default function Page() {
       image={images?.[0]}
       car={car}
     />
+    {lightboxImages && lightboxImages.length > 0 && (
+      <div
+        className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4"
+        onClick={closeLightbox}
+      >
+        <button
+          onClick={closeLightbox}
+          className="absolute top-4 right-4 text-white hover:text-gray-300 transition"
+        >
+          <X className="h-8 w-8" />
+        </button>
+
+        {lightboxIndex > 0 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              goToLightboxIndex(lightboxIndex - 1);
+            }}
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 bg-black/40 rounded-full p-2 transition z-10"
+          >
+            <ChevronLeft className="h-6 w-6 sm:h-8 sm:w-8" />
+          </button>
+        )}
+
+        {lightboxIndex < lightboxImages.length - 1 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              goToLightboxIndex(lightboxIndex + 1);
+            }}
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 bg-black/40 rounded-full p-2 transition z-10"
+          >
+            <ChevronRight className="h-6 w-6 sm:h-8 sm:w-8" />
+          </button>
+        )}
+
+        <div
+          className="max-w-4xl w-full max-h-[85vh] flex flex-col items-center"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div
+            className="w-full max-h-[75vh] overflow-auto flex items-center justify-center"
+            onWheel={handleLightboxWheel}
+          >
+            <img
+              src={
+                lightboxImages[lightboxIndex]?.url ||
+                lightboxImages[lightboxIndex]?.imageUrl ||
+                lightboxImages[lightboxIndex]
+              }
+              alt={lightboxImages[lightboxIndex]?.caption || `Image ${lightboxIndex + 1}`}
+              onClick={toggleLightboxZoom}
+              style={{ transform: `scale(${lightboxZoom})`, transition: 'transform 0.2s ease-out' }}
+              className={`max-w-full max-h-[75vh] object-contain rounded-lg ${lightboxZoom > 1 ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
+            />
+          </div>
+          <p className="text-white text-sm sm:text-base font-medium mt-4 text-center">
+            {lightboxImages[lightboxIndex]?.caption
+              ? lightboxImages[lightboxIndex].caption.toString().split('_').join(' ')
+              : `Image ${lightboxIndex + 1}`}
+          </p>
+          <p className="text-gray-400 text-xs mt-1">
+            {lightboxIndex + 1} / {lightboxImages.length}
+          </p>
+        </div>
+      </div>
+    )}
     </>
   );
 };
