@@ -138,6 +138,31 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+/* Mobile pagination responsive styles */
+@media (max-width: 480px) {
+  .ais-Pagination-list {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .ais-Pagination-item {
+    height: 32px;
+    width: 32px;
+    font-size: 12px;
+  }
+
+  .ais-Pagination-item.ais-Pagination-item--page {
+    margin-right: 2px;
+  }
+
+  .ais-Pagination-item--previousPage,
+  .ais-Pagination-item--nextPage,
+  .ais-Pagination-item--lastPage {
+    font-size: 24px;
+  }
+}
+
 .leaflet-container {
   z-index: 0;
 }
