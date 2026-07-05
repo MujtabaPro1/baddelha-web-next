@@ -3,7 +3,7 @@
 import { useStats, Pagination } from "react-instantsearch";
 import React, { memo, useState, useEffect } from "react";
 
-const _Pagination = () => {
+function PaginationWrapper() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -48,6 +48,6 @@ const _Pagination = () => {
       <Stats />
     </div>
   );
-};
+}
 
-export const PaginationComponent = memo(_Pagination);
+export const PaginationComponent = memo(PaginationWrapper);
