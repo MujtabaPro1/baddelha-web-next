@@ -1,6 +1,7 @@
 const lang = {
     en: {
         "defaultLocation": "Riyadh, Saudi Arabia",
+        "availableModels": "Available Models",
         "defaultSellerName": "Certified Seller",
         "defaultMake": "Toyota",
         "defaultModel": "RAV4",
@@ -713,6 +714,7 @@ const lang = {
        } ,
        ar: {
         "defaultLocation": "الرياض، المملكة العربية السعودية",
+        "availableModels": "الموديلات المتوفرة",
         "defaultSellerName": "بائع موثق",
         "defaultMake": "تويوتا",
         "defaultModel": "راف 4",

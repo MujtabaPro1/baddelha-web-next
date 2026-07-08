@@ -337,8 +337,9 @@ const DealershipCars: React.FC = () => {
                   <div
                     className="relative h-52 cursor-pointer overflow-hidden bg-gray-100"
                     onClick={() => {
-                         window.location.href = `https://wa.me/966920032590?text=${encodeURIComponent(`Hi, I'm interested in reserving this car:\n\n🚗 ${car.year} ${car.make} ${car.model}${car.exactModel ? ` ${car.exactModel}` : ''}\n💰 Price: SAR ${formatPrice(car.sellingPrice)}\n🏢 Dealership: ${dealership?.name || 'N/A'}\n\nPlease provide more details.`)}`;
-                    }}
+                         window.open(`https://wa.me/966920032590?text=${encodeURIComponent(`Hi, I'm interested in reserving this car:\n\n🚗 ${car.year} ${car.make} ${car.model}${car.exactModel ? ` ${car.exactModel}` : ''}\n💰 Price: SAR ${formatPrice(car.sellingPrice)}\n🏢 Dealership: ${dealership?.name || 'N/A'}\n\nPlease provide more details.`)}`, '_blank');
+                
+                        }}
                   >
                     <img
                       src={getCarImage(car)}
@@ -369,7 +370,9 @@ const DealershipCars: React.FC = () => {
                         </div>
                       </div>
                       {car.exactModel && (
-                        <p className="text-sm text-gray-500 mt-1">{car.exactModel}</p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {t.availableModels} <br/> {car.exactModel}
+                        </p>
                       )}
                     </div>
 
