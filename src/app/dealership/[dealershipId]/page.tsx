@@ -141,12 +141,7 @@ const DealershipCars: React.FC = () => {
     return '/placeholder-car.jpg';
   };
 
-  const openLightbox = (car: DealerCar, index: number = 0) => {
-    setSelectedCar(car);
-    setLightboxIndex(index);
-    setLightboxOpen(true);
-  };
-
+ 
   const closeLightbox = () => {
     setLightboxOpen(false);
     setSelectedCar(null);
