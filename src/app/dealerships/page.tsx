@@ -199,7 +199,7 @@ const Dealerships: React.FC = () => {
               {dealerships.map((dealership) => (
                 <Link
                   key={dealership.id}
-                  href={`/new-cars/${dealership.id}`}
+                  href={`/dealership/${dealership.id}`}
                   className="group bg-white rounded-2xl shadow-sm ring-1 ring-black/5 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
                 >
                   {/* Logo */}
