@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
         
 
         {showProfileMenu && (
-          <div className='absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50'>
+          <div className={`absolute ${language === 'ar' ? 'left-0' : 'right-0'} mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50`}>
             <a
               href="/profile"
               className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
@@ -138,11 +138,12 @@ const Navbar: React.FC = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
          'bg-gradient-to-br from-brand-50 via-white to-slate-100 py-4'
       }`}
+      dir={language === 'ar' ? 'rtl' : 'ltr'}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="flex items-center mr-6">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center">
               <span
               onClick={() => router.push('/')}
               className={`ml-2 text-xl font-bold ${isScrolled ? 'text-[#3d3d40]' : 'text-white'} cursor-pointer`}
@@ -161,7 +162,7 @@ const Navbar: React.FC = () => {
               />
               </span>
             </div>
-            <nav className="hidden md:flex space-x-8">
+            <nav className={`hidden md:flex ${language === 'ar' ? 'gap-6' : 'space-x-8'}`}>
               <a 
                 href="/buy" 
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
@@ -220,7 +221,7 @@ const Navbar: React.FC = () => {
             </nav>
           </div>
           
-          <div className="hidden md:flex items-center space-x-6">
+          <div className={`hidden md:flex items-center ${language === 'ar' ? 'gap-4' : 'space-x-6'}`}>
              <a 
                 href="/auction" 
                 className={`transition font-bold ${isScrolled ? 'text-[#3d3d40]' : 'text-primary'} hover:text-[#f78f37]`}
@@ -233,15 +234,15 @@ const Navbar: React.FC = () => {
             className={`flex items-center text-black`}
             role="button"
             aria-label="Call 920032590">
-              <Phone className="h-4 w-4  ml-2 mr-2" />
-              <span className="font-medium ml-2 mr-2">92 00 32590</span>
+              <Phone className="h-4 w-4" />
+              <span className="font-medium mx-2">92 00 32590</span>
             </div>
             <button
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
               className={`flex items-center ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37] transition`}
               aria-label={`Switch to ${language === 'en' ? 'Arabic' : 'English'} language`}
             >
-              <Globe className="h-4 w-4 mr-1" />&nbsp;
+              <Globe className={`h-4 w-4 ${language === 'ar' ? 'ml-1' : 'mr-1'}`} />
               <span>{language === 'en' ? 'العربية' : 'English'}</span>
             </button>
             {!isAuthenticated ? <button
@@ -265,7 +266,7 @@ const Navbar: React.FC = () => {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className={`md:hidden bg-white shadow-lg absolute top-full left-0 right-0 p-4 transition-transform`}>
-          <nav className="flex flex-col space-y-4 py-4">
+          <nav className="flex flex-col space-y-4 py-4" dir={language === 'ar' ? 'rtl' : 'ltr'}>
               <a 
                 href="/" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
@@ -338,14 +339,14 @@ const Navbar: React.FC = () => {
             className="flex items-center text-[#3d3d40] hover:text-[#f78f37] mt-4 cursor-pointer"
             role="button"
             aria-label="Call 920032590">
-              <Phone className="h-4 w-4 mr-2" />
-              <span className="font-medium ml-2 mr-2">92 00 32590</span>
+              <Phone className="h-4 w-4" />
+              <span className="font-medium mx-2">92 00 32590</span>
             </div>
             <button
               onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
               className="mt-4 w-full flex items-center justify-center text-[#3d3d40] hover:text-[#f78f37] border border-gray-300 px-5 py-2 rounded-full transition"
             >
-              <Globe className="h-4 w-4 mr-1" />
+              <Globe className={`h-4 w-4 ${language === 'ar' ? 'ml-1' : 'mr-1'}`} />
               <span>{language === 'en' ? 'العربية' : 'English'}</span>
             </button>
             {!isAuthenticated && <button onClick={() => router.push('/login')} className="mt-4 w-full bg-primaryBtn hover:bg-primaryBtn-600 text-white px-5 py-2 rounded-md transition transform hover:scale-105">
