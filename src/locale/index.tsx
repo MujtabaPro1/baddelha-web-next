@@ -702,7 +702,12 @@ const lang = {
     noDealershipsDescription: "Check back later for new partners.",
     dealershipsFound: "Dealerships Found",
     viewCars: "View New Cars",
-    backToDealerships: "Back to Dealerships"
+    backToDealerships: "Back to Dealerships",
+    
+    // Auth
+    loginRequired: "Login Required",
+    loginRequiredDescription: "Please sign in to view our dealership partners and browse new cars.",
+    signIn: "Sign In"
   },
 
        } ,
@@ -1403,7 +1408,12 @@ const lang = {
     noDealershipsDescription: "تحقق لاحقاً لمشاهدة شركاء جدد.",
     dealershipsFound: "وكيل متوفر",
     viewCars: "عرض السيارات الجديدة",
-    backToDealerships: "العودة إلى الوكلاء"
+    backToDealerships: "العودة إلى الوكلاء",
+    
+    // Auth
+    loginRequired: "تسجيل الدخول مطلوب",
+    loginRequiredDescription: "يرجى تسجيل الدخول لعرض شركائنا من الوكلاء وتصفح السيارات الجديدة.",
+    signIn: "تسجيل الدخول"
   },
   footer: {
     brand: 'بدلها',

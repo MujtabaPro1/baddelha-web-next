@@ -2,10 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Car, 
-  Building2, 
-  MapPin, 
   Phone, 
-  Fuel,
   Calendar,
   X,
   ChevronLeft,

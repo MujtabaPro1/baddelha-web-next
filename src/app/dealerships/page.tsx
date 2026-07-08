@@ -2,12 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import {
   Building2,
-  ChevronRight
+  ChevronRight,
+  Lock
 } from 'lucide-react';
 import axiosInstance from '../../services/axiosInstance';
 import { useLanguage } from '../../contexts/LanguageContext';
 import lang from '../../locale';
 import Link from 'next/link';
+import LoginModal from '../../components/LoginModal';
 
 interface DealershipLogo {
   id: string;
@@ -41,8 +43,18 @@ const Dealerships: React.FC = () => {
   const [dealerships, setDealerships] = useState<Dealership[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  // Check auth state
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken') || localStorage.getItem('token');
+    setIsAuthenticated(!!authToken);
+  }, []);
 
   useEffect(() => {
+    if (!isAuthenticated) return;
+    
     const fetchDealerships = async () => {
       setLoading(true);
       setError('');
@@ -59,7 +71,53 @@ const Dealerships: React.FC = () => {
     };
 
     fetchDealerships();
-  }, []);
+  }, [isAuthenticated]);
+
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false);
+    setIsAuthenticated(true);
+  };
+
+  // Show nothing while checking auth
+  if (isAuthenticated === null) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-20 flex items-center justify-center">
+        <div className="animate-pulse">Loading...</div>
+      </div>
+    );
+  }
+
+  // Show login prompt if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-20" dir={isAr ? 'rtl' : 'ltr'}>
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-md mx-auto text-center bg-white rounded-2xl shadow-sm p-8">
+            <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-amber-50 mb-6">
+              <Lock className="h-8 w-8 text-amber-500" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-3">
+              {t.loginRequired || 'Login Required'}
+            </h1>
+            <p className="text-gray-500 mb-6">
+              {t.loginRequiredDescription || 'Please sign in to view our dealership partners and browse new cars.'}
+            </p>
+            <button
+              onClick={() => setShowLoginModal(true)}
+              className="w-full bg-primaryBtn hover:bg-primaryBtnHover text-white font-semibold py-3 px-6 rounded-lg transition"
+            >
+              {t.signIn || 'Sign In'}
+            </button>
+          </div>
+        </div>
+        <LoginModal
+          open={showLoginModal}
+          onOpenChange={setShowLoginModal}
+          onSuccess={handleLoginSuccess}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20" dir={isAr ? 'rtl' : 'ltr'}>
