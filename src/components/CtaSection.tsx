@@ -29,9 +29,9 @@ const CtaSection: React.FC = () => {
                   <Phone className="h-5 w-5 text-amber-400 mr-3 ml-2" />
                   <span dir="ltr" className="text-white font-medium">92 00 32590</span>
                 </a>
-                <a href="mailto:info@baddelha.sa" className="flex items-center bg-white/10 rounded-lg p-4 hover:bg-white/20 transition">
+                <a href="mailto:info@baddelha.com.sa" className="flex items-center bg-white/10 rounded-lg p-4 hover:bg-white/20 transition">
                   <Mail className="h-5 w-5 text-amber-400 mr-3 ml-2" />
-                  <span className="text-white font-medium">info@baddelha.sa</span>
+                  <span className="text-white font-medium"></span>
                 </a>
               </div>
               

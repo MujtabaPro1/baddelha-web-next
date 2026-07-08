@@ -135,8 +135,8 @@ const Footer: React.FC = async () => {
                 </p>
                 <p className="flex items-center">
                   <Mail className="h-4 w-4 mr-2" />
-                  <a href="mailto:info@baddelha.sa" className="hover:text-amber-500 transition">
-                    info@baddelha.sa
+                  <a href="mailto:info@baddelha.com.sa" className="hover:text-amber-500 transition">
+                    info@baddelha.com.sa
                   </a>
                 </p>
               </address>
