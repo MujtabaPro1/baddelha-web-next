@@ -673,7 +673,36 @@ const lang = {
     company: "Company",
     private: "Private",
     viewDetails: "View Details",
-    perMonth: "/mo"
+    perMonth: "/mo",
+    
+    // New Cars Page
+    newCarsTitle: "New Cars from Dealerships",
+    newCarsSubtitle: "Browse the latest vehicles from our trusted dealership partners",
+    stockDisclaimer: "Stock is subject to availability under the responsibility of Dealership's authorities",
+    startingFrom: "Starting From",
+    loadingCars: "Loading cars...",
+    errorLoadingCars: "Failed to Load Cars",
+    tryAgain: "Try Again",
+    noCarsAvailable: "No Cars Available",
+    noCarsDescription: "Check back later for new arrivals.",
+    photos: "photos",
+    newLabel: "NEW",
+    reserve: "Reserve",
+    dealershipInfo: "Dealership Information",
+    visitWebsite: "Visit Website",
+    callDealership: "Call Dealership",
+    tradeInYourCar: "Trade-In Your Car",
+
+    // Dealerships Page
+    dealershipsTitle: "Our Dealership Partners",
+    dealershipsSubtitle: "Browse trusted dealerships and explore their new car inventory",
+    loadingDealerships: "Loading dealerships...",
+    errorLoadingDealerships: "Failed to Load Dealerships",
+    noDealershipsAvailable: "No Dealerships Available",
+    noDealershipsDescription: "Check back later for new partners.",
+    dealershipsFound: "Dealerships Found",
+    viewCars: "View New Cars",
+    backToDealerships: "Back to Dealerships"
   },
 
        } ,
@@ -1345,7 +1374,36 @@ const lang = {
     company: "شركة",
     private: "فرد",
     viewDetails: "عرض التفاصيل",
-    perMonth: "/شهرياً"
+    perMonth: "/شهرياً",
+    
+    // New Cars Page
+    newCarsTitle: "سيارات جديدة من الوكلاء",
+    newCarsSubtitle: "تصفح أحدث السيارات من شركائنا الموثوقين",
+    stockDisclaimer: "المخزون متاح حسب توفره وتحت مسؤولية الوكالة",
+    startingFrom: "يبدأ من",
+    loadingCars: "جاري تحميل السيارات...",
+    errorLoadingCars: "فشل في تحميل السيارات",
+    tryAgain: "حاول مرة أخرى",
+    noCarsAvailable: "لا توجد سيارات متاحة",
+    noCarsDescription: "تحقق لاحقاً للوصول الجديد.",
+    photos: "صور",
+    newLabel: "جديد",
+    reserve: "احجز",
+    dealershipInfo: "معلومات الوكالة",
+    visitWebsite: "زيارة الموقع",
+    callDealership: "اتصل بالوكالة",
+    tradeInYourCar: "بدّل سيارتك",
+
+    // Dealerships Page
+    dealershipsTitle: "شركاؤنا من الوكلاء",
+    dealershipsSubtitle: "تصفح الوكلاء الموثوقين واستكشف مخزون سياراتهم الجديدة",
+    loadingDealerships: "جاري تحميل الوكلاء...",
+    errorLoadingDealerships: "فشل في تحميل الوكلاء",
+    noDealershipsAvailable: "لا يوجد وكلاء متاحون",
+    noDealershipsDescription: "تحقق لاحقاً لمشاهدة شركاء جدد.",
+    dealershipsFound: "وكيل متوفر",
+    viewCars: "عرض السيارات الجديدة",
+    backToDealerships: "العودة إلى الوكلاء"
   },
   footer: {
     brand: 'بدلها',

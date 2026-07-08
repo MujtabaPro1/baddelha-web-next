@@ -168,6 +168,12 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'شراء سيارة مستعملة' : 'Buy used car'}
               </a>
+                 <a 
+                href="/dealerships" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'شراء سيارة جديدة' : 'Buy new car'}
+              </a>
               
               {/* <a 
                 href="/buy" 
@@ -274,13 +280,13 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'شراء سيارة مستعملة' : 'Buy used car'}
               </a>
-              {/* <a 
-                href="/auction" 
+              <a 
+                href="/dealerships" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {language === 'ar' ? 'مزاد' : 'Auction'}
-              </a> */}
+                {language === 'ar' ? 'شراء سيارة جديدة' : 'Buy new car'}
+              </a>
               {/* <a 
                 href="/locations" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
