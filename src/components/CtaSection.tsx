@@ -31,7 +31,7 @@ const CtaSection: React.FC = () => {
                 </a>
                 <a href="mailto:info@baddelha.com.sa" className="flex items-center bg-white/10 rounded-lg p-4 hover:bg-white/20 transition">
                   <Mail className="h-5 w-5 text-amber-400 mr-3 ml-2" />
-                  <span className="text-white font-medium"></span>
+                  <span className="text-white font-medium">info@baddelha.com.sa</span>
                 </a>
               </div>
               

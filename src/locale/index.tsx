@@ -694,7 +694,7 @@ const lang = {
     tradeInYourCar: "Trade-In Your Car",
 
     // Dealerships Page
-    dealershipsTitle: "Our Dealership Partners",
+    dealershipsTitle: "Available Dealerships",
     dealershipsSubtitle: "Browse trusted dealerships and explore their new car inventory",
     loadingDealerships: "Loading dealerships...",
     errorLoadingDealerships: "Failed to Load Dealerships",
@@ -1400,7 +1400,7 @@ const lang = {
     tradeInYourCar: "بدّل سيارتك",
 
     // Dealerships Page
-    dealershipsTitle: "شركاؤنا من الوكلاء",
+    dealershipsTitle: "الوكلاء المتاحون",
     dealershipsSubtitle: "تصفح الوكلاء الموثوقين واستكشف مخزون سياراتهم الجديدة",
     loadingDealerships: "جاري تحميل الوكلاء...",
     errorLoadingDealerships: "فشل في تحميل الوكلاء",
