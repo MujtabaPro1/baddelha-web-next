@@ -291,7 +291,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
               </div>
               <div className="flex gap-2">
                 <a
-                href={`/buy/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
+                href={`/buy/${(car.make + '-' + car.model + '-' + car.modelYear).replace(/\//g, '_')}/${car.id}`}
                 className="bg-primaryBtn hover:bg-primaryBtn text-white px-4 py-2 rounded-lg transition text-sm">
                   {t.viewDetails}
                 </a>
@@ -366,7 +366,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
         </div>
 
         <a
-          href={`/buy/${car.make + '-' + car.model + '-' + car.modelYear}/${car.id}`}
+                href={`/buy/${(car.make + '-' + car.model + '-' + car.modelYear).replace(/\//g, '_')}/${car.id}`}
           className="block w-full bg-primaryBtn hover:bg-primaryBtn text-white py-2 px-3 rounded-lg transition text-sm text-center font-medium"
         >
           {t.viewDetails}
