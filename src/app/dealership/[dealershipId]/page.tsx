@@ -100,7 +100,7 @@ const DealershipCars: React.FC = () => {
       setError('');
       try {
         const [carsResponse, dealershipsResponse] = await Promise.all([
-          axiosInstance.get('/api/1.0/dealership-car/find-all', { params: { dealershipId } }),
+          axiosInstance.get('/api/1.0/dealership-car/find-all', { params: { dealership, page: 1, limit: 100   } }),
           axiosInstance.get('/api/1.0/dealership/find-all'),
         ]);
 
