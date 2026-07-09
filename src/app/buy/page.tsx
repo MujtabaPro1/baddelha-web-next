@@ -307,70 +307,70 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200 flex flex-col h-full">
       <div className="relative">
-        <img 
-          src={isError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' :  BASE_URL + '/api/1.0/media/' +  car?.imageUrl} 
+        <img
+          src={isError ? 'https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=' :  BASE_URL + '/api/1.0/media/' +  car?.imageUrl}
           alt={`${car.modelYear} ${car.make} ${car.model}`}
           className="w-full h-[180px] object-cover"
+          loading="lazy"
           onError={()=>{
             console.log('onError');
             setError(true);
           }}
         />
-      
+
         <button
           onClick={onToggleLike}
           className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-md hover:bg-white transition"
         >
           <Heart className={`h-4 w-4 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
         </button>
-        
+
+        <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm text-[11px] font-medium text-gray-700 px-2 py-0.5 rounded-full">
+          {car?.organizationId ? t.company : t.private}
+        </div>
       </div>
-      
-      <div className="p-3">
-        <div className="mb-2">
+
+      <div className="p-3 sm:p-4 flex flex-col flex-1">
+        <div className="mb-2 min-h-[38px]">
           <h3 className="font-bold text-base text-gray-900 line-clamp-1">
             {car.make} {car.model} {car.modelYear}
           </h3>
-          <p className="text-gray-600 text-xs">{car.bodyType}</p>
+          <p className="text-gray-500 text-xs mt-0.5 line-clamp-1">{car.bodyType || ' '}</p>
         </div>
-        
+
         <div className="grid grid-cols-2 gap-x-2 gap-y-2 mb-3 text-xs">
           <div className="flex items-center text-gray-600">
-            <Settings className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <Settings className="h-3.5 w-3.5 mr-1.5 text-[#f78f37] flex-shrink-0" />
             <span className="font-medium truncate">{car.exactMileage || '0'} km</span>
           </div>
           <div className="flex items-center text-gray-600">
-            <Fuel className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <Fuel className="h-3.5 w-3.5 mr-1.5 text-[#f78f37] flex-shrink-0" />
             <span className="font-medium truncate">{car.fuelType || t.petrol}</span>
           </div>
           <div className="flex items-center text-gray-600">
-            <Calendar className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <Calendar className="h-3.5 w-3.5 mr-1.5 text-[#f78f37] flex-shrink-0" />
             <span className="font-medium truncate">{car.transmission || t.automatic}</span>
           </div>
           <div className="flex items-center text-gray-600">
-            <MapPin className="h-3.5 w-3.5 mr-1.5 text-[#f78f37]" />
+            <MapPin className="h-3.5 w-3.5 mr-1.5 text-[#f78f37] flex-shrink-0" />
             <span className="font-medium truncate">{car.location || 'Riyadh'}</span>
           </div>
         </div>
 
-        <div className="text-xs text-gray-600 mb-2">
-          <span className="font-medium">{car?.organizationId ? t.company : t.private}</span>
-        </div>
-
-        <div className="flex justify-between items-center mb-3">
-          <div className="font-bold text-base text-[#3d3d40]">
-            SAR {numberWithCommas(car?.sellingPrice || car.bookValue)}
+        <div className="mt-auto pt-2 border-t border-gray-100">
+          <div className="font-bold text-base text-[#3d3d40] mb-2">
+            SAR {numberWithCommas(car?.sellingPrice || car.bookValue || 0)}
           </div>
-        </div>
 
-        <a
-                href={`/buy/${(car.make + '-' + car.model + '-' + car.modelYear).replace(/\//g, '_')}/${car.id}`}
-          className="block w-full bg-primaryBtn hover:bg-primaryBtn text-white py-2 px-3 rounded-lg transition text-sm text-center font-medium"
-        >
-          {t.viewDetails}
-        </a>
+          <a
+            href={`/buy/${(car.make + '-' + car.model + '-' + car.modelYear).replace(/\//g, '_')}/${car.id}`}
+            className="block w-full bg-primaryBtn hover:bg-primaryBtn text-white py-2 px-3 rounded-lg transition text-sm text-center font-medium"
+          >
+            {t.viewDetails}
+          </a>
+        </div>
       </div>
     </div>
   );
