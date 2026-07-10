@@ -83,11 +83,11 @@ export function AuctionHero() {
               <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[#ee3c48]/10 via-[#f78f37]/5 to-transparent blur-2xl" />
               <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] px-6 py-3">
                 <Image
-                  src="/logo-light.png"
+                  src="/logo_new_white.png"
                   alt="Baddelha"
-                  width={180}
+                  width={150}
                   height={60}
-                  className="h-20 w-auto sm:h-24"
+                  className="h-20 w-[150px] object-contain"
                   priority
                 />
               </div>
