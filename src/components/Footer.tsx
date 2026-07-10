@@ -90,7 +90,7 @@ const Footer: React.FC = async () => {
             
             {/* Services Section */}
             <div>
-              <h3 className="font-semibold text-lg mb-4">Services</h3>
+              <h3 className="font-semibold text-lg mb-4">{lang[languageContent].services}</h3>
               <ul className="space-y-3">
                 <li><a href="#" className="text-white hover:text-amber-500 transition">{lang[languageContent].sellYourCar}</a></li>
                 <li><a href="#" className="text-white hover:text-amber-500 transition">{lang[languageContent].buyCars}</a></li>
@@ -102,7 +102,7 @@ const Footer: React.FC = async () => {
             
             {/* Resources Section */}
             <div>
-              <h3 className="font-semibold text-lg mb-4">Resources</h3>
+              <h3 className="font-semibold text-lg mb-4">{lang[languageContent].resources}</h3>
               <ul className="space-y-3">
                 <li><a href="/blog" className="text-white hover:text-amber-500 transition">{lang[languageContent].blogs}</a></li>
                 <li><a href="/buying-guides" className="text-white hover:text-amber-500 transition">{lang[languageContent].buyingGuides}</a></li>
@@ -114,7 +114,7 @@ const Footer: React.FC = async () => {
             
             {/* Legal Section */}
             <div>
-              <h3 className="font-semibold text-lg mb-4">Legal</h3>
+              <h3 className="font-semibold text-lg mb-4">{lang[languageContent].legal}</h3>
               <ul className="space-y-3">
                 <li><a href="/about" className="text-white hover:text-amber-500 transition">{lang[languageContent].aboutUs}</a></li>
                 <li><a href="/terms" className="text-white hover:text-amber-500 transition">{lang[languageContent].termsOfService}</a></li>
