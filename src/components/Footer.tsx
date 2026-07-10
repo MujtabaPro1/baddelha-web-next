@@ -21,9 +21,9 @@ const Footer: React.FC = async () => {
                 <Image 
                   width={150}
                   height={70}
-                  src="/logo-light.png" 
+                  src="/logo_new_white.png" 
                   alt="Baddelha Logo" 
-                  className="w-[150px] h-[70px] object-cover"
+                  className="w-[130px] h-[70px] object-contain"
                 />
               </div>
               <p className="text-white mb-6 max-w-md">
