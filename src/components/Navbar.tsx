@@ -167,13 +167,13 @@ const Navbar: React.FC = () => {
                 href="/buy" 
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
-                {language === 'ar' ? 'شراء سيارة مستعملة' : 'Buy used car'}
+                {language === 'ar' ? 'شراء سيارة مستعملة' : 'Buy Used Car'}
               </a>
                  <a 
                 href="/dealerships" 
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
-                {language === 'ar' ? 'شراء سيارة جديدة' : 'Buy new car'}
+                {language === 'ar' ? 'شراء سيارة جديدة' : 'Buy New Car'}
               </a>
               
               {/* <a 
@@ -194,18 +194,7 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'المواقع' : 'Location'}
               </a> */}
-              <a 
-                href="/contactus" 
-                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
-              >
-                {language === 'ar' ? 'اتصل بنا' : 'Contact us'}
-              </a>
-              <a 
-                href="/about" 
-                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
-              >
-                {language === 'ar' ? 'من نحن' : 'About us'}
-              </a>
+
               <a 
                 href="/why-us" 
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
@@ -217,6 +206,18 @@ const Navbar: React.FC = () => {
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
                 {language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}
+              </a>
+                            <a 
+                href="/contactus" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'اتصل بنا' : 'Contact Us'}
+              </a>
+              <a 
+                href="/about" 
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'من نحن' : 'About Us'}
               </a>
             </nav>
           </div>
@@ -279,14 +280,14 @@ const Navbar: React.FC = () => {
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {language === 'ar' ? 'شراء سيارة مستعملة' : 'Buy used car'}
+                {language === 'ar' ? 'شراء سيارة مستعملة' : 'Buy Used Car'}
               </a>
               <a 
                 href="/dealerships" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {language === 'ar' ? 'شراء سيارة جديدة' : 'Buy new car'}
+                {language === 'ar' ? 'شراء سيارة جديدة' : 'Buy New Car'}
               </a>
               {/* <a 
                 href="/locations" 
@@ -295,20 +296,7 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'المواقع' : 'Location'}
               </a> */}
-              <a 
-                href="/contactus" 
-                className="transition text-[#3d3d40] hover:text-[#f78f37]"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {language === 'ar' ? 'اتصل بنا' : 'Contact us'}
-              </a>
-              <a 
-                href="/about" 
-                className="transition text-[#3d3d40] hover:text-[#f78f37]"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {language === 'ar' ? 'من نحن' : 'About us'}
-              </a>
+    
               <a 
                 href="/why-us" 
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
@@ -323,6 +311,20 @@ const Navbar: React.FC = () => {
                 >
                   {language === 'ar' ? 'الأسئلة الشائعة' : 'FAQ'}
                 </a>
+                          <a 
+                href="/contactus" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'اتصل بنا' : 'Contact Us'}
+              </a>
+              <a 
+                href="/about" 
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'من نحن' : 'About Us'}
+              </a>
                 <a 
                   href="/auction" 
                   className="transition text-[#3d3d40] hover:text-[#f78f37]"
