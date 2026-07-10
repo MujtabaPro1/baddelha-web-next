@@ -155,7 +155,7 @@ const Navbar: React.FC = () => {
                 width={150}
                 height={50}
                 style={{objectFit: 'contain',
-                  width: '150px',
+                  width: '120px',
                   height: '50px'
                 }}
                 className="object-contain"
