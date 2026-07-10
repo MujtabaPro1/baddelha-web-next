@@ -5,14 +5,25 @@ import lang from '../locale';
 import {Button} from './ui/button';
 import BlurText from './ui/blur-text';
 
-// Array of car images for the slider
-const carImages = [
-  '/images/banner/1.webp',
-  // '/images/banner/2.webp',
-  // '/images/banner/3.webp',
-  // '/images/banner/4.webp',
-  // '/images/banner/5.webp',
-];
+// Array of car images for the slider, per language
+const carImagesByLanguage: Record<'en' | 'ar', string[]> = {
+  en: [
+    '/images/banner/banner-1-en.png',
+    '/images/banner/banner-2-en.png',
+    '/images/banner/banner-3-en.png',
+    '/images/banner/banner-4-en.png',
+    '/images/banner/banner-5-en.png',
+    '/images/banner/banner-6-en.png',
+  ],
+  ar: [
+    '/images/banner/banner-1-ar.png',
+    '/images/banner/banner-2-ar.png',
+    '/images/banner/banner-3-ar.png',
+    '/images/banner/banner-4-ar.png',
+    '/images/banner/banner-5-ar.png',
+    '/images/banner/banner-6-ar.png',
+  ],
+};
 
 const brandLogos = [
   { label: 'Toyota', src: '/images/car-logos/toyota.png' },
@@ -28,7 +39,8 @@ const HeroSection: React.FC = () => {
   const { language } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
   const hero: any = lang[languageContent].hero;
-  
+  const carImages = carImagesByLanguage[languageContent];
+
   
   // Slider state
   const [currentSlide,setCurrentSlide] = useState(0);
@@ -185,8 +197,6 @@ const HeroSection: React.FC = () => {
               ))}
 
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/75 to-transparent px-4 pb-4 pt-10 text-white">
-                <h2 className="text-lg font-extrabold">{hero.sliderTitle}</h2>
-                <p className="mt-1 text-sm text-slate-100">{hero.sliderSubtitle}</p>
                 <div className="mt-3 flex gap-2">
                   {carImages.map((_, index) => (
                     <span

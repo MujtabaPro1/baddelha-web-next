@@ -68,7 +68,7 @@ const Inspection = memo(function Inspection() {
             <h3 className="text-xl font-extrabold">{inspection.cardTitle}</h3>
             <p className="mt-2 text-sm text-slate-200">{inspection.cardText}</p>
             <img
-              src={'/images/banner/3.webp'}
+              src={'/images/about/about-' + language + '.png'}
               alt={inspection.cardImageAlt}
               className="mt-2 h-32 w-full rounded-2xl object-cover ring-1 ring-white/20"
               loading="lazy"

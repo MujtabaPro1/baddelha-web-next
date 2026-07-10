@@ -42,7 +42,7 @@ export default function About() {
           <div className="about-container grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             <figure className="card overflow-hidden">
               <img
-                src={'/images/banner/1.webp'}
+                src={'/images/about/brand-' + language + '.png'}
                 alt=""
                 className="w-full h-full object-cover aspect-[16/10]"
               />
