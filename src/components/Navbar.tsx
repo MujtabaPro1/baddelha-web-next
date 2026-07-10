@@ -150,15 +150,15 @@ const Navbar: React.FC = () => {
               role="button"
               aria-label="Go to homepage">
                <Image
-                src={'/logo.png'} 
+                src={'/logo_new.png'} 
                 alt="Baddelha Logo" 
                 width={150}
                 height={50}
-                style={{objectFit: 'cover',
+                style={{objectFit: 'contain',
                   width: '150px',
                   height: '50px'
                 }}
-                className="object-cover"
+                className="object-contain"
               />
               </span>
             </div>
