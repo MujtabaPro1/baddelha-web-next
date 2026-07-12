@@ -101,9 +101,33 @@ const ValuationWidget: React.FC = () => {
   const [modelId, setModelId] = useState('');
   const [year, setYear] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [pendingMakeId, setPendingMakeId] = useState<string | null>(null);
   const { language } = useLanguage();
   const languageContent = language === 'ar' ? 'ar' : 'en';
   const router = useRouter();
+
+  // Listen for brand selection coming from HeroSection
+  useEffect(() => {
+    const handler = (e: any) => {
+      const id = e?.detail?.id;
+      if (id !== undefined && id !== null) {
+        setPendingMakeId(String(id));
+      }
+    };
+    window.addEventListener('selectMakeFromHero', handler);
+    return () => window.removeEventListener('selectMakeFromHero', handler);
+  }, []);
+
+  // Apply the pending brand selection once makes are loaded
+  useEffect(() => {
+    if (!pendingMakeId || makes.length === 0) return;
+    const matched = makes.find((m) => String(m.id) === pendingMakeId);
+    if (matched) {
+      setMakeId(matched.id);
+      setMake(matched.name + (languageContent === 'ar' && matched.nameAr ? ' - ' + matched.nameAr : ''));
+      setPendingMakeId(null);
+    }
+  }, [pendingMakeId, makes, languageContent]);
   
   // Fetch car makes on component mount
   useEffect(() => {

@@ -26,13 +26,15 @@ const carImagesByLanguage: Record<'en' | 'ar', string[]> = {
 };
 
 const brandLogos = [
-  { label: 'Toyota', src: '/images/car-logos/toyota.png' },
-  { label: 'Nissan', src: '/images/car-logos/nissan.jpg' },
-  { label: 'Hyundai', src: '/images/car-logos/hyundai.png' },
-  { label: 'Ford', src: '/images/car-logos/ford.png' },
-  { label: 'BMW', src: '/images/car-logos/bmw.png' },
-  { label: 'Brand', src: '/images/car-logos/generic.webp' },
+  { id: 127, label: 'Toyota', src: '/images/car-logos/toyota.png' },
+  { id: 92, label: 'Nissan', src: '/images/car-logos/nissan.jpg' },
+  { id: 53, label: 'Hyundai', src: '/images/car-logos/hyundai.png' },
+  { id: 40, label: 'Ford', src: '/images/car-logos/ford.png' },
+  { id: 11, label: 'BMW', src: '/images/car-logos/bmw.png' },
+  { id: 20, label: 'CHANGAN', src: '/images/car-logos/generic.webp' },
 ];
+
+
 
 
 const HeroSection: React.FC = () => {
@@ -57,8 +59,9 @@ const HeroSection: React.FC = () => {
 
   const handleBrandClick = useCallback(
     (brand: any) => {
-      setSelectedBrand(brand);
+      setSelectedBrand(brand.label);
       scrollToValuation();
+      window.dispatchEvent(new CustomEvent('selectMakeFromHero', { detail: brand }));
     },
     [scrollToValuation],
   );
@@ -134,7 +137,7 @@ const HeroSection: React.FC = () => {
                     type="button"
                     key={brand.label}
                     onClick={() => {
-                      handleBrandClick(brand.label);
+                      handleBrandClick(brand);
                     }}
                     className={`flex items-center justify-center rounded-xl bg-white/80 px-3 py-3 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-soft ${
                       selectedBrand === brand.label ? 'ring-2 ring-brand-400' : ''
