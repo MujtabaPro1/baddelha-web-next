@@ -150,7 +150,7 @@ const Footer: React.FC = async () => {
           <div className="border-t border-gray-700 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-white text-sm mb-4 md:mb-0">
-                &copy; {new Date().getFullYear()} BADDELHA | بدلها. All rights reserved.
+                &copy; {new Date().getFullYear()} BADDELHA | بدلها. {language == 'en' ? 'All rights reserved.' : 'جميع الحقوق محفوظة'}
               </p>
               <div className="flex flex-wrap gap-4 text-sm text-white">
                 <a href="/terms" className="hover:text-amber-500 transition">{lang[languageContent].termsOfService}</a>

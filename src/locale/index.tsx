@@ -432,7 +432,7 @@ const lang = {
       "quickSteps": [
         'BOOK FREE APPOINTMENT',
         'INSPECT YOUR CAR FOR FREE',
-        "RECIEVE YOUR'E FAIR VALUATION",
+        "RECIEVE YOUR FAIR VALUATION",
       ],
       "sliderTitle": 'Trusted Inspection Standards',
       "sliderSubtitle": 'Real experts and clear reports for better decisions.',
@@ -1150,7 +1150,7 @@ const lang = {
             "slideAlts": ['خبير فحص سيارات', 'مشهد فحص شامل للسيارة'],
        },
        "features_widget": {
-            "title": 'طلب تقييم مجاني',
+            "title": 'طلب تقييم',
             "subtitle": 'أدخل البيانات الأساسية وسنرسل لك تقييمًا أوليًا بسرعة',
             "submit": 'إرسال الطلب',
        },
@@ -1162,7 +1162,7 @@ const lang = {
       "steps": [
         {
           "title": 'حجز مجاني',
-          "description": 'بعد الحصول على التقييم المجاني عبر الموقع الإلكتروني، يمكنك حجز موعد مجاني بالكامل.',
+          "description": 'بعد الحصول على التقييم عبر الموقع الإلكتروني، يمكنك حجز موعد مجاني بالكامل.',
         },
         {
           "title": 'تقييم خلال 30 دقيقة',
