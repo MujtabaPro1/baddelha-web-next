@@ -451,17 +451,17 @@ const lang = {
       "steps": [
         {
           "title": 'Free Booking',
-          "description": 'After the free valuation on the website, you can book a full free inspection.',
+          "description": 'After the free valuation on the website, you can book a full free apppointment.',
         },
         {
-          "title": '30 Min Free Valuation',
+          "title": '30 Min Valuation',
           "description":
             'After booking the appointment and completing the inspection by our certified engineers, you will receive a fair and suitable offer for your car’s value.',
         },
         {
           "title": 'Sell / Trade',
           "description":
-            'After the free inspection, we present you with a fair price. The decision is yours: sell your car, use the amount as a down payment, or trade it for another car.',
+            'After the inspection, we present you with a fair price. The decision is yours: sell your car, use the amount as a down payment, or trade it for another car.',
         },
       ],
     
@@ -504,7 +504,7 @@ const lang = {
       ],
       cardTitle: 'Quick Booking',
       cardText: 'Reserve your inspection slot in under a minute.',
-      cta: 'Book Free Inspection',
+      cta: 'Book Free Appointment',
       settingsIconAlt: 'Inspection settings icon',
       cardImageAlt: 'Car inspection preview image',
     },
@@ -1162,17 +1162,17 @@ const lang = {
       "steps": [
         {
           "title": 'حجز مجاني',
-          "description": 'بعد التقييم المجاني على الموقع، يمكنك حجز فحص كامل مجاني.',
+          "description": 'بعد الحصول على التقييم المجاني عبر الموقع الإلكتروني، يمكنك حجز موعد مجاني بالكامل.',
         },
         {
-          "title": 'تقييم مجاني خلال 30 دقيقة',
+          "title": 'تقييم خلال 30 دقيقة',
           "description":
             'بعد حجز الموعد وإكمال الفحص بواسطة مهندسينا المعتمدين، ستحصل على عرض عادل ومناسب لقيمة سيارتك.',
         },
         {
           "title": 'بيع / استبدال',
           "description":
-            'بعد الفحص المجاني، نقدم لك سعرًا عادلًا. القرار لك: بيع سيارتك، أو استخدام المبلغ كدفعة أولى، أو استبدالها بسيارة أخرى.',
+            'بعد الفحص، نقدم لك سعرًا عادلًا. القرار لك: بيع سيارتك، أو استخدام المبلغ كدفعة أولى، أو استبدالها بسيارة أخرى.',
         },
       ],
     },
@@ -1214,7 +1214,7 @@ const lang = {
       ],
       cardTitle: 'حجز سريع',
       cardText: 'احجز فحصك الآن خلال أقل من دقيقة.',
-      cta: 'احجز فحص مجاني',
+      cta: 'احجز موعدًا مجانيًا',
       settingsIconAlt: 'أيقونة إعدادات الفحص',
       cardImageAlt: 'صورة فحص السيارة',
     },
