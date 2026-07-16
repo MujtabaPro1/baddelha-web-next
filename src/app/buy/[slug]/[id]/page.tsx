@@ -1020,7 +1020,7 @@ export default function Page() {
                                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mt-3">
                                                 {section.fields.map((field: any, fieldIndex: number) => {
                                                   const isTextArea = field.fieldType === 'TextArea' || field.label?.toLowerCase() === 'remarks';
-                                                  const isVinField = /vin|chassis/i.test(field.label || '');
+                                                  const isVinField = (field.label || '').trim().toLowerCase() === 'vin / chassis number';
                                                   return (
                                                     <div
                                                       key={fieldIndex}
