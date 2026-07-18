@@ -241,7 +241,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h3 className="text-xl font-bold text-gray-900">
-                {car.make} {car.model} {car.modelYear} 
+                {car.make?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim()} {car.model?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim()} {car.modelYear} 
                 </h3>
                 <p className="text-gray-600">{car.bodyType}</p>
               </div>
@@ -335,7 +335,7 @@ const CarCard: React.FC<{ car: any; viewMode: string; isLiked: boolean; onToggle
       <div className="p-3 sm:p-4 flex flex-col flex-1">
         <div className="mb-2 min-h-[38px]">
           <h3 className="font-bold text-base text-gray-900 line-clamp-1">
-            {car.make} {car.model} {car.modelYear}
+            {car.make?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim()} {car.model?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim()} {car.modelYear} 
           </h3>
           <p className="text-gray-500 text-xs mt-0.5 line-clamp-1">{car.bodyType || ' '}</p>
         </div>

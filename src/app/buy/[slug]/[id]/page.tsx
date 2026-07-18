@@ -217,6 +217,9 @@ export default function Page() {
                   })
               }
               _car['InspectionData'] = _inspectionData;
+
+              _car.make = _car.make?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim();
+              _car.model = _car.model?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim();
               
               // Set car data
               setCar(_car);
