@@ -21,12 +21,12 @@ export async function generateMetadata({
   // optionally access and extend (rather than replace) parent metadata
 
   return {
-    title: data?.car?.make + " " + data?.car?.model + " " + data?.car?.modelYear,
-    description: "Buy used " + data?.car?.make + " " + data?.car?.model + " " + data?.car?.modelYear + " for SAR " + data?.car?.bookValue + " at Badelha",
+    title: data?.car?.make?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.model?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.modelYear,
+    description: "Buy used " + data?.car?.make?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.model?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.modelYear + " for SAR " + data?.car?.bookValue + " at Badelha",
     openGraph: {
-      title: data?.car?.make + " " + data?.car?.model + " " + data?.car?.modelYear,
+      title: data?.car?.make?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.model?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.modelYear,
       type: "website",
-      description: "Buy used " + data?.car?.make + " " + data?.car?.model + " " + data?.car?.modelYear + " for SAR " + data?.car?.bookValue + " at Badelha",
+      description: "Buy used " + data?.car?.make?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.model?.replace(/[\u0600-\u06FF\s-]+$/g, '').trim() + " " + data?.car?.modelYear + " for SAR " + data?.car?.bookValue + " at Badelha",
       images: [data?.carImages?.[0]],
       url: "https://baddelha.com/buy/" + data?.car?.id,
     },
