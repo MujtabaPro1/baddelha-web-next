@@ -3,11 +3,11 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Buying Guides',
   description:
-    'Learn about BADDELHA and how we make buying, selling, and trading cars in Saudi Arabia faster, smarter, and more transparent.',
+    'Expert tips and a step-by-step guide to buying a car in Saudi Arabia with BADDELHA: get a free online valuation, book a free inspection, and receive your offer in 30 minutes.',
   openGraph: {
     title: 'Buying Guides',
     description:
-      'Learn about BADDELHA and how we make buying, selling, and trading cars in Saudi Arabia faster, smarter, and more transparent.',
+      'Expert tips and a step-by-step guide to buying a car in Saudi Arabia with BADDELHA: get a free online valuation, book a free inspection, and receive your offer in 30 minutes.',
     url: 'https://www.baddelha.com.sa/buying-guides',
     siteName: 'BADDELHA',
     type: 'article',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Buying Guides',
     description:
-      'Learn about BADDELHA and how we make buying, selling, and trading cars in Saudi Arabia faster, smarter, and more transparent.',
+      'Expert tips and a step-by-step guide to buying a car in Saudi Arabia with BADDELHA: get a free online valuation, book a free inspection, and receive your offer in 30 minutes.',
     images: ['/logo_whatsapp.png'],
   },
   alternates: {
