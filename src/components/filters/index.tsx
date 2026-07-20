@@ -139,6 +139,7 @@ export const Filters = ({ isLanding = false }) => {
                       showMore: "mt-3 text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200",
                       checkbox: "rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     }}
+                    showMore={true}
                   />
                   <hr
                     className={"my-3 border-gray-200"}
