@@ -598,7 +598,7 @@ export default function Page() {
                     </div>
                     <div className="flex items-center justify-between mt-3 sm:mt-4 bg-gray-50 rounded-lg py-3 px-4">
                       <span className="text-xs sm:text-sm text-gray-500">{lang[language].vin}</span>
-                      <span className="text-xs sm:text-sm font-medium font-mono">{car?.vin || 'JTMWRREV7ND123456'}</span>
+                      <span className="text-xs sm:text-sm font-medium font-mono blur-xs">{car?.vin || 'JTMWRREV7ND123456'}</span>
                     </div>
                   </div>
                 )}
