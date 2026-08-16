@@ -498,6 +498,11 @@ const Step3 = () => {
         try {
             // Validate all required fields
             const validationErrors: any [] = [];
+
+            // Validate car details from step1
+            if (!step1Data?.make || !step1Data?.model || !step1Data?.year) {
+                validationErrors.push('Car details are missing. Please start from the beginning.');
+            }
             
             if (!branch) {
                 validationErrors.push('Please select a branch');
@@ -546,14 +551,9 @@ const Step3 = () => {
                 return;
             }
             
-            // Get step1 data from sessionStorage if available
-            const storedStep1Data = sessionStorage.getItem('carDetails');
-            const step1Data = storedStep1Data ? JSON.parse(storedStep1Data) : {};
-            
             // Format the appointment date and time
             // Extract date parts from the selectedDayObj.date (format: "Jun 30")
             // We've already validated selectedDayObj exists above, but add a safety check
-            console.log(selectedDayObj);
             // const [month, day] = selectedDayObj?.date?.split(' ') || [];
             // const currentYear = new Date().getFullYear();
             

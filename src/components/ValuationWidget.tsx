@@ -124,10 +124,10 @@ const ValuationWidget: React.FC = () => {
     const matched = makes.find((m) => String(m.id) === pendingMakeId);
     if (matched) {
       setMakeId(matched.id);
-      setMake(matched.name + (languageContent === 'ar' && matched.nameAr ? ' - ' + matched.nameAr : ''));
+      setMake(matched.name);
       setPendingMakeId(null);
     }
-  }, [pendingMakeId, makes, languageContent]);
+  }, [pendingMakeId, makes]);
   
   // Fetch car makes on component mount
   useEffect(() => {
@@ -207,11 +207,11 @@ const ValuationWidget: React.FC = () => {
               instanceId="make-select"
               inputId="make"
               value={makeId ? { value: makeId, label: make } : null}
-              onChange={(option) => {
-                setMake(option?.label || '');
+              onChange={(option: any) => {
+                setMake(option?.brandName || '');
                 setMakeId(option?.value || '');
               }}
-              options={makes?.map(makeItem => ({ value: makeItem.id, brandName: makeItem.name,  label: makeItem.name + (languageContent === 'ar' && makeItem.nameAr ? ' - ' + makeItem.nameAr : '') }))}
+              options={makes?.map(makeItem => ({ value: makeItem.id, brandName: makeItem.name, label: makeItem.name + (languageContent === 'ar' && makeItem.nameAr ? ' - ' + makeItem.nameAr : '') }))}
               placeholder={lang[languageContent].selectMake}
               isLoading={loading.makes}
               isDisabled={loading.makes}
@@ -240,11 +240,11 @@ const ValuationWidget: React.FC = () => {
               instanceId="model-select"
               inputId="model"
               value={modelId ? { value: modelId, label: model } : null}
-              onChange={(option) => {
-                setModel(option?.label || '');
+              onChange={(option: any) => {
+                setModel(option?.modelName || '');
                 setModelId(option?.value || '');
               }}
-              options={models.map(modelItem => ({ value: modelItem.id, label: modelItem.name + (languageContent === 'ar' ? ' - ' + modelItem.nameAr : '') }))}
+              options={models.map(modelItem => ({ value: modelItem.id, modelName: modelItem.name, label: modelItem.name + (languageContent === 'ar' && modelItem.nameAr ? ' - ' + modelItem.nameAr : '') }))}
               placeholder={lang[languageContent].selectModel}
               isLoading={loading.models}
               isDisabled={loading.models || !make}
