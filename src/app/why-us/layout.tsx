@@ -4,11 +4,11 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Why BADDELHA',
   description:
-    'Discover why BADDELHA is trusted for professional inspection, fair market valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
+    'Discover why BADDELHA is trusted for free professional inspection, free valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
   openGraph: {
     title: 'Why BADDELHA',
     description:
-      'Discover why BADDELHA is trusted for professional inspection, fair market valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
+      'Discover why BADDELHA is trusted for free professional inspection, free valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
     url: 'https://www.baddelha.com.sa/why-us',
     siteName: 'BADDELHA',
     type: 'website',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Why BADDELHA',
     description:
-      'Discover why BADDELHA is trusted for professional inspection, fair market valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
+      'Discover why BADDELHA is trusted for free professional inspection, free valuation, and hassle-free car selling and trade-ins in Saudi Arabia.',
     images: ['/logo_whatsapp.png'],
   },
   alternates: {

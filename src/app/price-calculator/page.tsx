@@ -148,7 +148,7 @@ const PriceCalculator = () => {
 
         {/* Professional Inspection Section */}
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-8 mb-10">
-          <h2 className="text-2xl font-bold mb-6 text-center">{isAr ? 'فحص سيارة احترافي' : 'Professional Car Inspection'}</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">{isAr ? 'فحص سيارة احترافي مجاني' : 'Free Professional Car Inspection'}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <div className="flex items-start mb-4">
@@ -156,8 +156,8 @@ const PriceCalculator = () => {
                   1
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">{isAr ? 'فحص احترافي للسيارة' : 'Professional Car Inspection'}</h3>
-                  <p className="text-gray-600 text-sm">{isAr ? 'بعد حجز الموعد، سيقوم مهندسونا الخبراء بفحص سيارتك بدقة لضمان تقييم عادل ودقيق.' : 'Once you book an appointment, our expert engineers will thoroughly inspect your car to ensure an accurate evaluation.'}</p>
+                  <h3 className="font-bold text-lg mb-2">{isAr ? 'فحص احترافي مجاني للسيارة' : 'Free Professional Car Inspection'}</h3>
+                  <p className="text-gray-600 text-sm">{isAr ? 'بعد حجز الموعد المجاني، سيقوم مهندسونا الخبراء بفحص سيارتك بدقة لضمان تقييم عادل ودقيق — بدون أي رسوم.' : 'Once you book your free appointment, our expert engineers will thoroughly inspect your car to ensure an accurate evaluation — at no cost to you.'}</p>
                 </div>
               </div>
             </div>
@@ -176,7 +176,7 @@ const PriceCalculator = () => {
                     </li>
                     <li className="flex items-start">
                       <span className="text-green-500 mr-2">●</span>
-                      <span>{isAr ? 'استخدامه كدفعة أولى لشراء سيارة جديدة من JAECOO أو OMODA' : 'Use it as a down payment for a new JAECOO or OMODA car'}</span>
+                      <span>{isAr ? 'استخدامه كدفعة أولى لشراء سيارة جديدة' : 'Use it as a down payment for a new car'}</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-green-500 mr-2">●</span>

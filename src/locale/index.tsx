@@ -106,7 +106,7 @@ const lang = {
         "readyToGetStarted": "Ready to Get Started?",
         "whetherYouAreLookingToBuySellOrTradeInOurTeamIsHereToHelpYouEveryStepOfTheWay": "Whether you are looking to buy, sell, or trade-in, our team is here to help you every step of the way.",
         "contactUsTodayToGetTheProcessStarted": "Contact us today to get the process started.",
-        "scheduleAppointment": "Schedule an Appointment",
+        "scheduleAppointment": "Schedule a Free Appointment",
         "ourStory": "Our Story",
         "howItWorks": "How It Works",
         "footer": "Footer",
@@ -131,7 +131,7 @@ const lang = {
         "and": "and",
         "apply": "apply",
         "youWillReceiveUpdates": "You will receive updates",
-        "bookAppointment": "Book Appointment",
+        "bookAppointment": "Book Free Appointment",
         "onlyOneStepLeft": "Only 1 step left! 319 slots taken. Secure yours now. 2:41",
         "bookFreeCarInspection": "Book Free Car Inspection now!",
         "yourVehicleMarketPrice": "Your Vehicle Demand Price",
@@ -258,7 +258,7 @@ const lang = {
         "vehicle": "Vehicle",
         "contactInformation": "Contact Information",
         "vehicleInspection": "Vehicle Inspection",
-        "vehicleInspectionDesc": "We'll inspect your trade-in vehicle",
+        "vehicleInspectionDesc": "We'll inspect your trade-in vehicle for free",
         "finalValuation": "Final Valuation",
         "finalValuationDesc": "Confirm the trade-in value",
         "completeTransaction": "Complete Transaction",
@@ -396,8 +396,8 @@ const lang = {
                     "description": "Complete inspections and valuations in as little as 30 minutes."
                 },
                 {
-                    "title": "Professional Inspection",
-                    "description": "Detailed checks by experts, with clear and reliable reports."
+                    "title": "Free Professional Inspection",
+                    "description": "Detailed checks by experts, with clear and reliable reports — completely free of charge."
                 },
                 {
                     "title": "Fair Market Value",
@@ -413,7 +413,7 @@ const lang = {
                 }
             ],
             "ctaTitle": "Start with Confidence",
-            "ctaDescription": "Inspect your car, get a fair price, and complete your transaction — all in one place.",
+            "ctaDescription": "Inspect your car for free, get a fair price, and complete your transaction — all in one place.",
             "getStarted": "Get Started",
             "tagline": "Baddelha.",
             "faster": "Faster.",
@@ -421,13 +421,13 @@ const lang = {
             "trusted": "Trusted."
         },
         "hero": {
-      "badge": 'Free Evaluation & Inspection',
+      "badge": 'Free Appointment & Evaluation',
       "title": 'Buy,Sell, Trade in',
       "titleHighlight": '30 Minutes',
       "description":
-        'A fast platform to evaluate your car, book an expert inspection, and move forward with clarity.',
+        'A fast platform to evaluate your car for free, book a free expert inspection, and move forward with clarity.',
       "ctaEvaluation": 'Start Free Evaluation',
-      "ctaBooking": 'Book Inspection',
+      "ctaBooking": 'Book Free Inspection',
       "selectBrand": 'Select a Brand',
       "quickSteps": [
         'BOOK FREE APPOINTMENT',
@@ -451,12 +451,12 @@ const lang = {
       "steps": [
         {
           "title": 'Free Booking',
-          "description": 'After the free valuation on the website, you can book a full free apppointment.',
+          "description": 'After the free valuation on the website, you can book a completely free appointment — no fees at any stage.',
         },
         {
           "title": '30 Min Valuation',
           "description":
-            'After booking the appointment and completing the inspection by our certified engineers, you will receive a fair and suitable offer for your car’s value.',
+            'After booking the appointment and completing the free inspection by our certified engineers, you will receive a fair and suitable offer for your car’s value.',
         },
         {
           "title": 'Sell / Trade',
@@ -493,7 +493,7 @@ const lang = {
       "inspection_items": {
       title: 'Comprehensive Car Inspection',
       highlightWord: 'Inspection',
-      subtitle: 'A structured report that covers key safety and performance points',
+      subtitle: 'A free, structured report that covers key safety and performance points',
       checks: [
         'Engine and transmission check',
         'Body and paint condition',
@@ -503,7 +503,7 @@ const lang = {
         'Complete report summary',
       ],
       cardTitle: 'Quick Booking',
-      cardText: 'Reserve your inspection slot in under a minute.',
+      cardText: 'Reserve your free inspection slot in under a minute — no fees, no obligation.',
       cta: 'Book Free Appointment',
       settingsIconAlt: 'Inspection settings icon',
       cardImageAlt: 'Car inspection preview image',
@@ -824,7 +824,7 @@ const lang = {
         "readyToGetStarted": "هل أنت مستعد للبدء؟",
         "whetherYouAreLookingToBuySellOrTradeInOurTeamIsHereToHelpYouEveryStepOfTheWay": "هل أنت مستعد للبدء؟",
         "contactUsTodayToGetTheProcessStarted": "هل أنت مستعد للبدء؟",
-        "scheduleAppointment": "حجز موعد",
+        "scheduleAppointment": "احجز موعدًا مجانيًا",
         "aboutUs": "من نحن",
         "ourStory": "قصتنا",
         "howItWorks": "كيف يعمل",
@@ -848,7 +848,7 @@ const lang = {
         "and": "و",
         "apply": "تطبيق",
         "youWillReceiveUpdates": "سوف تتلقى التحديثات",
-        "bookAppointment": "احجز موعدًا",
+        "bookAppointment": "احجز موعدًا مجانيًا",
         "onlyOneStepLeft": "تبقّت خطوة واحدة فقط! تم حجز 319 خانة. احجز مكانك الآن. 2:41",
         "bookFreeCarInspection": "احجز فحص السيارة المجاني الآن!",
         "yourVehicleMarketPrice": "سعر الطلب لسيارتك",
@@ -973,7 +973,7 @@ const lang = {
         "vehicle": "سيارة",
         "contactInformation": "معلومات الاتصال",
         "vehicleInspection": "فحص السيارة",
-        "vehicleInspectionDesc": "سنقوم بفحص سيارتك المستبدلة",
+        "vehicleInspectionDesc": "سنقوم بفحص سيارتك المستبدلة مجانًا",
         "finalValuation": "التقييم النهائي",
         "finalValuationDesc": "تأكيد قيمة الاستبدال",
         "completeTransaction": "إتمام المعاملة",
@@ -1112,8 +1112,8 @@ const lang = {
                     "description": "إكمال الفحص والتقييم في أقل من 30 دقيقة."
                 },
                 {
-                    "title": "فحص احترافي",
-                    "description": "فحص تفصيلي من قبل خبراء، مع تقارير واضحة وموثوقة."
+                    "title": "فحص احترافي مجاني",
+                    "description": "فحص تفصيلي من قبل خبراء، مع تقارير واضحة وموثوقة — ومجاني بالكامل."
                 },
                 {
                     "title": "قيمة السوق العادلة",
@@ -1129,7 +1129,7 @@ const lang = {
                 }
             ],
             "ctaTitle": "ابدأ بثقة",
-            "ctaDescription": "افحص سيارتك، احصل على سعر عادل، وأكمل معاملتك - كل شيء في مكان واحد.",
+            "ctaDescription": "افحص سيارتك مجانًا، احصل على سعر عادل، وأكمل معاملتك - كل شيء في مكان واحد.",
             "getStarted": "ابدأ الآن",
             "tagline": "بادلها.",
             "faster": "أسرع.",
@@ -1137,20 +1137,20 @@ const lang = {
             "trusted": "موثوق."
         },
         "hero": {
-            "badge": 'تقييم وفحص مجاني',
+            "badge": 'موعد وتقييم مجاني',
             "title": 'اشترِ، بِع، بدّل خلال',
             "titleHighlight": '30 دقيقة',
-            "description": 'نساعدك على تقييم سيارتك وحجز فحص احترافي بسرعة، مع تجربة واضحة بالكامل.',
+            "description": 'نساعدك على تقييم سيارتك مجانًا وحجز فحص احترافي مجاني بسرعة، مع تجربة واضحة بالكامل.',
             "ctaEvaluation": 'ابدأ التقييم المجاني',
-            "ctaBooking": 'احجز موعد فحص',
+            "ctaBooking": 'احجز فحصًا مجانيًا',
             "selectBrand": 'اختر الماركة',
-            "quickSteps": ['أدخل بيانات سيارتك خلال دقيقة', 'اختر أقرب فرع وموعد مناسب', 'استلم تقييمًا واضحًا وعادلاً'],
+            "quickSteps": ['احجز موعدًا مجانيًا', 'افحص سيارتك مجانًا', 'استلم تقييمًا واضحًا وعادلاً'],
             "sliderTitle": 'فحص احترافي بمعايير موثوقة',
             "sliderSubtitle": 'نتائج دقيقة تساعدك على اتخاذ القرار بسرعة.',
             "slideAlts": ['خبير فحص سيارات', 'مشهد فحص شامل للسيارة'],
        },
        "features_widget": {
-            "title": 'طلب تقييم',
+            "title": 'طلب تقييم مجاني',
             "subtitle": 'أدخل البيانات الأساسية وسنرسل لك تقييمًا أوليًا بسرعة',
             "submit": 'إرسال الطلب',
        },
@@ -1162,12 +1162,12 @@ const lang = {
       "steps": [
         {
           "title": 'حجز مجاني',
-          "description": 'بعد الحصول على التقييم عبر الموقع الإلكتروني، يمكنك حجز موعد مجاني بالكامل.',
+          "description": 'بعد الحصول على التقييم المجاني عبر الموقع الإلكتروني، يمكنك حجز موعد مجاني بالكامل — بدون أي رسوم في أي مرحلة.',
         },
         {
           "title": 'تقييم خلال 30 دقيقة',
           "description":
-            'بعد حجز الموعد وإكمال الفحص بواسطة مهندسينا المعتمدين، ستحصل على عرض عادل ومناسب لقيمة سيارتك.',
+            'بعد حجز الموعد وإكمال الفحص المجاني بواسطة مهندسينا المعتمدين، ستحصل على عرض عادل ومناسب لقيمة سيارتك.',
         },
         {
           "title": 'بيع / استبدال',
@@ -1203,7 +1203,7 @@ const lang = {
        "inspection_items": {
       title: 'فحص شامل لسيارتك',
       highlightWord: 'فحص',
-      subtitle: 'تقرير واضح يغطي أهم نقاط السلامة والأداء',
+      subtitle: 'تقرير مجاني وواضح يغطي أهم نقاط السلامة والأداء',
       checks: [
         'فحص المحرك وناقل الحركة',
         'فحص الهيكل الخارجي والدهان',
@@ -1213,7 +1213,7 @@ const lang = {
         'تقرير شامل بالنتائج',
       ],
       cardTitle: 'حجز سريع',
-      cardText: 'احجز فحصك الآن خلال أقل من دقيقة.',
+      cardText: 'احجز فحصك المجاني خلال أقل من دقيقة — بدون رسوم وبدون التزام.',
       cta: 'احجز موعدًا مجانيًا',
       settingsIconAlt: 'أيقونة إعدادات الفحص',
       cardImageAlt: 'صورة فحص السيارة',

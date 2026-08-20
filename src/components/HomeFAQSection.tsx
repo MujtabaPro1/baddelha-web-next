@@ -37,6 +37,11 @@ export default function HomeFAQSection({ isAr }: Props) {
   const inspectionItems: FAQItem[] = isAr
     ? [
         {
+          question: "هل الموعد والتقييم والفحص مجانية؟",
+          answer:
+            "نعم، حجز الموعد والتقييم والفحص مجانية بالكامل. لا توجد أي رسوم في أي مرحلة، ولست ملزمًا بالبيع.",
+        },
+        {
           question: "كم يستغرق وقت الفحص؟",
           answer:
             "عادةً ما يستغرق الفحص من 15 إلى 30 دقيقة حسب حالة السيارة.",
@@ -61,6 +66,11 @@ export default function HomeFAQSection({ isAr }: Props) {
         },
       ]
     : [
+        {
+          question: "Are the appointment, evaluation and inspection free?",
+          answer:
+            "Yes. Booking an appointment, the evaluation, and the inspection are completely free. There are no fees at any stage, and you are never obligated to sell.",
+        },
         {
           question: "How long does the inspection take?",
           answer:
