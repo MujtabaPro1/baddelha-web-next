@@ -8,6 +8,7 @@ import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
 import Inspection from '../components/Inspection';
 import HomeFAQSection from '../components/HomeFAQSection';
+import AppPromoSection from '../components/AppPromoSection';
 
 async function App() {
   const cookieStore = await cookies();
@@ -16,6 +17,7 @@ async function App() {
   return (
     <div className="min-h-screen bg-white">
         <HeroSection />
+        <AppPromoSection />
         <Features/>
         <HowItWorks/>
         <ServicesSection />
