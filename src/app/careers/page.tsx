@@ -12,6 +12,7 @@ import {
 } from '../../services/careerService';
 
 const CAREERS_EMAIL = 'info@baddelha.com.sa';
+const APPLY_FORM_URL = 'https://forms.gle/ciCyYqEufVgJFxTRA';
 
 const CareersPage: React.FC = () => {
   const { language } = useLanguage();
@@ -69,17 +70,6 @@ const CareersPage: React.FC = () => {
       );
     });
   }, [jobs, searchTerm, isAr]);
-
-  const getApplyMailto = (job: CareerJob) => {
-    const jobTitle = (isAr && job.titleAr ? job.titleAr : job.title) || '';
-    const subject = encodeURIComponent(`${isAr ? 'طلب توظيف' : 'Job Application'}: ${jobTitle}`);
-    const body = encodeURIComponent(
-      isAr
-        ? `مرحبًا فريق بدّلها،\n\nأود التقديم على وظيفة "${jobTitle}".\nيرجى الاطلاع على سيرتي الذاتية المرفقة.\n\nشكرًا لكم.`
-        : `Hi Baddelha Team,\n\nI would like to apply for the "${jobTitle}" position.\nPlease find my CV attached.\n\nThank you.`
-    );
-    return `mailto:${CAREERS_EMAIL}?subject=${subject}&body=${body}`;
-  };
 
   const generalCvMailto = `mailto:${CAREERS_EMAIL}?subject=${encodeURIComponent(
     isAr ? 'سيرة ذاتية - طلب توظيف عام' : 'CV Submission - General Application'
@@ -243,7 +233,9 @@ const CareersPage: React.FC = () => {
                         {t.viewDetails}
                       </button>
                       <a
-                        href={getApplyMailto(job)}
+                        href={APPLY_FORM_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="bg-primaryBtn hover:bg-primaryBtn-600 text-white text-sm font-semibold py-2 px-5 rounded-full transition"
                       >
                         {t.applyNow}
@@ -344,7 +336,9 @@ const CareersPage: React.FC = () => {
             )}
 
             <a
-              href={getApplyMailto(selectedJob)}
+              href={APPLY_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-8 block text-center bg-primaryBtn hover:bg-primaryBtn-600 text-white font-semibold py-3 px-6 rounded-full transition"
             >
               {t.applyNow}

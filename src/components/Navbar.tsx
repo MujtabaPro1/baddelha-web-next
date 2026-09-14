@@ -213,11 +213,17 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'اتصل بنا' : 'Contact Us'}
               </a>
-              <a 
-                href="/about" 
+              <a
+                href="/about"
                 className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
               >
                 {language === 'ar' ? 'من نحن' : 'About Us'}
+              </a>
+              <a
+                href="/careers"
+                className={`transition ${isScrolled ? 'text-[#3d3d40]' : 'text-black'} hover:text-[#f78f37]`}
+              >
+                {language === 'ar' ? 'الوظائف' : 'Careers'}
               </a>
             </nav>
           </div>
@@ -318,15 +324,22 @@ const Navbar: React.FC = () => {
               >
                 {language === 'ar' ? 'اتصل بنا' : 'Contact Us'}
               </a>
-              <a 
-                href="/about" 
+              <a
+                href="/about"
                 className="transition text-[#3d3d40] hover:text-[#f78f37]"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {language === 'ar' ? 'من نحن' : 'About Us'}
               </a>
-                <a 
-                  href="/auction" 
+              <a
+                href="/careers"
+                className="transition text-[#3d3d40] hover:text-[#f78f37]"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {language === 'ar' ? 'الوظائف' : 'Careers'}
+              </a>
+                <a
+                  href="/auction"
                   className="transition text-[#3d3d40] hover:text-[#f78f37]"
                   onClick={() => setIsMenuOpen(false)}
                 >
