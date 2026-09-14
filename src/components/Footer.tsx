@@ -117,6 +117,7 @@ const Footer: React.FC = async () => {
               <h3 className="font-semibold text-lg mb-4">{lang[languageContent].legal}</h3>
               <ul className="space-y-3">
                 <li><a href="/about" className="text-white hover:text-amber-500 transition">{lang[languageContent].aboutUs}</a></li>
+                <li><a href="/careers" className="text-white hover:text-amber-500 transition">{lang[languageContent].careers}</a></li>
                 <li><a href="/terms" className="text-white hover:text-amber-500 transition">{lang[languageContent].termsOfService}</a></li>
                 <li><a href="/privacy" className="text-white hover:text-amber-500 transition">{lang[languageContent].privacyPolicy}</a></li>
               </ul>

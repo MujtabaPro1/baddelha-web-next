@@ -111,6 +111,7 @@ const lang = {
         "howItWorks": "How It Works",
         "footer": "Footer",
         "aboutUs": "About Us",
+        "careers": "Careers",
         "quickLinks": "Quick Links",
         "contactUs": "Contact Us",
         "footerText": "BADDELHA | بدلها is your trusted partner for all car-related services. From buying and selling to valuation and financing, we make the process simple, transparent, and enjoyable.",
@@ -713,6 +714,39 @@ const lang = {
     signIn: "Sign In"
   },
 
+    "careers_page": {
+      eyebrow: "Careers",
+      title: "Build the Future of Car Trading in Saudi Arabia",
+      subtitle: "Join a fast-growing team on a mission to make buying, selling, and trading cars transparent and effortless across the Kingdom.",
+      allDepartments: "All Departments",
+      searchPlaceholder: "Search open positions...",
+      loading: "Loading open positions...",
+      errorTitle: "Failed to Load Openings",
+      errorDescription: "Something went wrong while loading our open positions. Please try again.",
+      tryAgain: "Try Again",
+      noJobsTitle: "No Open Positions Right Now",
+      noJobsDescription: "We don't have any openings in this department at the moment. Check back soon or send us your CV.",
+      positionsFound: "Open Positions",
+      applyNow: "Apply Now",
+      viewDetails: "View Details",
+      location: "Location",
+      department: "Department",
+      employmentType: "Employment Type",
+      aboutRole: "About the Role",
+      sendCvTitle: "Don't See a Role That Fits?",
+      sendCvDescription: "We're always looking for talented people. Send us your CV and we'll reach out when a matching role opens up.",
+      sendCvEmailLabel: "Email your CV to:",
+      sendCvButton: "Send Us Your CV",
+      whyJoinTitle: "Why Join Baddelha?",
+      whyJoinSubtitle: "A culture built on trust, speed, and ownership",
+      perks: [
+        { title: "Growth & Impact", text: "Work on products used by thousands of customers across Saudi Arabia and shape the direction of the company." },
+        { title: "Great Team", text: "Collaborate with a passionate, supportive team that values transparency and getting things done." },
+        { title: "Competitive Package", text: "Enjoy a competitive salary, benefits, and opportunities to grow your career." }
+      ],
+      remote: "Remote"
+    },
+
        } ,
        ar: {
         "defaultLocation": "الرياض، المملكة العربية السعودية",
@@ -826,6 +860,7 @@ const lang = {
         "contactUsTodayToGetTheProcessStarted": "هل أنت مستعد للبدء؟",
         "scheduleAppointment": "احجز موعدًا مجانيًا",
         "aboutUs": "من نحن",
+        "careers": "الوظائف",
         "ourStory": "قصتنا",
         "howItWorks": "كيف يعمل",
         "quickLinks": "روابط سريعة",
@@ -1421,6 +1456,40 @@ const lang = {
     loginRequiredDescription: "يرجى تسجيل الدخول لعرض شركائنا من الوكلاء وتصفح السيارات الجديدة.",
     signIn: "تسجيل الدخول"
   },
+
+    "careers_page": {
+      eyebrow: "الوظائف",
+      title: "ابنِ مستقبل تجارة السيارات في المملكة العربية السعودية",
+      subtitle: "انضم إلى فريق سريع النمو في مهمة جعل بيع وشراء وتبديل السيارات أكثر شفافية وسهولة في جميع أنحاء المملكة.",
+      allDepartments: "كل الأقسام",
+      searchPlaceholder: "ابحث عن وظائف شاغرة...",
+      loading: "جاري تحميل الوظائف الشاغرة...",
+      errorTitle: "فشل تحميل الوظائف",
+      errorDescription: "حدث خطأ أثناء تحميل الوظائف الشاغرة. يرجى المحاولة مرة أخرى.",
+      tryAgain: "حاول مرة أخرى",
+      noJobsTitle: "لا توجد وظائف شاغرة حاليًا",
+      noJobsDescription: "لا توجد لدينا وظائف شاغرة في هذا القسم حاليًا. تحقق لاحقًا أو أرسل لنا سيرتك الذاتية.",
+      positionsFound: "وظيفة شاغرة",
+      applyNow: "قدّم الآن",
+      viewDetails: "عرض التفاصيل",
+      location: "الموقع",
+      department: "القسم",
+      employmentType: "نوع التوظيف",
+      aboutRole: "عن الوظيفة",
+      sendCvTitle: "لا تجد وظيفة تناسبك؟",
+      sendCvDescription: "نحن دائمًا نبحث عن أشخاص موهوبين. أرسل لنا سيرتك الذاتية وسنتواصل معك عند توفر وظيفة مناسبة.",
+      sendCvEmailLabel: "أرسل سيرتك الذاتية إلى:",
+      sendCvButton: "أرسل لنا سيرتك الذاتية",
+      whyJoinTitle: "لماذا تنضم إلى بدّلها؟",
+      whyJoinSubtitle: "ثقافة عمل قائمة على الثقة والسرعة والمسؤولية",
+      perks: [
+        { title: "نمو وتأثير", text: "اعمل على منتجات يستخدمها آلاف العملاء في جميع أنحاء المملكة وساهم في رسم توجه الشركة." },
+        { title: "فريق رائع", text: "تعاون مع فريق شغوف وداعم يقدّر الشفافية وإنجاز الأعمال." },
+        { title: "حزمة تنافسية", text: "استمتع براتب تنافسي ومزايا وفرص لتطوير مسيرتك المهنية." }
+      ],
+      remote: "عن بُعد"
+    },
+
   footer: {
     brand: 'بدلها',
     description:
